@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/gridview_selector"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:background="@drawable/ic_launcher"
+        android:layout_marginTop="8dp"
+        android:id="@+id/iv_grid_icon"
+        style="@style/widget_basic_wrap"
+		android:layout_centerHorizontal="true"
+        android:scaleType="centerInside" />
+
+    <TextView
+        android:layout_below="@id/iv_grid_icon"
+        android:id="@+id/tv_grid_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="4dp"
+        android:background="#19ffffff"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="sdfsdf"
+        android:textColor="#555555"
+        android:textSize="14sp" />
+    
+       <TextView
+            android:textSize="10sp"
+            android:id="@+id/bubbles_nums_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_grid_icon"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bubbles_circle_bg"
+            android:gravity="center"
+            android:text="22"
+            android:textColor="#ffffff" />
+
+</RelativeLayout>

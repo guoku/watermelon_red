@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffffff"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:id="@+id/faxian_sv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/rl_username"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp" >
+
+                <TextView
+                    android:id="@+id/user_et_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="36dp"
+                    android:layout_centerInParent="true"
+                    android:background="#fff0f0f0"
+                    android:clickable="false"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="30dp"
+                    android:singleLine="true"
+                    android:text="搜索"
+                    android:textColor="#8c8c8c"
+                    android:textColorHint="#414243"
+                    android:textSize="13sp" >
+                </TextView>
+
+                <ImageView
+                    android:id="@+id/iv_name_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/search_icon"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:background="@color/g_line" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp" >
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/product_vp_img"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp" />
+
+                <TextView
+                    android:id="@+id/tv_point"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/g_w" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:id="@+id/faxian_ll_tab1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/faxian_tv_tab1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="热门商品" />
+
+                    <ImageView
+                        android:id="@+id/faxian_iv_tab1"
+                        android:layout_width="54dp"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="12dp"
+                        android:background="#ff1f77" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="1px"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/g_line"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/faxian_ll_tab2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/faxian_tv_tab2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="推荐品类"
+                        android:textColor="@color/g_other" />
+
+                    <ImageView
+                        android:id="@+id/faxian_iv_tab2"
+                        android:layout_width="54dp"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="12dp"
+                        android:background="#ff1f77"
+                        android:visibility="invisible" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:background="@color/g_line" />
+
+            <com.ekwing.students.customview.ScrollViewWithGridView
+                android:id="@+id/faxian_gv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#f8f8f8"
+                android:cacheColorHint="#00000000"
+                android:gravity="center"
+                android:horizontalSpacing="4dp"
+                android:listSelector="#00000000"
+                android:numColumns="3"
+                android:paddingTop="4dp"
+                android:scrollbars="none"
+                android:verticalSpacing="4dp" >
+            </com.ekwing.students.customview.ScrollViewWithGridView>
+
+            <com.ekwing.students.customview.ScrollViewWithListView
+                android:id="@+id/faxian_lv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:background="#ffffffff"
+                android:divider="#000000"
+                android:dividerHeight="0px"
+                android:numColumns="3"
+                android:visibility="gone" >
+            </com.ekwing.students.customview.ScrollViewWithListView>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

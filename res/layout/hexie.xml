@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="4dp"
+        android:text="请选择举报原因:"
+        android:textColor="@color/g_other" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/g_line" />
+
+    <RadioGroup
+        android:id="@+id/hexie_rg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp" >
+
+        <RadioButton
+            android:id="@+id/RadioButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:checked="true"
+            android:textColor="@color/g_main"
+            android:text="  商品下架" />
+
+        <RadioButton
+            android:id="@+id/RadioButton2"
+            android:layout_width="wrap_content"
+            android:textColor="@color/g_main"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="  分类错误" />
+
+        <RadioButton
+            android:id="@+id/RadioButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="  垃圾或诈骗信息"
+            android:textColor="@color/g_main" />
+
+        <RadioButton
+            android:id="@+id/RadioButton4"
+            android:layout_width="wrap_content"
+            android:textColor="@color/g_main"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="  不良内容" />
+    </RadioGroup>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/g_line" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="4dp"
+        android:text="补充说明:"
+        android:textColor="@color/g_other" />
+
+    <EditText
+        android:id="@+id/comment_ed_com"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@color/g_224"
+        android:gravity="left|top"
+        android:hint="靠谱的举报原因"
+        android:lines="2"
+        android:padding="8dp" />
+
+</LinearLayout>

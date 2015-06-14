@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Activity动画  正常 -->
+    <style name="ActivityAnimation" mce_bogus="1" parent="android:Animation">
+        <item name="@android:activityOpenEnterAnimation">@anim/activity_open_enter</item>
+        <item name="@android:activityOpenExitAnimation">@anim/activity_open_exit</item>
+        <item name="@android:activityCloseEnterAnimation">@anim/activity_close_enter</item>
+        <item name="@android:activityCloseExitAnimation">@anim/activity_close_exit</item>
+    </style>
+
+</resources>

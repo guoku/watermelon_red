@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="selected_view" type="id"/>
+    <item name="gridview" type="id"/>
+    <item name="webview" type="id"/>
+    <item name="scrollview" type="id"/>
+    <item name="linearLayout" type="id"/>
+    <item name="iv_jiantou" type="id"/>
+    <item name="iv_hw_righticon" type="id"/>
+    <item name="ll_txt_icon" type="id"/>
+    <item name="ll_voice" type="id"/>
+    <item name="account_iv1" type="id"/>
+    <item name="account_iv2" type="id"/>
+    <item name="account_iv3" type="id"/>
+    <item name="account_iv4" type="id"/>
+    <item name="account_iv5" type="id"/>
+    <item name="tv_iscomplete_show" type="id"/>
+    <item name="ll_down" type="id"/>
+    <item name="down" type="id"/>
+    <item name="down_rl" type="id"/>
+    <item name="tabs" type="id"/>
+    <item name="main_tab" type="id"/>
+    <item name="tabcontent" type="id"/>
+    <item name="iv" type="id"/>
+    <item name="learning_bottom" type="id"/>
+    <item name="confirm_ll_is_show_bottom" type="id"/>
+    <item name="login_right_arrow1" type="id"/>
+    <item name="login_right_arrow2" type="id"/>
+    <item name="iscomplete_is_send_flower" type="id"/>
+    <item name="articel_bottom_ll" type="id"/>
+    <item name="words_bottom_ll" type="id"/>
+    <item name="judge_ll" type="id" />
+    <item name="judge_tv" type="id" />
+
+</resources>

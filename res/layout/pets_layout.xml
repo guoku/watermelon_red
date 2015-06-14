@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/id_tv_loadingmsg"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ff7d50"
+        android:gravity="center"
+        android:text="宠物领取"
+        android:textColor="#ffffff"
+        android:textSize="18.0sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="14dp"
+        android:text="欢迎你："
+        android:textColor="#555555"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/id_tv_loadingmsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="12dp"
+        android:text="		小小的勇士，在旅途的起点领取你的小伙伴吧~"
+        android:textColor="#555555"
+        android:textSize="16sp" />
+
+    <com.ekwing.students.customview.HorizontalListView
+        android:id="@+id/pet_hl"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_gravity="center" />
+
+    <!-- <LinearLayout -->
+    <!-- android:layout_width="match_parent" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_marginBottom="20dp" -->
+    <!-- android:layout_marginLeft="20dp" -->
+    <!-- android:layout_marginRight="20dp" -->
+    <!-- android:layout_marginTop="12dp" -->
+    <!-- android:orientation="horizontal" > -->
+
+
+    <!-- <LinearLayout -->
+    <!-- android:layout_width="0dp" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_gravity="center" -->
+    <!-- android:layout_weight="1" -->
+    <!-- android:orientation="vertical" > -->
+
+
+    <!-- <com.ekwing.students.utils.GifMovieView -->
+    <!-- android:id="@+id/pet1" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_gravity="center_horizontal" /> -->
+
+
+    <!-- <TextView -->
+    <!-- android:id="@+id/get_btn1" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_gravity="center_horizontal" -->
+    <!-- android:layout_marginTop="12dp" -->
+    <!-- android:background="@drawable/start_selector" -->
+    <!-- android:paddingBottom="8dp" -->
+    <!-- android:paddingLeft="30dp" -->
+    <!-- android:paddingRight="30dp" -->
+    <!-- android:paddingTop="8dp" -->
+    <!-- android:text="领取" -->
+    <!-- android:textColor="#ffffff" -->
+    <!-- android:textSize="18sp" /> -->
+    <!-- </LinearLayout> -->
+
+
+    <!-- <LinearLayout -->
+    <!-- android:layout_width="0dp" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_gravity="center_horizontal" -->
+    <!-- android:layout_weight="1" -->
+    <!-- android:orientation="vertical" > -->
+
+
+    <!-- <com.ekwing.students.utils.GifMovieView -->
+    <!-- android:id="@+id/pet2" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_gravity="center_horizontal" /> -->
+
+
+    <!-- <TextView -->
+    <!-- android:id="@+id/get_btn2" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_gravity="center_horizontal" -->
+    <!-- android:layout_marginTop="12dp" -->
+    <!-- android:background="@drawable/start_selector" -->
+    <!-- android:paddingBottom="8dp" -->
+    <!-- android:paddingLeft="30dp" -->
+    <!-- android:paddingRight="30dp" -->
+    <!-- android:paddingTop="8dp" -->
+    <!-- android:text="领取" -->
+    <!-- android:textColor="#ffffff" -->
+    <!-- android:textSize="18sp" /> -->
+    <!-- </LinearLayout> -->
+    <!-- </LinearLayout> -->
+
+</LinearLayout>

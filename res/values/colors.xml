@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="body_text_1">#ff000000</color>
+    <color name="body_text_2">#99000000</color>
+    <color name="body_text_disabled">#66000000</color>
+    <color name="body_text_1_inverse">#ffffffff</color>
+    <color name="body_text_2_inverse">#99ffffff</color>
+    <color name="accent_1">#ff29549f</color>
+    <color name="g_224">#e0e0e0e0</color>
+    <color name="g_main">#ff414243</color>
+    <color name="g_other">#ff9d9e9f</color>
+    <color name="g_blue">#ff427ec0</color>
+    <color name="g_w">#ffffffff</color>
+    <color name="g_def">#fff0f0f0</color>
+    <color name="g_g">#fffafafa</color>
+    <color name="g_red">#ffff1f77</color>
+    <color name="hyperlink">#ffff549f</color>
+    <color name="background_1">#ffffffff</color>
+    <color name="whats_on_separator">#4d000000</color>
+    <color name="all_track_color">#ff222222</color>
+    <color name="block_column_1">#ff0fabff</color>
+    <color name="block_column_2">#ffdf1831</color>
+    <color name="block_column_3">#ff009939</color>
+    <color name="circle_grey">#b2b2b2</color>
+    <color name="user_press">#f0efef</color>
+    <color name="item_grey_bg">#f5f5f5</color>
+    <color name="item_con_press">#f5f5f5</color>
+    <color name="bottom_color_press">#ff7b50</color>
+    <color name="bottom_color">#aaaaaa</color>
+    <color name="title_bg">#0a94ff</color>
+    <color name="normal_bg">#ffffff</color>
+    <color name="press_bg">#aaaaaaaa</color>
+    <color name="hw_isdoing">#ff0000</color>
+    <color name="hw_isdo">#00ffff</color>
+    <color name="dialog_color">#ffffffff</color>
+    <color name="no_color">#00ffffff</color>
+    <color name="item_normal">#ffff</color>
+    <color name="white">#ffffff</color>
+    <color name="send_bg_normal">#ff8f6d</color>
+    <color name="send_bg_press">#ff7b50</color>
+    <color name="article_item_bg">#f0efef</color>
+    <color name="btn_experences_normal">#fd7f58</color>
+    <color name="btn_experences_press">#fb6b3f</color>
+    <color name="next_color_normal">#cbcbcb</color>
+    <color name="next_color_press">#dcdcdc</color>
+    <color name="btn_finish_normal">#ff906d</color>
+    <color name="btn_finish_press">#ff7b50</color>
+    <color name="resend_conde">#cbcbcb</color>
+    <color name="down_color_normal">#ff906d</color>
+    <color name="down_color_press">#ff7b50</color>
+    <color name="btn_login_bg">#ff7b50</color>
+    <color name="btn_login_bg_press">#ff8f6d</color>
+    <color name="exercise_confirm_normal">#ff906d</color>
+    <color name="exercise_confirm_normal1">#ff7b50</color>
+    <color name="exercise_confirm_press">#fe7247</color>
+    <color name="sliding_menu_item_down">#ff39393b</color>
+    <color name="sliding_menu_item_release">#00000000</color>
+    <color name="sliding_menu_background">#ff2c2c2e</color>
+    <color name="sliding_menu_body_background">#fff5f5f5</color>
+    <color name="base_blue">#3ebde0</color>
+    <color name="current_progress">#5bca51</color>
+    <color name="base_write_more">#f6f6f6</color>
+    <color name="segment_bg_press">#ffff</color>
+    <color name="dialog_bg">#0000</color>
+    <color name="dialog1_bg">#40000000</color>
+    <color name="main_btn_select">#903ebde0</color>
+    <color name="main_btn_normal">#ffff</color>
+    <color name="price_color">#f99c1c</color>
+    <color name="pay_btn_color">#ff7300</color>
+    <color name="item_press">#f4f4f4</color>
+    <color name="green_read">#1c9b12</color>
+    <color name="red_read">#f74812</color>
+    <color name="wecome_in1_bg">#86caff</color>
+    <color name="wecome_in2_bg">#69e092</color>
+    <color name="wecome_in3_bg">#ffc2af</color>
+    <color name="start_normal">#ff8f6d</color>
+    <color name="start_press">#ff7b50</color>
+    <color name="blue_normal">#91cfe4</color>
+    <color name="blue_press">#6dc5e3</color>
+    <color name="fast_login_textcolor_press">#fb763c</color>
+    <color name="fast_login_textcolor_normal">#a77c69</color>
+
+    <drawable name="darkgray">#808080</drawable>
+    <drawable name="black">#1A1A1A</drawable>
+    <drawable name="white">#FFFFFF</drawable>
+    <drawable name="blue">#0000FF</drawable>
+
+    <color name="g_line">#ffebebeb</color>
+    <color name="g_ttz">#f0f0f0</color>
+    <color name="g_tfz">#fafafa</color>
+    <color name="event_background">#ffc3d9ff</color>
+    <color name="panel_text_foreground">#ffffffff</color>
+    <color name="daynames_background">#FFDDDDDD</color>
+    <color name="daynames_text_color">#ff000000</color>
+    <color name="sunday_text_color">#ff446688</color>
+    <color name="saturday_text_color">#ff446688</color>
+    <!-- <color name="calendar_event_selected_text_color">#ff000000</color> -->
+    <color name="calendar_event_selected_text_color">#ffffffff</color>
+    <!-- <color name="calendar_event_text_color">#ffffffff</color> -->
+    <color name="calendar_event_text_color">#ff2077ff</color>
+    <color name="calendar_owner_text_color">#ffbebebe</color>
+    <color name="calendar_all_day_background">#ffDDDDDD</color>
+    <color name="week_saturday">#ff446688</color>
+    <color name="week_sunday">#ff446688</color>
+    <color name="calendar_hour_label">#ff000000</color>
+    <color name="calendar_ampm_label">#ff000000</color>
+    <color name="calendar_hour_background">#ffDDDDDD</color>
+    <color name="calendar_hour_selected">#ffB0B0B0</color>
+    <color name="calendar_date_banner_background">#FFDDDDDD</color>
+    <color name="calendar_date_selected">#ffB0B0B0</color>
+    <color name="calendar_date_banner_text_color">#ff000000</color>
+    <color name="calendar_grid_area_background">#ffffffff</color>
+    <color name="calendar_grid_area_selected">#ffffffcc</color>
+    <color name="calendar_grid_line_horizontal_color">#ffdddddd</color>
+    <color name="calendar_grid_line_vertical_color">#ff808080</color>
+    <color name="calendar_grid_line_highlight_color">#ff707070</color>
+    <!-- <color name="selection">#ffffaa00</color> -->
+    <!-- <color name="pressed">#fffab400</color> -->
+    <color name="selection">#ee357eff</color>
+    <color name="pressed">#ee357eff</color>
+    <!-- #ff404040 -->
+    <color name="month_day_number">#ffbebebe</color>
+    <!-- #ff404040 -->
+    <color name="month_saturday">#ffbebebe</color>
+    <!-- #ff404040 -->
+    <color name="month_sunday">#ffbebebe</color>
+    <color name="month_today_number">#ffffffff</color>
+    <!-- #ff595959 -->
+    <color name="month_other_month">#e2e2e2</color>
+    <color name="month_other_month_day_number">#ffa0a0a0</color>
+    <color name="month_other_month_banner">#80595959</color>
+    <color name="month_week_banner">#FFDDDDDD</color>
+    <color name="month_busybits">#FF6090F0</color>
+    <!-- #FFDDDDDD -->
+    <color name="month_bgcolor">#FFeeeeee</color>
+    <color name="event_center">#ff6bd697</color>
+    <color name="current_time_marker">#aaff0033</color>
+    <color name="current_time_marker_border">#aaffffff</color>
+    <color name="agenda_day_bar_color">#c8c8c8</color>
+
+    <drawable name="agenda_item_declined">#88ffffff</drawable>
+
+    <!-- 以下为增加颜色 -->
+    <color name="today_text_color">#ff9d6e41</color>
+    <color name="grouplist_header_bg">#ffe8e9eb</color>
+    <color name="event_text_color">#ff00f9eb</color>
+    <color name="event_select_background">#ffcfcfcf</color>
+    <color name="calendar_text_main_color">#ffbbbbff</color>
+    <color name="main_blue">#ff518ef3</color>
+    <color name="main_gray">#FFeeeeee</color>
+    <color name="day_view_gray">#FF8c8c8c</color>
+    <color name="event_rect_color">#eef1f6fa</color>
+    <color name="title_text_color">#ffff00</color>
+    <color name="button_font_color">#4d4d4d</color>
+    <color name="press">#f8f8f8</color>
+    <color name="gray">#d9d8d8</color>
+    <color name="text_font_color">#4d4d4d</color>
+
+    <drawable name="color_white">#FFFFFF</drawable>
+    <drawable name="color_null">#00000000</drawable>
+
+    <color name="blue">#0000ff</color>
+    <color name="diliver_gray">#0a8c8c8c</color>
+    <color name="remind_item_bg">#e7e8ed</color>
+    <color name="month_select_month_day_number">#000000</color>
+    <color name="calendar_week_bg">#f1f1f1</color>
+    <color name="calendar_today_bg">#ffeddf</color>
+    <color name="calendar_select_bg">#ffeddf</color>
+    <color name="calendar_money_bg">#ff7302</color>
+    <color name="calendar_money_noin_bg">#ffdead</color>
+    <color name="holidaycolor">#87c80a</color>
+
+</resources>

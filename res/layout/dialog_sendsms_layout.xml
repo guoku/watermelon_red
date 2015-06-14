@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+     >
+ <RelativeLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:background="@drawable/dialog_bg"
+    android:layout_marginLeft="20dip"
+    android:layout_marginRight="20dip"
+    android:orientation="vertical" 
+          android:focusable="true"
+          android:focusableInTouchMode="true"
+    >
+
+    <TextView
+        android:id="@+id/title"
+      android:padding="16dp"
+        android:textColor="#666666"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:text="订单提示"
+        android:minHeight="120dp"
+        android:layout_height="wrap_content" />
+    <EditText 
+        android:id="@+id/edit"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="14sp"
+        android:hint="验证码"
+        android:layout_below="@id/title"
+        android:background="@drawable/product_et_bg"
+        android:padding="10dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="10dp"
+        />
+    <View 
+         android:id="@+id/hline"
+        android:layout_height="1px"
+        android:layout_width="match_parent"
+        android:background="#919191"
+        android:layout_below="@id/edit"
+        android:layout_marginTop="10dp"
+        />
+    <LinearLayout
+        android:id="@+id/dialog_btn_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/hline"
+         >
+
+        <Button
+            android:id="@+id/cancle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:textColor="#999999"
+            android:textSize="16sp"
+            android:background="@drawable/dialog_chance_bg"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:onClick="doClick"
+            android:text="取消" />
+       <View 
+          android:id="@+id/vline"
+        android:layout_height="match_parent"
+        android:layout_width="1px"
+        android:background="#919191"
+        />
+        
+        <Button
+            android:id="@+id/ok"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/dialog_ok_bg"
+            android:textColor="@color/base_blue"
+            android:textSize="16sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:minWidth="120dip"
+            android:onClick="doClick"
+            android:layout_weight="1"
+          
+            android:text="查看" />
+    </LinearLayout>
+</RelativeLayout>
+</LinearLayout>

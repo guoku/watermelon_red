@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/user_pet_level_name_tv"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:background="#ff7d50"
+        android:gravity="center"
+        android:text="宠物"
+        android:textColor="#ffffff"
+        android:textSize="16.0sp" />
+
+    <TextView
+        android:id="@+id/user_pet_level_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="30dp"
+        android:text="距离下一等级：0/0"
+        android:textSize="14.0sp" />
+
+    <ProgressBar
+        android:id="@+id/user_pet_level_pb"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="12dp"
+        android:progress="25"
+        android:progressDrawable="@drawable/dialog_progress" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+       android:layout_marginTop="24dp" 
+       android:layout_marginBottom="24dp"
+        android:orientation="vertical" >
+
+        <com.ekwing.students.customview.GifMovieView
+            android:id="@+id/user_pet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="12dp"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/user_pet_close_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/pet_btn_selector"
+        android:paddingBottom="8dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="8dp"
+        android:text="关闭"
+        android:textColor="#ff7b50"
+        android:textSize="20sp" />
+
+</LinearLayout>

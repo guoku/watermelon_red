@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical" >
+
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/title" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/g_line" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/tab_iv_gv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/g_gv" />
+
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/g_line" />
+
+        <ImageView
+            android:id="@+id/tab_iv_lv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/g_lv_p" />
+
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/g_line" />
+
+        <TextView
+            android:id="@+id/tab_tv_count"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/g_other" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/g_line" />
+
+    <GridView
+        android:id="@+id/tab_gv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff8f8f8"
+        android:cacheColorHint="#00000000"
+        android:gravity="center"
+        android:horizontalSpacing="2px"
+        android:listSelector="#00000000"
+        android:numColumns="3"
+        android:padding="4px"
+        android:paddingTop="12dp"
+        android:scrollbars="none"
+        android:verticalSpacing="2px" >
+    </GridView>
+
+    <ListView
+        android:id="@+id/tab_lv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:divider="#000000"
+        android:dividerHeight="0px"
+        android:numColumns="3"
+        android:paddingTop="12dp"
+        android:visibility="gone" >
+    </ListView>
+
+</LinearLayout>

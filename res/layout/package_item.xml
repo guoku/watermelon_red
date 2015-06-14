@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" 
+    android:background="#ffff"
+    >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp" 
+        >
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="12dp"
+            android:background="#d4d4d4" 
+            android:layout_marginBottom="4dp"
+            />
+
+        <TextView
+            android:id="@+id/orderitem_day_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/day_time_bg"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="D1"
+            android:textColor="#ffff"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/orderitem_month_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="12/3"
+            android:textColor="#666666"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="1px"
+            android:layout_height="fill_parent"
+            android:background="#d4d4d4"
+             android:layout_marginTop="4dp"
+             />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:orientation="vertical" >
+
+
+        <LinearLayout
+                android:id="@+id/ll_speace"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+            </LinearLayout>
+
+        <View
+            android:id="@+id/line_tag"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="8dp"
+            android:background="#cccccc" />
+    </LinearLayout>
+
+</LinearLayout>

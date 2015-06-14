@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:padding="8dp" >
+
+        <TextView
+            android:id="@+id/jingxuan_title_item_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="#f0f0f0"
+            android:padding="20dp"
+            android:singleLine="true"
+            android:text="所有"
+            android:textColor="@color/g_other" />
+
+        <TextView
+            android:id="@+id/jingxuan_title_item_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="#f0f0f0"
+            android:padding="20dp"
+            android:singleLine="true"
+            android:text="女装"
+            android:textColor="@color/g_other" />
+
+        <TextView
+            android:id="@+id/jingxuan_title_item_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="#f0f0f0"
+            android:padding="20dp"
+            android:singleLine="true"
+            android:text="男装"
+            android:textColor="@color/g_other" />
+
+        <TextView
+            android:id="@+id/jingxuan_title_item_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#f0f0f0"
+            android:padding="20dp"
+            android:singleLine="true"
+            android:text="厨具"
+            android:textColor="@color/g_other" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:padding="8dp" >
+
+        <TextView
+            android:id="@+id/jingxuan_title_item_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="#f0f0f0"
+            android:padding="20dp"
+            android:singleLine="true"
+            android:text="佩饰"
+            android:textColor="@color/g_other" />
+
+        <TextView
+            android:id="@+id/jingxuan_title_item_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="#f0f0f0"
+            android:padding="20dp"
+            android:singleLine="true"
+            android:text="科技"
+            android:textColor="@color/g_other" />
+
+        <TextView
+            android:id="@+id/jingxuan_title_item_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="#f0f0f0"
+            android:padding="20dp"
+            android:singleLine="true"
+            android:text="户外"
+            android:textColor="@color/g_other" />
+
+        <TextView
+            android:id="@+id/jingxuan_title_item_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#f0f0f0"
+            android:padding="20dp"
+            android:singleLine="true"
+            android:text="文化"
+            android:textColor="@color/g_other" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:padding="8dp" >
+
+        <TextView
+            android:id="@+id/jingxuan_title_item_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="#f0f0f0"
+            android:padding="20dp"
+            android:singleLine="true"
+            android:text="Kids"
+            android:textColor="@color/g_other" />
+
+        <TextView
+            android:id="@+id/jingxuan_title_item_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="#f0f0f0"
+            android:padding="20dp"
+            android:singleLine="true"
+            android:text="Food"
+            android:textColor="@color/g_other" />
+
+        <TextView
+            android:id="@+id/jingxuan_title_item_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="#f0f0f0"
+            android:padding="20dp"
+            android:singleLine="true"
+            android:text="Toy"
+            android:textColor="@color/g_other" />
+
+        <TextView
+            android:id="@+id/jingxuan_title_item_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#f0f0f0"
+            android:padding="20dp"
+            android:singleLine="true"
+            android:text="文化"
+            android:textColor="@color/g_other" />
+    </LinearLayout>
+
+</LinearLayout>

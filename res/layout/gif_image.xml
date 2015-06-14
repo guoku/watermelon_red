@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/gif_tv_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="6.0dip"
+        android:shadowColor="#ff666666"
+        android:shadowDy="3.0"
+        android:visibility="gone"
+        android:shadowRadius="3.0"
+        android:textColor="#ffffffff"
+        android:textSize="16.0sp" />
+
+    <com.ekwing.students.customview.GifMovieView
+        android:id="@+id/confirm_gif"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:layout_gravity="center" />
+
+</LinearLayout>
