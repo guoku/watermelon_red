@@ -2,13 +2,14 @@ package com.ekwing.students.utils;
 
 import java.util.ArrayList;
 
-import com.ekwing.students.config.Logger;
-
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
+
+import com.ekwing.students.config.Logger;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 /**
  * 公共适配器，只需重写抽象方法即可
@@ -40,6 +41,18 @@ public abstract class ArrayListAdapter<T> extends BaseAdapter {
 		this.mList.clear();
 		this.mList = l;
 		notifyDataSetChanged();
+	}
+
+	public void upData(ListView listView, int position) {
+		View view = listView.getChildAt(position
+				- listView.getFirstVisiblePosition());
+		getView(position, view, listView);
+	}
+
+	public void upData(PullToRefreshListView listView, int position) {
+		View view = listView.getChildAt(position
+				- listView.getFirstVisiblePosition());
+		getView(position, view, listView);
 	}
 
 	/**
@@ -75,6 +88,10 @@ public abstract class ArrayListAdapter<T> extends BaseAdapter {
 	 */
 	public long getItemId(int position) {
 		return position;
+	}
+
+	public int getItemId(T bean) {
+		return mList.indexOf(bean);
 	}
 
 	/**

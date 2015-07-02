@@ -67,7 +67,7 @@ public abstract class NetWorkActivity extends BaseActivity {
 		progressDialog = new CustomProgressDialog(NetWorkActivity.this);
 		progressDialog.setMessage("载入中...");
 		httpUtils = HttputilHelp.getHttpUtils();
-		httpUtils.configUserAgent(EkwingApplication.userAgent);
+		// httpUtils.configUserAgent(EkwingApplication.userAgent);
 		vector = new Vector<Integer>();
 		options = new DisplayImageOptions.Builder()
 				.imageScaleType(ImageScaleType.EXACTLY)
@@ -461,202 +461,19 @@ public abstract class NetWorkActivity extends BaseActivity {
 
 		@Override
 		public void onFailure(HttpException ex, String msg) {
-			Logger.e("请求", "---------------->url:>:" + this.getRequestUrl());
-			Logger.e("请求", "---------------->onFailure" + ex.getMessage());
-			Logger.e("请求", "---------------->onFailure" + ex.getExceptionCode());
-			Logger.e("请求", "---------------->msg" + msg);
-			Logger.e("请求", "---------------->msg" + ex.toString());
-			Logger.e("请求", "---------------->where" + where);
+			Logger.e(TAG, "onFailure--->" + msg);
 			dismissDialog();
-			String result = context.getResources().getString(
-					R.string.result_failure);
-			Logger.e("请求", "---------------->result" + result);
-			NetWorkActivity.this.onFailure(result, where);
+			NetWorkActivity.this.onFailure(msg, where);
 		}
 
 		@Override
 		public void onSuccess(ResponseInfo<String> arg0) {
 			dismissDialog();
 			String result = arg0.result;
-			Logger.e("NetWorkActivity", "返回:url--->" + this.getRequestUrl()
-					+ "------------>" + result);
 			NetWorkActivity.this.onSuccess(result, where);
 		}
 
 	}
-
-	// /**
-	// * 上传未成功的音频
-	// */
-	// private void uploadVoice() {
-	// if (isuploading == false) {
-	// RequestParams params = new RequestParams();
-	// dbutils = DbUtils.create(getApplicationContext(), EkwingApplication
-	// .getInstance().getUid());
-	// lists = new ArrayList<UploadIdBean>();
-	// try {
-	// lists = dbutils.findAll(UploadIdBean.class);
-	// } catch (DbException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// lists = new ArrayList<UploadIdBean>();
-	// }
-	//
-	// if (lists != null && lists.size() > 0) {
-	// Logger.v(TAG,
-	// "upload-------------------------lists.toString()---------------------------->"
-	// + lists.toString());
-	// if (SharePrenceUtil.isLogin(mContext)) {
-	// params.addBodyParameter(lists.get(0).getSid(), new File(
-	// lists.get(0).getPath()));
-	// params.addBodyParameter("type", lists.get(0).getType());
-	// params.addBodyParameter("cid", lists.get(0).getCid());
-	// params.addBodyParameter("driverCode",
-	// Utils.getVersionName(getApplicationContext()));
-	// params.addBodyParameter("token", SharePrenceUtil
-	// .getLoginInfo(getApplicationContext()).getToken());
-	// params.addBodyParameter("author_id", SharePrenceUtil
-	// .getLoginInfo(getApplicationContext()).getUid());
-	// if (http == null) {
-	// Logger.d(TAG, "null");
-	// return;
-	// }
-	// Logger.d(TAG, http.toString());
-	// http.send(HttpRequest.HttpMethod.POST,
-	// Constant.EKWING_UPGRADES, params,
-	// new RequestCallBack<String>() {
-	//
-	// @Override
-	// public void onStart() {
-	// isuploading = true;
-	// Logger.e(TAG,
-	// "onStart--------------------->");
-	// }
-	//
-	// @Override
-	// public void onLoading(long total, long current,
-	// boolean isUploading) {
-	// Logger.e(TAG,
-	// "onLoading--------------------->"
-	// + total + ":" + current
-	// + ":" + isUploading);
-	// }
-	//
-	// @Override
-	// public void onSuccess(
-	// ResponseInfo<String> responseInfo) {
-	// Logger.e(TAG,
-	// "onSuccess--------------------->"
-	// + responseInfo.result);
-	// if (http == null) {
-	// return;
-	// }
-	// try {
-	// JSONObject root = new JSONObject(
-	// responseInfo.result);
-	// if (root.has("status")
-	// && "0".equals(root
-	// .getString("status"))) {
-	// JSONObject data = root
-	// .getJSONObject("data");
-	// if (data.has("success")) {
-	// String sid = data
-	// .getString("success");
-	// dbutils.delete(
-	// UploadIdBean.class,
-	// WhereBuilder.b("sid",
-	// "==", sid));
-	// }
-	// uploadVoice();
-	// // dbutils.delete(UploadIdBean.class,
-	// // WhereBuilder.b("_id", "==",
-	// // lists.get(0).get_id()));
-	// }
-	//
-	// } catch (Exception e) {
-	// Logger.e(TAG,
-	// "Exception--->上传音频返回数据有误！！！！！！！！！！！！！！！！！！！！！！！！！！！！"
-	// + e.toString());
-	// e.printStackTrace();
-	// MobclickAgent.onEvent(
-	// getApplicationContext(),
-	// "ykxs228");
-	// }
-	//
-	// isuploading = false;
-	// }
-	//
-	// @Override
-	// public void onFailure(HttpException error,
-	// String msg) {
-	// Logger.e(TAG,
-	// "onSuccess--------------------->"
-	// + msg);
-	// isuploading = false;
-	// if (http == null) {
-	// return;
-	// }
-	// }
-	// });
-	//
-	// }
-	// }
-	// }
-	//
-	// }
-
-	// /**
-	// * 显示加载对话框，用于框架内部调用
-	// */
-	// private void showLoadDialog() {
-	// // 保证请求多次 只显示一个加载对话框
-	// if (vector.size() == 1) {
-	// progressDialog.show();
-	// }
-	// }
-
-	// public boolean GetErrorIntent(String result, Context context) {
-	//
-	// boolean errIntent = false;
-	// try {
-	// JSONObject root = new JSONObject(result);
-	// if (root.has("status") && "1".equals(root.getString("status"))) {
-	// JSONObject data = root.getJSONObject("data");
-	// if (data.has("intent")) {
-	// LightHttpUtils.showFailureResult(context, data.toString());
-	// switch (data.getInt("intent")) {
-	// case Constant.MASTLOGIN:
-	// errIntent = true;
-	// // Log.i("MUST", "must");
-	// UserInfoBean bean1 = new UserInfoBean();
-	// UserLoginBean bean = new UserLoginBean();
-	// SharePrenceUtil.setLoginInfo(context, bean);
-	// SharePrenceUtil.setUserInfoBean1(context, bean1);
-	// SharePrenceUtil.setLogin(context, false);
-	// SharePrenceUtil.setTab(getApplicationContext(),
-	// "homework");
-	// DataCleanManager
-	// .cleanDatabases(getApplicationContext());
-	// EkwingApplication.getInstance().finishAll();
-	// Intent intent = new Intent(context,
-	// LoginPagerActivity.class);
-	// intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
-	// context.startActivity(intent);
-	// break;
-	//
-	// default:
-	// break;
-	// }
-	// }
-	// }
-	//
-	// } catch (JSONException e) {
-	// e.printStackTrace();
-	// return errIntent;
-	// }
-	// return errIntent;
-	//
-	// }
 
 	/**
 	 * 隐藏加载对话框

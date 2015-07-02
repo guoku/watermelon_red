@@ -6,7 +6,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,6 +20,7 @@ import com.alibaba.fastjson.JSON;
 import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.base.NetWorkActivity;
 import com.ekwing.students.config.Constant;
+import com.ekwing.students.utils.SharePrenceUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.adapter.EntityAdapter;
 import com.guoku.guokuv4.adapter.GVAdapter;
@@ -35,6 +35,8 @@ public class TabAct extends NetWorkActivity implements OnClickListener {
 	private static final int CATABLIST = 10;
 	private static final int STAT = 11;
 	private static final int PROINFO = 12;
+	private static final int LIST = 1;
+	private static final int GRID = 2;
 
 	@ViewInject(R.id.tab_lv)
 	private ListView tab_lv;
@@ -57,6 +59,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener {
 	private String cid;
 	private ArrayList<EntityBean> list;
 	private String isLike;
+	private int curTab = LIST;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +158,12 @@ public class TabAct extends NetWorkActivity implements OnClickListener {
 		// gvAdapter.setList(bean.getList());
 		// lvAdapter.setList(bean.getList());
 
+		if (SharePrenceUtil.getTAG(mContext) == LIST) {
+			LV(null);
+		} else {
+			GV(null);
+		}
+
 	}
 
 	@Override
@@ -187,6 +196,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener {
 
 	@OnClick(R.id.tab_iv_gv)
 	public void GV(View v) {
+		curTab = GRID;
 		tab_iv_gv.setImageResource(R.drawable.g_gv);
 		tab_iv_lv.setImageResource(R.drawable.g_lv_p);
 		tab_gv.setVisibility(View.VISIBLE);
@@ -196,6 +206,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener {
 
 	@OnClick(R.id.tab_iv_lv)
 	public void LV(View v) {
+		curTab = LIST;
 		tab_iv_gv.setImageResource(R.drawable.g_gv_p);
 		tab_iv_lv.setImageResource(R.drawable.g_lv);
 		tab_gv.setVisibility(View.GONE);
@@ -205,6 +216,14 @@ public class TabAct extends NetWorkActivity implements OnClickListener {
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		SharePrenceUtil.setTAG(mContext, curTab);
 
 	}
 

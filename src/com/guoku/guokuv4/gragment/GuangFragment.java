@@ -213,6 +213,7 @@ public class GuangFragment extends BaseFrament {
 										WebAct.class);
 								intent.putExtra("data", url);
 								intent.putExtra("name", "  ");
+								intent.putExtra("type", "banner");
 								startActivity(intent);
 							} else if (url.contains("entity")) {
 								sendConnection(Constant.PROINFO + last + "/",

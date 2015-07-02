@@ -1,12 +1,12 @@
 package com.guoku.guokuv4.entity.test;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TAB1Bean {
+public class TAB1Bean implements Serializable {
 	private String status, category_count, group_id, title;
 	private ArrayList<Tab2Bean> list1;
 	private ArrayList<Tab2Bean> list2;
-	
 
 	public ArrayList<Tab2Bean> getList1() {
 		return list1;
@@ -34,6 +34,10 @@ public class TAB1Bean {
 
 	public String getCategory_count() {
 		return category_count;
+	}
+
+	public int getCount() {
+		return Integer.parseInt(category_count);
 	}
 
 	public void setCategory_count(String category_count) {

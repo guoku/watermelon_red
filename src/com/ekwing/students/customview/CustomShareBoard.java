@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,6 +43,8 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 	private Activity mActivity;
 	private String entityID;
 	private PInfoBean pib;
+	private View rootView;
+	private String url;
 
 	public CustomShareBoard(Activity activity) {
 		super(activity);
@@ -94,6 +97,29 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		sinaShareContent.setTargetUrl("http://www.guoku.com/detail/"
 				+ bean.getEntity().getEntity_hash() + "/");
 		mController.setShareMedia(sinaShareContent);
+	}
+
+	public void setShareContext(String title, String url) {
+		configPlatforms();
+		this.url = url;
+
+		WeiXinShareContent weixinContent = new WeiXinShareContent();
+		weixinContent.setTargetUrl(url);
+		weixinContent.setTitle(title);
+		mController.setShareMedia(weixinContent);
+
+		CircleShareContent circleMedia = new CircleShareContent();
+		circleMedia.setTitle(title);
+		circleMedia.setTargetUrl(url);
+		mController.setShareMedia(circleMedia);
+
+		SinaShareContent sinaShareContent = new SinaShareContent();
+		sinaShareContent.setTitle(title);
+		sinaShareContent.setTargetUrl(url);
+		mController.setShareMedia(sinaShareContent);
+
+		rootView.findViewById(R.id.share_jubao).setVisibility(View.GONE);
+		rootView.findViewById(R.id.share_llq).setVisibility(View.VISIBLE);
 	}
 
 	public void setShareContext(String context, UMImage url, String tag,
@@ -157,9 +183,10 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 
 	@SuppressWarnings("deprecation")
 	private void initView(Context context) {
-		View rootView = LayoutInflater.from(context).inflate(
-				R.layout.custom_board, null);
+		rootView = LayoutInflater.from(context).inflate(R.layout.custom_board,
+				null);
 		rootView.findViewById(R.id.share_jubao).setOnClickListener(this);
+		rootView.findViewById(R.id.share_llq).setOnClickListener(this);
 		rootView.findViewById(R.id.share_sina).setOnClickListener(this);
 		rootView.findViewById(R.id.share_wx_1).setOnClickListener(this);
 		rootView.findViewById(R.id.share_wx_2).setOnClickListener(this);
@@ -168,6 +195,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		setHeight(LayoutParams.WRAP_CONTENT);
 		setFocusable(true);
 		setBackgroundDrawable(new BitmapDrawable());
+
 		setTouchable(true);
 	}
 
@@ -205,6 +233,11 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 
 			AVAnalytics.onEvent(mActivity, "share entity to wechat", pib
 					.getEntity().getTitle());
+			break;
+		case R.id.share_llq:
+			Intent intent = new Intent(Intent.ACTION_VIEW);
+			intent.setData(Uri.parse(url));
+			mActivity.startActivity(intent);
 			break;
 		default:
 			break;

@@ -249,63 +249,6 @@ public class MainActivity2 extends NetWorkActivity {
 		}
 	}
 
-	// @Override
-	// public void onClick(View v) {
-	// switch (v.getId()) {
-	// case R.id.ll_destination:
-	// // iv_destination.setBackgroundResource(R.drawable.tabbar_home_press);
-	// // iv_guang.setBackgroundResource(R.drawable.tabbar_guang_normal);
-	// // iv_order.setBackgroundResource(R.drawable.tabbar_order_normal);
-	// // iv_personal
-	// // .setBackgroundResource(R.drawable.tabbar_personal_normal);
-	// if (destinationFragment == null) {
-	// destinationFragment = new DestinationFragment();
-	// }
-	// switchContent(destinationFragment);
-	// MobclickAgent.onEvent(this, "event_1");
-	// break;
-	// case R.id.ll_guang:
-	// // iv_destination.setBackgroundResource(R.drawable.tabbar_home_normal);
-	// // iv_guang.setBackgroundResource(R.drawable.tabbar_guang_press);
-	// // iv_order.setBackgroundResource(R.drawable.tabbar_order_normal);
-	// // iv_personal
-	// // .setBackgroundResource(R.drawable.tabbar_personal_normal);
-	// if (qunaerFragment == null) {
-	// qunaerFragment = new GuangFragment();
-	// // DataManager.guangFragment = qunaerFragment;
-	// }
-	// switchContent(qunaerFragment);
-	// MobclickAgent.onEvent(this, "event_2");
-	// break;
-	// case R.id.ll_order:
-	// // iv_destination.setBackgroundResource(R.drawable.tabbar_home_normal);
-	// // iv_guang.setBackgroundResource(R.drawable.tabbar_guang_normal);
-	// // iv_order.setBackgroundResource(R.drawable.tabbar_order_press);
-	// // iv_personal
-	// // .setBackgroundResource(R.drawable.tabbar_personal_normal);
-	// if (orderFragment == null) {
-	// orderFragment = new OrderFragment();
-	// }
-	// switchContent(orderFragment);
-	// MobclickAgent.onEvent(this, "event_4");
-	// break;
-	// case R.id.ll_personal:
-	// // iv_destination.setBackgroundResource(R.drawable.tabbar_home_normal);
-	// // iv_guang.setBackgroundResource(R.drawable.tabbar_guang_normal);
-	// // iv_order.setBackgroundResource(R.drawable.tabbar_order_normal);
-	// // iv_personal.setBackgroundResource(R.drawable.tabbar_personal_press);
-	// if (personalFragment == null) {
-	// personalFragment = new PersonalFragment();
-	// }
-	// switchContent(personalFragment);
-	// MobclickAgent.onEvent(this, "event_5");
-	// break;
-	//
-	// default:
-	// break;
-	// }
-	// }
-
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
@@ -329,22 +272,6 @@ public class MainActivity2 extends NetWorkActivity {
 			mContent = to;
 		}
 	}
-
-	// @Override
-	// public boolean dispatchKeyEvent(KeyEvent event) {
-	// if (event.getAction() == KeyEvent.ACTION_DOWN
-	// && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-	// // if (DataManager.ifInGuang == false) {
-	// // ServiceUtils.showExitDialog(this);
-	// // } else {
-	// // // 判断是否进入逛一逛界面，进入的话返回。
-	// // getSupportFragmentManager().popBackStack();
-	// // DataManager.ifInGuang = false;
-	// // }
-	// return true;
-	// }
-	// return super.dispatchKeyEvent(event);
-	// }
 
 	@Override
 	protected void onSuccess(String result, int where) {

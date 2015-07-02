@@ -100,6 +100,7 @@ public class Constant {
 	public final static String SP_HAS_LOGIN = "HAS_LOGIN";
 	public static final String DATA_BASE_NAME = "ekwing_student.db"; // 数据库的名字
 	public static final String EKWING_IS_FIRST_ARTICLE = "ekwing_isfirst";
+	public static final String TAG = "TAG";
 	public static final String EKWING_ARTICLE = "isfirst_article";
 	public static final String EKWING_IS_AUTO_PLAY = "ekwing_isauto";
 	public static final String EKWING_WORDS_PLAY = "words_auto";
@@ -302,6 +303,7 @@ public class Constant {
 	public static final String LOGIN = "http://api.guoku.com/mobile/v4/login/";
 	public static final String HOT = "http://api.guoku.com/mobile/v4/popular/";
 	public static final String TAB = "http://api.guoku.com/mobile/v4/category/";
+
 	public static final String TABLIKE = "http://api.guoku.com/mobile/v4/user/";
 	public static final String POINTLIST = "http://api.guoku.com/mobile/v4/feed/";
 	public static final String MESSAGELIST = "http://api.guoku.com/mobile/v4/message/";
@@ -313,8 +315,8 @@ public class Constant {
 	public static final String USERUPDATA = "http://api.guoku.com/mobile/v4/user/update/";
 	public static final String GETTAGLIST = "http://api.guoku.com/mobile/v4/user/";
 	public static final String REGISTER = "http://api.guoku.com/mobile/v4/register/";
-	public static final String TAOBAOLOGIN = "http://api.guoku.com/mobile/v4/taobao/login/";
-	public static final String SINALOGIN = "http://api.guoku.com/mobile/v4/sina/login/";
+	public static final String TAOBAOLOGIN = "http://api.guoku.com/mobile/v4/baichuan/login/";
+	public static final String SINALOGIN = "http://api.guoku.com/mobile/v4/weibo/login/";
 	public static final String SINAREGISTER = "http://api.guoku.com/mobile/v4/sina/register/";
 	public static final String TAOREGISTER = "http://api.guoku.com/mobile/v4/taobao/register/";
 	public static final String FORGET = "http://api.guoku.com/mobile/v4/forget/password/";

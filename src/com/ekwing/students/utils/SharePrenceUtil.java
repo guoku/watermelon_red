@@ -23,7 +23,6 @@ import com.ekwing.students.entity.UserLoginBean;
 import com.ekwing.students.entity.WeekBean;
 import com.guoku.guokuv4.entity.test.AccountBean;
 import com.guoku.guokuv4.entity.test.TAB1Bean;
-import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.parse.ParseUtil;
 
 //import com.guoku.guokuv4.entity.UserBean;
@@ -361,6 +360,16 @@ public class SharePrenceUtil {
 		return context
 				.getSharedPreferences(Constant.EKWING_IS_FIRST_ARTICLE, 0)
 				.getBoolean(Constant.EKWING_ARTICLE, false);
+	}
+
+	public static int getTAG(Context context) {
+		return context.getSharedPreferences(Constant.TAG, 0).getInt(
+				Constant.TAG, 1);
+	}
+
+	public static void setTAG(Context context, int isfirst) {
+		context.getSharedPreferences(Constant.TAG, 0).edit()
+				.putInt(Constant.TAG, isfirst).commit();
 	}
 
 	/**

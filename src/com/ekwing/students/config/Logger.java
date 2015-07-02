@@ -3,7 +3,7 @@ package com.ekwing.students.config;
 import android.util.Log;
 
 public class Logger {
-	public static int LOG_LEVEL = -1;
+	public static int LOG_LEVEL = 9;
 	public static final int VERBOSE = 5;
 	public static final int DEBUG = 4;
 	public static final int INFO = 3;

@@ -63,96 +63,13 @@
                 android:padding="12dp" >
 
                 <LinearLayout
-                    android:id="@+id/product_ll_like"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/like_shap"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="4dp"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:paddingTop="4dp" >
-
-                    <ImageView
-                        android:id="@+id/product_iv_like"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:scaleType="centerInside" />
-
-                    <TextView
-                        android:id="@+id/product_tv_likes"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
-                        android:text=""
-                        android:textColor="@color/g_other" />
-                </LinearLayout>
-
-                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical|right"
                     android:orientation="horizontal" >
                 </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/product_ll_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/blue_shap"
-                    android:gravity="center_vertical|right"
-                    android:orientation="horizontal"
-                    android:paddingBottom="4dp"
-                    android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
-                    android:paddingTop="4dp" >
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginRight="4dp"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/icon"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/product_tv_price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="12dp"
-                        android:text="￥800.00"
-                        android:textColor="#ffffffff" />
-                </LinearLayout>
             </LinearLayout>
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="2px"
-                android:layout_marginTop="4dp"
-                android:background="@color/g_line" />
-
-            <com.ekwing.students.customview.ScrollViewWithGridView
-                android:id="@+id/product_gv_user"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="12dp"
-                android:layout_marginTop="12dp"
-                android:background="#ffffffff"
-                android:cacheColorHint="#00000000"
-                android:gravity="center"
-                android:horizontalSpacing="4dp"
-                android:listSelector="#00000000"
-                android:numColumns="7"
-                android:scrollbars="none"
-                android:verticalSpacing="4px" />
 
             <ImageView
                 android:layout_width="fill_parent"
@@ -192,6 +109,62 @@
                     android:src="@drawable/right"
                     android:visibility="visible" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/product_ll_like_2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal"
+                android:paddingBottom="4dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp" >
+
+                <TextView
+                    android:id="@+id/product_tv_like_size"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:textColor="@color/g_other" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text=""
+                    android:textColor="@color/g_other" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/right"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <com.ekwing.students.customview.ScrollViewWithGridView
+                android:id="@+id/product_gv_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:layout_marginTop="12dp"
+                android:background="#ffffffff"
+                android:cacheColorHint="#00000000"
+                android:gravity="center"
+                android:horizontalSpacing="4dp"
+                android:listSelector="#00000000"
+                android:numColumns="7"
+                android:scrollbars="none"
+                android:verticalSpacing="4px" />
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="2px"
+                android:layout_marginTop="4dp"
+                android:background="@color/g_line" />
 
             <com.ekwing.students.customview.ScrollViewWithListView
                 xmlns:android="http://schemas.android.com/apk/res/android"
@@ -244,23 +217,79 @@
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:background="#ffffffff"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:orientation="horizontal" >
 
-        <ImageView
+        <LinearLayout
+            android:id="@+id/product_ll_like"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/comment_press" />
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
 
-        <TextView
+            <ImageView
+                android:id="@+id/product_iv_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:scaleType="centerInside" />
+
+            <TextView
+                android:id="@+id/product_tv_likes"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:background="@drawable/likecounter_bg"
+                android:text=""
+                android:textColor="@color/g_other"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <ImageView
             android:id="@+id/product_tv_comment"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginLeft="12dp"
-            android:gravity="center"
-            android:text="写点评"
-            android:textColor="@color/g_blue"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/comment_2" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:id="@+id/product_ll_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/blue_shap"
+            android:gravity="center_vertical|right"
+            android:orientation="horizontal"
+            android:paddingBottom="4dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="4dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/product_tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="12dp"
+                android:text="￥800.00"
+                android:textColor="#ffffffff" />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

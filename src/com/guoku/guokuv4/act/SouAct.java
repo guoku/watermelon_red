@@ -101,6 +101,9 @@ public class SouAct extends NetWorkActivity implements OnClickListener {
 				JSONObject root;
 				try {
 					root = new JSONObject(result);
+					// sou_tv_tab1 .setText("商品 "
+					// + root.getJSONObject("stat").getString(
+					// "all_count"));
 					entityAdapter.setList((ArrayList<EntityBean>) JSON
 							.parseArray(root.getString("entity_list"),
 									EntityBean.class));
@@ -259,9 +262,9 @@ public class SouAct extends NetWorkActivity implements OnClickListener {
 			public void onPullUpToRefresh(
 					PullToRefreshBase<ListView> refreshView) {
 				if (curTab.equals("entity/search/")) {
-					search(listEntity.size());
+					search(entityAdapter.getCount());
 				} else if (curTab.equals("user/search/")) {
-					search(listEntity.size());
+					search(fansAdapter.getCount());
 				} else {
 					lv.onRefreshComplete();
 				}
@@ -340,6 +343,8 @@ public class SouAct extends NetWorkActivity implements OnClickListener {
 			sendConnection(Constant.TAB, new String[] {}, new String[] {}, TAB,
 					false);
 		}
+		sendConnection(Constant.TAB, new String[] {}, new String[] {}, TAB,
+				false);
 
 		sou_tv_tab2.setTextColor(Color.rgb(65, 66, 67));
 		sou_tv_tab1.setTextColor(Color.rgb(157, 158, 159));
@@ -383,14 +388,14 @@ public class SouAct extends NetWorkActivity implements OnClickListener {
 				sendConnectionPOST(Constant.FOLLOW + bean.getUser_id()
 						+ "/follow/1/", new String[] {}, new String[] {},
 						FOLLOW1, false);
-				bean.setRelation("1");
+				// bean.setRelation("1");
 			} else {
 				sendConnectionPOST(Constant.FOLLOW + bean.getUser_id()
 						+ "/follow/0/", new String[] {}, new String[] {},
 						FOLLOW0, false);
-				bean.setRelation("0");
+				// bean.setRelation("0");
 			}
-			fansAdapter.notifyDataSetChanged();
+			// fansAdapter.notifyDataSetChanged();
 			break;
 		default:
 			break;

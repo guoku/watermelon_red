@@ -68,15 +68,18 @@ public class JingXuanAdapter extends ArrayListAdapter<PBean> {
 		holder.ll_likes.setOnClickListener(listener);
 
 		if ("1".equals(bean.getContent().getEntity().getLike_already())) {
-			holder.iv_isLike.setImageResource(R.drawable.icon_like_press);
+			holder.iv_isLike.setImageResource(R.drawable.like_red);
 		} else {
-			holder.iv_isLike.setImageResource(R.drawable.icon_like);
+			holder.iv_isLike.setImageResource(R.drawable.like_gary);
 		}
 		holder.tv_context.setText(bean.getContent().getNote().getContent());
-		// if (!bean.getContent().getEntity().getLike_count().equals("")) {
-		holder.tv_likes.setText("喜爱 "
-				+ bean.getContent().getEntity().getLike_count());
-		// }
+		if (!bean.getContent().getEntity().getLike_count().equals("")) {
+			holder.tv_likes.setVisibility(View.VISIBLE);
+			holder.tv_likes.setText(""
+					+ bean.getContent().getEntity().getLike_count());
+		} else {
+			holder.tv_likes.setVisibility(View.GONE);
+		}
 		holder.tv_time.setText(DateUtils.getStandardDate(bean.getPost_time()));
 		return convertView;
 	}

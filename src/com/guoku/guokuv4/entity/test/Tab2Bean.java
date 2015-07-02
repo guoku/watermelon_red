@@ -1,6 +1,8 @@
 package com.guoku.guokuv4.entity.test;
 
-public class Tab2Bean {
+import java.io.Serializable;
+
+public class Tab2Bean implements Serializable {
 	private String status, category_id, category_icon_small, category_title,
 			category_icon_large;
 

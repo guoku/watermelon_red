@@ -71,7 +71,7 @@ public class RegisterAct extends NetWorkActivity {
 				if (16 >= ed_pass.length() && ed_pass.length() >= 6) {
 					if (name.length() >= 3) {
 
-						if ("sina".equals(type)) {
+						if (type != null && type.equals("sina")) {
 							sendConnectionPOST(
 									Constant.SINAREGISTER,
 									new String[] { "nickname", "email",
@@ -117,7 +117,7 @@ public class RegisterAct extends NetWorkActivity {
 					finish();
 					ToastUtil.show(context, "注册成功");
 				} else {
-					ToastUtil.show(context, "用户名或密码错误");
+					ToastUtil.show(context, root.getString("message"));
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -134,10 +134,8 @@ public class RegisterAct extends NetWorkActivity {
 	protected void onFailure(String result, int where) {
 		if ("sina".equals(type)) {
 			ToastUtil.show(mContext, "用户名或邮箱已被使用");
-
 		} else {
-
-			ToastUtil.show(mContext, "注册失败,请稍后再试");
+			ToastUtil.show(mContext, "用户名或邮箱已被使用");
 		}
 	}
 
@@ -148,7 +146,6 @@ public class RegisterAct extends NetWorkActivity {
 			ed_name.setText(getIntent().getStringExtra("name"));
 		} else if ("taobao".equals(type)) {
 			ed_name.setText(getIntent().getStringExtra("name"));
-
 		}
 
 		tv_com.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);

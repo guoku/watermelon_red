@@ -63,8 +63,8 @@
             android:name="UMENG_CHANNEL"
             android:value="91" />
         <meta-data
-            android:name="91"
-            android:value="LeanCloud" />
+            android:name="leancloud"
+            android:value="91" />
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5279bf3656240b8271004a8a" />
@@ -152,6 +152,11 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="com.guoku.guokuv4.act.TabListAct"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.guoku.guokuv4.act.RegisterAct"
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
@@ -178,6 +183,11 @@
         </activity>
         <activity
             android:name="com.guoku.guokuv4.act.UserAct"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.guoku.guokuv4.act.LikesAct"
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
         </activity>

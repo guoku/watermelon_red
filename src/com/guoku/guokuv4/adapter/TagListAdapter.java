@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ekwing.students.customview.ScrollViewWithGridView;
 import com.ekwing.students.utils.ArrayListAdapter;
 import com.guoku.R;
 import com.guoku.guokuv4.act.TabAct;
+import com.guoku.guokuv4.act.TabListAct;
 import com.guoku.guokuv4.entity.test.TAB1Bean;
 import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.lidroid.xutils.ViewUtils;
@@ -45,10 +47,10 @@ public class TagListAdapter extends ArrayListAdapter<TAB1Bean> {
 		} else {
 			holder = (LVViewHold) convertView.getTag();
 		}
-		TAB1Bean bean = mList.get(position);
+		final TAB1Bean bean = mList.get(position);
 		holder.faxian_lv_item_tv_name.setText(bean.getTitle());
-		// holder.faxian_lv_item_tv_count.setText(bean.getCategory_count()
-		// + "个品类 ");
+		holder.faxian_lv_item_tv_count.setText(bean.getCategory_count()
+				+ "个品类 ");
 
 		ArrayListAdapter<Tab2Bean> lvgvAdapter = new ArrayListAdapter<Tab2Bean>(
 				mContext) {
@@ -86,6 +88,17 @@ public class TagListAdapter extends ArrayListAdapter<TAB1Bean> {
 			}
 		};
 		holder.faxian_lv_item_gv.setAdapter(lvgvAdapter);
+
+		holder.faxian_lv_item_ll_title
+				.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View arg0) {
+						Intent intent = new Intent(mContext, TabListAct.class);
+						intent.putExtra("data", bean);
+						mContext.startActivity(intent);
+					}
+				});
 		lvgvAdapter.setList(bean.getList1());
 		return convertView;
 	}
@@ -96,6 +109,9 @@ public class TagListAdapter extends ArrayListAdapter<TAB1Bean> {
 
 		@ViewInject(R.id.faxian_lv_item_tv_count)
 		TextView faxian_lv_item_tv_count;
+
+		@ViewInject(R.id.faxian_lv_item_ll_title)
+		LinearLayout faxian_lv_item_ll_title;
 
 		@ViewInject(R.id.faxian_lv_item_gv)
 		ScrollViewWithGridView faxian_lv_item_gv;

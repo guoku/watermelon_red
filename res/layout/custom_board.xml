@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#414243"
+    android:background="#fff"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:text="分享到新浪微博"
-            android:textColor="@color/g_w" />
+            android:textColor="@color/g_main" />
     </LinearLayout>
 
     <ImageView
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:text="分享到微信"
-            android:textColor="@color/g_w" />
+            android:textColor="@color/g_main" />
     </LinearLayout>
 
     <ImageView
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:text="分享到朋友圈"
-            android:textColor="@color/g_w" />
+            android:textColor="@color/g_main" />
     </LinearLayout>
 
     <ImageView
@@ -81,7 +81,24 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
             android:text="举报"
-            android:textColor="@color/g_w" />
+            android:textColor="@color/g_main" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/share_llq"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:visibility="gone" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:text="浏览器打开"
+            android:textColor="@color/g_main" />
     </LinearLayout>
 
 </LinearLayout>

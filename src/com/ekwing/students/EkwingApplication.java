@@ -119,6 +119,7 @@ public class EkwingApplication extends Application {
 
 			@Override
 			public void onSuccess() {
+				Logger.i("taobao", "onSuccess---->");
 				// Toast.makeText(MainActivity.this, "初始化成功",
 				// Toast.LENGTH_SHORT)
 				// .show();
@@ -127,6 +128,7 @@ public class EkwingApplication extends Application {
 
 			@Override
 			public void onFailure(int code, String message) {
+				Logger.e("taobao", "fail---->" + message);
 				// Toast.makeText(MainActivity.this, "初始化异常",
 				// Toast.LENGTH_SHORT)
 				// .show();

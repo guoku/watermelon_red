@@ -32,16 +32,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:checked="true"
-            android:textColor="@color/g_main"
-            android:text="  商品下架" />
+            android:text="  商品下架"
+            android:textColor="@color/g_main" />
 
         <RadioButton
             android:id="@+id/RadioButton2"
             android:layout_width="wrap_content"
-            android:textColor="@color/g_main"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="  分类错误" />
+            android:text="  分类错误"
+            android:textColor="@color/g_main" />
 
         <RadioButton
             android:id="@+id/RadioButton3"
@@ -54,10 +54,10 @@
         <RadioButton
             android:id="@+id/RadioButton4"
             android:layout_width="wrap_content"
-            android:textColor="@color/g_main"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="  不良内容" />
+            android:text="  不良内容"
+            android:textColor="@color/g_main" />
     </RadioGroup>
 
     <ImageView
@@ -82,6 +82,7 @@
         android:gravity="left|top"
         android:hint="靠谱的举报原因"
         android:lines="2"
-        android:padding="8dp" />
+        android:padding="8dp"
+        android:textColor="@color/g_main" />
 
 </LinearLayout>

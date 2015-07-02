@@ -6,7 +6,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -315,10 +314,7 @@ public class UserInfoAct extends NetWorkActivity {
 					Bundle bundle = data.getExtras();
 					Bitmap buf = (Bitmap) bundle.get("data");
 
-					Matrix matrix = new Matrix();
-					matrix.setRotate(90);
-					ed_Bitmap = Bitmap.createBitmap(buf, 0, 0, buf.getWidth(),
-							buf.getHeight(), matrix, true);
+					ed_Bitmap = Bitmap.createBitmap(buf);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -329,6 +325,9 @@ public class UserInfoAct extends NetWorkActivity {
 			}
 			iv_pic.setImageBitmap(ed_Bitmap);
 			BitmapUtil.saveBitmap(Constant.IMAGES_PATH + "temp.png", ed_Bitmap);
+			int d = BitmapUtil.getBitmapDegree(Constant.IMAGES_PATH
+					+ "temp.png");
+			ed_Bitmap = BitmapUtil.rotateBitmapByDegree(ed_Bitmap, d);
 			upPic(Constant.USERUPDATA, ed_Bitmap, PIC);
 		}
 	}

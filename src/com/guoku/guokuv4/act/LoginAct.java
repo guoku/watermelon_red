@@ -10,11 +10,15 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.sdk.android.AlibabaSDK;
+import com.alibaba.sdk.android.callback.CallbackContext;
+import com.alibaba.sdk.android.login.LoginService;
+import com.alibaba.sdk.android.login.callback.LoginCallback;
 import com.alibaba.sdk.android.session.model.Session;
 import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.base.NetWorkActivity;
@@ -41,6 +45,7 @@ public class LoginAct extends NetWorkActivity {
 
 	private static final int LOGIN = 10;
 	private static final int SINALOGIN = 12;
+	private static final int TAOBAOLOGIN = 14;
 	private static final int FORGET = 13;
 
 	@ViewInject(R.id.login_username)
@@ -51,6 +56,7 @@ public class LoginAct extends NetWorkActivity {
 	private Session session;
 	private Bundle value;
 	private Map<String, Object> sinainfo;
+	private Session taobaoSession;
 
 	UMSocialService mController = UMServiceFactory
 			.getUMSocialService("com.umeng.login");
@@ -63,7 +69,7 @@ public class LoginAct extends NetWorkActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		/** 使用SSO授权必须添加如下代码 */
+		CallbackContext.onActivityResult(requestCode, resultCode, data);
 		UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(
 				requestCode);
 		if (ssoHandler != null) {
@@ -104,7 +110,6 @@ public class LoginAct extends NetWorkActivity {
 							new UMDataListener() {
 								@Override
 								public void onStart() {
-//									Log.d("TestData", "开始");
 
 								}
 
@@ -139,16 +144,12 @@ public class LoginAct extends NetWorkActivity {
 																.toString() },
 												SINALOGIN, true);
 
-//										Log.d("TestData", sb.toString());
 									} else {
-//										Log.d("TestData", "发生错误：" + status);
 									}
 								}
 							});
 
 				} else {
-					// Toast.makeText(MainActivity.this, "授权失败",
-					// Toast.LENGTH_SHORT).show();
 				}
 			}
 
@@ -162,41 +163,27 @@ public class LoginAct extends NetWorkActivity {
 		});
 	}
 
-	@OnClick(R.id.login_no_tao)
+	@OnClick(R.id.login_no_tao2)
 	public void taobao(View v) {
-		Intent intent = new Intent(mContext, WebAct.class);
-		intent.putExtra("name", "淘宝登录");
-		intent.putExtra(
-				"data",
-				"https://oauth.taobao.com/authorize?response_type=user&client_id=12313170&redirect_uri=http://www.guoku.com/");
-		startActivity(intent);
-		// LoginService loginService =
-		// AlibabaSDK.getService(LoginService.class);
-		// loginService.showLogin(this, new LoginCallback() {
-		//
-		// @Override
-		// public void onSuccess(Session session) {
-		//
-		// Logger.i(TAG, "sess---->" + session.toString());
-		// sendConnectionPOST(
-		// Constant.TAOBAOLOGIN,
-		// new String[] { "taobao_id", "taobao_token" },
-		// new String[] { session.getUserId(),
-		// session.getAuthorizationCode() }, TAOBAOLOGIN,
-		// false);
-		// // Intent intent = new Intent(mContext, RegisterAct.class);
-		// // intent.putExtra("", value)
-		// // Logger.i(TAG, "session--->" + session.toString());
-		// }
-		//
-		// @Override
-		// public void onFailure(int code, String message) {
-		// // Toast.makeText(this, "授权取消" + code + message,
-		// // Toast.LENGTH_SHORT).show();
-		// Logger.e(TAG, "message---->" + message.toString());
-		//
-		// }
-		// });
+		LoginService loginService = AlibabaSDK.getService(LoginService.class);
+		loginService.showLogin(this, new LoginCallback() {
+
+			@Override
+			public void onSuccess(Session session) {
+				taobaoSession = session;
+				sendConnectionPOST(Constant.TAOBAOLOGIN, new String[] {
+						"user_id", "nick" }, new String[] {
+						session.getUserId(), session.getUser().nick, },
+						TAOBAOLOGIN, true);
+
+			}
+
+			@Override
+			public void onFailure(int code, String message) {
+				Toast.makeText(LoginAct.this, "授权取消" + code + message,
+						Toast.LENGTH_SHORT).show();
+			}
+		});
 
 	}
 
@@ -279,6 +266,24 @@ public class LoginAct extends NetWorkActivity {
 				e.printStackTrace();
 			}
 			break;
+		case TAOBAOLOGIN:
+			try {
+				JSONObject root = new JSONObject(result);
+				if (!root.has("message")) {
+					AccountBean bean = new AccountBean();
+					bean.setSession(root.getString("session"));
+					bean.setUser(JSON.parseObject(root.getString("user"),
+							UserBean.class));
+					EkwingApplication.getInstance().login(bean);
+					startActivity(new Intent(this, MainActivity2.class));
+					finish();
+				} else {
+					ToastUtil.show(context, "用户名或密码错误");
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			break;
 		case FORGET:
 			ToastUtil.show(context, "已发送");
 			break;
@@ -307,6 +312,17 @@ public class LoginAct extends NetWorkActivity {
 						.toString());
 				intent.putExtra("description", sinainfo.get("description")
 						.toString());
+				startActivity(intent);
+			} else {
+				ToastUtil.show(mContext, "sina微博授权失败");
+			}
+			break;
+		case TAOBAOLOGIN:
+
+			if (taobaoSession != null) {
+				Intent intent = new Intent(mContext, RegisterAct.class);
+				intent.putExtra("type", "taobao");
+				intent.putExtra("name", taobaoSession.getUser().nick);
 				startActivity(intent);
 			} else {
 				ToastUtil.show(mContext, "sina微博授权失败");

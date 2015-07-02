@@ -23,12 +23,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -89,8 +91,8 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	@ViewInject(R.id.tv_point)
 	private TextView tv_point;
 
-	@ViewInject(R.id.product_tv_comment)
-	private TextView product_tv_comment;
+	// @ViewInject(R.id.product_tv_comment)
+	// private TextView product_tv_comment;
 
 	@ViewInject(R.id.product_vp_img)
 	private ViewPager vp;
@@ -104,6 +106,9 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 	@ViewInject(R.id.product_tv_likes)
 	private TextView product_tv_likes;
+
+	@ViewInject(R.id.product_tv_like_size)
+	private TextView product_tv_like_size;
 
 	@ViewInject(R.id.product_tv_price)
 	private TextView product_tv_price;
@@ -206,7 +211,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			}
 			// ToastUtil.show(context, "取消喜爱");
 			productBean.getEntity().setLike_already("0");
-			product_iv_like.setBackgroundResource(R.drawable.icon_like);
+			product_iv_like.setBackgroundResource(R.drawable.like_gary);
 			product_tv_likes.setText("喜爱 "
 					+ productBean.getEntity().getLike_countCut());
 			break;
@@ -219,7 +224,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			}
 			ToastUtil.show(context, "喜爱成功");
 			productBean.getEntity().setLike_already("1");
-			product_iv_like.setBackgroundResource(R.drawable.icon_like_press);
+			product_iv_like.setBackgroundResource(R.drawable.like_red);
 			product_tv_likes.setText("喜爱 "
 					+ productBean.getEntity().getLike_countAdd());
 			break;
@@ -309,12 +314,14 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 					+ productBean.getEntity().getTitle());
 		} else
 			product_tv_name.setText(productBean.getEntity().getTitle());
-		product_tv_likes.setText(productBean.getEntity().getLike_count());
+		// product_tv_likes.setText(productBean.getEntity().getLike_count());
 
-		// if (!productBean.getEntity().getLike_count().equals("")) {
-		product_tv_likes.setText("喜爱 "
-				+ productBean.getEntity().getLike_count());
-		// }
+		if (!productBean.getEntity().getLike_count().equals("")) {
+			product_tv_likes.setText("喜爱 "
+					+ productBean.getEntity().getLike_count());
+			product_tv_like_size.setText(productBean.getEntity()
+					.getLike_count() + "人喜欢");
+		}
 		product_tv_price.setText("￥ " + productBean.getEntity().getPrice());
 		// imageLoader.displayImage(productBean.getPic(), product_iv_pic);
 
@@ -407,9 +414,9 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		}
 
 		if ("1".equals(productBean.getEntity().getLike_already())) {
-			product_iv_like.setBackgroundResource(R.drawable.icon_like_press);
+			product_iv_like.setBackgroundResource(R.drawable.like_red);
 		} else
-			product_iv_like.setBackgroundResource(R.drawable.icon_like);
+			product_iv_like.setBackgroundResource(R.drawable.like_gary);
 
 		gv1Adapter = new ArrayListAdapter<UserBean>(context) {
 
@@ -531,7 +538,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 						.equals(EkwingApplication.getInstance().getBean()
 								.getUser().getUser_id())) {
 					myNoteBean = bean;
-					product_tv_comment.setText("修改点评");
+					// product_tv_comment.setText("修改点评");
 				}
 			}
 		}
@@ -592,6 +599,21 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		shareBoard.setShareContext(context, url, id, tid, productBean);
 		shareBoard.showAtLocation(this.getWindow().getDecorView(),
 				Gravity.BOTTOM, 0, 0);
+		WindowManager.LayoutParams params = getWindow().getAttributes();
+		params.alpha = 0.7f;
+		getWindow().setAttributes(params);
+
+		shareBoard.setOnDismissListener(new OnDismissListener() {
+
+			@Override
+			public void onDismiss() {
+				WindowManager.LayoutParams params = getWindow().getAttributes();
+				params.alpha = 1f;
+				getWindow().setAttributes(params);
+
+			}
+		});
+
 	}
 
 	@OnClick(R.id.product_ll_like)
@@ -607,6 +629,16 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 					new String[] {}, new String[] {}, LIKE0, false);
 
 		}
+	}
+
+	@OnClick(R.id.product_ll_like_2)
+	public void Like_2(View v) {
+		// sendConnectionPOST(Constant.TOLIKE
+		// + productBean.getEntity().getEntity_id() + "/like/",
+		// new String[] {}, new String[] {}, LIKE1, false);
+		Intent intent = new Intent(mContext, LikesAct.class);
+		intent.putExtra("data", productBean.getEntity().getEntity_id());
+		startActivity(intent);
 	}
 
 	/**
