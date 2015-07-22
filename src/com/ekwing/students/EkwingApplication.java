@@ -7,18 +7,16 @@ import java.util.List;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.util.Log;
+import android.widget.Toast;
 
 import com.alibaba.sdk.android.AlibabaSDK;
 import com.alibaba.sdk.android.callback.InitResultCallback;
+import com.alibaba.sdk.android.login.LoginService;
+import com.alibaba.sdk.android.login.callback.LogoutCallback;
 import com.avos.avoscloud.AVOSCloud;
 import com.ekwing.students.config.Constant;
 import com.ekwing.students.config.Logger;
 import com.ekwing.students.utils.SharePrenceUtil;
-import com.ekwing.students.utils.ToastUtil;
-import com.guoku.guokuv4.act.ProductInfoAct;
-import com.guoku.guokuv4.act.UserAct;
-import com.guoku.guokuv4.act.UserInfoAct;
 import com.guoku.guokuv4.entity.test.AccountBean;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
@@ -54,7 +52,7 @@ public class EkwingApplication extends Application {
 		this.bean = null;
 		this.session = null;
 		SharePrenceUtil.setUserBean(instance, null);
-	}
+	   	}
 
 	public String getSession() {
 		return session;

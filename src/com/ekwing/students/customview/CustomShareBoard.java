@@ -75,7 +75,8 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		configPlatforms();
 
 		WeiXinShareContent weixinContent = new WeiXinShareContent();
-		weixinContent.setShareContent(context);
+		weixinContent.setShareContent(context + "http://www.guoku.com/detail/"
+				+ bean.getEntity().getEntity_hash() + "/");
 		weixinContent.setTargetUrl("http://www.guoku.com/detail/"
 				+ bean.getEntity().getEntity_hash() + "/");
 		weixinContent.setShareImage(url);
@@ -83,7 +84,8 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		mController.setShareMedia(weixinContent);
 
 		CircleShareContent circleMedia = new CircleShareContent();
-		circleMedia.setShareContent(context);
+		circleMedia.setShareContent(context + "http://www.guoku.com/detail/"
+				+ bean.getEntity().getEntity_hash() + "/");
 		circleMedia.setShareImage(url);
 		circleMedia.setTitle(context);
 		circleMedia.setTargetUrl("http://www.guoku.com/detail/"
@@ -91,7 +93,9 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		mController.setShareMedia(circleMedia);
 
 		SinaShareContent sinaShareContent = new SinaShareContent();
-		sinaShareContent.setShareContent(context);
+		sinaShareContent.setShareContent(context
+				+ "http://www.guoku.com/detail/"
+				+ bean.getEntity().getEntity_hash() + "/");
 		sinaShareContent.setShareImage(url);
 		sinaShareContent.setTitle(context);
 		sinaShareContent.setTargetUrl("http://www.guoku.com/detail/"
@@ -214,25 +218,33 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 			}
 			break;
 		case R.id.share_sina:
-			AVAnalytics.onEvent(mActivity, "share to entity to weibo", pib
-					.getEntity().getTitle());
-			MobclickAgent.onEvent(mActivity, "share to entity to weibo");
+			if (pib != null) {
 
+				AVAnalytics.onEvent(mActivity, "share to entity to weibo", pib
+						.getEntity().getTitle());
+				MobclickAgent.onEvent(mActivity, "share to entity to weibo");
+
+			}
 			performShare(SHARE_MEDIA.SINA);
 			break;
 		case R.id.share_wx_1:
 			performShare(SHARE_MEDIA.WEIXIN);
+			if (pib != null) {
 
-			MobclickAgent.onEvent(mActivity, "share entity to moments");
-			AVAnalytics.onEvent(mActivity, "share entity to moments", pib
-					.getEntity().getTitle());
+				MobclickAgent.onEvent(mActivity, "share entity to moments");
+				AVAnalytics.onEvent(mActivity, "share entity to moments", pib
+						.getEntity().getTitle());
+			}
 			break;
 		case R.id.share_wx_2:
 			performShare(SHARE_MEDIA.WEIXIN_CIRCLE);
-			MobclickAgent.onEvent(mActivity, "share entity to wechat");
+			if (pib != null) {
 
-			AVAnalytics.onEvent(mActivity, "share entity to wechat", pib
-					.getEntity().getTitle());
+				MobclickAgent.onEvent(mActivity, "share entity to wechat");
+
+				AVAnalytics.onEvent(mActivity, "share entity to wechat", pib
+						.getEntity().getTitle());
+			}
 			break;
 		case R.id.share_llq:
 			Intent intent = new Intent(Intent.ACTION_VIEW);

@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alibaba.sdk.android.AlibabaSDK;
+import com.alibaba.sdk.android.login.LoginService;
+import com.alibaba.sdk.android.login.callback.LogoutCallback;
 import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.base.NetWorkActivity;
 import com.ekwing.students.customview.CustomShareBoard;
@@ -18,8 +22,11 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.fb.FeedbackAgent;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners.SocializeClientListener;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.UMSsoHandler;
 
@@ -115,7 +122,47 @@ public class SettingAct extends NetWorkActivity {
 			startActivity(new Intent(mContext, LoginAct.class));
 		} else {
 			EkwingApplication.getInstance().logout();
+			mController.deleteOauth(mContext, SHARE_MEDIA.SINA,
+					new SocializeClientListener() {
+						@Override
+						public void onStart() {
+						}
+
+						@Override
+						public void onComplete(int status,
+								SocializeEntity entity) {
+							if (status == 200) {
+								// Toast.makeText(mContext, "删除成功.",
+								// Toast.LENGTH_SHORT).show();
+							} else {
+								// Toast.makeText(mContext, "删除失败",
+								// Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
+
 			startActivity(new Intent(mContext, MainActivity2.class));
+			LoginService loginService = AlibabaSDK
+					.getService(LoginService.class);
+			loginService.logout(this, new LogoutCallback() {
+
+				@Override
+				public void onFailure(int code, String msg) {
+					// Toast.makeText(SettingAct.this, "登出失败",
+					// Toast.LENGTH_SHORT)
+					// .show();
+
+				}
+
+				@Override
+				public void onSuccess() {
+					// Toast.makeText(SettingAct.this, "登出成功",
+					// Toast.LENGTH_SHORT)
+					// .show();
+
+				}
+			});
+
 			finish();
 		}
 	}

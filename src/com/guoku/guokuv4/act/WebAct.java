@@ -36,7 +36,6 @@ public class WebAct extends BaseActivity {
 			}
 
 		};
-
 		if ("banner".equals(getIntent().getStringExtra("type"))) {
 			setGRigth(true, R.drawable.more);
 		}
@@ -45,6 +44,10 @@ public class WebAct extends BaseActivity {
 		url = getIntent().getStringExtra("data");
 		view.loadUrl(url);
 		view.getSettings().setJavaScriptEnabled(true);
+		if ("UA".equals(getIntent().getStringExtra("UA"))) {
+
+		} else
+			view.getSettings().setUserAgentString("guoku-client");
 		view.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {

@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -42,6 +43,9 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 
 public class UserAct extends NetWorkActivity {
@@ -124,6 +128,7 @@ public class UserAct extends NetWorkActivity {
 	private UserBean userBean;
 	private boolean isMe;
 	private String time = "";
+	private DisplayImageOptions optionsRound1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -234,6 +239,15 @@ public class UserAct extends NetWorkActivity {
 
 	@Override
 	protected void setupData() {
+
+		optionsRound1 = new DisplayImageOptions.Builder()
+				.bitmapConfig(Bitmap.Config.RGB_565)
+				.imageScaleType(ImageScaleType.EXACTLY)
+				.displayer(new RoundedBitmapDisplayer(300))
+				.showImageForEmptyUri(R.drawable.user100)
+				.showImageOnFail(R.drawable.user100)
+				.showImageOnLoading(R.drawable.user100).build();
+
 		setGLeft(true, R.drawable.back_selector);
 
 		userBean = (UserBean) getIntent().getSerializableExtra("data");
@@ -254,8 +268,8 @@ public class UserAct extends NetWorkActivity {
 			psrson_iv_sex.setTextColor(Color.rgb(253, 189, 217));
 		}
 
-		imageLoader
-				.displayImage(userBean.get240(), psrson_iv_pic, optionsRound);
+		imageLoader.displayImage(userBean.get240(), psrson_iv_pic,
+				optionsRound1);
 
 		psrson_tv_tab2.setText("点评 " + userBean.getEntity_note_count());
 		psrson_tv_tab1.setText("喜爱 " + userBean.getLike_count());

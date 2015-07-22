@@ -320,7 +320,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			product_tv_likes.setText("喜爱 "
 					+ productBean.getEntity().getLike_count());
 			product_tv_like_size.setText(productBean.getEntity()
-					.getLike_count() + "人喜欢");
+					.getLike_count() + " 人喜爱");
 		}
 		product_tv_price.setText("￥ " + productBean.getEntity().getPrice());
 		// imageLoader.displayImage(productBean.getPic(), product_iv_pic);
@@ -667,6 +667,18 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		try {
 			JSONArray array;
 			array = new JSONArray(productBean.getEntity().getItem_list());
+			if (!(array.getJSONObject(0).getString("origin_source")
+					.contains("taobao") || array.getJSONObject(0)
+					.getString("origin_source").contains("tmall"))) {
+				Intent intent = new Intent(context, WebAct.class);
+				intent.putExtra("data",
+						array.getJSONObject(0).getString("buy_link"));
+				intent.putExtra("name", "  ");
+				intent.putExtra("UA", "UA");
+				startActivity(intent);
+				return;
+
+			}
 			TaeWebViewUiSettings taeWebViewUiSettings = new TaeWebViewUiSettings();
 			TaokeParams taokeParams = new TaokeParams();
 			taokeParams.pid = "mm_28514026_4132785_24810648";

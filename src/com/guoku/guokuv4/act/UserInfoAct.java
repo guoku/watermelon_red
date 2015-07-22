@@ -28,6 +28,9 @@ import com.guoku.guokuv4.entity.test.AccountBean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class UserInfoAct extends NetWorkActivity {
 	private static final int ADD = 10;
@@ -56,6 +59,7 @@ public class UserInfoAct extends NetWorkActivity {
 
 	@ViewInject(R.id.user_info_tv_sex)
 	private TextView tv_sex;
+	private DisplayImageOptions optionsRound1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -286,7 +290,16 @@ public class UserInfoAct extends NetWorkActivity {
 		// bean.getUser().getAvatar_large(),
 		// options, iv_pic);
 
-		imageLoader.displayImage(bean.getUser().get240(), iv_pic, optionsRound);
+		optionsRound1 = new DisplayImageOptions.Builder()
+				.bitmapConfig(Bitmap.Config.RGB_565)
+				.imageScaleType(ImageScaleType.EXACTLY)
+				.displayer(new RoundedBitmapDisplayer(300))
+				.showImageForEmptyUri(R.drawable.user100)
+				.showImageOnFail(R.drawable.user100)
+				.showImageOnLoading(R.drawable.user100).build();
+
+		imageLoader
+				.displayImage(bean.getUser().get240(), iv_pic, optionsRound1);
 
 		LayoutParams params = (LayoutParams) iv_pic.getLayoutParams();
 		params.topMargin = BitmapUtil.dip2pix(context, 32);

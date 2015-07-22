@@ -12,14 +12,14 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/com_taobao_tae_sdk_web_view_title_bar_back" />
+        android:background="@drawable/back_selector" />
 
     <TextView
         android:id="@+id/com_taobao_tae_sdk_web_view_title_bar_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxWidth="160dp"
         android:layout_centerInParent="true"
+        android:maxWidth="160dp"
         android:singleLine="true"
         android:textColor="#3d4245"
         android:textSize="18sp" />
