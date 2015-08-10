@@ -40,11 +40,13 @@ import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener
 import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener;
 import com.umeng.socialize.exception.SocializeException;
 import com.umeng.socialize.sso.UMSsoHandler;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
 
 public class LoginAct extends NetWorkActivity {
 
 	private static final int LOGIN = 10;
 	private static final int SINALOGIN = 12;
+	private static final int WXLOGIN = 15;
 	private static final int TAOBAOLOGIN = 14;
 	private static final int FORGET = 13;
 
@@ -91,6 +93,111 @@ public class LoginAct extends NetWorkActivity {
 
 			}
 		}, "忘记密码", "输入注册时的邮箱", editText).show();
+	}
+
+	@OnClick(R.id.login_no_wx)
+	public void wx(View v) {
+		UMWXHandler wxHandler = new UMWXHandler(this, Constant.WX_APPID,
+				Constant.WX_SECRET);
+		wxHandler.addToSocialSDK();
+
+		mController.doOauthVerify(mContext, SHARE_MEDIA.WEIXIN,
+				new UMAuthListener() {
+					@Override
+					public void onStart(SHARE_MEDIA platform) {
+						// Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT)
+						// .show();
+					}
+
+					@Override
+					public void onError(SocializeException e,
+							SHARE_MEDIA platform) {
+						Toast.makeText(mContext, "授权错误", Toast.LENGTH_SHORT)
+								.show();
+					}
+
+					@Override
+					public void onComplete(Bundle value, SHARE_MEDIA platform) {
+						// Toast.makeText(mContext, "授权完成", Toast.LENGTH_SHORT)
+						// .show();
+						// 获取相关授权信息
+						mController.getPlatformInfo(LoginAct.this,
+								SHARE_MEDIA.WEIXIN, new UMDataListener() {
+									@Override
+									public void onStart() {
+										// Toast.makeText(LoginAct.this,
+										// "获取平台数据开始...",
+										// Toast.LENGTH_SHORT).show();
+									}
+
+									@Override
+									public void onComplete(int status,
+											Map<String, Object> info) {
+										if (status == 200 && info != null) {
+											// StringBuilder sb = new
+											// StringBuilder();
+											// Set<String> keys = info.keySet();
+											//
+											// for (String key : keys) {
+											// sb.append(key
+											// + "="
+											// + info.get(key)
+											// .toString()
+											// + "\r\n");
+											// }
+
+											// 08-04 11:33:41.839:
+											// I/LoginAct(21736): sex=1
+											// 08-04 11:33:41.839:
+											// I/LoginAct(21736): nickname=冷
+											// 08-04 11:33:41.839:
+											// I/LoginAct(21736):
+											// unionid=oc-NVuIsWoo-VtL7UQo1iFI-9zrg
+											// 08-04 11:33:41.839:
+											// I/LoginAct(21736): province=北京
+											// 08-04 11:33:41.839:
+											// I/LoginAct(21736):
+											// openid=oPhJ9jqnN-gV1qcs1N2c3PBaS_H8
+											// 08-04 11:33:41.839:
+											// I/LoginAct(21736): language=zh_CN
+											// 08-04 11:33:41.839:
+											// I/LoginAct(21736):
+											// headimgurl=http://wx.qlogo.cn/mmopen/ajNVdqHZLLBnpIbESjWQQRDBQ4wkbGwFy0W3DqfUAjroX8aYoy8Srff0U1NFc62CR8icBibPaePHw9bFHO1NAvuw/0
+											// 08-04 11:33:41.839:
+											// I/LoginAct(21736): country=中国
+											// 08-04 11:33:41.839:
+											// I/LoginAct(21736): city=朝阳
+
+											// Logger.i(TAG, sb.toString());
+											sendConnectionPOST(
+													Constant.WXLOGIN,
+													new String[] { "unionid",
+															"nickname",
+															"headimgurl" },
+													new String[] {
+															info.get("unionid")
+																	.toString(),
+															info.get("nickname")
+																	.toString(),
+															info.get(
+																	"headimgurl")
+																	.toString() },
+													WXLOGIN, true);
+											//
+										} else {
+										}
+
+									}
+								});
+					}
+
+					@Override
+					public void onCancel(SHARE_MEDIA platform) {
+						Toast.makeText(mContext, "授权取消", Toast.LENGTH_SHORT)
+								.show();
+					}
+				});
+
 	}
 
 	@OnClick(R.id.login_no_sina)
@@ -248,6 +355,26 @@ public class LoginAct extends NetWorkActivity {
 			}
 
 			break;
+		case WXLOGIN:
+			try {
+				JSONObject root = new JSONObject(result);
+				if (!root.has("message")) {
+					AccountBean bean = new AccountBean();
+					bean.setSession(root.getString("session"));
+					bean.setUser(JSON.parseObject(root.getString("user"),
+							UserBean.class));
+					EkwingApplication.getInstance().login(bean);
+					startActivity(new Intent(this, MainActivity2.class));
+					finish();
+				} else {
+					ToastUtil.show(context, "用户名或密码错误");
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			break;
 		case SINALOGIN:
 			try {
 				JSONObject root = new JSONObject(result);
@@ -299,6 +426,9 @@ public class LoginAct extends NetWorkActivity {
 			ToastUtil.show(context, "登录失败,用户名或密码错误");
 			break;
 
+		case WXLOGIN:
+			ToastUtil.show(context, "登录失败,用户名或密码错误");
+			break;
 		case SINALOGIN:
 
 			if (sinainfo != null) {

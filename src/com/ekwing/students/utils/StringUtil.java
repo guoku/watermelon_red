@@ -8,9 +8,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.ekwing.students.config.Logger;
@@ -124,6 +132,72 @@ public class StringUtil {
 
 		view.setText(builder);
 		return view;
+	}
+
+	public static void setTextColoPoint(TextView tv, String root) {
+		if ("".equals(root)) {
+			return;
+		}
+		if (root.contains("#")) {
+			int cIndex = 0;
+			int cLength = 0;
+			// while (cIndex < root.length()) {
+			cIndex = root.indexOf("#", cIndex);
+			cLength = root.indexOf(" ", cIndex) == -1 ? root.length() : root
+					.indexOf(" ", cIndex);
+			SpannableString spannableString1 = new SpannableString(root);
+			spannableString1.setSpan(new ClickableSpan() {
+				@Override
+				public void onClick(View widget) {
+					Logger.i(TAG, "onclick--->");
+				}
+			}, cIndex, cLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+			spannableString1.setSpan(new ForegroundColorSpan(Color.RED),
+					cIndex, cLength, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+			tv.setText(spannableString1);
+			tv.setMovementMethod(LinkMovementMethod.getInstance());
+			// }
+		}
+	}
+
+	public static void setTextColoPoint2(TextView tv, String root,
+			final Handler handler, final String uid) {
+		if ("".equals(root)) {
+			return;
+		}
+		SpannableStringBuilder builder = new SpannableStringBuilder(root + " ");
+		if (root.contains("#")) {
+			int cIndex = 0;
+			int cLength = 0;
+			while (cIndex < root.length()) {
+				cIndex = root.indexOf("#", cIndex);
+				if (cIndex == -1) {
+					break;
+				}
+				cLength = root.indexOf(" ", cIndex) == -1 ? root.length()
+						: root.indexOf(" ", cIndex);
+				MyClickableSpan span = new MyClickableSpan(root.substring(
+						cIndex, cLength)) {
+
+					@Override
+					public void onClick(View arg0) {
+						Message msg = Message.obtain();
+						msg.what = 200;
+						msg.obj = text + "&&" + uid;
+						handler.sendMessage(msg);
+					}
+				};
+				builder.setSpan(span, cIndex, cLength,
+						Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+				builder.setSpan(new ForegroundColorSpan(Color.RED), cIndex,
+						cLength, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+				tv.setText(builder);
+				tv.setMovementMethod(LinkMovementMethod.getInstance());
+				cIndex++;
+			}
+		} else {
+			tv.setText(root);
+		}
 	}
 
 	public static TextView setTextColor(TextView view, String root, String time) {

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
@@ -38,6 +39,7 @@ public class FansAct extends NetWorkActivity implements OnClickListener {
 	private FansAdapter adapter;
 	private String url, uid;
 	private UserBean bean;
+	private ImageView view;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,6 @@ public class FansAct extends NetWorkActivity implements OnClickListener {
 
 	@Override
 	protected void onSuccess(String result, int where) {
-		adapter.notifyDataSetChanged();
 		lv.onRefreshComplete();
 		switch (where) {
 		case FANS:
@@ -62,12 +63,12 @@ public class FansAct extends NetWorkActivity implements OnClickListener {
 				return;
 			}
 			bean.setRelation("0");
+			adapter.setStatus(view, bean);
 			break;
 		case FOLLOW1:
 			if (bean == null) {
 				return;
 			}
-
 			ToastUtil.show(context, "关注成功");
 			JSONObject root;
 			try {
@@ -81,7 +82,7 @@ public class FansAct extends NetWorkActivity implements OnClickListener {
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-			adapter.notifyDataSetChanged();
+			adapter.setStatus(view, bean);
 
 			break;
 		default:
@@ -161,6 +162,7 @@ public class FansAct extends NetWorkActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.fans_item_iv_status:
+			view = (ImageView) v;
 			bean = (UserBean) v.getTag();
 			if (bean.getRelation().equals("0")
 					|| bean.getRelation().equals("2")) {

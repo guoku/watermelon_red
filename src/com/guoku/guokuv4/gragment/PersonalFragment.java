@@ -372,7 +372,6 @@ public class PersonalFragment extends BaseFrament {
 
 	@Override
 	protected void setData() {
-		// TODO Auto-generated method stub
 		if (userBean == null) {
 			return;
 		}
@@ -422,14 +421,12 @@ public class PersonalFragment extends BaseFrament {
 		startActivity(new Intent(getActivity(), SettingAct.class));
 	}
 
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		init();
-		setData();
-
-	}
+	// @Override
+	// public void onStart() {
+	// super.onStart();
+	// init();
+	// setData();
+	// }
 
 	@OnClick(R.id.psrson_ll_tab1)
 	public void Tab1(View v) {

@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -297,6 +298,27 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		setGCenter(true, "商品");
 		setGLeft(true, R.drawable.back_selector);
 		setGRigth(true, R.drawable.more);
+
+		mHandler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				// TODO Auto-generated method stub
+				switch (msg.what) {
+				case 200:
+					Intent intent = new Intent(mContext, EntityAct.class);
+					String[] strs = ((String) msg.obj).split("&&");
+					intent.putExtra("data", strs[1]);
+					intent.putExtra("name", strs[0]);
+					startActivity(intent);
+
+					break;
+
+				default:
+					break;
+				}
+			}
+		};
+
 		productBean = JSON.parseObject(getIntent().getStringExtra("data"),
 				PInfoBean.class);
 		tabList = ParseUtil.getTab2ALL(mContext);
@@ -513,7 +535,10 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 				holder.comment_item_tv_name.setText(bean.getCreator()
 						.getNickname());
-				holder.comment_item_tv_context.setText(bean.getContent());
+				// holder.comment_item_tv_context.setText(bean.getContent());
+				StringUtil.setTextColoPoint2(holder.comment_item_tv_context,
+						bean.getContent(), mHandler, bean.getCreator()
+								.getUser_id());
 				holder.comment_item_tv_likes.setText(bean.getPoke_count());
 				holder.comment_item_tv_coms.setText(bean.getComment_count());
 				holder.comment_item_tv_time.setText(DateUtils

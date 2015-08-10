@@ -317,6 +317,7 @@ public class Constant {
 	public static final String REGISTER = "http://api.guoku.com/mobile/v4/register/";
 	public static final String TAOBAOLOGIN = "http://api.guoku.com/mobile/v4/baichuan/login/";
 	public static final String SINALOGIN = "http://api.guoku.com/mobile/v4/weibo/login/";
+	public static final String WXLOGIN = "http://api.guoku.com/mobile/v4/wechat/login/";
 	public static final String SINAREGISTER = "http://api.guoku.com/mobile/v4/sina/register/";
 	public static final String TAOREGISTER = "http://api.guoku.com/mobile/v4/taobao/register/";
 	public static final String FORGET = "http://api.guoku.com/mobile/v4/forget/password/";
@@ -357,6 +358,7 @@ public class Constant {
 				|| Constant.SINALOGIN.equals(url)
 				|| Constant.TAOBAOLOGIN.equals(url)
 				|| Constant.TAOREGISTER.equals(url)
+				|| Constant.WXLOGIN.equals(url)
 				|| Constant.SINAREGISTER.equals(url)
 				|| Constant.FORGET.equals(url);
 	}

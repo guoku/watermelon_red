@@ -73,13 +73,13 @@ public abstract class NetWorkActivity extends BaseActivity {
 				.imageScaleType(ImageScaleType.EXACTLY)
 				.considerExifParams(true).bitmapConfig(Config.RGB_565)
 				.showImageOnLoading(R.drawable.item240)
-				.showImageForEmptyUri(R.drawable.item240)
-				.showImageOnFail(R.drawable.item240).build();
+				.showImageForEmptyUri(R.drawable.item240).cacheInMemory(true)
+				.cacheOnDisk(true).showImageOnFail(R.drawable.item240).build();
 		optionsRound = new DisplayImageOptions.Builder()
 				.bitmapConfig(Bitmap.Config.RGB_565)
 				.imageScaleType(ImageScaleType.EXACTLY)
-				.displayer(new RoundedBitmapDisplayer(90))
-				.showImageForEmptyUri(R.drawable.user100)
+				.displayer(new RoundedBitmapDisplayer(90)).cacheInMemory(true)
+				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.user100)
 				.showImageOnFail(R.drawable.user100)
 				.showImageOnLoading(R.drawable.user100).build();
 
@@ -501,7 +501,6 @@ public abstract class NetWorkActivity extends BaseActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		imageLoader.clearDiskCache();
 	}
 
 	@Override

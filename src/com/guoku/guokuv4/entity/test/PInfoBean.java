@@ -7,9 +7,21 @@ public class PInfoBean implements Serializable {
 	private EntityBean entity;
 	private ArrayList<NoteBean> note_list;
 	private ArrayList<UserBean> like_user_list;
+	private String top_note;
 
 	public EntityBean getEntity() {
 		return entity;
+	}
+
+	public String getTop_note() {
+		if (note_list != null && note_list.size() > 0) {
+			return note_list.get(0).getContent();
+		}
+		return "";
+	}
+
+	public void setTop_note(String top_note) {
+		this.top_note = top_note;
 	}
 
 	public void setEntity(EntityBean entity) {
