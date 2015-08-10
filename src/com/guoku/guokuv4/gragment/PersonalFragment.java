@@ -40,6 +40,7 @@ import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.TabNoteBean;
 import com.guoku.guokuv4.entity.test.TagBean;
 import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.ImgUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -236,7 +237,7 @@ public class PersonalFragment extends BaseFrament {
 		psrson_tv_sign.setText(userBean.getUser().getBio());
 
 		imageLoader.displayImage(userBean.getUser().get240(), psrson_iv_pic,
-				optionsRound);
+				optionsRound, new ImgUtils.AnimateFirstDisplayListener());
 
 		if (userBean.getUser().getGender().equals("男")) {
 			psrson_iv_sex.setText("♂");
@@ -297,7 +298,7 @@ public class PersonalFragment extends BaseFrament {
 				}
 				TabNoteBean bean = mList.get(position);
 				imageLoader.displayImage(bean.getEntity().get240(),
-						holder.person_item_iv_pic, options);
+						holder.person_item_iv_pic, options, new ImgUtils.AnimateFirstDisplayListener());
 				holder.person_item_tv_context.setText(bean.getNote()
 						.getContent());
 				holder.person_item_tv_time.setText(DateUtils

@@ -608,5 +608,10 @@ public abstract class BaseFrament extends Fragment {
 		super.onDestroy();
 		MobclickAgent.onPageEnd("MainScreen");
 	}
+	
+	private void test(){
+		
+		
+	}
 
 }

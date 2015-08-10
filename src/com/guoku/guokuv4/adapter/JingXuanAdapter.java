@@ -17,6 +17,7 @@ import com.ekwing.students.utils.ArrayListAdapter;
 import com.ekwing.students.utils.DateUtils;
 import com.guoku.R;
 import com.guoku.guokuv4.entity.test.PBean;
+import com.guoku.guokuv4.utils.ImgUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -58,11 +59,7 @@ public class JingXuanAdapter extends ArrayListAdapter<PBean> {
 		params.height = w;
 		params.width = w;
 		loader.displayImage(bean.getContent().getEntity().get800(),
-				holder.iv_img, options);
-		// loader.displayImage(bean.getContent().getNote().getCreator()
-		// .getAvatar_small(), holder.iv_last, optionsRound);
-		// BitmapUtil.setRoundImage(loader, bean.getContent().getNote()
-		// .getCreator().getAvatar_small(), options, holder.iv_last);
+				holder.iv_img, options, new ImgUtils.AnimateFirstDisplayListener());
 
 		holder.ll_likes.setTag(bean);
 		holder.ll_likes.setOnClickListener(listener);

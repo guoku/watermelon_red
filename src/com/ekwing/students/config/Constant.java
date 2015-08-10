@@ -292,36 +292,44 @@ public class Constant {
 	public static final String REAL_SELECT_PROVINCE = "REAL_PROVINCE";
 	public static final String SP_KEY = "SP_KEY";
 	public static final String KEY_STATUS = "KEY_STATUS";
-	public static final String JINGXUAN = "http://api.guoku.com/mobile/v4/selection/";
-	public static final String PROINFO = "http://api.guoku.com/mobile/v4/entity/";
-	public static final String GUESS = "http://api.guoku.com/mobile/v4/entity/guess/";
-	public static final String TOLIKE = "http://api.guoku.com/mobile/v4/entity/";
-	public static final String TOPY = "http://api.guoku.com/mobile/v4/entity/note/";
-	public static final String COMMENT = "http://api.guoku.com/mobile/v4/entity/note/";
-	public static final String COMMENTLIST = "http://api.guoku.com/mobile/v4/entity/note/";
-	public static final String COMMENTNOTE = "http://api.guoku.com/mobile/v4/entity/";
-	public static final String LOGIN = "http://api.guoku.com/mobile/v4/login/";
-	public static final String HOT = "http://api.guoku.com/mobile/v4/popular/";
-	public static final String TAB = "http://api.guoku.com/mobile/v4/category/";
+	
+	
+	public static final String URL = "http://api.guoku.com";//生产环境地址
+//	public static final String URL = "http://10.0.0.101:8000";//测试环境地址
+//	public static final String URL = "http://test.guoku.com";//测试环境地址
+	
+	
+	
+	public static final String JINGXUAN = URL + "/mobile/v4/selection/";
+	public static final String PROINFO = URL + "/mobile/v4/entity/";
+	public static final String GUESS = URL + "/mobile/v4/entity/guess/";
+	public static final String TOLIKE = URL + "/mobile/v4/entity/";
+	public static final String TOPY = URL + "/mobile/v4/entity/note/";
+	public static final String COMMENT = URL + "/mobile/v4/entity/note/";
+	public static final String COMMENTLIST = URL + "/mobile/v4/entity/note/";
+	public static final String COMMENTNOTE = URL + "/mobile/v4/entity/";
+	public static final String LOGIN = URL + "/mobile/v4/login/";
+	public static final String HOT = URL + "/mobile/v4/popular/";
+	public static final String TAB = URL + "/mobile/v4/category/";
 
-	public static final String TABLIKE = "http://api.guoku.com/mobile/v4/user/";
-	public static final String POINTLIST = "http://api.guoku.com/mobile/v4/feed/";
-	public static final String MESSAGELIST = "http://api.guoku.com/mobile/v4/message/";
-	public static final String FAXIANHOME = "http://api.guoku.com/mobile/v4/homepage/";
-	public static final String SEARCH = "http://api.guoku.com/mobile/v4/";
-	public static final String CATAB = "http://api.guoku.com/mobile/v4/category/";
-	public static final String FOLLOW = "http://api.guoku.com/mobile/v4/user/";
-	public static final String GETFANSLIST = "http://api.guoku.com/mobile/v4/user/";
-	public static final String USERUPDATA = "http://api.guoku.com/mobile/v4/user/update/";
-	public static final String GETTAGLIST = "http://api.guoku.com/mobile/v4/user/";
-	public static final String REGISTER = "http://api.guoku.com/mobile/v4/register/";
-	public static final String TAOBAOLOGIN = "http://api.guoku.com/mobile/v4/baichuan/login/";
-	public static final String SINALOGIN = "http://api.guoku.com/mobile/v4/weibo/login/";
-	public static final String WXLOGIN = "http://api.guoku.com/mobile/v4/wechat/login/";
-	public static final String SINAREGISTER = "http://api.guoku.com/mobile/v4/sina/register/";
-	public static final String TAOREGISTER = "http://api.guoku.com/mobile/v4/taobao/register/";
-	public static final String FORGET = "http://api.guoku.com/mobile/v4/forget/password/";
-	public static final String USERINFO = "http://api.guoku.com/mobile/v4/user/";
+	public static final String TABLIKE = URL + "/mobile/v4/user/";
+	public static final String POINTLIST = URL + "/mobile/v4/feed/";
+	public static final String MESSAGELIST = URL + "/mobile/v4/message/";
+	public static final String FAXIANHOME = URL + "/mobile/v4/homepage/";
+	public static final String SEARCH = URL + "/mobile/v4/";
+	public static final String CATAB = URL + "/mobile/v4/category/";
+	public static final String FOLLOW = URL + "/mobile/v4/user/";
+	public static final String GETFANSLIST = URL + "/mobile/v4/user/";
+	public static final String USERUPDATA = URL + "/mobile/v4/user/update/";
+	public static final String GETTAGLIST = URL + "/mobile/v4/user/";
+	public static final String REGISTER = URL + "/mobile/v4/register/";
+	public static final String TAOBAOLOGIN = URL + "/mobile/v4/baichuan/login/";
+	public static final String SINALOGIN = URL + "/mobile/v4/weibo/login/";
+	public static final String WXLOGIN = URL + "/mobile/v4/wechat/login/";
+	public static final String SINAREGISTER = URL + "/mobile/v4/sina/register/";
+	public static final String TAOREGISTER = URL + "/mobile/v4/taobao/register/";
+	public static final String FORGET = URL + "/mobile/v4/forget/password/";
+	public static final String USERINFO = URL + "/mobile/v4/user/";
 	public static final String DESCRIPTOR = "1";
 	public static final String WX_APPID = "wx59118ccde8270caa";
 	public static final String WX_SECRET = "2200ad1c64775d37bcb0e7f74c8a0641";

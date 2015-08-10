@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.ekwing.students.utils.ArrayListAdapter;
 import com.guoku.R;
 import com.guoku.guokuv4.entity.test.UserBean;
+import com.guoku.guokuv4.utils.ImgUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -34,7 +35,9 @@ public class FansAdapter extends ArrayListAdapter<UserBean> {
 				.displayer(new RoundedBitmapDisplayer(90))
 				.showImageOnLoading(R.drawable.user100)
 				.showImageForEmptyUri(R.drawable.user100)
-				.showImageOnFail(R.drawable.user100).build();
+				.showImageOnFail(R.drawable.user100)
+				.cacheInMemory(true)
+				.build();
 		this.listener = listener;
 	}
 
@@ -90,7 +93,7 @@ public class FansAdapter extends ArrayListAdapter<UserBean> {
 			ViewHold holder = (ViewHold) view.getTag();
 
 			UserBean bean = (UserBean) mList.get(itemIndex);
-			loader.displayImage(bean.get50(), holder.fans_item_iv_pic, options);
+			loader.displayImage(bean.get50(), holder.fans_item_iv_pic, options, new ImgUtils.AnimateFirstDisplayListener());
 			// BitmapUtil.setRoundImage(loader, bean.getAvatar_small(), options,
 			// holder.fans_item_iv_pic);
 			holder.fans_item_tv_fans.setText("关注  " + bean.getFollowing_count()
