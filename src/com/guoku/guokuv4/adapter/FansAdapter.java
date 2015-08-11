@@ -53,7 +53,7 @@ public class FansAdapter extends ArrayListAdapter<UserBean> {
 			holder = (ViewHold) convertView.getTag();
 		}
 		UserBean bean = (UserBean) mList.get(position);
-		loader.displayImage(bean.get50(), holder.fans_item_iv_pic, options);
+		loader.displayImage(bean.get50(), holder.fans_item_iv_pic, options, new ImgUtils.AnimateFirstDisplayListener());
 		holder.fans_item_tv_fans.setText("关注  " + bean.getFollowing_count()
 				+ "    粉丝 " + bean.getFan_count());
 		holder.fans_item_tv_name.setText(bean.getNickname());

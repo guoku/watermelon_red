@@ -24,17 +24,19 @@ import com.alibaba.fastjson.JSON;
 import com.ekwing.students.base.NetWorkActivity;
 import com.ekwing.students.config.Constant;
 import com.ekwing.students.config.Logger;
+import com.ekwing.students.customview.ScrollViewWithGridView;
 import com.ekwing.students.utils.SharePrenceUtil;
 import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.adapter.EntityAdapter;
 import com.guoku.guokuv4.adapter.FansAdapter;
-import com.guoku.guokuv4.adapter.TabAdapter;
+import com.guoku.guokuv4.adapter.SeachCommodityTypeAdapter;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.BroadUtil;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
@@ -42,7 +44,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
-public class SouAct extends NetWorkActivity implements OnClickListener {
+public class SeachAct extends NetWorkActivity implements OnClickListener {
 	private static final int SEARCH = 10;
 	private static final int SEARCHADD = 15;
 	private static final int TAB = 11;
@@ -73,10 +75,13 @@ public class SouAct extends NetWorkActivity implements OnClickListener {
 
 	@ViewInject(R.id.sou_lv_1)
 	private PullToRefreshListView lv;
+	
+	@ViewInject(R.id.gd_commodity_type)
+	private ScrollViewWithGridView sGridView;//品类
 
 	private EntityAdapter entityAdapter;
 	private FansAdapter fansAdapter;
-	private TabAdapter tabAdapter;
+	private SeachCommodityTypeAdapter seachCommodityTypeAdapter;
 
 	private String curTab = "entity/search/";
 
@@ -169,10 +174,12 @@ public class SouAct extends NetWorkActivity implements OnClickListener {
 		case FOLLOW0:
 			ToastUtil.show(context, "取消关注成功");
 			fansAdapter.notifyDataSetChanged();
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_FOLLOW);
 			break;
 		case FOLLOW1:
 			fansAdapter.notifyDataSetChanged();
 			ToastUtil.show(context, "关注成功");
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_FOLLOW);
 			break;
 		default:
 			break;
@@ -196,7 +203,7 @@ public class SouAct extends NetWorkActivity implements OnClickListener {
 	@Override
 	protected void setupData() {
 		fansAdapter = new FansAdapter(context, this);
-		tabAdapter = new TabAdapter(context);
+		seachCommodityTypeAdapter = new SeachCommodityTypeAdapter(mContext);
 		entityAdapter = new EntityAdapter(context);
 
 		listEntity = new ArrayList<EntityBean>();
@@ -241,7 +248,7 @@ public class SouAct extends NetWorkActivity implements OnClickListener {
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				if (keyCode == KeyEvent.KEYCODE_ENTER) {// 修改回车键功能
 					((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-							.hideSoftInputFromWindow(SouAct.this
+							.hideSoftInputFromWindow(SeachAct.this
 									.getCurrentFocus().getWindowToken(),
 									InputMethodManager.HIDE_NOT_ALWAYS);
 					search(0);
@@ -285,11 +292,13 @@ public class SouAct extends NetWorkActivity implements OnClickListener {
 			sendConnection(Constant.SEARCH + curTab, new String[] { "count",
 					"offset", "q", "type" }, new String[] { "30", off + "",
 					ed_text.getText().toString(), "all" }, off == 0 ? SEARCH
-					: SEARCHADD, false);
+					: SEARCHADD, true);
 	}
 
 	@OnClick(R.id.sou_ll_tab1)
 	public void Tab1(View v) {
+		
+		isShowCT(false);
 		sou_iv_tab1.setVisibility(View.VISIBLE);
 		sou_iv_tab2.setVisibility(View.INVISIBLE);
 		sou_iv_tab3.setVisibility(View.INVISIBLE);
@@ -308,11 +317,13 @@ public class SouAct extends NetWorkActivity implements OnClickListener {
 		sou_tv_tab1.setTextColor(Color.rgb(65, 66, 67));
 		sou_tv_tab2.setTextColor(Color.rgb(157, 158, 159));
 		sou_tv_tab3.setTextColor(Color.rgb(157, 158, 159));
-
+		
 	}
 
 	@OnClick(R.id.sou_ll_tab2)
 	public void Tab2(View v) {
+		
+		isShowCT(true);
 		sou_iv_tab1.setVisibility(View.INVISIBLE);
 		sou_iv_tab2.setVisibility(View.VISIBLE);
 		sou_iv_tab3.setVisibility(View.INVISIBLE);
@@ -321,7 +332,7 @@ public class SouAct extends NetWorkActivity implements OnClickListener {
 		Logger.i(TAG, "listtab" + listTab.size());
 		Logger.i(TAG, "listtab" + listTab.toString());
 
-		lv.setAdapter(tabAdapter);
+		sGridView.setAdapter(seachCommodityTypeAdapter);
 		curList.clear();
 		if (listTab.size() > 0) {
 			if (ed_text.getText().toString() != null
@@ -333,8 +344,8 @@ public class SouAct extends NetWorkActivity implements OnClickListener {
 						curList.add(bean);
 					}
 				}
-				tabAdapter.setList(curList);
-				if (tabAdapter.getCount() == 0) {
+				seachCommodityTypeAdapter.setList(curList);
+				if (seachCommodityTypeAdapter.getCount() == 0) {
 					ToastUtil.show(context, "没有相关结果");
 				}
 
@@ -359,6 +370,8 @@ public class SouAct extends NetWorkActivity implements OnClickListener {
 
 	@OnClick(R.id.sou_ll_tab3)
 	public void Tab3(View v) {
+		
+		isShowCT(false);
 		sou_iv_tab1.setVisibility(View.INVISIBLE);
 		sou_iv_tab2.setVisibility(View.INVISIBLE);
 		sou_iv_tab3.setVisibility(View.VISIBLE);
@@ -400,6 +413,18 @@ public class SouAct extends NetWorkActivity implements OnClickListener {
 		default:
 			break;
 		}
+	}
+	
+	//品类显隐
+	private void isShowCT(boolean isShow){
+		if(isShow){
+			sGridView.setVisibility(View.VISIBLE);
+			lv.setVisibility(View.GONE);
+		}else{
+			sGridView.setVisibility(View.GONE);
+			lv.setVisibility(View.VISIBLE);
+		}
+		
 	}
 
 }

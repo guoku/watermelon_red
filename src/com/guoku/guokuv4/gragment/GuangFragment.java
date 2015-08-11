@@ -42,7 +42,7 @@ import com.ekwing.students.utils.ArrayListAdapter;
 import com.ekwing.students.utils.SharePrenceUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.act.ProductInfoAct;
-import com.guoku.guokuv4.act.SouAct;
+import com.guoku.guokuv4.act.SeachAct;
 import com.guoku.guokuv4.act.TabAct;
 import com.guoku.guokuv4.act.UserAct;
 import com.guoku.guokuv4.act.WebAct;
@@ -68,8 +68,8 @@ public class GuangFragment extends BaseFrament {
 	private static final int FAXIANHOME = 13;
 	private static final int USERINFO = 14;
 
-	@ViewInject(R.id.rl_username)
-	private RelativeLayout rl_username;
+	@ViewInject(R.id.user_et_name)
+	private TextView user_et_name;
 
 	@ViewInject(R.id.product_vp_img)
 	private ViewPager vp;
@@ -372,7 +372,6 @@ public class GuangFragment extends BaseFrament {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		sv.smoothScrollTo(0, 0);
 	}
 
 	@Override
@@ -414,9 +413,9 @@ public class GuangFragment extends BaseFrament {
 		sv.smoothScrollTo(0, 0);
 	}
 
-	@OnClick(R.id.rl_username)
+	@OnClick(R.id.user_et_name)
 	public void SQR(View v) {
-		startActivity(new Intent(context, SouAct.class));
+		startActivity(new Intent(context, SeachAct.class));
 
 	}
 

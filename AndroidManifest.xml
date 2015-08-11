@@ -282,7 +282,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.guoku.guokuv4.act.SouAct"
+            android:name="com.guoku.guokuv4.act.SeachAct"
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
         </activity>

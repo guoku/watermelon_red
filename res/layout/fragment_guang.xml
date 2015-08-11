@@ -15,39 +15,25 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <RelativeLayout
-                android:id="@+id/rl_username"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp" >
-
-                <TextView
+            <TextView
                     android:id="@+id/user_et_name"
-                    android:layout_width="fill_parent"
-                    android:layout_height="36dp"
-                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
                     android:background="#fff0f0f0"
                     android:clickable="false"
                     android:gravity="center_vertical"
-                    android:paddingLeft="30dp"
-                    android:singleLine="true"
                     android:text="搜索"
                     android:textColor="#8c8c8c"
                     android:textColorHint="#414243"
-                    android:textSize="13sp" >
-                </TextView>
-
-                <ImageView
-                    android:id="@+id/iv_name_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
+                    android:textSize="13sp" 
+                    android:drawableLeft="@drawable/search_icon"
+                    android:drawablePadding="8dp"
                     android:layout_marginLeft="8dp"
-                    android:background="@drawable/search_icon"
-                    android:visibility="visible" />
-            </RelativeLayout>
+                	android:layout_marginRight="8dp"
+                	android:layout_marginBottom="4dp"
+                	android:paddingLeft="8dp"
+                    >
+                </TextView>
 
             <ImageView
                 android:layout_width="fill_parent"

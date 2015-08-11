@@ -12,6 +12,7 @@ import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.utils.ArrayListAdapter;
 import com.guoku.R;
 import com.guoku.guokuv4.entity.test.EntityBean;
+import com.guoku.guokuv4.utils.ImgUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -45,7 +46,8 @@ public class EntityAdapter extends ArrayListAdapter<EntityBean> {
 			holder = (ViewHold) convertView.getTag();
 		}
 		EntityBean bean = (EntityBean) mList.get(position);
-		loader.displayImage(bean.get240(), holder.entity_item_iv_pic, options);
+		loader.displayImage(bean.get240(), holder.entity_item_iv_pic, options,
+				new ImgUtils.AnimateFirstDisplayListener());
 		LayoutParams params = new LayoutParams(w, w);
 		holder.entity_item_iv_pic.setLayoutParams(params);
 		if (bean.getLike_already().equals("0")) {

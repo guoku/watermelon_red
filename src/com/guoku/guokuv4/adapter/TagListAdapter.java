@@ -17,6 +17,7 @@ import com.guoku.guokuv4.act.TabAct;
 import com.guoku.guokuv4.act.TabListAct;
 import com.guoku.guokuv4.entity.test.TAB1Bean;
 import com.guoku.guokuv4.entity.test.Tab2Bean;
+import com.guoku.guokuv4.utils.ImgUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -70,7 +71,8 @@ public class TagListAdapter extends ArrayListAdapter<TAB1Bean> {
 
 				final Tab2Bean bean = mList.get(position);
 				loader.displayImage(bean.getCategory_icon_small(),
-						holder.faxian_lv_gv_item_iv_img, options);
+						holder.faxian_lv_gv_item_iv_img, options,
+						new ImgUtils.AnimateFirstDisplayListener());
 				holder.faxian_lv_gv_item_tv_name.setText(bean
 						.getCategory_title());
 
