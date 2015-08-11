@@ -37,8 +37,10 @@ public class JingXuanAdapter extends ArrayListAdapter<PBean> {
 				.imageScaleType(ImageScaleType.EXACTLY)
 				.considerExifParams(true).bitmapConfig(Config.RGB_565)
 				.showImageOnLoading(R.drawable.item800)
-				.showImageForEmptyUri(R.drawable.item800).cacheInMemory(true)
-				.showImageOnFail(R.drawable.item800).build();
+				.showImageForEmptyUri(R.drawable.item800)
+				.showImageOnFail(R.drawable.item800)
+				.cacheInMemory(true)
+				.build();
 
 	}
 
@@ -59,7 +61,8 @@ public class JingXuanAdapter extends ArrayListAdapter<PBean> {
 		params.height = w;
 		params.width = w;
 		loader.displayImage(bean.getContent().getEntity().get800(),
-				holder.iv_img, options, new ImgUtils.AnimateFirstDisplayListener());
+				holder.iv_img, options,
+				new ImgUtils.AnimateFirstDisplayListener());
 
 		holder.ll_likes.setTag(bean);
 		holder.ll_likes.setOnClickListener(listener);

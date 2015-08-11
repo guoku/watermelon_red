@@ -8,6 +8,7 @@ import android.os.Environment;
 
 import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.utils.Utils;
+import com.guoku.guokuv4.gragment.JingXuanFragment;
 import com.lidroid.xutils.util.LogUtils;
 
 public class Constant {
@@ -330,12 +331,22 @@ public class Constant {
 	public static final String TAOREGISTER = URL + "/mobile/v4/taobao/register/";
 	public static final String FORGET = URL + "/mobile/v4/forget/password/";
 	public static final String USERINFO = URL + "/mobile/v4/user/";
+	
+	
+	
 	public static final String DESCRIPTOR = "1";
 	public static final String WX_APPID = "wx59118ccde8270caa";
 	public static final String WX_SECRET = "2200ad1c64775d37bcb0e7f74c8a0641";
 
 	/** 是否打印友盟的log */
 	public static boolean UMENG_LOG = true;
+	
+	
+	/**关注、喜欢等广播action*/
+	public static final String INTENT_ACTION = Constant.class.getName();
+	public static final String INTENT_ACTION_KEY = Constant.class.getName() + "_KEY";
+	public static final int INTENT_ACTION_VALUE_LIKE = 1;//喜欢
+	public static final int INTENT_ACTION_VALUE_FOLLOW = 2;//关注
 
 	public static void init(EkwingApplication lezyoApplication) {
 		if (lezyoApplication != null) {

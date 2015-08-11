@@ -62,6 +62,8 @@ import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.BroadUtil;
+import com.guoku.guokuv4.utils.ImgUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -215,6 +217,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			product_iv_like.setBackgroundResource(R.drawable.like_gary);
 			product_tv_likes.setText("喜爱 "
 					+ productBean.getEntity().getLike_countCut());
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE);
 			break;
 		case LIKE1:
 			AVAnalytics.onEvent(this, "like");
@@ -228,6 +231,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			product_iv_like.setBackgroundResource(R.drawable.like_red);
 			product_tv_likes.setText("喜爱 "
 					+ productBean.getEntity().getLike_countAdd());
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE);
 			break;
 		case PY1:
 			AVAnalytics.onEvent(this, "poke");
@@ -366,7 +370,8 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				final ImageView image = new ImageView(this);
 				image.setTag(i);
 				image.setScaleType(ScaleType.FIT_CENTER);
-				imageLoader.displayImage(url, image, options);
+				imageLoader.displayImage(url, image, options,
+						new ImgUtils.AnimateFirstDisplayListener());
 				image.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View arg0) {
@@ -379,7 +384,8 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			// if (imgs.size() == 0) {
 			final ImageView image = new ImageView(this);
 			image.setScaleType(ScaleType.FIT_CENTER);
-			imageLoader.displayImage(productBean.getEntity().get800(), image);
+			imageLoader.displayImage(productBean.getEntity().get800(), image,
+					new ImgUtils.AnimateFirstDisplayListener());
 			image.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
@@ -454,7 +460,8 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				}
 
 				imageLoader.displayImage(mList.get(position).get50(),
-						(ImageView) convertView, optionsRound);
+						(ImageView) convertView, optionsRound,
+						new ImgUtils.AnimateFirstDisplayListener());
 
 				// BitmapUtil.setRoundImage(imageLoader, mList.get(position)
 				// .getAvatar_small(), options, (ImageView) convertView);
@@ -478,7 +485,8 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 					convertView.setBackgroundColor(Color.WHITE);
 				}
 				imageLoader.displayImage(mList.get(position).get240(),
-						(ImageView) convertView, options);
+						(ImageView) convertView, options,
+						new ImgUtils.AnimateFirstDisplayListener());
 
 				return convertView;
 			}
@@ -500,7 +508,8 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				NoteBean bean = mList.get(position);
 
 				imageLoader.displayImage(bean.getCreator().get50(),
-						holder.comment_item_iv_pic, optionsRound);
+						holder.comment_item_iv_pic, optionsRound,
+						new ImgUtils.AnimateFirstDisplayListener());
 				holder.comment_item_iv_pic.setTag(bean);
 				holder.comment_item_iv_pic
 						.setOnClickListener(ProductInfoAct.this);

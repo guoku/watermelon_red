@@ -27,6 +27,7 @@ import com.guoku.guokuv4.entity.test.MessageBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.PointBean;
 import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.ImgUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
@@ -181,7 +182,8 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 				if (bean.getType().equals("user_like")) {
 					imageLoader.displayImage(bean.getContent().getLiker()
 							.get50(), holder.tongzhi_item_iv_userpic,
-							optionsRound);
+							optionsRound,
+							new ImgUtils.AnimateFirstDisplayListener());
 					StringUtil.setTextColor(
 							holder.tv_context,
 							bean.getContent().getLiker().getNickname()
@@ -191,11 +193,13 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 									.getContent().getLiker().getNickname(),
 							DateUtils.getStandardDate(bean.getCreated_time()));
 					imageLoader.displayImage(bean.getContent().getEntity()
-							.get50(), holder.tongzhi_item_iv_pimg, options);
+							.get50(), holder.tongzhi_item_iv_pimg, options,
+							new ImgUtils.AnimateFirstDisplayListener());
 				} else if (bean.getType().equals("entity")) {
 					imageLoader.displayImage(bean.getContent().getNote()
 							.getCreator().get50(),
-							holder.tongzhi_item_iv_userpic, optionsRound);
+							holder.tongzhi_item_iv_userpic, optionsRound,
+							new ImgUtils.AnimateFirstDisplayListener());
 					StringUtil.setTextColor(
 							holder.tv_context,
 							bean.getContent().getNote().getCreator()
@@ -209,11 +213,13 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 									.getNickname(),
 							DateUtils.getStandardDate(bean.getCreated_time()));
 					imageLoader.displayImage(bean.getContent().getEntity()
-							.get50(), holder.tongzhi_item_iv_pimg, options);
+							.get50(), holder.tongzhi_item_iv_pimg, options,
+							new ImgUtils.AnimateFirstDisplayListener());
 				} else if (bean.getType().equals("user_follow")) {
 					imageLoader.displayImage(bean.getContent().getUser()
 							.get50(), holder.tongzhi_item_iv_userpic,
-							optionsRound);
+							optionsRound,
+							new ImgUtils.AnimateFirstDisplayListener());
 					StringUtil.setTextColor(
 							holder.tv_context,
 							bean.getContent().getUser().getNickname()
@@ -261,7 +267,8 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 
 					imageLoader.displayImage(bean.getContent()
 							.getComment_user().get50(),
-							holder.tongzhi_item_iv_userpic, optionsRound);
+							holder.tongzhi_item_iv_userpic, optionsRound,
+							new ImgUtils.AnimateFirstDisplayListener());
 					StringUtil.setTextColor(
 							holder.tv_context,
 							bean.getContent().getComment_user().getNickname()
@@ -277,13 +284,15 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 							DateUtils.getStandardDate(bean.getCreated_time()));
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
 					imageLoader.displayImage(bean.getContent().getNote()
-							.get50(), holder.tongzhi_item_iv_pimg, options);
+							.get50(), holder.tongzhi_item_iv_pimg, options,
+							new ImgUtils.AnimateFirstDisplayListener());
 				} else if (bean.getType().equals("note_poke_message")) {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
 
 					imageLoader.displayImage(bean.getContent().getPoker()
 							.get50(), holder.tongzhi_item_iv_userpic,
-							optionsRound);
+							optionsRound,
+							new ImgUtils.AnimateFirstDisplayListener());
 
 					StringUtil.setTextColor(
 							holder.tv_context,
@@ -296,16 +305,19 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 							DateUtils.getStandardDate(bean.getCreated_time()));
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
 					imageLoader.displayImage(bean.getContent().getNote()
-							.get50(), holder.tongzhi_item_iv_pimg, options);
+							.get50(), holder.tongzhi_item_iv_pimg, options,
+							new ImgUtils.AnimateFirstDisplayListener());
 				} else if (bean.getType().equals("entity_note_message")) {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
 
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
 					imageLoader.displayImage(bean.getContent().getNote()
 							.getCreator().get50(),
-							holder.tongzhi_item_iv_userpic, optionsRound);
+							holder.tongzhi_item_iv_userpic, optionsRound,
+							new ImgUtils.AnimateFirstDisplayListener());
 					imageLoader.displayImage(bean.getContent().getEntity()
-							.get50(), holder.tongzhi_item_iv_pimg, options);
+							.get50(), holder.tongzhi_item_iv_pimg, options,
+							new ImgUtils.AnimateFirstDisplayListener());
 
 					StringUtil.setTextColor(
 							holder.tv_context,
@@ -324,7 +336,8 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 
 					imageLoader.displayImage(bean.getContent().getFollower()
 							.get50(), holder.tongzhi_item_iv_userpic,
-							optionsRound);
+							optionsRound,
+							new ImgUtils.AnimateFirstDisplayListener());
 
 					StringUtil.setTextColor(
 							holder.tv_context,
@@ -342,7 +355,8 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 
 					imageLoader.displayImage(bean.getContent().getFollower()
 							.get50(), holder.tongzhi_item_iv_userpic,
-							optionsRound);
+							optionsRound,
+							new ImgUtils.AnimateFirstDisplayListener());
 					StringUtil.setTextColor(
 							holder.tv_context,
 							bean.getContent().getNote().getCreator()
@@ -364,7 +378,8 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 							.setImageResource(R.drawable.star);
 					// .setVisibility(View.INVISIBLE);
 					imageLoader.displayImage(bean.getContent().getEntity()
-							.get50(), holder.tongzhi_item_iv_pimg, options);
+							.get50(), holder.tongzhi_item_iv_pimg, options,
+							new ImgUtils.AnimateFirstDisplayListener());
 					holder.tv_context
 							.setText("你添加的商品被收录精选 "
 									+ " "
@@ -375,7 +390,8 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 					Logger.i(TAG, bean.getContent().getLiker().toString());
 					imageLoader.displayImage(bean.getContent().getLiker()
 							.get50(), holder.tongzhi_item_iv_userpic,
-							optionsRound);
+							optionsRound,
+							new ImgUtils.AnimateFirstDisplayListener());
 					StringUtil.setTextColor(
 							holder.tv_context,
 							bean.getContent().getLiker().getNickname()
@@ -385,10 +401,10 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 									.getContent().getLiker().getNickname(),
 							DateUtils.getStandardDate(bean.getCreated_time()));
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
-					imageLoader
-							.displayImage(
-									bean.getContent().getEntity().get50(),
-									holder.tongzhi_item_iv_pimg, optionsRound);
+					imageLoader.displayImage(bean.getContent().getEntity()
+							.get50(), holder.tongzhi_item_iv_pimg,
+							optionsRound,
+							new ImgUtils.AnimateFirstDisplayListener());
 				}
 
 				return convertView;

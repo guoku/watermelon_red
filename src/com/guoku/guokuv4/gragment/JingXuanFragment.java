@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ import com.guoku.guokuv4.entity.test.JIngxuanBean;
 import com.guoku.guokuv4.entity.test.PBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.BroadUtil;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
@@ -161,7 +163,7 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 				if (cur == position) {
 					textView.setTextColor(Color.rgb(66, 126, 192));
 				} else {
-					textView.setTextColor(R.color.g_other);
+					textView.setTextColor(getResources().getColor(R.color.g_other));
 				}
 
 				return textView;
@@ -283,6 +285,7 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 					.setLike_count(
 							pBean.getContent().getEntity().getLike_countCut());
 			adapter.notifyDataSetChanged();
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE);
 			break;
 		case LIKE1:
 			AVAnalytics.onEvent(context, "like_click", pBean.getContent()
@@ -300,6 +303,7 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 					.setLike_count(
 							pBean.getContent().getEntity().getLike_countAdd());
 			adapter.notifyDataSetChanged();
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE);
 			break;
 		default:
 			break;
@@ -335,14 +339,12 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 						+ pBean.getContent().getEntity().getEntity_id()
 						+ "/like/1/", new String[] {}, new String[] {}, LIKE1,
 						false);
-
 			} else {
 
 				sendConnectionPost(Constant.TOLIKE
 						+ pBean.getContent().getEntity().getEntity_id()
 						+ "/like/0/", new String[] {}, new String[] {}, LIKE0,
 						false);
-
 			}
 			break;
 

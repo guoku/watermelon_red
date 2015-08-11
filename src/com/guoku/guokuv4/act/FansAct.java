@@ -22,6 +22,7 @@ import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.adapter.FansAdapter;
 import com.guoku.guokuv4.entity.test.UserBean;
+import com.guoku.guokuv4.utils.BroadUtil;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
@@ -47,7 +48,7 @@ public class FansAct extends NetWorkActivity implements OnClickListener {
 		setContentView(R.layout.fans);
 		setGCenter(true, getIntent().getStringExtra("name"));
 		setGLeft(true, R.drawable.back_selector);
-
+		getFans(0);
 	}
 
 	@Override
@@ -64,6 +65,8 @@ public class FansAct extends NetWorkActivity implements OnClickListener {
 			}
 			bean.setRelation("0");
 			adapter.setStatus(view, bean);
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY,
+					Constant.INTENT_ACTION_VALUE_FOLLOW);
 			break;
 		case FOLLOW1:
 			if (bean == null) {
@@ -83,7 +86,8 @@ public class FansAct extends NetWorkActivity implements OnClickListener {
 				e.printStackTrace();
 			}
 			adapter.setStatus(view, bean);
-
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY,
+					Constant.INTENT_ACTION_VALUE_FOLLOW);
 			break;
 		default:
 			break;
@@ -150,12 +154,6 @@ public class FansAct extends NetWorkActivity implements OnClickListener {
 			}
 		});
 
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		getFans(0);
 	}
 
 	@Override

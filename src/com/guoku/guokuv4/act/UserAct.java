@@ -36,6 +36,8 @@ import com.guoku.guokuv4.entity.test.TabNoteBean;
 import com.guoku.guokuv4.entity.test.TagBean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.BroadUtil;
+import com.guoku.guokuv4.utils.ImgUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -185,6 +187,8 @@ public class UserAct extends NetWorkActivity {
 			psrson_iv_btn.setImageResource(R.drawable.add_to);
 			psrson_tv_btn.setTextColor(Color.WHITE);
 			psrson_ll_btn.setBackgroundResource(R.drawable.blue_shap);
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY,
+					Constant.INTENT_ACTION_VALUE_FOLLOW);
 			break;
 		case FOLLOW1:
 			ToastUtil.show(context, "关注成功");
@@ -203,6 +207,8 @@ public class UserAct extends NetWorkActivity {
 					psrson_iv_btn.setImageResource(R.drawable.to);
 					psrson_tv_btn.setTextColor(Color.argb(255, 19, 143, 215));
 				}
+				BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY,
+						Constant.INTENT_ACTION_VALUE_FOLLOW);
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -269,7 +275,7 @@ public class UserAct extends NetWorkActivity {
 		}
 
 		imageLoader.displayImage(userBean.get240(), psrson_iv_pic,
-				optionsRound1);
+				optionsRound1, new ImgUtils.AnimateFirstDisplayListener());
 
 		psrson_tv_tab2.setText("点评 " + userBean.getEntity_note_count());
 		psrson_tv_tab1.setText("喜爱 " + userBean.getLike_count());
@@ -329,7 +335,8 @@ public class UserAct extends NetWorkActivity {
 					convertView.setBackgroundColor(Color.WHITE);
 				}
 				imageLoader.displayImage(mList.get(position).get240(),
-						(ImageView) convertView, options);
+						(ImageView) convertView, options,
+						new ImgUtils.AnimateFirstDisplayListener());
 
 				return convertView;
 			}
@@ -350,7 +357,8 @@ public class UserAct extends NetWorkActivity {
 				}
 				TabNoteBean bean = mList.get(position);
 				imageLoader.displayImage(bean.getEntity().get240(),
-						holder.person_item_iv_pic, options);
+						holder.person_item_iv_pic, options,
+						new ImgUtils.AnimateFirstDisplayListener());
 				holder.person_item_tv_context.setText(bean.getNote()
 						.getContent());
 				holder.person_item_tv_time.setText(DateUtils

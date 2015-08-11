@@ -5,9 +5,14 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView.LayoutParams;
@@ -24,6 +29,8 @@ import com.ekwing.students.config.Constant;
 import com.ekwing.students.customview.ScrollViewWithListView;
 import com.ekwing.students.utils.ArrayListAdapter;
 import com.ekwing.students.utils.DateUtils;
+import com.ekwing.students.utils.SharePrenceUtil;
+import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.act.CommentTalkAct;
 import com.guoku.guokuv4.act.EntityAct;
@@ -39,6 +46,7 @@ import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.TabNoteBean;
 import com.guoku.guokuv4.entity.test.TagBean;
+import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.ImgUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -63,6 +71,7 @@ public class PersonalFragment extends BaseFrament {
 	private static final int TABTAGADD = 17;
 	private static final int COMMENTLIST = 14;
 	private static final int PROINFO = 13;
+	private static final int USERINFO = 18;
 
 	@ViewInject(R.id.psrson_tv_tab2)
 	private TextView psrson_tv_tab2;
@@ -133,6 +142,8 @@ public class PersonalFragment extends BaseFrament {
 	private DisplayImageOptions optionsRound;
 	private String time = System.currentTimeMillis() / 1000 + "";
 
+	private BroadcastReceiver receiveBroadCast; // 用来处理其它ui操作的关注、喜欢等，保证数据急时同步
+
 	@Override
 	protected int getContentId() {
 		optionsRound = new DisplayImageOptions.Builder()
@@ -165,6 +176,7 @@ public class PersonalFragment extends BaseFrament {
 
 			likeList = ParseUtil.getTabLikeList(result);
 			gvAdapter.setList(likeList);
+			psrson_tv_tab1.setText("喜爱 " + String.valueOf(likeList.size()));
 			break;
 		case TABLIKEADD:
 			try {
@@ -203,6 +215,10 @@ public class PersonalFragment extends BaseFrament {
 			intent = new Intent(context, ProductInfoAct.class);
 			intent.putExtra("data", JSON.toJSONString(bean));
 			startActivity(intent);
+			break;
+		case USERINFO:
+			Log.d("USERINFO=", result);
+			refreshFollow(result);
 			break;
 		default:
 			break;
@@ -249,7 +265,7 @@ public class PersonalFragment extends BaseFrament {
 
 		psrson_tv_tab2.setText("点评 "
 				+ userBean.getUser().getEntity_note_count());
-		psrson_tv_tab1.setText("喜爱 " + userBean.getUser().getLike_count());
+		psrson_tv_tab1.setText("喜爱 ");
 		psrson_tv_tab3.setText("标签 " + userBean.getUser().getTag_count());
 
 		// BitmapUtil.setRoundImage(imageLoader, userBean.getUser()
@@ -277,7 +293,8 @@ public class PersonalFragment extends BaseFrament {
 					convertView.setBackgroundColor(Color.WHITE);
 				}
 				imageLoader.displayImage(mList.get(position).get240(),
-						(ImageView) convertView, options);
+						(ImageView) convertView, options,
+						new ImgUtils.AnimateFirstDisplayListener());
 
 				return convertView;
 			}
@@ -298,7 +315,8 @@ public class PersonalFragment extends BaseFrament {
 				}
 				TabNoteBean bean = mList.get(position);
 				imageLoader.displayImage(bean.getEntity().get240(),
-						holder.person_item_iv_pic, options, new ImgUtils.AnimateFirstDisplayListener());
+						holder.person_item_iv_pic, options,
+						new ImgUtils.AnimateFirstDisplayListener());
 				holder.person_item_tv_context.setText(bean.getNote()
 						.getContent());
 				holder.person_item_tv_time.setText(DateUtils
@@ -369,6 +387,8 @@ public class PersonalFragment extends BaseFrament {
 			}
 		});
 
+		initReceiver();
+		getUserInfo();
 	}
 
 	@Override
@@ -577,6 +597,90 @@ public class PersonalFragment extends BaseFrament {
 		@ViewInject(R.id.person_item3_tv_time)
 		TextView person_item_tv_time;
 
+	}
+
+	private void getUserInfo() {
+
+		sendConnection(Constant.USERINFO + userBean.getUser().getUser_id()
+				+ "/", new String[] {}, new String[] {}, USERINFO, false);
+	}
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		register();
+	}
+
+	private void initReceiver() {
+		receiveBroadCast = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+
+				if (userBean != null) {
+
+					Bundle bundle = intent.getExtras();
+					if (bundle != null) {
+						switch (bundle.getInt(Constant.INTENT_ACTION_KEY)) {
+						case Constant.INTENT_ACTION_VALUE_LIKE:
+							sendConnection(
+									Constant.TABLIKE
+											+ userBean.getUser().getUser_id()
+											+ "/like/",
+									new String[] { "count", "timestamp" },
+									new String[] {
+											"30",
+											System.currentTimeMillis() / 1000
+													+ "" }, TABLIKE, false);
+							break;
+						case Constant.INTENT_ACTION_VALUE_FOLLOW:
+							getUserInfo();
+							break;
+
+						default:
+							break;
+						}
+					}
+				}
+			}
+		};
+	}
+
+	private void register() {
+
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(Constant.INTENT_ACTION);
+		filter.setPriority(Integer.MAX_VALUE);
+		context.registerReceiver(receiveBroadCast, filter);
+	}
+
+	/**
+	 * 处理关注返回的事件
+	 */
+	private void refreshFollow(String result) {
+
+		JSONObject root;
+		try {
+			root = new JSONObject(result);
+			UserBean userBean = (UserBean) JSON.parseObject(
+					root.getString("user"), UserBean.class);
+			String count = userBean.getFollowing_count();
+			userBean.setFollowing_count(count);
+			SharePrenceUtil.setUserBean(context, this.userBean);
+			psrson_tv_guanzhu.setText(userBean.getFollowing_count());
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		if (receiveBroadCast != null) {
+			context.unregisterReceiver(receiveBroadCast);
+		}
 	}
 
 }

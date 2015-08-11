@@ -55,6 +55,7 @@ import com.guoku.guokuv4.entity.test.TAB1Bean;
 import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.ImgUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -197,7 +198,8 @@ public class GuangFragment extends BaseFrament {
 					final ImageView image = new ImageView(getActivity());
 					image.setTag(i);
 					image.setScaleType(ScaleType.FIT_XY);
-					imageLoader.displayImage(list.get(i).getImg(), image);
+					imageLoader.displayImage(list.get(i).getImg(), image,
+							new ImgUtils.AnimateFirstDisplayListener());
 					image.setOnClickListener(new OnClickListener() {
 
 						@Override
@@ -296,7 +298,8 @@ public class GuangFragment extends BaseFrament {
 					convertView.setBackgroundColor(Color.WHITE);
 				}
 				imageLoader.displayImage(mList.get(position).get240(),
-						(ImageView) convertView, options);
+						(ImageView) convertView, options,
+						new ImgUtils.AnimateFirstDisplayListener());
 
 				return convertView;
 			}
