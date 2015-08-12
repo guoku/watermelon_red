@@ -7,10 +7,26 @@
     <string name="error_network">搜索失败,请检查网络连接！</string>
     <string name="result_failure">加载数据失败，请检查您的网络连接并重试.</string>
     
+    <!-- 公共 -->
+    <string name="tv_save">保存</string>
+    
     <!-- 搜索界面相关 -->
     <string name="tv_seach">搜索</string>
     <string name="tv_commodity">商品</string>
 	<string name="tv_commodity_type">品类</string>
 	<string name="tv_user">用户</string>
+	
+	<!-- 修改密码 -->
+	<string name="tv_change_psd">修改密码</string>
+	<string name="tv_psd_old">原密码</string>
+	<string name="tv_psd_new">新密码</string>
+	<string name="tv_psd_ok">确认密码</string>
+	
+		<!-- 修改邮箱 -->
+	<string name="tv_change_email">修改邮箱</string>
+	<string name="tv_email_now">当前邮箱：</string>
+	<string name="tv_email_new">新邮箱</string>
+	<string name="tv_email_psd">密码</string>
+	<string name="tv_email_psd_toast">为保证账号安全，请输入密码：</string>
 
 </resources>

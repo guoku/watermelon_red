@@ -14,6 +14,8 @@ import com.avos.avoscloud.AVAnalytics;
 import com.ekwing.students.EkwingApplication;
 import com.guoku.R;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnChildClick;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -21,7 +23,8 @@ import com.umeng.analytics.MobclickAgent;
  * 
  * @date 2013-12-12
  */
-public abstract class BaseActivity extends FragmentActivity {
+
+public abstract class BaseActivity extends FragmentActivity{
 	protected final String TAG = getClass().getSimpleName();
 	protected Context mContext;
 	protected Handler mHandler;
@@ -98,12 +101,30 @@ public abstract class BaseActivity extends FragmentActivity {
 			view.setVisibility(View.GONE);
 		}
 	}
+	
+	protected void setGRigthText(boolean show, int resid) {
+		TextView rightTv = (TextView) findViewById(R.id.title_bar_rigth_tv);
+		if (show) {
+			rightTv.setVisibility(View.VISIBLE);
+			rightTv.setText(getResources().getString(resid));
+		} else {
+			rightTv.setVisibility(View.GONE);
+		}
+		rightTv.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				rightTextOnClick();
+			}
+		});
+	}
 
 	protected void setGCenter(boolean show, int resid) {
 		TextView view = (TextView) findViewById(R.id.title_bar_centrt_tv);
 		if (show) {
 			view.setVisibility(View.VISIBLE);
-			view.setText(resid);
+			view.setText(getResources().getString(resid));
 		} else {
 			view.setVisibility(View.GONE);
 		}
@@ -118,112 +139,8 @@ public abstract class BaseActivity extends FragmentActivity {
 			view.setVisibility(View.GONE);
 		}
 	}
-
-	// protected void setLeftIC(boolean show, int resid) {
-	// ImageView view = (ImageView) findViewById(R.id.title_iv_left);
-	// if (show) {
-	// view.setVisibility(View.VISIBLE);
-	// view.setImageResource(resid);
-	// } else {
-	// view.setVisibility(View.GONE);
-	// }
-	// }
-	//
-	// protected void setRigthIC(boolean show, int resid) {
-	// ImageView view = (ImageView) findViewById(R.id.title_iv_rigth);
-	// if (show) {
-	// view.setVisibility(View.VISIBLE);
-	// view.setImageResource(resid);
-	// } else {
-	// view.setVisibility(View.GONE);
-	// }
-	// }
-	//
-	// protected void setCenterIC(boolean show, int resid) {
-	// ImageView view = (ImageView) findViewById(R.id.title_iv_center);
-	// if (show) {
-	// view.setVisibility(View.VISIBLE);
-	// view.setImageResource(resid);
-	// } else {
-	// view.setVisibility(View.GONE);
-	// }
-	// }
-	//
-	// protected void setCenterHWIC(boolean show, int resid, Animation anim) {
-	// ImageView view = (ImageView) findViewById(R.id.title_iv_center);
-	// view.setAnimation(anim);
-	// view.setVisibility(View.VISIBLE);
-	// view.setImageResource(resid);
-	// }
-	//
-	// protected void setCenterHWICHidden(boolean show) {
-	// ImageView view = (ImageView) findViewById(R.id.title_iv_center);
-	// view.setAnimation(null);
-	// view.setVisibility(View.GONE);
-	// }
-	//
-	// protected void setLeftText(boolean show, String text) {
-	// TextView view = (TextView) findViewById(R.id.title_tv_left);
-	// if (show) {
-	// view.setVisibility(View.VISIBLE);
-	// view.setText(text);
-	// } else {
-	// view.setVisibility(View.GONE);
-	// }
-	// }
-	//
-	// protected void setLeftText1(boolean show, int text) {
-	// TextView view = (TextView) findViewById(R.id.title_tv_left);
-	// if (show) {
-	// view.setVisibility(View.VISIBLE);
-	// view.setText(text);
-	// } else {
-	// view.setVisibility(View.GONE);
-	// }
-	// }
-	//
-	// protected void setRightText(boolean show, String text) {
-	// TextView view = (TextView) findViewById(R.id.title_tv_rigth);
-	// if (show) {
-	// view.setVisibility(View.VISIBLE);
-	// view.setText(text);
-	// } else {
-	// view.setVisibility(View.GONE);
-	// }
-	// }
-	//
-	// protected void setRightText1(boolean show, int text) {
-	// TextView view = (TextView) findViewById(R.id.title_tv_rigth);
-	// if (show) {
-	// view.setVisibility(View.VISIBLE);
-	// view.setText(text);
-	// } else {
-	// view.setVisibility(View.GONE);
-	// }
-	// }
-	//
-	// protected void setText(boolean show, String text) {
-	// TextView view = (TextView) findViewById(R.id.title_tv_title);
-	// if (show) {
-	// view.setVisibility(View.VISIBLE);
-	// view.setText(text);
-	// } else {
-	// view.setVisibility(View.GONE);
-	// }
-	// }
-	//
-	// protected void setText1(boolean show, int text) {
-	// TextView view = (TextView) findViewById(R.id.title_tv_title);
-	// if (show) {
-	// view.setVisibility(View.VISIBLE);
-	// view.setText(text);
-	// } else {
-	// view.setVisibility(View.GONE);
-	// }
-	// }
-	//
-	// protected void settitleBG(int color) {
-	// RelativeLayout view = (RelativeLayout) findViewById(R.id.title_bg);
-	// view.setBackgroundColor(color);
-	// }
+	
+	protected void rightTextOnClick() {
+		
+	}
 }

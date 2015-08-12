@@ -14,7 +14,9 @@
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
+
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="AnimBottom" parent="@android:style/Animation">
@@ -334,6 +336,18 @@
         <item name="android:backgroundDimEnabled">true</item> <!-- dim:模糊的 阴影效果 -->
         <item name="android:windowBackground">@android:color/transparent</item> <!-- 背景图片的大小也影响窗口的大小 -->
         <item name="android:windowNoTitle">true</item> <!-- 没有标题 -->
+    </style>
+
+    <!-- activity通用背景  临时解决manifest中theam不统一问题 -->
+    <style name="act_style">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <!-- EditView字体style -->
+    <style name="edit_item">
+        <item name="android:textSize">18sp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:singleLine">true</item>
     </style>
 
 </resources>

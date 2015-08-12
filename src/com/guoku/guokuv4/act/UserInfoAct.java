@@ -26,6 +26,8 @@ import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.entity.test.AccountBean;
 import com.guoku.guokuv4.entity.test.UserBean;
+import com.guoku.guokuv4.my.ChangeEmailAct;
+import com.guoku.guokuv4.my.ChangePasswordAct;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -115,21 +117,23 @@ public class UserInfoAct extends NetWorkActivity {
 
 	@OnClick(R.id.user_info_ll_email)
 	public void email(View v) {
-		final EditText text = new EditText(mContext);
-		text.setText(bean.getUser().getEmail());
-		DialogUtils.getEDialog(mContext, new OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				if (text.getText().toString() != null
-						&& !"".equals(text.getText().toString())) {
-
-					sendConnectionPOST(Constant.USERUPDATA + "account/",
-							new String[] { "email" }, new String[] { text
-									.getText().toString() }, EMAIL, false);
-				}
-			}
-		}, "修改邮箱", text).show();
+//		final EditText text = new EditText(mContext);
+//		text.setText(bean.getUser().getEmail());
+//		DialogUtils.getEDialog(mContext, new OnClickListener() {
+//
+//			@Override
+//			public void onClick(DialogInterface dialog, int which) {
+//				if (text.getText().toString() != null
+//						&& !"".equals(text.getText().toString())) {
+//
+//					sendConnectionPOST(Constant.USERUPDATA + "account/",
+//							new String[] { "email" }, new String[] { text
+//									.getText().toString() }, EMAIL, false);
+//				}
+//			}
+//		}, "修改邮箱", text).show();
+		
+		startActivity(new Intent(this, ChangeEmailAct.class));
 	}
 
 	@OnClick(R.id.user_info_ll_name)
@@ -153,21 +157,23 @@ public class UserInfoAct extends NetWorkActivity {
 
 	@OnClick(R.id.user_info_ll_pass)
 	public void pass(View v) {
-		final EditText text = new EditText(mContext);
-		text.setText("");
-		DialogUtils.getEDialog(mContext, new OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				if (text.getText().toString() != null
-						&& !"".equals(text.getText().toString())) {
-
-					sendConnectionPOST(Constant.USERUPDATA + "account/",
-							new String[] { "password" }, new String[] { text
-									.getText().toString() }, PASS, false);
-				}
-			}
-		}, "修改密码", text).show();
+//		final EditText text = new EditText(mContext);
+//		text.setText("");
+//		DialogUtils.getEDialog(mContext, new OnClickListener() {
+//
+//			@Override
+//			public void onClick(DialogInterface dialog, int which) {
+//				if (text.getText().toString() != null
+//						&& !"".equals(text.getText().toString())) {
+//
+//					sendConnectionPOST(Constant.USERUPDATA + "account/",
+//							new String[] { "password" }, new String[] { text
+//									.getText().toString() }, PASS, false);
+//				}
+//			}
+//		}, "修改密码", text).show();
+		startActivity(new Intent(this, ChangePasswordAct.class));
+		
 	}
 
 	@OnClick(R.id.user_info_ll_sex)
