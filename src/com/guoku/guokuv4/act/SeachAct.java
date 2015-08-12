@@ -8,15 +8,19 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,6 +41,8 @@ import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.BroadUtil;
+import com.guoku.guokuv4.utils.ScreenSizeUtil;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
@@ -75,9 +81,15 @@ public class SeachAct extends NetWorkActivity implements OnClickListener {
 
 	@ViewInject(R.id.sou_lv_1)
 	private PullToRefreshListView lv;
-	
+
 	@ViewInject(R.id.gd_commodity_type)
-	private ScrollViewWithGridView sGridView;//品类
+	private ScrollViewWithGridView sGridView;// 品类
+
+	@ViewInject(R.id.view_def_img)
+	private ImageView view_def;// 搜索内容为null时默认显示
+
+	@ViewInject(R.id.layout_content)
+	private View view_content;
 
 	private EntityAdapter entityAdapter;
 	private FansAdapter fansAdapter;
@@ -89,16 +101,31 @@ public class SeachAct extends NetWorkActivity implements OnClickListener {
 	private ArrayList<UserBean> listUser;
 	private ArrayList<Tab2Bean> listTab, curList;
 
+	UserBean beanFowllow;// 刷新关注按钮相关
+	ImageView imgFowllow;
+	
+	private String seachConten;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.sou);
+		init();
+	}
+
+	private void init() {
+
+		ed_text.addTextChangedListener(watcher);
+		view_def.setLayoutParams(new LinearLayout.LayoutParams(ScreenSizeUtil
+				.getScreenWidth(this) / 2, ScreenSizeUtil.getScreenHeight(this) / 2));
 	}
 
 	@Override
 	protected void onSuccess(String result, int where) {
 		// TODO Auto-generated method stub
+		isShowSeachResult(true);
 		lv.onRefreshComplete();
+		ed_text.setEnabled(true);
 		switch (where) {
 		case SEARCH:
 			Logger.i(TAG, "set");
@@ -173,13 +200,15 @@ public class SeachAct extends NetWorkActivity implements OnClickListener {
 			break;
 		case FOLLOW0:
 			ToastUtil.show(context, "取消关注成功");
-			fansAdapter.notifyDataSetChanged();
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_FOLLOW);
+			fansAdapter.setStatus(imgFowllow, beanFowllow);
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY,
+					Constant.INTENT_ACTION_VALUE_FOLLOW);
 			break;
 		case FOLLOW1:
-			fansAdapter.notifyDataSetChanged();
 			ToastUtil.show(context, "关注成功");
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_FOLLOW);
+			fansAdapter.setStatus(imgFowllow, beanFowllow);
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY,
+					Constant.INTENT_ACTION_VALUE_FOLLOW);
 			break;
 		default:
 			break;
@@ -251,7 +280,7 @@ public class SeachAct extends NetWorkActivity implements OnClickListener {
 							.hideSoftInputFromWindow(SeachAct.this
 									.getCurrentFocus().getWindowToken(),
 									InputMethodManager.HIDE_NOT_ALWAYS);
-					search(0);
+					search(0, seachConten);
 				}
 				return false;
 			}
@@ -269,9 +298,9 @@ public class SeachAct extends NetWorkActivity implements OnClickListener {
 			public void onPullUpToRefresh(
 					PullToRefreshBase<ListView> refreshView) {
 				if (curTab.equals("entity/search/")) {
-					search(entityAdapter.getCount());
+					search(entityAdapter.getCount(), seachConten);
 				} else if (curTab.equals("user/search/")) {
-					search(fansAdapter.getCount());
+					search(fansAdapter.getCount(), seachConten);
 				} else {
 					lv.onRefreshComplete();
 				}
@@ -280,24 +309,23 @@ public class SeachAct extends NetWorkActivity implements OnClickListener {
 
 	}
 
-	private void search(int off) {
-		if (ed_text.getText().toString() == null
-				|| "".equals(ed_text.getText().toString())) {
-			lv.onRefreshComplete();
+	private void search(int off, String content) {
+
+		if (StringUtils.isEmpty(content)) {
 			return;
 		}
+
 		if (curTab.equals("tab")) {
 			Tab2(null);
 		} else
 			sendConnection(Constant.SEARCH + curTab, new String[] { "count",
 					"offset", "q", "type" }, new String[] { "30", off + "",
-					ed_text.getText().toString(), "all" }, off == 0 ? SEARCH
-					: SEARCHADD, true);
+					content, "all" }, off == 0 ? SEARCH : SEARCHADD, false);
 	}
 
 	@OnClick(R.id.sou_ll_tab1)
 	public void Tab1(View v) {
-		
+
 		isShowCT(false);
 		sou_iv_tab1.setVisibility(View.VISIBLE);
 		sou_iv_tab2.setVisibility(View.INVISIBLE);
@@ -311,18 +339,18 @@ public class SeachAct extends NetWorkActivity implements OnClickListener {
 		if (listEntity.size() > 0) {
 			entityAdapter.setList(listEntity);
 		} else {
-			search(0);
+			search(0, seachConten);
 		}
 
 		sou_tv_tab1.setTextColor(Color.rgb(65, 66, 67));
 		sou_tv_tab2.setTextColor(Color.rgb(157, 158, 159));
 		sou_tv_tab3.setTextColor(Color.rgb(157, 158, 159));
-		
+
 	}
 
 	@OnClick(R.id.sou_ll_tab2)
 	public void Tab2(View v) {
-		
+
 		isShowCT(true);
 		sou_iv_tab1.setVisibility(View.INVISIBLE);
 		sou_iv_tab2.setVisibility(View.VISIBLE);
@@ -335,12 +363,10 @@ public class SeachAct extends NetWorkActivity implements OnClickListener {
 		sGridView.setAdapter(seachCommodityTypeAdapter);
 		curList.clear();
 		if (listTab.size() > 0) {
-			if (ed_text.getText().toString() != null
-					&& !"".equals(ed_text.getText().toString())) {
-
+			if(!StringUtils.isEmpty(seachConten)){
 				for (Tab2Bean bean : listTab) {
 					if (bean.getCategory_title().contains(
-							ed_text.getText().toString())) {
+							seachConten)) {
 						curList.add(bean);
 					}
 				}
@@ -348,7 +374,6 @@ public class SeachAct extends NetWorkActivity implements OnClickListener {
 				if (seachCommodityTypeAdapter.getCount() == 0) {
 					ToastUtil.show(context, "没有相关结果");
 				}
-
 			}
 		} else {
 			sendConnection(Constant.TAB, new String[] {}, new String[] {}, TAB,
@@ -370,7 +395,7 @@ public class SeachAct extends NetWorkActivity implements OnClickListener {
 
 	@OnClick(R.id.sou_ll_tab3)
 	public void Tab3(View v) {
-		
+
 		isShowCT(false);
 		sou_iv_tab1.setVisibility(View.INVISIBLE);
 		sou_iv_tab2.setVisibility(View.INVISIBLE);
@@ -382,7 +407,7 @@ public class SeachAct extends NetWorkActivity implements OnClickListener {
 		if (listUser.size() > 0) {
 			fansAdapter.setList(listUser);
 		} else {
-			search(0);
+			search(0, seachConten);
 		}
 
 		sou_tv_tab3.setTextColor(Color.rgb(65, 66, 67));
@@ -395,18 +420,20 @@ public class SeachAct extends NetWorkActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.fans_item_iv_status:
-			UserBean bean = (UserBean) v.getTag();
-			if (bean.getRelation().equals("0")
-					|| bean.getRelation().equals("2")) {
-				sendConnectionPOST(Constant.FOLLOW + bean.getUser_id()
+			beanFowllow = (UserBean) v.getTag();
+			imgFowllow = (ImageView) v;
+
+			if (beanFowllow.getRelation().equals("0")
+					|| beanFowllow.getRelation().equals("2")) {
+				sendConnectionPOST(Constant.FOLLOW + beanFowllow.getUser_id()
 						+ "/follow/1/", new String[] {}, new String[] {},
 						FOLLOW1, false);
-				// bean.setRelation("1");
+				beanFowllow.setRelation("1");
 			} else {
-				sendConnectionPOST(Constant.FOLLOW + bean.getUser_id()
+				sendConnectionPOST(Constant.FOLLOW + beanFowllow.getUser_id()
 						+ "/follow/0/", new String[] {}, new String[] {},
 						FOLLOW0, false);
-				// bean.setRelation("0");
+				beanFowllow.setRelation("0");
 			}
 			// fansAdapter.notifyDataSetChanged();
 			break;
@@ -414,17 +441,55 @@ public class SeachAct extends NetWorkActivity implements OnClickListener {
 			break;
 		}
 	}
-	
-	//品类显隐
-	private void isShowCT(boolean isShow){
-		if(isShow){
+
+	// 品类显隐
+	private void isShowCT(boolean isShow) {
+		if (isShow) {
 			sGridView.setVisibility(View.VISIBLE);
 			lv.setVisibility(View.GONE);
-		}else{
+		} else {
 			sGridView.setVisibility(View.GONE);
 			lv.setVisibility(View.VISIBLE);
 		}
-		
+
 	}
+
+	// 搜索结果显隐
+	private void isShowSeachResult(boolean isShow) {
+
+		if (isShow) {
+			view_content.setVisibility(View.VISIBLE);
+			view_def.setVisibility(View.GONE);
+		} else {
+			view_content.setVisibility(View.GONE);
+			view_def.setVisibility(View.VISIBLE);
+		}
+	}
+
+	private TextWatcher watcher = new TextWatcher() {
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before,
+				int count) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count,
+				int after) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+			// TODO Auto-generated method stub
+			seachConten = s.toString();
+			if (s.length() > 0) {
+				search(0, seachConten);
+			}
+		}
+	};
 
 }

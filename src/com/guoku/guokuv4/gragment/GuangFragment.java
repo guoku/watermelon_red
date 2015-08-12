@@ -369,12 +369,6 @@ public class GuangFragment extends BaseFrament {
 	}
 
 	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-	}
-
-	@Override
 	protected void setData() {
 		list_cid = ParseUtil.getTab2List(context);
 		sendConnection(Constant.HOT, new String[] {}, new String[] {}, HOT,

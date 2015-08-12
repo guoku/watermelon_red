@@ -72,6 +72,7 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 	private GridView view;
 	private ArrayList<JIngxuanBean> list2;
 	private ArrayListAdapter<JIngxuanBean> adapter2;
+	private View layoutView;//刷新喜欢img
 
 	@Override
 	public void onLowMemory() {
@@ -284,7 +285,8 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 					.getEntity()
 					.setLike_count(
 							pBean.getContent().getEntity().getLike_countCut());
-			adapter.notifyDataSetChanged();
+			
+			adapter.setStatus(layoutView, pBean);
 			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE);
 			break;
 		case LIKE1:
@@ -302,7 +304,7 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 					.getEntity()
 					.setLike_count(
 							pBean.getContent().getEntity().getLike_countAdd());
-			adapter.notifyDataSetChanged();
+			adapter.setStatus(layoutView, pBean);
 			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE);
 			break;
 		default:
@@ -333,6 +335,7 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 		switch (arg0.getId()) {
 		case R.id.jingxuan_item_ll_like:
 			pBean = (PBean) arg0.getTag();
+			layoutView = arg0;
 			if (pBean.getContent().getEntity().getLike_already().equals("0")) {
 
 				sendConnectionPost(Constant.TOLIKE

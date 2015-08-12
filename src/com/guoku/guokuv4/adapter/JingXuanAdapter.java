@@ -17,6 +17,7 @@ import com.ekwing.students.utils.ArrayListAdapter;
 import com.ekwing.students.utils.DateUtils;
 import com.guoku.R;
 import com.guoku.guokuv4.entity.test.PBean;
+import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.utils.ImgUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -86,6 +87,24 @@ public class JingXuanAdapter extends ArrayListAdapter<PBean> {
 
 	public void setUserBeans(ArrayList<PBean> beans) {
 		setList(beans);
+	}
+	
+	public void setStatus(View view, PBean bean) {
+		ImageView iv_isLike = (ImageView) view.findViewById(R.id.jingxuan_item_iv_like);
+		TextView tv_like_count = (TextView) view.findViewById(R.id.jingxuan_item_tv_likes);
+		if ("1".equals(bean.getContent().getEntity().getLike_already())) {
+			iv_isLike.setImageResource(R.drawable.like_red);
+		} else {
+			iv_isLike.setImageResource(R.drawable.like_gary);
+		}
+		tv_like_count.setText(bean.getContent().getNote().getContent());
+		if (!bean.getContent().getEntity().getLike_count().equals("")) {
+			tv_like_count.setVisibility(View.VISIBLE);
+			tv_like_count.setText(""
+					+ bean.getContent().getEntity().getLike_count());
+		} else {
+			tv_like_count.setVisibility(View.GONE);
+		}
 	}
 
 	private class ViewHolder {
