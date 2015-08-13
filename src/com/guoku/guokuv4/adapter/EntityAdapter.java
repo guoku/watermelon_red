@@ -31,6 +31,7 @@ public class EntityAdapter extends ArrayListAdapter<EntityBean> {
 				.considerExifParams(true).bitmapConfig(Config.RGB_565)
 				.showImageOnLoading(R.color.g_w)
 				.showImageForEmptyUri(R.color.g_w).showImageOnFail(R.color.g_w)
+				.cacheInMemory(true)
 				.build();
 	}
 
@@ -56,12 +57,6 @@ public class EntityAdapter extends ArrayListAdapter<EntityBean> {
 			holder.entity_item_iv_islike
 					.setImageResource(R.drawable.icon_like_press);
 		}
-		// if (bean.getNote_count().equals("0")) {
-		// holder.entity_item_iv_islike.setImageResource(R.drawable.icon_like);
-		// } else {
-		// holder.entity_item_iv_islike
-		// .setImageResource(R.drawable.icon_like_press);
-		// }
 		holder.entity_item_tv_com.setText(bean.getNote_count());
 		holder.entity_item_tv_like.setText(bean.getLike_count());
 		holder.entity_item_tv_name.setText(bean.getTitle());

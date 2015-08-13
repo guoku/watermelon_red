@@ -1,6 +1,7 @@
 package com.ekwing.students.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -119,6 +120,7 @@ public abstract class BaseActivity extends FragmentActivity{
 			}
 		});
 	}
+	
 
 	protected void setGCenter(boolean show, int resid) {
 		TextView view = (TextView) findViewById(R.id.title_bar_centrt_tv);
@@ -142,5 +144,33 @@ public abstract class BaseActivity extends FragmentActivity{
 	
 	protected void rightTextOnClick() {
 		
+	}
+	
+    protected void openActivity(Class<?> pClass)
+    {
+        openActivity(pClass, null);
+    }
+
+    protected void openActivity(Class<?> pClass, Bundle pBundle)
+    {
+        Intent intent = new Intent(this, pClass);
+        if (pBundle != null)
+        {
+            intent.putExtras(pBundle);
+        }
+
+        startActivity(intent);
+    }
+	
+	protected void openActivityForResult(Class<?> pClass, int requestCode) {
+		openActivityForResult(pClass, null, requestCode);
+	}
+	
+	protected void openActivityForResult(Class<?> pClass, Bundle pBundle, int requestCode) {
+		Intent intent = new Intent(this, pClass);
+		if (pBundle != null) {
+			intent.putExtras(pBundle);
+		}
+		startActivityForResult(intent, requestCode);
 	}
 }

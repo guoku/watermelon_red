@@ -35,10 +35,11 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class UserInfoAct extends NetWorkActivity {
+	
+	public static final int INTENT_REQUEST_CODE = 1001;
+	
 	private static final int ADD = 10;
 	private static final int NAME = 11;
-	private static final int PASS = 12;
-	private static final int EMAIL = 13;
 	private static final int SIGN = 14;
 	private static final int SEX = 15;
 	private static final int PIC = 16;
@@ -117,23 +118,8 @@ public class UserInfoAct extends NetWorkActivity {
 
 	@OnClick(R.id.user_info_ll_email)
 	public void email(View v) {
-//		final EditText text = new EditText(mContext);
-//		text.setText(bean.getUser().getEmail());
-//		DialogUtils.getEDialog(mContext, new OnClickListener() {
-//
-//			@Override
-//			public void onClick(DialogInterface dialog, int which) {
-//				if (text.getText().toString() != null
-//						&& !"".equals(text.getText().toString())) {
-//
-//					sendConnectionPOST(Constant.USERUPDATA + "account/",
-//							new String[] { "email" }, new String[] { text
-//									.getText().toString() }, EMAIL, false);
-//				}
-//			}
-//		}, "修改邮箱", text).show();
 		
-		startActivity(new Intent(this, ChangeEmailAct.class));
+		openActivityForResult(ChangeEmailAct.class, INTENT_REQUEST_CODE);
 	}
 
 	@OnClick(R.id.user_info_ll_name)
@@ -157,23 +143,8 @@ public class UserInfoAct extends NetWorkActivity {
 
 	@OnClick(R.id.user_info_ll_pass)
 	public void pass(View v) {
-//		final EditText text = new EditText(mContext);
-//		text.setText("");
-//		DialogUtils.getEDialog(mContext, new OnClickListener() {
-//
-//			@Override
-//			public void onClick(DialogInterface dialog, int which) {
-//				if (text.getText().toString() != null
-//						&& !"".equals(text.getText().toString())) {
-//
-//					sendConnectionPOST(Constant.USERUPDATA + "account/",
-//							new String[] { "password" }, new String[] { text
-//									.getText().toString() }, PASS, false);
-//				}
-//			}
-//		}, "修改密码", text).show();
-		startActivity(new Intent(this, ChangePasswordAct.class));
 		
+		startActivity(new Intent(this, ChangePasswordAct.class));
 	}
 
 	@OnClick(R.id.user_info_ll_sex)
@@ -235,12 +206,6 @@ public class UserInfoAct extends NetWorkActivity {
 		case NAME:
 			ToastUtil.show(mContext, "昵称修改成功");
 			break;
-		case PASS:
-			ToastUtil.show(mContext, "密码修改成功");
-			break;
-		case EMAIL:
-			ToastUtil.show(mContext, "邮箱修改成功");
-			break;
 		case SIGN:
 			ToastUtil.show(mContext, "简介修改成功");
 			break;
@@ -264,12 +229,6 @@ public class UserInfoAct extends NetWorkActivity {
 			break;
 		case NAME:
 			ToastUtil.show(mContext, "昵称修改失败");
-			break;
-		case PASS:
-			ToastUtil.show(mContext, "密码修改失败");
-			break;
-		case EMAIL:
-			ToastUtil.show(mContext, "邮箱修改失败");
 			break;
 		case SIGN:
 			ToastUtil.show(mContext, "简介修改失败");
@@ -315,40 +274,45 @@ public class UserInfoAct extends NetWorkActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (data != null) {
-			Bitmap ed_Bitmap = null;
-			if (requestCode == 0) {
-				Uri uri = data.getData();
-				ContentResolver cr = this.getContentResolver();
-				try {
-					BitmapFactory.Options options = new BitmapFactory.Options();
-					options.inJustDecodeBounds = false;
-					options.inSampleSize = 4;
-					ed_Bitmap = BitmapFactory.decodeStream(
-							cr.openInputStream(uri), null, options);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			} else if (requestCode == 1) {
-				try {
-					Bundle bundle = data.getExtras();
-					Bitmap buf = (Bitmap) bundle.get("data");
+			if(resultCode == INTENT_REQUEST_CODE){
+				bean = EkwingApplication.getInstance().getBean();
+				tv_email.setText(bean.getUser().getEmail());
+			}else{
+				Bitmap ed_Bitmap = null;
+				if (requestCode == 0) {
+					Uri uri = data.getData();
+					ContentResolver cr = this.getContentResolver();
+					try {
+						BitmapFactory.Options options = new BitmapFactory.Options();
+						options.inJustDecodeBounds = false;
+						options.inSampleSize = 4;
+						ed_Bitmap = BitmapFactory.decodeStream(
+								cr.openInputStream(uri), null, options);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} else if (requestCode == 1) {
+					try {
+						Bundle bundle = data.getExtras();
+						Bitmap buf = (Bitmap) bundle.get("data");
 
-					ed_Bitmap = Bitmap.createBitmap(buf);
-				} catch (Exception e) {
-					e.printStackTrace();
+						ed_Bitmap = Bitmap.createBitmap(buf);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
+				String sdState = Environment.getExternalStorageState();
+				if (!sdState.equals(Environment.MEDIA_MOUNTED)) {
+					return;
+				}
+				iv_pic.setImageBitmap(ed_Bitmap);
+				BitmapUtil.saveBitmap(Constant.IMAGES_PATH + "temp.png", ed_Bitmap);
+				int d = BitmapUtil.getBitmapDegree(Constant.IMAGES_PATH
+						+ "temp.png");
+				ed_Bitmap = BitmapUtil.rotateBitmapByDegree(ed_Bitmap, d);
+				upPic(Constant.USERUPDATA, ed_Bitmap, PIC);
 			}
-			String sdState = Environment.getExternalStorageState();
-			if (!sdState.equals(Environment.MEDIA_MOUNTED)) {
-				return;
-			}
-			iv_pic.setImageBitmap(ed_Bitmap);
-			BitmapUtil.saveBitmap(Constant.IMAGES_PATH + "temp.png", ed_Bitmap);
-			int d = BitmapUtil.getBitmapDegree(Constant.IMAGES_PATH
-					+ "temp.png");
-			ed_Bitmap = BitmapUtil.rotateBitmapByDegree(ed_Bitmap, d);
-			upPic(Constant.USERUPDATA, ed_Bitmap, PIC);
 		}
 	}
-
+	
 }

@@ -24,4 +24,15 @@ public class ToastUtil {
 
 		mToast.show();
 	}
+	
+	public static void show(Context context, int id) {
+		if (mToast == null) {
+			mToast = Toast.makeText(context, context.getResources().getString(id), Toast.LENGTH_SHORT);
+		} else {
+			mToast.setText(context.getResources().getString(id));
+			mToast.setDuration(Toast.LENGTH_SHORT);
+		}
+
+		mToast.show();
+	}
 }

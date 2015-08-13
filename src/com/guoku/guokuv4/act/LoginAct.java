@@ -308,6 +308,7 @@ public class LoginAct extends NetWorkActivity {
 
 	@OnClick(R.id.login_btn_login)
 	public void Push(View v) {
+		
 		if (ed_name.getText().toString() != null
 				&& !"".equals(ed_name.getText().toString().trim())
 				&& ed_pass.getText().toString() != null

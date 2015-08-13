@@ -5,16 +5,18 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
-import android.view.ViewGroup.LayoutParams;
+import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -45,12 +47,14 @@ import com.guoku.guokuv4.utils.ScreenSizeUtil;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnPullEventListener;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
-public class SeachAct extends NetWorkActivity implements OnClickListener {
+@SuppressLint("ClickableViewAccessibility") public class SeachAct extends NetWorkActivity implements OnClickListener, OnTouchListener {
 	private static final int SEARCH = 10;
 	private static final int SEARCHADD = 15;
 	private static final int TAB = 11;
@@ -118,6 +122,17 @@ public class SeachAct extends NetWorkActivity implements OnClickListener {
 		ed_text.addTextChangedListener(watcher);
 		view_def.setLayoutParams(new LinearLayout.LayoutParams(ScreenSizeUtil
 				.getScreenWidth(this) / 2, ScreenSizeUtil.getScreenHeight(this) / 2));
+		
+		lv.setOnPullEventListener(new OnPullEventListener<ListView>() {
+
+			@Override
+			public void onPullEvent(PullToRefreshBase<ListView> refreshView,
+					State state, Mode direction) {
+				// TODO Auto-generated method stub
+				hideKeyBoard();
+			}
+		});
+		sGridView.setOnTouchListener(this);
 	}
 
 	@Override
@@ -491,5 +506,25 @@ public class SeachAct extends NetWorkActivity implements OnClickListener {
 			}
 		}
 	};
+
+	@Override
+	public boolean onTouch(View arg0, MotionEvent arg1) {
+		// TODO Auto-generated method stub
+		if (arg1.getAction() == MotionEvent.ACTION_MOVE) {
+			hideKeyBoard();
+        }
+		return false;
+	}
+	
+    public void hideKeyBoard()
+    {
+        InputMethodManager im = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if (this.getCurrentFocus() != null
+                && this.getCurrentFocus().getWindowToken() != null)
+        {
+            im.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
 
 }

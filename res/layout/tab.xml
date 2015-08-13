@@ -15,45 +15,38 @@
         android:layout_height="1px"
         android:background="@color/g_line" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <ImageView
-            android:id="@+id/tab_iv_gv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/g_gv" />
-
-        <ImageView
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/g_line" />
-
-        <ImageView
-            android:id="@+id/tab_iv_lv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/g_lv_p" />
-
-        <ImageView
-            android:layout_width="1px"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/g_line" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
         <TextView
             android:id="@+id/tab_tv_count"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textColor="@color/g_other" />
-    </LinearLayout>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/line"
+            android:textColor="@color/g_other" 
+            android:layout_marginRight="8dp"
+            />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="1dp"
+            android:layout_height="15dp"
+            android:layout_toLeftOf="@+id/check_box_lyout"
+            android:background="@color/g_line" 
+            android:layout_centerVertical="true"
+            android:layout_marginRight="4dp"
+            />
+
+        <CheckBox
+            android:id="@+id/check_box_lyout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:button="@drawable/laylut_check_box_bg" />
+    </RelativeLayout>
 
     <ImageView
         android:layout_width="match_parent"

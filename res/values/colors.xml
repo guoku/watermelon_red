@@ -170,5 +170,9 @@
     <color name="calendar_money_bg">#ff7302</color>
     <color name="calendar_money_noin_bg">#ffdead</color>
     <color name="holidaycolor">#87c80a</color>
+    
+    <!-- top bar right tv -->
+    <color name="title_bar_gray">#9D9E9F</color>
+    <color name="title_bar_blue">#427EC0</color>
 
 </resources>

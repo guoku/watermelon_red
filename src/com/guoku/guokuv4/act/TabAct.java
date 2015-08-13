@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -30,7 +33,7 @@ import com.guoku.guokuv4.parse.ParseUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
-public class TabAct extends NetWorkActivity implements OnClickListener {
+public class TabAct extends NetWorkActivity implements OnClickListener, OnCheckedChangeListener {
 
 	private static final int CATABLIST = 10;
 	private static final int STAT = 11;
@@ -47,11 +50,8 @@ public class TabAct extends NetWorkActivity implements OnClickListener {
 	@ViewInject(R.id.tab_tv_count)
 	private TextView tab_tv_count;
 
-	@ViewInject(R.id.tab_iv_gv)
-	private ImageView tab_iv_gv;
-
-	@ViewInject(R.id.tab_iv_lv)
-	private ImageView tab_iv_lv;
+	@ViewInject(R.id.check_box_lyout)
+	private CheckBox cBoxLayout;
 
 	private GVAdapter gvAdapter;
 	private EntityAdapter lvAdapter;
@@ -65,7 +65,13 @@ public class TabAct extends NetWorkActivity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tab);
-
+		
+		init();
+	}
+	
+	private void init(){
+		
+		cBoxLayout.setOnCheckedChangeListener(this);
 	}
 
 	@OnClick(R.id.title_bar_rigth_iv)
@@ -154,16 +160,6 @@ public class TabAct extends NetWorkActivity implements OnClickListener {
 						PROINFO, true);
 			}
 		});
-
-		// gvAdapter.setList(bean.getList());
-		// lvAdapter.setList(bean.getList());
-
-		if (SharePrenceUtil.getTAG(mContext) == LIST) {
-			LV(null);
-		} else {
-			GV(null);
-		}
-
 	}
 
 	@Override
@@ -194,25 +190,6 @@ public class TabAct extends NetWorkActivity implements OnClickListener {
 		}
 	}
 
-	@OnClick(R.id.tab_iv_gv)
-	public void GV(View v) {
-		curTab = GRID;
-		tab_iv_gv.setImageResource(R.drawable.g_gv);
-		tab_iv_lv.setImageResource(R.drawable.g_lv_p);
-		tab_gv.setVisibility(View.VISIBLE);
-		tab_lv.setVisibility(View.GONE);
-
-	}
-
-	@OnClick(R.id.tab_iv_lv)
-	public void LV(View v) {
-		curTab = LIST;
-		tab_iv_gv.setImageResource(R.drawable.g_gv_p);
-		tab_iv_lv.setImageResource(R.drawable.g_lv);
-		tab_gv.setVisibility(View.GONE);
-		tab_lv.setVisibility(View.VISIBLE);
-	}
-
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
@@ -225,6 +202,20 @@ public class TabAct extends NetWorkActivity implements OnClickListener {
 		super.onDestroy();
 		SharePrenceUtil.setTAG(mContext, curTab);
 
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+		// TODO Auto-generated method stub
+		if(arg1){
+			curTab = LIST;
+			tab_gv.setVisibility(View.GONE);
+			tab_lv.setVisibility(View.VISIBLE);
+		}else{
+			curTab = GRID;
+			tab_gv.setVisibility(View.VISIBLE);
+			tab_lv.setVisibility(View.GONE);
+		}
 	}
 
 }

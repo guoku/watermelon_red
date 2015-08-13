@@ -331,6 +331,8 @@ public class Constant {
 	public static final String TAOREGISTER = URL + "/mobile/v4/taobao/register/";
 	public static final String FORGET = URL + "/mobile/v4/forget/password/";
 	public static final String USERINFO = URL + "/mobile/v4/user/";
+	/** 修改密码*/
+	public static final String PASSWORD_CHANGE = URL + "/mobile/v4/user/reset/password/";
 	
 	
 	

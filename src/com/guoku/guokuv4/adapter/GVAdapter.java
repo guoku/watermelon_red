@@ -13,6 +13,7 @@ import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.utils.ArrayListAdapter;
 import com.guoku.R;
 import com.guoku.guokuv4.entity.test.EntityBean;
+import com.guoku.guokuv4.utils.ImgUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -28,6 +29,7 @@ public class GVAdapter extends ArrayListAdapter<EntityBean> {
 				.considerExifParams(true).bitmapConfig(Config.RGB_565)
 				.showImageOnLoading(R.color.g_w)
 				.showImageForEmptyUri(R.color.g_w).showImageOnFail(R.color.g_w)
+				.cacheInMemory(true)
 				.build();
 	}
 
@@ -43,7 +45,8 @@ public class GVAdapter extends ArrayListAdapter<EntityBean> {
 			convertView.setBackgroundColor(Color.WHITE);
 		}
 		loader.displayImage(mList.get(position).get240(),
-				(ImageView) convertView, options);
+				(ImageView) convertView, options,
+				new ImgUtils.AnimateFirstDisplayListener());
 		return convertView;
 	}
 
