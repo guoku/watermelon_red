@@ -217,7 +217,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			product_iv_like.setBackgroundResource(R.drawable.like_gary);
 			product_tv_likes.setText("喜爱 "
 					+ productBean.getEntity().getLike_countCut());
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE);
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE_UN);
 			break;
 		case LIKE1:
 			AVAnalytics.onEvent(this, "like");
