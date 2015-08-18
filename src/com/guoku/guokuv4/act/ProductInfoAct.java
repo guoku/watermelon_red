@@ -19,6 +19,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -61,8 +62,8 @@ import com.guoku.guokuv4.entity.test.NoteBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.UserBean;
+import com.guoku.guokuv4.gragment.JingXuanFragment;
 import com.guoku.guokuv4.parse.ParseUtil;
-import com.guoku.guokuv4.utils.BroadUtil;
 import com.guoku.guokuv4.utils.ImgUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -93,9 +94,6 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 	@ViewInject(R.id.tv_point)
 	private TextView tv_point;
-
-	// @ViewInject(R.id.product_tv_comment)
-	// private TextView product_tv_comment;
 
 	@ViewInject(R.id.product_vp_img)
 	private ViewPager vp;
@@ -128,11 +126,16 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	@ViewInject(R.id.product_gv_product)
 	private ScrollViewWithGridView product_gv_product;
 
+	@ViewInject(R.id.title_bar_left_iv)
+	private ImageView left;
+
 	private ArrayListAdapter<UserBean> gv1Adapter;
 	private ArrayListAdapter<EntityBean> gv2Adapter;
 	private ArrayListAdapter<NoteBean> comAdapter;
 	private ArrayList<Tab2Bean> tabList;
 	private Tab2Bean curTab2Bean;
+
+	private int isLike;
 
 	private String root = "";
 	// private ImgAdapter imgAdapter;
@@ -217,7 +220,8 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			product_iv_like.setBackgroundResource(R.drawable.like_gary);
 			product_tv_likes.setText("喜爱 "
 					+ productBean.getEntity().getLike_countCut());
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE_UN);
+
+			isLike = 1;
 			break;
 		case LIKE1:
 			AVAnalytics.onEvent(this, "like");
@@ -231,7 +235,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			product_iv_like.setBackgroundResource(R.drawable.like_red);
 			product_tv_likes.setText("喜爱 "
 					+ productBean.getEntity().getLike_countAdd());
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE);
+			isLike = 2;
 			break;
 		case PY1:
 			AVAnalytics.onEvent(this, "poke");
@@ -270,32 +274,6 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			break;
 		}
 	}
-
-	@Override
-	protected void onRestart() {
-		super.onRestart();
-		onTouchTrue = false;
-		Logger.w(TAG, "onRestart");
-		sendConnection(Constant.PROINFO
-				+ productBean.getEntity().getEntity_id() + "/",
-				new String[] { "entity_id" }, new String[] { productBean
-						.getEntity().getEntity_id() }, PROINFOFULL, true);
-
-	}
-
-	// @Override
-	// protected void onResume() {
-	// // TODO Auto-generated method stub
-	// super.onResume();
-	//
-	// Logger.w(TAG, "onResume");
-	//
-	// sendConnection(Constant.PROINFO
-	// + productBean.getEntity().getEntity_id() + "/",
-	// new String[] { "entity_id" }, new String[] { productBean
-	// .getEntity().getEntity_id() }, PROINFOFULL, true);
-	//
-	// }
 
 	@Override
 	protected void setupData() {
@@ -783,12 +761,18 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		}
 		switch (arg0) {
 		case 10086:
-			if (arg2 != null && arg2.getStringExtra("data") != null
-					&& !"".equals(arg2.getStringExtra("data"))) {
-				NoteBean bean = JSON.parseObject(arg2.getStringExtra("data"),
+			if(arg2.getExtras() != null){
+				
+				myNoteBean = JSON.parseObject(arg2.getStringExtra(CommentAct.KEY_DATA),
 						NoteBean.class);
-				productBean.getNote_list().add(bean);
-				comAdapter.notifyDataSetChanged();
+				
+				if(arg2.getExtras().getBoolean(CommentAct.KEY_UPDATA)){
+					myNoteBean.setContent(myNoteBean.getContent());
+					comAdapter.notifyDataSetChanged();
+				}else{
+					productBean.getNote_list().add(myNoteBean);
+					comAdapter.notifyDataSetChanged();
+				}
 			}
 			break;
 
@@ -928,5 +912,34 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		default:
 			break;
 		}
+	}
+
+	private void requestIntent() {
+		
+		Intent intent = new Intent();
+		if(isLike == 1){
+			intent.putExtra(JingXuanFragment.INTNT_KEY, false);
+		}
+		if(isLike == 2){
+			intent.putExtra(JingXuanFragment.INTNT_KEY, true);
+		}
+		setResult(JingXuanFragment.UPDATA_LIKE, intent);
+		finish();
+	}
+
+	@OnClick(R.id.title_bar_left_iv)
+	private void leftBt(View v) {
+		if (isLike == 1 || isLike == 2) {
+			requestIntent();
+		}
+	}
+
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+			requestIntent();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

@@ -40,6 +40,7 @@ import com.guoku.guokuv4.entity.test.PBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.BroadUtil;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
@@ -57,8 +58,9 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 	private static final int LIKE1 = 13;
 	private static final int LIKE0 = 14;
 	private static final int TYPE = 15;
-	private static final int UPDATA_LIKE = 16;
-	private static final int UPDATA_LIKE_UN = 17;
+	public static final int UPDATA_LIKE = 16;
+	public static final String INTNT_KEY = JingXuanFragment.class.getName();
+	// private static final int UPDATA_LIKE_UN = 17;
 	@ViewInject(R.id.jingxuan_lv_1)
 	private PullToRefreshListView jingxuan_lv_1;
 	private JingXuanAdapter adapter;
@@ -77,10 +79,9 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 	private GridView view;
 	private ArrayList<JIngxuanBean> list2;
 	private ArrayListAdapter<JIngxuanBean> adapter2;
-	private View layoutView;//刷新喜欢img
-	
-	private BroadcastReceiver receiveBroadCast; // 用来处理其它ui操作的关注、喜欢等，保证数据急时同步
-	private int pos;//纪录商品
+	private View layoutView;// 刷新喜欢img
+
+	private int pos;// 纪录商品
 
 	@Override
 	public void onLowMemory() {
@@ -145,11 +146,10 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 				layoutView = arg1;
 				pos = arg2 - 1;
 				sendConnection(Constant.PROINFO
-						+ list.get(pos).getContent().getEntity()
-								.getEntity_id() + "/",
-						new String[] { "entity_id" },
-						new String[] { list.get(pos).getContent()
-								.getEntity().getEntity_id() }, PROINFO, true);
+						+ list.get(pos).getContent().getEntity().getEntity_id()
+						+ "/", new String[] { "entity_id" },
+						new String[] { list.get(pos).getContent().getEntity()
+								.getEntity_id() }, PROINFO, true);
 			}
 		});
 
@@ -173,7 +173,8 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 				if (cur == position) {
 					textView.setTextColor(Color.rgb(66, 126, 192));
 				} else {
-					textView.setTextColor(getResources().getColor(R.color.g_other));
+					textView.setTextColor(getResources().getColor(
+							R.color.g_other));
 				}
 
 				return textView;
@@ -207,8 +208,6 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 		POPUtils.setPop(view);
 
 		POPUtils.setListener(this);
-		
-		initReceiver();
 	}
 
 	@Override
@@ -271,20 +270,15 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 			list = ParseUtil.getJingXuanList(result);
 			adapter.setList(list);
 			break;
-
 		case JINGXUANUP:
 			list.addAll(ParseUtil.getJingXuanList(result));
 			adapter.setList(list);
 			break;
-		// case JINGXUANDOWN:
-		// list = ParseUtil.getJingXuanList(result);
-		// adapter.setList(list);
-		// break;
 		case PROINFO:
 			PInfoBean bean = ParseUtil.getPI(result);
 			Intent intent = new Intent(context, ProductInfoAct.class);
 			intent.putExtra("data", JSON.toJSONString(bean));
-			startActivity(intent);
+			startActivityForResult(intent, UPDATA_LIKE);
 			break;
 		case LIKE0:
 			if (pBean == null) {
@@ -296,9 +290,10 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 					.getEntity()
 					.setLike_count(
 							pBean.getContent().getEntity().getLike_countCut());
-			
+
 			adapter.setStatus(layoutView, pBean);
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE);
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY,
+					Constant.INTENT_ACTION_VALUE_LIKE);
 			break;
 		case LIKE1:
 			AVAnalytics.onEvent(context, "like_click", pBean.getContent()
@@ -316,19 +311,8 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 					.setLike_count(
 							pBean.getContent().getEntity().getLike_countAdd());
 			adapter.setStatus(layoutView, pBean);
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE);
-			break;
-		case UPDATA_LIKE:
-			int count = Integer.valueOf(pBean.getContent().getEntity().getLike_count());
-			adapter.getItem(pos).getContent().getEntity().setLike_already("1");
-			adapter.getItem(pos).getContent().getEntity().setLike_count(String.valueOf(count ++));
-			adapter.setStatus(layoutView, adapter.getItem(pos));
-			break;
-		case UPDATA_LIKE_UN:
-			int count2 = Integer.valueOf(pBean.getContent().getEntity().getLike_count());
-			adapter.getItem(pos).getContent().getEntity().setLike_already("0");
-			adapter.getItem(pos).getContent().getEntity().setLike_count(String.valueOf(count2 --));
-			adapter.setStatus(layoutView, adapter.getItem(pos));
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY,
+					Constant.INTENT_ACTION_VALUE_LIKE);
 			break;
 		default:
 			break;
@@ -387,82 +371,55 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 		bar.setImageResource(R.drawable.open_list);
 
 	}
-	
+
 	@Override
-	public void onResume() {
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
-		super.onResume();
-		register();
-	}
-	
-	private void register() {
-
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(Constant.INTENT_ACTION);
-		filter.setPriority(Integer.MAX_VALUE);
-		context.registerReceiver(receiveBroadCast, filter);
-	}
-	
-	private void initReceiver() {
-		receiveBroadCast = new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				
-				int type = UPDATA_LIKE;
-				
-				if(intent.getExtras() != null){
-					switch (intent.getExtras().getInt(Constant.INTENT_ACTION_KEY)) {
-					case Constant.INTENT_ACTION_VALUE_LIKE:
-//						type = UPDATA
-
-						int count = Integer.valueOf(adapter.getItem(pos).getContent().getEntity().getLike_count());
-						adapter.getItem(pos).getContent().getEntity().setLike_already("1");
-						adapter.getItem(pos).getContent().getEntity().setLike_count(String.valueOf(count ++));
-						adapter.setStatus(layoutView, adapter.getItem(pos));
-						break;
-					case Constant.INTENT_ACTION_VALUE_LIKE_UN:
-//						type = UPDATA_LIKE_UN;
-						int count2 = Integer.valueOf(adapter.getItem(pos).getContent().getEntity().getLike_count());
-						adapter.getItem(pos).getContent().getEntity().setLike_already("0");
-						adapter.getItem(pos).getContent().getEntity().setLike_count(String.valueOf(count2 --));
-						adapter.setStatus(layoutView, adapter.getItem(pos));
-						break;
-					default:
-						break;
+		if (data != null) {
+			if (resultCode == UPDATA_LIKE) {
+				boolean isLike = data.getBooleanExtra(INTNT_KEY, false);
+				if (isLike) {
+					int count = 0;
+					if (StringUtils.isEmpty(adapter.getItem(pos).getContent()
+							.getEntity().getLike_count())) {
+						count++;
+					} else {
+						count = Integer.valueOf(adapter.getItem(pos)
+								.getContent().getEntity().getLike_count());
+						count++;
 					}
-					
-					
-//				case UPDATA_LIKE:
-//					int count = Integer.valueOf(pBean.getContent().getEntity().getLike_count());
-//					adapter.getItem(pos).getContent().getEntity().setLike_already("1");
-//					adapter.getItem(pos).getContent().getEntity().setLike_count(String.valueOf(count ++));
-//					adapter.setStatus(layoutView, adapter.getItem(pos));
-//					break;
-//				case UPDATA_LIKE_UN:
-//					int count2 = Integer.valueOf(pBean.getContent().getEntity().getLike_count());
-//					adapter.getItem(pos).getContent().getEntity().setLike_already("0");
-//					adapter.getItem(pos).getContent().getEntity().setLike_count(String.valueOf(count2 --));
-//					adapter.setStatus(layoutView, adapter.getItem(pos));
-//					break;
-					
-					
-//					sendConnection(Constant.PROINFO
-//							+ list.get(pos).getContent().getEntity()
-//									.getEntity_id() + "/",
-//							new String[] { "entity_id" },
-//							new String[] { list.get(pos).getContent()
-//									.getEntity().getEntity_id() }, type, true);
+					adapter.getItem(pos).getContent().getEntity()
+							.setLike_already("1");
+					adapter.getItem(pos).getContent().getEntity()
+							.setLike_count(String.valueOf(count));
+					adapter.setStatus(layoutView, adapter.getItem(pos));
+
+					BroadUtil.setBroadcastInt(context,
+							Constant.INTENT_ACTION_KEY,
+							Constant.INTENT_ACTION_VALUE_LIKE);
+				} else {
+					int count2 = 0;
+					if (!StringUtils.isEmpty(adapter.getItem(pos).getContent()
+							.getEntity().getLike_count())) {
+						count2 = Integer.valueOf(adapter.getItem(pos)
+								.getContent().getEntity().getLike_count());
+						if (count2 > 0) {
+							count2--;
+						} else {
+							count2 = 0;
+						}
+					}
+					adapter.getItem(pos).getContent().getEntity()
+							.setLike_already("0");
+					adapter.getItem(pos).getContent().getEntity()
+							.setLike_count(String.valueOf(count2));
+					adapter.setStatus(layoutView, adapter.getItem(pos));
+
+					BroadUtil.setBroadcastInt(context,
+							Constant.INTENT_ACTION_KEY,
+							Constant.INTENT_ACTION_VALUE_LIKE);
 				}
 			}
-		};
-	}
-
-	@Override
-	public void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-		if (receiveBroadCast != null) {
-			context.unregisterReceiver(receiveBroadCast);
 		}
 	}
 }

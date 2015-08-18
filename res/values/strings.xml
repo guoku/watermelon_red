@@ -15,6 +15,8 @@
     <string name="tv_commodity">商品</string>
 	<string name="tv_commodity_type">品类</string>
 	<string name="tv_user">用户</string>
+	<string name="tv_seach_time">按时间</string>
+	<string name="tv_seach_like">按喜爱</string>
 	
 	<!-- 修改密码 -->
 	<string name="tv_change_psd">修改密码</string>

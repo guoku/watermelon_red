@@ -203,6 +203,8 @@ public abstract class NetWorkActivity extends BaseActivity {
 		Logger.e("params", "api_key----->"
 				+ ":0b19c2b93687347e95c6b6f5cc91bb87");
 		Logger.e("params", "params----->" + ":" + params.toString());
+		Logger.e("params", "session----->" + ":" + EkwingApplication.getInstance()
+				.getBean().getSession());
 		if (showDialog && !isFinishing()) {
 			showDialog();
 		}
@@ -225,49 +227,6 @@ public abstract class NetWorkActivity extends BaseActivity {
 		params.addBodyParameter("api_key", "0b19c2b93687347e95c6b6f5cc91bb87");
 		httpUtils.send(HttpMethod.POST, url, params, httpCallback);
 	}
-
-	// public void sendConnectionNoLoginOrPsw(HttpMethod method, String url,
-	// String[] argsKeys, String[] argsValues, int where,
-	// boolean showDialog, int umengId) {
-	// Logger.e(TAG, "params-url----------------------?>" + url);
-	// if (argsKeys.length != argsValues.length) {
-	// throw new IllegalArgumentException(
-	// "check your Params key or value length!");
-	// }
-	// if (showDialog) {
-	// vector.add(where);
-	// }
-	// HttpCallBack httpCallback = new HttpCallBack(where, showDialog);
-	// RequestParams params = new RequestParams();
-	// for (int i = 0; i < argsKeys.length; i++) {
-	// params.addBodyParameter(argsKeys[i], argsValues[i]);
-	// Logger.e("params", "params----->" + argsKeys[i] + ":"
-	// + argsValues[i]);
-	// }
-	// params.addBodyParameter("driverCode",
-	// Utils.getVersionName(getApplicationContext()));
-	// params.addBodyParameter("token",
-	// SharePrenceUtil.getLoginInfo(getApplicationContext())
-	// .getToken());
-	// params.addBodyParameter("author_id",
-	// SharePrenceUtil.getLoginInfo(getApplicationContext()).getUid());
-	// Logger.e(
-	// "params",
-	// "params----->" + "driverCode :"
-	// + Utils.getVersionName(getApplicationContext()));
-	// Logger.e("params", "params----->"
-	// + "token:"
-	// + SharePrenceUtil.getLoginInfo(getApplicationContext())
-	// .getToken());
-	// Logger.e("params", "params----->"
-	// + "author_id  :"
-	// + SharePrenceUtil.getLoginInfo(getApplicationContext())
-	// .getUid());
-	// if (showDialog && !context.isFinishing()) {
-	// showDialog();
-	// }
-	// httpUtils.send(method, url, params, httpCallback);
-	// }
 
 	/**
 	 * 当为post请求是 调用改方法设置body体 参数,此方法在sendConnection 方法前调用

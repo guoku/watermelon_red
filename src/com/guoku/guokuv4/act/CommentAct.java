@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVAnalytics;
+import com.avos.avoscloud.LogUtil.log;
 import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.base.NetWorkActivity;
 import com.ekwing.students.config.Constant;
@@ -17,6 +18,7 @@ import com.ekwing.students.utils.Utils;
 import com.guoku.R;
 import com.guoku.guokuv4.entity.test.NoteBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.umeng.analytics.MobclickAgent;
@@ -33,6 +35,9 @@ public class CommentAct extends NetWorkActivity {
 	private boolean up;
 
 	private String noteid;
+	
+	public static final String KEY_UPDATA = "KEY_UPDATA";
+	public static final String KEY_DATA = "KEY_DATA";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +50,7 @@ public class CommentAct extends NetWorkActivity {
 
 	@OnClick(R.id.title_bar_rigth_iv)
 	public void Push(View v) {
-		if (text.getText().toString() != null
-				&& !"".equals(text.getText().toString().trim())) {
+		if (!StringUtils.isEmpty(text.getText().toString())) {
 			if (up) {
 				sendConnectionPOST(Constant.COMMENTLIST + noteid + "/update/",
 						new String[] { "note" }, new String[] { text.getText()
@@ -74,7 +78,10 @@ public class CommentAct extends NetWorkActivity {
 
 			AVAnalytics.onEvent(mContext, "success");
 			Intent intent = new Intent();
-			intent.putExtra("data", result);
+			Bundle bundle = new Bundle();
+			bundle.putString(KEY_DATA, result);
+			bundle.putBoolean(KEY_UPDATA, up);
+			intent.putExtras(bundle);
 			setResult(10086, intent);
 			finish();
 			break;

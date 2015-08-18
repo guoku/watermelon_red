@@ -5,6 +5,8 @@ package com.guoku.guokuv4.my;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.widget.TextView;
 
@@ -34,6 +36,8 @@ public class ChangeEmailAct extends NetWorkActivity {
 	LayoutItemEdit tvEmailNew;
 	@ViewInject(R.id.layout_email_psd)
 	LayoutItemEdit tvEmailPsd;
+	@ViewInject(R.id.title_bar_rigth_tv)
+	TextView rightTv;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,11 @@ public class ChangeEmailAct extends NetWorkActivity {
 		tvEmailPsd.tv1.setTextAppearance(mContext, R.style.edit_item_left);
 		
 		tvEmailPsd.edDel.setTransformationMethod(PasswordTransformationMethod.getInstance());
+		
+		tvEmailNew.edDel.addTextChangedListener(tWatcher1);
+		tvEmailPsd.edDel.addTextChangedListener(tWatcher2);
+		
+		rightTv.setEnabled(false);
 	}
 
 	@Override
@@ -118,6 +127,67 @@ public class ChangeEmailAct extends NetWorkActivity {
 //		}
 
 		return true;
+	}
+	
+	TextWatcher tWatcher1 = new TextWatcher() {
+		
+		@Override
+		public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+				int arg3) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void afterTextChanged(Editable arg0) {
+			// TODO Auto-generated method stub
+			if(arg0.length() > 0){
+				isSave();
+			}
+			
+		}
+	};
+	
+	TextWatcher tWatcher2 = new TextWatcher() {
+		
+		@Override
+		public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+				int arg3) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		@Override
+		public void afterTextChanged(Editable arg0) {
+			// TODO Auto-generated method stub
+			if(arg0.length() > 0){
+				isSave();
+			}
+		}
+	};
+	
+	private void isSave(){
+		
+		if(StringUtils.isEmpty(tvEmailNew.edDel.getText().toString())
+				|| StringUtils.isEmpty(tvEmailPsd.edDel.getText().toString())){
+			rightTv.setEnabled(false);
+			rightTv.setTextColor(getResources().getColor(R.color.title_bar_gray));
+		}else{
+			rightTv.setEnabled(true);
+			rightTv.setTextColor(getResources().getColor(R.color.title_bar_blue));
+		}
 	}
 
 }

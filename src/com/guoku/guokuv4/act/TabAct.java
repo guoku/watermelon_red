@@ -5,10 +5,15 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
@@ -33,7 +38,9 @@ import com.guoku.guokuv4.parse.ParseUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
-public class TabAct extends NetWorkActivity implements OnClickListener, OnCheckedChangeListener {
+@SuppressLint("ResourceAsColor")
+public class TabAct extends NetWorkActivity implements OnClickListener,
+		OnCheckedChangeListener {
 
 	private static final int CATABLIST = 10;
 	private static final int STAT = 11;
@@ -53,6 +60,15 @@ public class TabAct extends NetWorkActivity implements OnClickListener, OnChecke
 	@ViewInject(R.id.check_box_lyout)
 	private CheckBox cBoxLayout;
 
+	@ViewInject(R.id.tv_what_def)
+	private CheckBox tvWhatDef;// 默认搜索条件
+
+	@ViewInject(R.id.tv_what)
+	private CheckBox tvWhatlike;// 按喜爱
+
+	@ViewInject(R.id.view_back_black)
+	private View backblack;
+
 	private GVAdapter gvAdapter;
 	private EntityAdapter lvAdapter;
 
@@ -61,17 +77,27 @@ public class TabAct extends NetWorkActivity implements OnClickListener, OnChecke
 	private String isLike;
 	private int curTab = LIST;
 
+	private Animation animationll;
+	private Animation animationBackShow;
+	private Animation animationBackHide;
+	private boolean animIsRunning = false;
+
+	private int animationTiem = 300;
+	private boolean isWhat = false;// 用来纪录排序方式 false：默认按时间 true：喜欢
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.tab);
-		
+
 		init();
 	}
-	
-	private void init(){
-		
+
+	private void init() {
+
 		cBoxLayout.setOnCheckedChangeListener(this);
+		tvWhatDef.setOnCheckedChangeListener(this);
+		tvWhatlike.setOnCheckedChangeListener(this);
 	}
 
 	@OnClick(R.id.title_bar_rigth_iv)
@@ -166,29 +192,27 @@ public class TabAct extends NetWorkActivity implements OnClickListener, OnChecke
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		getCATABLIST(0 + "");
+		sendData(null);
 		sendConnection(Constant.CATAB + cid + "/stat/", new String[] {},
 				new String[] {}, STAT, false);
 	}
 
-	private void getCATABLIST(String off) {
-		if (isLike == null) {
-			sendConnection(Constant.CATAB + cid + "/entity/", new String[] {
-					"count", "offset", "reverse" }, new String[] { "30", off,
-					"0" }, CATABLIST, true);
-		} else if (EkwingApplication.getInstance().getBean() != null) {
-			sendConnection(Constant.CATAB
-					+ cid
-					+ "/user/"
-					+ EkwingApplication.getInstance().getBean().getUser()
-							.getUser_id() + "/like/", new String[] { "count",
-					"offset", "reverse" }, new String[] { "30", off, "0" },
-					CATABLIST, true);
-		} else {
-			startActivity(new Intent(mContext, LoginAct.class));
-			finish();
-		}
-	}
+	// private void getCATABLIST(String off) {
+	// if (isLike == null) {
+	// sendConnection(Constant.CATAB + cid + "/entity/", new String[] {
+	// "count", "offset", "reverse" }, new String[] { "30", off,
+	// "0" }, CATABLIST, true);
+	// } else if (EkwingApplication.getInstance().getBean() != null) {
+	// sendConnection(Constant.CATAB + cid + "/user/"
+	// + EkwingApplication.getInstance().getBean().getUser()
+	// .getUser_id() + "/like/", new String[] { "count",
+	// "offset", "reverse" }, new String[] { "30", off, "0" },
+	// CATABLIST, true);
+	// } else {
+	// startActivity(new Intent(mContext, LoginAct.class));
+	// finish();
+	// }
+	// }
 
 	@Override
 	public void onClick(View arg0) {
@@ -207,15 +231,128 @@ public class TabAct extends NetWorkActivity implements OnClickListener, OnChecke
 	@Override
 	public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
 		// TODO Auto-generated method stub
-		if(arg1){
-			curTab = LIST;
-			tab_gv.setVisibility(View.GONE);
-			tab_lv.setVisibility(View.VISIBLE);
-		}else{
-			curTab = GRID;
-			tab_gv.setVisibility(View.VISIBLE);
-			tab_lv.setVisibility(View.GONE);
+		if (arg0 == cBoxLayout) {
+			if (arg1) {
+				curTab = LIST;
+				tab_gv.setVisibility(View.GONE);
+				tab_lv.setVisibility(View.VISIBLE);
+			} else {
+				curTab = GRID;
+				tab_gv.setVisibility(View.VISIBLE);
+				tab_lv.setVisibility(View.GONE);
+			}
+		}
+		if (arg0 == tvWhatDef) {
+			showView(tvWhatlike);
+		}
+		if (arg0 == tvWhatlike) {
+			showView(tvWhatlike);
+			whatText();
 		}
 	}
+
+	private void sendData(String like) {
+
+		if (EkwingApplication.getInstance().getBean() != null) {
+			if (like == null) {
+				sendConnection(Constant.CATAB + cid + "/entity/", new String[] {
+						"count", "offset", "reverse" }, new String[] { "30",
+						"0", "0" }, CATABLIST, true);
+			} else {
+				sendConnection(Constant.CATAB + cid + "/entity/", new String[] {
+						"count", "offset", "sort", "reverse" }, new String[] {
+						"30", "0", like, "0" }, CATABLIST, true);
+			}
+		} else {
+			startActivity(new Intent(mContext, LoginAct.class));
+			finish();
+		}
+
+	}
+
+	private void whatText() {
+		if (isWhat) {
+			isWhat = false;
+			tvWhatDef.setText(R.string.tv_seach_time);
+			tvWhatlike.setText(R.string.tv_seach_like);
+			sendData(null);
+		} else {
+			isWhat = true;
+			tvWhatDef.setText(R.string.tv_seach_like);
+			tvWhatlike.setText(R.string.tv_seach_time);
+			sendData("like");
+		}
+	}
+
+	private void showView(View view) {
+
+		if (view.getVisibility() == View.VISIBLE) {
+			animationll = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0,
+					Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF,
+					0.0f, Animation.RELATIVE_TO_SELF, -1.0f);
+			view.setVisibility(View.GONE);
+			hideBackBlack();
+		} else {
+			view.setVisibility(View.VISIBLE);
+			animationll = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0,
+					Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF,
+					-1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+			showBackBlack();
+		}
+		animationll.setDuration(animationTiem);
+		view.startAnimation(animationll);
+	}
+
+	private void showBackBlack() {
+		if (animationBackShow == null) {
+			backblack.setVisibility(View.VISIBLE);
+			animationBackShow = new AlphaAnimation(0.0f, 1.0f);
+			animationBackShow.setAnimationListener(animationShowListener);
+		}
+		animationBackShow.setDuration(animationTiem);
+		backblack.startAnimation(animationBackShow);
+	}
+
+	private void hideBackBlack() {
+		if (animationBackHide == null) {
+			animationBackHide = new AlphaAnimation(1.0f, 0.0f);
+			animationBackHide.setAnimationListener(animationHideListener);
+		}
+		animationBackHide.setDuration(animationTiem);
+		backblack.startAnimation(animationBackHide);
+	}
+
+	AnimationListener animationShowListener = new AnimationListener() {
+		@Override
+		public void onAnimationStart(Animation animation) {
+			animIsRunning = true;
+			backblack.setVisibility(View.VISIBLE);
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+		}
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			animIsRunning = false;
+		}
+	};
+	AnimationListener animationHideListener = new AnimationListener() {
+		@Override
+		public void onAnimationStart(Animation animation) {
+			animIsRunning = true;
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+		}
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			backblack.setVisibility(View.INVISIBLE);
+			animIsRunning = false;
+		}
+	};
 
 }

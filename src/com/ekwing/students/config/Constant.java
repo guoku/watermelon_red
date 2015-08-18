@@ -349,7 +349,6 @@ public class Constant {
 	public static final String INTENT_ACTION_KEY = Constant.class.getName() + "_KEY";
 	public static final int INTENT_ACTION_VALUE_LIKE = 1;//喜欢
 	public static final int INTENT_ACTION_VALUE_FOLLOW = 2;//关注
-	public static final int INTENT_ACTION_VALUE_LIKE_UN = 3;//喜欢
 	
 
 	public static void init(EkwingApplication lezyoApplication) {

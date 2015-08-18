@@ -503,6 +503,8 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 			seachConten = s.toString();
 			if (s.length() > 0) {
 				search(0, seachConten);
+			}else{
+				isShowSeachResult(false);
 			}
 		}
 	};
