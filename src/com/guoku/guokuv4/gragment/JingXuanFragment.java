@@ -113,11 +113,6 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 			@Override
 			public void onPullDownToRefresh(
 					PullToRefreshBase<ListView> refreshView) {
-				// sendConnection(Constant.JINGXUAN, new String[] { "count",
-				// "timestamp" },
-				// new String[] { "10",
-				// System.currentTimeMillis() / 1000 + "" },
-				// JINGXUANDOWN, false);
 				getJingXuan(System.currentTimeMillis() / 1000 + "");
 			}
 
@@ -125,12 +120,6 @@ public class JingXuanFragment extends BaseFrament implements OnClickListener,
 			public void onPullUpToRefresh(
 					PullToRefreshBase<ListView> refreshView) {
 				if (list.size() > 0) {
-
-					// sendConnection(Constant.JINGXUAN, new String[] { "count",
-					// "timestamp" },
-					// new String[] { "10",
-					// list.get(list.size() - 1).getPost_time() },
-					// JINGXUANUP, false);
 					getJingXuanDown(list.get(list.size() - 1).getPost_time());
 				} else {
 					// Toast

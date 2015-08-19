@@ -937,7 +937,9 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			requestIntent();
+			if(isLike == 1 || isLike == 2){
+				requestIntent();
+			}
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);

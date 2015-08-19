@@ -306,10 +306,16 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 		onLoadingDrawableSet(imageDrawable);
 	}
 
+	/**
+	 * 下拉刷新
+	 */
 	public void setPullLabel(CharSequence pullLabel) {
 		mPullLabel = pullLabel;
 	}
 
+	/**
+	 * 正在载入
+	 */
 	public void setRefreshingLabel(CharSequence refreshingLabel) {
 		mRefreshingLabel = refreshingLabel;
 	}
