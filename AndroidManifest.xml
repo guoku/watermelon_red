@@ -31,13 +31,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_SETTINGS" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
 
@@ -66,24 +63,6 @@
             android:name="BDAPPKEY"
             android:value="ajmp1KiH1r87F2UIpIEpKaMWotTmbiis" />
 
-        <!-- ↓↓↓ 自更新SDK ↓↓↓ -->
-        <activity
-            android:name="com.baidu.autoupdatesdk.ConfirmDialoigActivity"
-            android:exported="false"
-            android:screenOrientation="sensor"
-            android:theme="@style/bdp_update_dialog_style_fullscreen" />
-
-        <receiver
-            android:name="com.baidu.autoupdatesdk.receiver.BDBroadcastReceiver"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_UPDATE" />
-                <action android:name="com.baidu.autoupdatesdk.ACTION_DOWNLOAD_COMPLETE" />
-                <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_AS" />
-                <action android:name="com.baidu.autoupdatesdk.ACTION_AS_DOWNLOAD_COMPLETE" />
-            </intent-filter>
-        </receiver>
-        <!-- ↑↑↑ 自更新SDK ↑↑↑ -->
 
 
         <!-- ↓↓↓ 百度移动统计SDK ↓↓↓ -->
@@ -129,7 +108,7 @@
             android:value="ajmp1KiH1r87F2UIpIEpKaMWotTmbiis" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="main" />
+            android:value="channel" />
         <meta-data
             android:name="leancloud"
             android:value="main" />
@@ -158,12 +137,6 @@
         <meta-data
             android:name="UMENG"
             android:value="yes" />
-
-        <activity
-            android:name="com.baidu.autoupdatesdk.ConfirmDialoigActivity"
-            android:exported="false"
-            android:screenOrientation="sensor"
-            android:theme="@style/bdp_update_dialog_style_fullscreen" />
 
         <receiver
             android:name="com.baidu.autoupdatesdk.receiver.BDBroadcastReceiver"
