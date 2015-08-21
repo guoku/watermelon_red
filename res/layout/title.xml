@@ -35,7 +35,6 @@
             android:paddingLeft="10dp"
             android:singleLine="true"
             android:textColor="@color/g_main"
-            android:textSize="17sp"
             android:textStyle="bold" />
 
         <ImageView

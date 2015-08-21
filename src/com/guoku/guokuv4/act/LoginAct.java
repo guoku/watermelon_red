@@ -134,41 +134,6 @@ public class LoginAct extends NetWorkActivity {
 									public void onComplete(int status,
 											Map<String, Object> info) {
 										if (status == 200 && info != null) {
-											// StringBuilder sb = new
-											// StringBuilder();
-											// Set<String> keys = info.keySet();
-											//
-											// for (String key : keys) {
-											// sb.append(key
-											// + "="
-											// + info.get(key)
-											// .toString()
-											// + "\r\n");
-											// }
-
-											// 08-04 11:33:41.839:
-											// I/LoginAct(21736): sex=1
-											// 08-04 11:33:41.839:
-											// I/LoginAct(21736): nickname=冷
-											// 08-04 11:33:41.839:
-											// I/LoginAct(21736):
-											// unionid=oc-NVuIsWoo-VtL7UQo1iFI-9zrg
-											// 08-04 11:33:41.839:
-											// I/LoginAct(21736): province=北京
-											// 08-04 11:33:41.839:
-											// I/LoginAct(21736):
-											// openid=oPhJ9jqnN-gV1qcs1N2c3PBaS_H8
-											// 08-04 11:33:41.839:
-											// I/LoginAct(21736): language=zh_CN
-											// 08-04 11:33:41.839:
-											// I/LoginAct(21736):
-											// headimgurl=http://wx.qlogo.cn/mmopen/ajNVdqHZLLBnpIbESjWQQRDBQ4wkbGwFy0W3DqfUAjroX8aYoy8Srff0U1NFc62CR8icBibPaePHw9bFHO1NAvuw/0
-											// 08-04 11:33:41.839:
-											// I/LoginAct(21736): country=中国
-											// 08-04 11:33:41.839:
-											// I/LoginAct(21736): city=朝阳
-
-											// Logger.i(TAG, sb.toString());
 											sendConnectionPOST(
 													Constant.WXLOGIN,
 													new String[] { "unionid",
@@ -308,7 +273,7 @@ public class LoginAct extends NetWorkActivity {
 
 	@OnClick(R.id.login_btn_login)
 	public void Push(View v) {
-		
+
 		if (ed_name.getText().toString() != null
 				&& !"".equals(ed_name.getText().toString().trim())
 				&& ed_pass.getText().toString() != null
@@ -456,7 +421,7 @@ public class LoginAct extends NetWorkActivity {
 				intent.putExtra("name", taobaoSession.getUser().nick);
 				startActivity(intent);
 			} else {
-				ToastUtil.show(mContext, "sina微博授权失败");
+				ToastUtil.show(mContext, "淘宝授权失败");
 			}
 			break;
 		}

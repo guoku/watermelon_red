@@ -60,7 +60,7 @@ public class CommentTalkAct extends NetWorkActivity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.comment_talk);
-		setGCenter(true, "评论");
+		setGCenter(true, "点评");
 		setGLeft(true, R.drawable.back_selector);
 	}
 

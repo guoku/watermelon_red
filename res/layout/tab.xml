@@ -26,11 +26,20 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
-            android:layout_toLeftOf="@+id/line"
+            android:layout_marginRight="5dp"
             android:button="@null"
             android:clickable="true"
             android:text="@string/tv_seach_time"
             android:textColor="@color/g_main" />
+        
+        <ImageView
+            android:id="@+id/img_arrws" 
+            android:layout_width="wrap_content"
+           	android:layout_height="wrap_content"
+           	android:layout_toRightOf="@id/tv_what_def"
+           	android:src="@drawable/arrws_open"
+           	android:layout_centerVertical="true"
+            />
 
         <TextView
             android:id="@+id/tab_tv_count"

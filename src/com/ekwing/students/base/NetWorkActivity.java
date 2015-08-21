@@ -28,6 +28,7 @@ import com.ekwing.students.utils.StringUtil;
 import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.act.LoginAct;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -422,6 +423,15 @@ public abstract class NetWorkActivity extends BaseActivity {
 		public void onFailure(HttpException ex, String msg) {
 			Logger.e(TAG, "onFailure--->" + msg);
 			dismissDialog();
+			switch (ex.getExceptionCode()) {
+			case 400:
+				ToastUtil.show(mContext, R.string.error_bad_request);
+				break;
+
+			default:
+				break;
+			}
+			
 			NetWorkActivity.this.onFailure(msg, where);
 		}
 

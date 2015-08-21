@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
@@ -35,9 +37,12 @@ public class CommentAct extends NetWorkActivity {
 	private boolean up;
 
 	private String noteid;
-	
+
 	public static final String KEY_UPDATA = "KEY_UPDATA";
 	public static final String KEY_DATA = "KEY_DATA";
+
+	String strContent = "";
+	private boolean isUpData;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,22 +51,63 @@ public class CommentAct extends NetWorkActivity {
 		setGCenter(true, "撰写点评");
 		setGLeft(true, R.drawable.back_selector);
 		setGRigth(true, R.drawable.send);
+
+		init();
+	}
+
+	private void init() {
+
+		text.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+					int arg3) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence arg0, int arg1,
+					int arg2, int arg3) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable arg0) {
+				// TODO Auto-generated method stub
+				if (arg0.length() > 0) {
+					if (arg0.toString().equals(strContent)) {
+						isUpData = false;
+					} else {
+						isUpData = true;
+					}
+				} else {
+					isUpData = false;
+				}
+			}
+		});
 	}
 
 	@OnClick(R.id.title_bar_rigth_iv)
 	public void Push(View v) {
 		if (!StringUtils.isEmpty(text.getText().toString())) {
 			if (up) {
-				sendConnectionPOST(Constant.COMMENTLIST + noteid + "/update/",
-						new String[] { "note" }, new String[] { text.getText()
-								.toString() }, COMMENTNOTE, false);
+				if (isUpData) {
+					sendConnectionPOST(Constant.COMMENTLIST + noteid
+							+ "/update/", new String[] { "note" },
+							new String[] { text.getText().toString() },
+							COMMENTNOTE, true);
+				} else {
+					finish();
+				}
 			} else
 				sendConnectionPOST(
 						Constant.COMMENTNOTE
 								+ productBean.getEntity().getEntity_id()
 								+ "/add/note/", new String[] { "note" },
 						new String[] { text.getText().toString() },
-						COMMENTNOTE, false);
+						COMMENTNOTE, true);
 
 		} else {
 			ToastUtil.show(mContext, "总得说点什么吧~");
@@ -108,7 +154,8 @@ public class CommentAct extends NetWorkActivity {
 						.getUser_id()
 						.equals(EkwingApplication.getInstance().getBean()
 								.getUser().getUser_id())) {
-					text.setText(bean.getContent());
+					strContent = bean.getContent();
+					text.setText(strContent);
 					up = true;
 				}
 			}

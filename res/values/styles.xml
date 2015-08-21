@@ -345,28 +345,24 @@
 
     <!-- EditView字体style -->
     <style name="edit_item">
-        <item name="android:textSize">18sp</item>
         <item name="android:padding">10dp</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/g_main</item>
     </style>
 
     <style name="edit_item2">
-        <item name="android:textSize">18sp</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/g_main</item>
         <item name="android:paddingLeft">10dp</item>
     </style>
 
     <style name="edit_item_left">
-        <item name="android:textSize">18sp</item>
         <item name="android:padding">10dp</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/title_bar_gray</item>
     </style>
     
     <style name="edit_item_left2">
-        <item name="android:textSize">18sp</item>
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/title_bar_gray</item>
         <item name="android:paddingLeft">10dp</item>

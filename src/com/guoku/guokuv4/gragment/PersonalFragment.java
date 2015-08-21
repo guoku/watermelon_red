@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,7 +31,6 @@ import com.ekwing.students.customview.ScrollViewWithListView;
 import com.ekwing.students.utils.ArrayListAdapter;
 import com.ekwing.students.utils.DateUtils;
 import com.ekwing.students.utils.SharePrenceUtil;
-import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.act.CommentTalkAct;
 import com.guoku.guokuv4.act.EntityAct;
@@ -256,11 +256,11 @@ public class PersonalFragment extends BaseFrament {
 				optionsRound, new ImgUtils.AnimateFirstDisplayListener());
 
 		if (userBean.getUser().getGender().equals("男")) {
-			psrson_iv_sex.setText("♂");
 			psrson_iv_sex.setTextColor(Color.rgb(19, 143, 215));
+			setTextRightImg(psrson_iv_sex, R.drawable.male);
 		} else {
-			psrson_iv_sex.setText("♀");
 			psrson_iv_sex.setTextColor(Color.rgb(253, 189, 217));
+			setTextRightImg(psrson_iv_sex, R.drawable.female);
 		}
 
 		psrson_tv_tab2.setText("点评 "
@@ -681,6 +681,13 @@ public class PersonalFragment extends BaseFrament {
 		if (receiveBroadCast != null) {
 			context.unregisterReceiver(receiveBroadCast);
 		}
+	}
+	
+	private void setTextRightImg(TextView view, int id){
+		
+		Drawable drawable= getResources().getDrawable(id);  
+		drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());  
+		view.setCompoundDrawables(null,null,drawable,null);  
 	}
 
 }

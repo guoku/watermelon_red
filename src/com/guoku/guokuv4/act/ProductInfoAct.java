@@ -153,6 +153,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	private NoteBean noteBean;
 	private UMSocialService mController;
 	private NoteBean myNoteBean;
+	String checkId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -572,6 +573,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
+				checkId = gv2Adapter.getItem(arg2).getEntity_id() ;
 				sendConnection(Constant.PROINFO
 						+ gv2Adapter.getItem(arg2).getEntity_id() + "/",
 						new String[] { "entity_id" }, new String[] { gv2Adapter
@@ -759,27 +761,33 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		if (ssoHandler != null) {
 			ssoHandler.authorizeCallBack(arg0, arg1, arg2);
 		}
-		switch (arg0) {
-		case 10086:
-			if(arg2.getExtras() != null){
-				
-				myNoteBean = JSON.parseObject(arg2.getStringExtra(CommentAct.KEY_DATA),
-						NoteBean.class);
-				
-				if(arg2.getExtras().getBoolean(CommentAct.KEY_UPDATA)){
-					myNoteBean.setContent(myNoteBean.getContent());
-					comAdapter.notifyDataSetChanged();
-				}else{
-					productBean.getNote_list().add(myNoteBean);
-					comAdapter.notifyDataSetChanged();
+		if(arg2 != null){
+			switch (arg0) {
+			case 10086:
+				if (arg2.getExtras() != null) {
+
+					myNoteBean = JSON.parseObject(
+							arg2.getStringExtra(CommentAct.KEY_DATA),
+							NoteBean.class);
+
+					if (arg2.getExtras().getBoolean(CommentAct.KEY_UPDATA)) {
+						for (int i = 0; i < productBean.getNote_list().size(); i ++) {
+							if(myNoteBean.getNote_id().equals(productBean.getNote_list().get(i).getNote_id())){
+								productBean.getNote_list().set(i, myNoteBean);
+							}
+						}
+						comAdapter.notifyDataSetChanged();
+					} else {
+						productBean.getNote_list().add(myNoteBean);
+						comAdapter.notifyDataSetChanged();
+					}
 				}
+				break;
+
+			default:
+				break;
 			}
-			break;
-
-		default:
-			break;
 		}
-
 	}
 
 	@OnClick(R.id.product_ll_tab)
@@ -915,12 +923,12 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	}
 
 	private void requestIntent() {
-		
+
 		Intent intent = new Intent();
-		if(isLike == 1){
+		if (isLike == 1) {
 			intent.putExtra(JingXuanFragment.INTNT_KEY, false);
 		}
-		if(isLike == 2){
+		if (isLike == 2) {
 			intent.putExtra(JingXuanFragment.INTNT_KEY, true);
 		}
 		setResult(JingXuanFragment.UPDATA_LIKE, intent);
@@ -936,11 +944,12 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			if(isLike == 1 || isLike == 2){
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (isLike == 1 || isLike == 2) {
 				requestIntent();
+			} else {
+				finish();
 			}
-			return true;
 		}
 		return super.onKeyDown(keyCode, event);
 	}

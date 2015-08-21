@@ -80,7 +80,9 @@
                 android:focusableInTouchMode="true"
                 android:gravity="center_vertical"
                 android:singleLine="true"
-                android:textColor="@color/g_w" >
+                android:textColor="@color/g_w" 
+                android:textCursorDrawable="@null"
+                >
             </EditText>
         </LinearLayout>
 
@@ -121,7 +123,9 @@
                 android:gravity="center_vertical"
                 android:inputType="textPassword"
                 android:singleLine="true"
-                android:textColor="@color/g_w" >
+                android:textColor="@color/g_w" 
+                android:textCursorDrawable="@null"
+                >
             </EditText>
 
             <ImageView
@@ -166,7 +170,7 @@
                 android:id="@+id/login_no_wx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/sina"
+                android:src="@drawable/wechat"
                 android:visibility="visible" />
 
             <TextView

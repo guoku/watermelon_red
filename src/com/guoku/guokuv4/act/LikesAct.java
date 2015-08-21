@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
@@ -47,11 +48,11 @@ public class LikesAct extends NetWorkActivity implements OnClickListener {
 		setGCenter(true, getIntent().getStringExtra("name"));
 		setGLeft(true, R.drawable.back_selector);
 
+		getFans(page);
 	}
 
 	@Override
 	protected void onSuccess(String result, int where) {
-		adapter.notifyDataSetChanged();
 		lv.onRefreshComplete();
 		switch (where) {
 		case Likes:
@@ -69,6 +70,7 @@ public class LikesAct extends NetWorkActivity implements OnClickListener {
 				return;
 			}
 			bean.setRelation("0");
+			adapter.setStatus(imView, bean);
 			break;
 		case FOLLOW1:
 			if (bean == null) {
@@ -85,11 +87,10 @@ public class LikesAct extends NetWorkActivity implements OnClickListener {
 				} else {
 					bean.setRelation("3");
 				}
+				adapter.setStatus(imView, bean);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-			adapter.notifyDataSetChanged();
-
 			break;
 		default:
 			break;
@@ -157,16 +158,13 @@ public class LikesAct extends NetWorkActivity implements OnClickListener {
 
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		getFans(page);
-	}
+	private ImageView imView;
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.fans_item_iv_status:
+			imView = (ImageView) v;
 			bean = (UserBean) v.getTag();
 			if (bean.getRelation().equals("0")
 					|| bean.getRelation().equals("2")) {

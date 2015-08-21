@@ -69,7 +69,9 @@
             android:hint="example@guoku.com"
             android:singleLine="true"
             android:textColor="#ffffffff"
-            android:textSize="14sp" />
+            android:textSize="14sp" 
+            android:textCursorDrawable="@null"
+            />
     </LinearLayout>
 
     <ImageView
@@ -103,7 +105,9 @@
             android:password="true"
             android:singleLine="true"
             android:textColor="#ffffffff"
-            android:textSize="14sp" />
+            android:textSize="14sp" 
+            android:textCursorDrawable="@null"
+            />
     </LinearLayout>
 
     <ImageView
@@ -136,7 +140,9 @@
             android:hint="4位以上文字/字母"
             android:singleLine="true"
             android:textColor="#ffffffff"
-            android:textSize="14sp" />
+            android:textSize="14sp" 
+            android:textCursorDrawable="@null"
+            />
     </LinearLayout>
 
     <ImageView

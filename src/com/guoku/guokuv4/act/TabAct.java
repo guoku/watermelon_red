@@ -12,8 +12,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
@@ -29,6 +32,7 @@ import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.base.NetWorkActivity;
 import com.ekwing.students.config.Constant;
 import com.ekwing.students.utils.SharePrenceUtil;
+import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.adapter.EntityAdapter;
 import com.guoku.guokuv4.adapter.GVAdapter;
@@ -65,6 +69,9 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 
 	@ViewInject(R.id.tv_what)
 	private CheckBox tvWhatlike;// 按喜爱
+	
+	@ViewInject(R.id.img_arrws)
+	private ImageView arrowsImg;
 
 	@ViewInject(R.id.view_back_black)
 	private View backblack;
@@ -244,10 +251,12 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		}
 		if (arg0 == tvWhatDef) {
 			showView(tvWhatlike);
+			arrowsAnim();
 		}
 		if (arg0 == tvWhatlike) {
 			showView(tvWhatlike);
 			whatText();
+			arrowsAnim();
 		}
 	}
 
@@ -283,6 +292,15 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 			sendData("like");
 		}
 	}
+	
+	Animation animation2; 
+	private  void arrowsAnim(){
+		
+		if(animation2 == null){
+			animation2 = new AnimationUtils().loadAnimation(mContext, R.anim.anim_arrows_right);
+		}
+		arrowsImg.setAnimation(animation2);
+	}
 
 	private void showView(View view) {
 
@@ -292,6 +310,8 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 					0.0f, Animation.RELATIVE_TO_SELF, -1.0f);
 			view.setVisibility(View.GONE);
 			hideBackBlack();
+			
+			
 		} else {
 			view.setVisibility(View.VISIBLE);
 			animationll = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0,
