@@ -121,10 +121,10 @@ public class ChangeEmailAct extends NetWorkActivity {
 			ToastUtil.show(mContext, "2");
 			return false;
 		}
-//		if(!StringUtils.isEmail(tvEmailPsd.edDel.getText().toString())){
-//			ToastUtil.show(mContext, R.string.tv_email_input_email_error);
-//			return false;
-//		}
+		if(!StringUtils.isEmail(tvEmailPsd.edDel.getText().toString())){
+			ToastUtil.show(mContext, R.string.tv_email_input_email_error);
+			return false;
+		}
 
 		return true;
 	}

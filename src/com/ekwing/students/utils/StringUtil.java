@@ -160,45 +160,45 @@ public class StringUtil {
 		}
 	}
 
-	public static void setTextColoPoint2(TextView tv, String root,
-			final Handler handler, final String uid) {
-		if ("".equals(root)) {
-			return;
-		}
-		SpannableStringBuilder builder = new SpannableStringBuilder(root + " ");
-		if (root.contains("#")) {
-			int cIndex = 0;
-			int cLength = 0;
-			while (cIndex < root.length()) {
-				cIndex = root.indexOf("#", cIndex);
-				if (cIndex == -1) {
-					break;
-				}
-				cLength = root.indexOf(" ", cIndex) == -1 ? root.length()
-						: root.indexOf(" ", cIndex);
-				MyClickableSpan span = new MyClickableSpan(root.substring(
-						cIndex, cLength)) {
-
-					@Override
-					public void onClick(View arg0) {
-						Message msg = Message.obtain();
-						msg.what = 200;
-						msg.obj = text + "&&" + uid;
-						handler.sendMessage(msg);
-					}
-				};
-				builder.setSpan(span, cIndex, cLength,
-						Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-				builder.setSpan(new ForegroundColorSpan(Color.RED), cIndex,
-						cLength, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-				tv.setText(builder);
-				tv.setMovementMethod(LinkMovementMethod.getInstance());
-				cIndex++;
-			}
-		} else {
-			tv.setText(root);
-		}
-	}
+//	public static void setTextColoPoint2(TextView tv, String root,
+//			final Handler handler, final String uid) {
+//		if ("".equals(root)) {
+//			return;
+//		}
+//		SpannableStringBuilder builder = new SpannableStringBuilder(root + " ");
+//		if (root.contains("#")) {
+//			int cIndex = 0;
+//			int cLength = 0;
+//			while (cIndex < root.length()) {
+//				cIndex = root.indexOf("#", cIndex);
+//				if (cIndex == -1) {
+//					break;
+//				}
+//				cLength = root.indexOf(" ", cIndex) == -1 ? root.length()
+//						: root.indexOf(" ", cIndex);
+//				MyClickableSpan span = new MyClickableSpan(root.substring(
+//						cIndex, cLength)) {
+//
+//					@Override
+//					public void onClick(View arg0) {
+//						Message msg = Message.obtain();
+//						msg.what = 200;
+//						msg.obj = text + "&&" + uid;
+//						handler.sendMessage(msg);
+//					}
+//				};
+//				builder.setSpan(span, cIndex, cLength,
+//						Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//				builder.setSpan(new ForegroundColorSpan(Color.RED), cIndex,
+//						cLength, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//				tv.setText(builder);
+//				tv.setMovementMethod(LinkMovementMethod.getInstance());
+//				cIndex++;
+//			}
+//		} else {
+//			tv.setText(root);
+//		}
+//	}
 
 	public static TextView setTextColor(TextView view, String root, String time) {
 		SpannableStringBuilder builder = new SpannableStringBuilder(root + " ");

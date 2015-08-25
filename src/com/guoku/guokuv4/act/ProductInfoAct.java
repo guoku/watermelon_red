@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,6 +20,13 @@ import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -64,7 +73,10 @@ import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.gragment.JingXuanFragment;
 import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.CheckTextNumModel;
 import com.guoku.guokuv4.utils.ImgUtils;
+import com.guoku.guokuv4.utils.StringUtils;
+import com.guoku.guokuv4.utils.StringUtils.OnNoteTag;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -77,7 +89,7 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.UMSsoHandler;
 
 public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
-		DialogInterface.OnClickListener {
+		DialogInterface.OnClickListener{
 	private static final int GUESS = 10;
 	private static final int PROINFO = 11;
 	private static final int PY1 = 12;
@@ -86,6 +98,8 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	private static final int LIKE0 = 15;
 	private static final int COMMENTLIST = 14;
 	private static final int PROINFOFULL = 17;
+	private static final int NOTE_TAG = 18;//标签
+	
 
 	private PInfoBean productBean;
 
@@ -256,6 +270,8 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			noteBean.setPoke_already("0");
 			noteBean.setPoke_countCut();
 			comAdapter.notifyDataSetChanged();
+			break;
+		case NOTE_TAG:
 			break;
 		default:
 			break;
@@ -513,24 +529,25 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 					holder.comment_item_iv_status.setVisibility(View.VISIBLE);
 				}
 
-				// if ("0".equals(bean.getComment_count())) {
-				// holder.comment_item_iv_iscom
-				// .setImageResource(R.drawable.comment);
-				// } else {
-				// holder.comment_item_iv_iscom
-				// .setImageResource(R.drawable.comment_press);
-				// }
-
 				holder.comment_item_tv_name.setText(bean.getCreator()
 						.getNickname());
-				// holder.comment_item_tv_context.setText(bean.getContent());
-				StringUtil.setTextColoPoint2(holder.comment_item_tv_context,
-						bean.getContent(), mHandler, bean.getCreator()
-								.getUser_id());
+				holder.comment_item_tv_context.setText(bean.getContent());
 				holder.comment_item_tv_likes.setText(bean.getPoke_count());
 				holder.comment_item_tv_coms.setText(bean.getComment_count());
 				holder.comment_item_tv_time.setText(DateUtils
 						.getStandardDate(bean.getUpdated_time()));
+
+				StringUtils.setNoteTag(mContext, bean.getContent(), holder.comment_item_tv_context, new OnNoteTag() {
+					
+					@Override
+					public void setTagClick(String tagName) {
+						// TODO Auto-generated method stub
+//						sendConnection(Constant.TABLIKE + "/tag/", new String[] { "count", "timestamp" }, new String[] {
+//								"30", System.currentTimeMillis() / 1000 + "" }, NOTE_TAG, true);
+					
+					ToastUtil.show(mContext, tagName);
+					}
+				});
 				return convertView;
 			}
 		};
@@ -573,7 +590,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				checkId = gv2Adapter.getItem(arg2).getEntity_id() ;
+				checkId = gv2Adapter.getItem(arg2).getEntity_id();
 				sendConnection(Constant.PROINFO
 						+ gv2Adapter.getItem(arg2).getEntity_id() + "/",
 						new String[] { "entity_id" }, new String[] { gv2Adapter
@@ -761,7 +778,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		if (ssoHandler != null) {
 			ssoHandler.authorizeCallBack(arg0, arg1, arg2);
 		}
-		if(arg2 != null){
+		if (arg2 != null) {
 			switch (arg0) {
 			case 10086:
 				if (arg2.getExtras() != null) {
@@ -771,8 +788,10 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 							NoteBean.class);
 
 					if (arg2.getExtras().getBoolean(CommentAct.KEY_UPDATA)) {
-						for (int i = 0; i < productBean.getNote_list().size(); i ++) {
-							if(myNoteBean.getNote_id().equals(productBean.getNote_list().get(i).getNote_id())){
+						for (int i = 0; i < productBean.getNote_list().size(); i++) {
+							if (myNoteBean.getNote_id().equals(
+									productBean.getNote_list().get(i)
+											.getNote_id())) {
 								productBean.getNote_list().set(i, myNoteBean);
 							}
 						}
@@ -953,4 +972,6 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+
+
 }

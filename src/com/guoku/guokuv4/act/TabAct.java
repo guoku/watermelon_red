@@ -251,12 +251,10 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		}
 		if (arg0 == tvWhatDef) {
 			showView(tvWhatlike);
-			arrowsAnim();
 		}
 		if (arg0 == tvWhatlike) {
 			showView(tvWhatlike);
 			whatText();
-			arrowsAnim();
 		}
 	}
 
@@ -292,15 +290,6 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 			sendData("like");
 		}
 	}
-	
-	Animation animation2; 
-	private  void arrowsAnim(){
-		
-		if(animation2 == null){
-			animation2 = new AnimationUtils().loadAnimation(mContext, R.anim.anim_arrows_right);
-		}
-		arrowsImg.setAnimation(animation2);
-	}
 
 	private void showView(View view) {
 
@@ -331,6 +320,8 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		}
 		animationBackShow.setDuration(animationTiem);
 		backblack.startAnimation(animationBackShow);
+		
+		arrowsImg.setImageResource(R.drawable.arrws_close);
 	}
 
 	private void hideBackBlack() {
@@ -340,6 +331,8 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		}
 		animationBackHide.setDuration(animationTiem);
 		backblack.startAnimation(animationBackHide);
+		
+		arrowsImg.setImageResource(R.drawable.arrws_open);
 	}
 
 	AnimationListener animationShowListener = new AnimationListener() {

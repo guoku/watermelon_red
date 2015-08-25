@@ -519,7 +519,7 @@ public class PersonalFragment extends BaseFrament {
 		// if (tagList.size() <= 0) {
 		sendConnection(Constant.TABLIKE + userBean.getUser().getUser_id()
 				+ "/tag/", new String[] { "count", "timestamp" }, new String[] {
-				"30", System.currentTimeMillis() / 1000 + "" }, TABTAG, false);
+				"30", System.currentTimeMillis() / 1000 + "" }, TABTAG, true);
 		// }
 		// sv.smoothScrollTo(0, 0);
 		// sv.setOnRefreshListener(new OnRefreshListener<ScrollView>() {

@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.guoku"
     android:installLocation="auto"
-    android:versionCode="403"
-    android:versionName="4.0.4" >
+    android:versionCode="401"
+    android:versionName="4.0.1" >
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -22,7 +22,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -48,9 +47,19 @@
         <meta-data
             android:name="leancloud"
             android:value="main" />
-        <meta-data
+
+        <!-- 正式 -->
+        <!--
+             <meta-data
             android:name="UMENG_APPKEY"
             android:value="5279bf3656240b8271004a8a" />
+        -->
+
+
+        <!-- 测试 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="55d5453567e58ed077000332" />
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="e69c78d00ceddb2c8d41b4dc4f62eeea" />
@@ -572,7 +581,6 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
         </activity>
-        
     </application>
 
 </manifest>
