@@ -31,7 +31,7 @@ public class NavigationActivity extends BaseActivity {
 	ImageView img3;
 	@ViewInject(R.id.icon_4)
 	ImageView img4;
-	
+
 	@ViewInject(R.id.nav_image_btn)
 	TextView btn;
 
@@ -60,12 +60,12 @@ public class NavigationActivity extends BaseActivity {
 		currIndex = 0;
 		viewPager.setCurrentItem(currIndex);
 		img1.setImageResource(R.drawable.ced_d);
-		
+
 		btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(mContext, MainActivity2.class);
+				Intent intent = new Intent(mContext, WelAct.class);
 				mContext.startActivity(intent);
 				NavigationActivity.this.finish();
 			}
@@ -76,7 +76,7 @@ public class NavigationActivity extends BaseActivity {
 			@Override
 			public void onPageSelected(int arg0) {
 				// TODO Auto-generated method stub
-				
+
 				switch (arg0) {
 				case 0:
 					img1.setImageResource(R.drawable.ced_d);

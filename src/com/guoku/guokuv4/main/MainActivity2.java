@@ -81,7 +81,6 @@ public class MainActivity2 extends NetWorkActivity {
 		UmengUpdateAgent.update(this);
 	}
 
-
 	@Override
 	protected void setupData() {
 		destinationFragment = new JingXuanFragment();

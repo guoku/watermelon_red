@@ -2,6 +2,7 @@ package com.guoku.guokuv4.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -12,6 +13,8 @@ import com.ekwing.students.base.NetWorkActivity;
 import com.ekwing.students.config.Constant;
 import com.ekwing.students.utils.SharePrenceUtil;
 import com.guoku.R;
+import com.guoku.guokuv4.config.ConfigGK;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.umeng.analytics.MobclickAgent;
@@ -23,6 +26,10 @@ public class WelAct extends NetWorkActivity {
 	private RelativeLayout wecome;
 	@ViewInject(R.id.wecome_flash_iv)
 	private ImageView wecome_iv;
+	@ViewInject(R.id.imageView1)
+	private ImageView imgBaidu;//百度首发icon
+	String channel;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +49,17 @@ public class WelAct extends NetWorkActivity {
 		} else {
 			startActivity(new Intent(WelAct.this, NavigationActivity.class));
 			finish();
+		}
+		init();
+	}
+	
+	private void init(){
+		
+		channel = StringUtils.getAppMetaData(this, "UMENG_CHANNEL");
+		if(!StringUtils.isEmpty(channel)){
+			if(channel.equals(ConfigGK.CHANNEL_BAIDU)){
+				imgBaidu.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 

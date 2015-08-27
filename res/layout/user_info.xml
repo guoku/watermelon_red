@@ -224,11 +224,6 @@
                 android:layout_height="1px"
                 android:background="@color/g_line" />
 
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="@color/g_line" />
-
             <LinearLayout
                 android:id="@+id/user_info_ll_email"
                 android:layout_width="match_parent"
@@ -292,7 +287,6 @@
                     android:textColor="@color/g_main" />
 
                 <TextView
-                    android:id="@+id/user_info_tv_add"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

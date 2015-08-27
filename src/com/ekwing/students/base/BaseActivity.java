@@ -84,6 +84,7 @@ public abstract class BaseActivity extends FragmentActivity{
 
 				@Override
 				public void onClick(View arg0) {
+					leftOnClick();
 					finish();
 				}
 			});
@@ -172,5 +173,9 @@ public abstract class BaseActivity extends FragmentActivity{
 			intent.putExtras(pBundle);
 		}
 		startActivityForResult(intent, requestCode);
+	}
+	
+	public void leftOnClick(){
+		
 	}
 }

@@ -9,16 +9,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.TextView;
 
-import com.ekwing.students.utils.ToastUtil;
+import com.guoku.R;
+import com.guoku.guokuv4.view.NoLineClickSpan;
 
 /**
  * @zhangyao
@@ -52,6 +54,7 @@ public class StringUtils {
 
 	/**
 	 * 设置评论里的标签
+	 * 
 	 * @param mContext
 	 * @param context
 	 * @param tView
@@ -66,7 +69,7 @@ public class StringUtils {
 
 			List<CheckTextNumModel> listNum = new ArrayList<CheckTextNumModel>();
 
-			String regex = "#[^\\s^+#]+\\s";
+			String regex = "#[^\\s^+#]+\\s?";
 			Pattern pattern = Pattern.compile(regex);
 			Matcher m = pattern.matcher(context);
 			while (m.find()) {
@@ -79,7 +82,7 @@ public class StringUtils {
 
 					if (listNum.size() > 0) {
 						for (final CheckTextNumModel text : listNum) {
-							style.setSpan(new ClickableSpan() {
+							style.setSpan(new NoLineClickSpan(text.getValue()) {
 								@Override
 								public void onClick(View arg0) {
 									// TODO Auto-generated method stub
@@ -90,11 +93,10 @@ public class StringUtils {
 									Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 							style.setSpan(
-									new ForegroundColorSpan(
-											mContext.getResources()
-													.getColor(
-															android.R.color.holo_red_dark)),
-									text.getStartPosttion(), text
+									new ForegroundColorSpan(mContext
+											.getResources().getColor(
+													R.color.tv_note_tag)), text
+											.getStartPosttion(), text
 											.getEndPosttion(),
 									Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 						}
@@ -124,6 +126,35 @@ public class StringUtils {
 	public interface OnNoteTag {
 
 		void setTagClick(String tagName);
+	}
+
+	/**
+	 * 获取application中指定的meta-data
+	 * 
+	 * @return 如果没有获取成功(没有对应值，或者异常)，则返回值为空
+	 */
+	public static String getAppMetaData(Context ctx, String key) {
+		if (ctx == null || TextUtils.isEmpty(key)) {
+			return null;
+		}
+		String resultData = null;
+		try {
+			PackageManager packageManager = ctx.getPackageManager();
+			if (packageManager != null) {
+				ApplicationInfo applicationInfo = packageManager
+						.getApplicationInfo(ctx.getPackageName(),
+								PackageManager.GET_META_DATA);
+				if (applicationInfo != null) {
+					if (applicationInfo.metaData != null) {
+						resultData = applicationInfo.metaData.getString(key);
+					}
+				}
+			}
+		} catch (PackageManager.NameNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return resultData;
 	}
 
 }

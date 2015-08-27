@@ -89,7 +89,7 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.UMSsoHandler;
 
 public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
-		DialogInterface.OnClickListener{
+		DialogInterface.OnClickListener {
 	private static final int GUESS = 10;
 	private static final int PROINFO = 11;
 	private static final int PY1 = 12;
@@ -98,8 +98,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	private static final int LIKE0 = 15;
 	private static final int COMMENTLIST = 14;
 	private static final int PROINFOFULL = 17;
-	private static final int NOTE_TAG = 18;//标签
-	
+	private static final int NOTE_TAG = 18;// 标签
 
 	private PInfoBean productBean;
 
@@ -537,17 +536,27 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				holder.comment_item_tv_time.setText(DateUtils
 						.getStandardDate(bean.getUpdated_time()));
 
-				StringUtils.setNoteTag(mContext, bean.getContent(), holder.comment_item_tv_context, new OnNoteTag() {
-					
-					@Override
-					public void setTagClick(String tagName) {
-						// TODO Auto-generated method stub
-//						sendConnection(Constant.TABLIKE + "/tag/", new String[] { "count", "timestamp" }, new String[] {
-//								"30", System.currentTimeMillis() / 1000 + "" }, NOTE_TAG, true);
-					
-					ToastUtil.show(mContext, tagName);
-					}
-				});
+				StringUtils.setNoteTag(mContext, bean.getContent(),
+						holder.comment_item_tv_context, new OnNoteTag() {
+
+							@Override
+							public void setTagClick(String tagName) {
+								// TODO Auto-generated method stub
+
+								if(EkwingApplication
+										.getInstance().getBean() == null){
+									startActivity(new Intent(ProductInfoAct.this,
+											LoginAct.class));
+								}else{
+									tagName = tagName.trim().replace("#", "");
+									Intent intent = new Intent(ProductInfoAct.this, EntityAct.class);
+									intent.putExtra("data", EkwingApplication
+											.getInstance().getBean().getUser().getUser_id());
+									intent.putExtra("name", tagName);
+									startActivity(intent);
+								}
+							}
+						});
 				return convertView;
 			}
 		};
@@ -972,6 +981,5 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-
 
 }

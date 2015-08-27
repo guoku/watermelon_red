@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,6 +27,8 @@ import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.entity.test.AccountBean;
 import com.guoku.guokuv4.entity.test.UserBean;
+import com.guoku.guokuv4.gragment.JingXuanFragment;
+import com.guoku.guokuv4.gragment.PersonalFragment;
 import com.guoku.guokuv4.my.ChangeEmailAct;
 import com.guoku.guokuv4.my.ChangePasswordAct;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -35,9 +38,9 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class UserInfoAct extends NetWorkActivity {
-	
+
 	public static final int INTENT_REQUEST_CODE = 1001;
-	
+
 	private static final int ADD = 10;
 	private static final int NAME = 11;
 	private static final int SIGN = 14;
@@ -62,7 +65,13 @@ public class UserInfoAct extends NetWorkActivity {
 
 	@ViewInject(R.id.user_info_tv_sex)
 	private TextView tv_sex;
+	
+	@ViewInject(R.id.title_bar_left_iv)
+	private ImageView left;
+	
 	private DisplayImageOptions optionsRound1;
+	
+	private boolean isUpdata;//是否有刷新
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +127,7 @@ public class UserInfoAct extends NetWorkActivity {
 
 	@OnClick(R.id.user_info_ll_email)
 	public void email(View v) {
-		
+
 		openActivityForResult(ChangeEmailAct.class, INTENT_REQUEST_CODE);
 	}
 
@@ -143,7 +152,7 @@ public class UserInfoAct extends NetWorkActivity {
 
 	@OnClick(R.id.user_info_ll_pass)
 	public void pass(View v) {
-		
+
 		startActivity(new Intent(this, ChangePasswordAct.class));
 	}
 
@@ -192,10 +201,15 @@ public class UserInfoAct extends NetWorkActivity {
 
 	@Override
 	protected void onSuccess(String result, int where) {
+		isUpdata = true;
 		bean.setUser(JSON.parseObject(result, UserBean.class));
 		Logger.e("USER", bean.toString());
 		EkwingApplication.getInstance().login(bean);
-		setupData();
+		if(where == PIC){
+			refreshTv(false);
+		}else{
+			refreshTv(true);
+		}
 		switch (where) {
 		case ADD:
 			ToastUtil.show(mContext, "所在地修改成功");
@@ -244,8 +258,13 @@ public class UserInfoAct extends NetWorkActivity {
 
 	@Override
 	protected void setupData() {
-
-		bean = (AccountBean) getIntent().getSerializableExtra("data");
+		refreshTv(true);
+	}
+	
+	
+	private void refreshTv(Boolean isHead){
+		
+		bean = EkwingApplication.getInstance().getBean();
 		tv_add.setText(bean.getUser().getLocation());
 		tv_email.setText(bean.getUser().getEmail());
 		tv_name.setText(bean.getUser().getNickname());
@@ -255,29 +274,32 @@ public class UserInfoAct extends NetWorkActivity {
 		// bean.getUser().getAvatar_large(),
 		// options, iv_pic);
 
-		optionsRound1 = new DisplayImageOptions.Builder()
-				.bitmapConfig(Bitmap.Config.RGB_565)
-				.imageScaleType(ImageScaleType.EXACTLY)
-				.displayer(new RoundedBitmapDisplayer(300))
-				.showImageForEmptyUri(R.drawable.user100)
-				.showImageOnFail(R.drawable.user100)
-				.showImageOnLoading(R.drawable.user100).build();
+		if(isHead){
+			optionsRound1 = new DisplayImageOptions.Builder()
+			.bitmapConfig(Bitmap.Config.RGB_565)
+			.imageScaleType(ImageScaleType.EXACTLY)
+			.displayer(new RoundedBitmapDisplayer(300))
+			.showImageForEmptyUri(R.drawable.user100)
+			.showImageOnFail(R.drawable.user100)
+			.showImageOnLoading(R.drawable.user100).build();
 
-		imageLoader
-				.displayImage(bean.getUser().get240(), iv_pic, optionsRound1);
+	imageLoader
+			.displayImage(bean.getUser().get240(), iv_pic, optionsRound1);
 
-		LayoutParams params = (LayoutParams) iv_pic.getLayoutParams();
-		params.topMargin = BitmapUtil.dip2pix(context, 32);
-		params.bottomMargin = BitmapUtil.dip2pix(context, 32);
+	LayoutParams params = (LayoutParams) iv_pic.getLayoutParams();
+	params.topMargin = BitmapUtil.dip2pix(context, 32);
+	params.bottomMargin = BitmapUtil.dip2pix(context, 32);
+		}
+		
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (data != null) {
-			if(resultCode == INTENT_REQUEST_CODE){
+			if (resultCode == INTENT_REQUEST_CODE) {
 				bean = EkwingApplication.getInstance().getBean();
 				tv_email.setText(bean.getUser().getEmail());
-			}else{
+			} else {
 				Bitmap ed_Bitmap = null;
 				if (requestCode == 0) {
 					Uri uri = data.getData();
@@ -306,7 +328,8 @@ public class UserInfoAct extends NetWorkActivity {
 					return;
 				}
 				iv_pic.setImageBitmap(ed_Bitmap);
-				BitmapUtil.saveBitmap(Constant.IMAGES_PATH + "temp.png", ed_Bitmap);
+				BitmapUtil.saveBitmap(Constant.IMAGES_PATH + "temp.png",
+						ed_Bitmap);
 				int d = BitmapUtil.getBitmapDegree(Constant.IMAGES_PATH
 						+ "temp.png");
 				ed_Bitmap = BitmapUtil.rotateBitmapByDegree(ed_Bitmap, d);
@@ -315,4 +338,32 @@ public class UserInfoAct extends NetWorkActivity {
 		}
 	}
 	
+	@Override
+	public void leftOnClick() {
+		// TODO Auto-generated method stub
+		if(isUpdata){
+			requestIntent();
+		}
+	}
+
+
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (isUpdata) {
+				requestIntent();
+			} else {
+				finish();
+			}
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+	
+	private void requestIntent() {
+
+		Intent intent = new Intent();
+		setResult(PersonalFragment.RESULT_CODE, intent);
+		finish();
+	}
+
 }

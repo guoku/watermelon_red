@@ -79,7 +79,7 @@ public class EntityAct extends NetWorkActivity {
 	protected void setupData() {
 		tag = getIntent().getStringExtra("name");
 		uid = getIntent().getStringExtra("data");
-		setGCenter(true, tag);
+		setGCenter(true, "#" + tag);
 		entityAdapter = new EntityAdapter(context);
 		listEntity = new ArrayList<EntityBean>();
 		lv.setMode(Mode.DISABLED);
@@ -109,7 +109,7 @@ public class EntityAct extends NetWorkActivity {
 			}
 		});
 		sendConnection(Constant.GETTAGLIST + uid + "/tag/" + tag.trim() + "/",
-				new String[] {}, new String[] {}, ENTITY, false);
+				new String[] {}, new String[] {}, ENTITY, true);
 
 	}
 
