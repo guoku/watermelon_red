@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Gallery;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -77,19 +78,8 @@ public class GuangFragment extends BaseFrament {
 	@ViewInject(R.id.faxian_sv)
 	private ScrollView sv;
 
-	private int currentItem;
-	private Handler handler = new Handler() {
-		public void handleMessage(android.os.Message msg) {
-			vp.setCurrentItem(currentItem);
-		}
-	};
-
-	@Override
-	public void onLowMemory() {
-		// TODO Auto-generated method stub
-		super.onLowMemory();
-		imageLoader.clearMemoryCache();
-	}
+	@ViewInject(R.id.gallery_recommend_sort)
+	private LinearLayout vpRecommendSort;// 推荐品类
 
 	private ScheduledExecutorService scheduledExecutorService;
 	private boolean onTouchTrue;
@@ -127,6 +117,20 @@ public class GuangFragment extends BaseFrament {
 	private ArrayList<TAB1Bean> tabList;
 	private ArrayList<BannerBean> list;
 	private ArrayList<Tab2Bean> list_cid;
+
+	private int currentItem;
+	private Handler handler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			vp.setCurrentItem(currentItem);
+		}
+	};
+
+	@Override
+	public void onLowMemory() {
+		// TODO Auto-generated method stub
+		super.onLowMemory();
+		imageLoader.clearMemoryCache();
+	}
 
 	@Override
 	public void onStart() {
@@ -178,6 +182,27 @@ public class GuangFragment extends BaseFrament {
 							.getString("entity"), EntityBean.class));
 				}
 				gvAdapter.setList(hotList);
+
+				/**
+				 * 推荐品类测试
+				 */
+				List<ImageView> list = new ArrayList<ImageView>();
+				for (int i = 0; i < 15; i++) {
+					final ImageView image = new ImageView(getActivity());
+					LayoutParams params = new LayoutParams(280, 280);
+					image.setLayoutParams(params);
+					if(i == 0){
+						image.setPadding(0, 0, 10, 0);
+					}else{
+						image.setPadding(10, 0, 10, 0);
+					}
+					imageLoader.displayImage(hotList.get(i).getChief_image(),
+							image, options,
+							new ImgUtils.AnimateFirstDisplayListener());
+					list.add(image);
+					vpRecommendSort.addView(image);
+				}
+
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -198,8 +223,9 @@ public class GuangFragment extends BaseFrament {
 					final ImageView image = new ImageView(getActivity());
 					image.setTag(i);
 					image.setScaleType(ScaleType.FIT_XY);
-					imageLoader.displayImage(list.get(i).getImg(), image,
-							new ImgUtils.AnimateFirstDisplayListener());
+					imageLoader
+							.displayImage(list.get(i).getImg(), image, options,
+									new ImgUtils.AnimateFirstDisplayListener());
 					image.setOnClickListener(new OnClickListener() {
 
 						@Override
@@ -363,6 +389,11 @@ public class GuangFragment extends BaseFrament {
 			});
 			adapter = new MyViewPagerAdapter();
 			vp.setAdapter(adapter);
+
+//			LayoutParams params = new LayoutParams(EkwingApplication.screenW,
+//					EkwingApplication.screenW / 4 - 10);
+//			vpRecommendSort.setLayoutParams(params);
+
 		} catch (Exception e) {
 		}
 
@@ -445,6 +476,11 @@ public class GuangFragment extends BaseFrament {
 		public boolean isViewFromObject(View arg0, Object arg1) {
 			return arg0 == arg1;// 官方提示这样写
 		}
-	}
 
+		@Override
+		public float getPageWidth(int position) {
+			// TODO Auto-generated method stub
+			return super.getPageWidth(position);
+		}
+	}
 }

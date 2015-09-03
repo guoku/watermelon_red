@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.guoku"
     android:installLocation="auto"
-    android:versionCode="401"
-    android:versionName="4.0.1" >
+    android:versionCode="403"
+    android:versionName="4.0.3" >
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -49,17 +49,17 @@
             android:value="main" />
 
         <!-- 正式 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5279bf3656240b8271004a8a" />
+
+        <!-- 测试 -->
         <!--
              <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5279bf3656240b8271004a8a" />
+            android:value="55d5453567e58ed077000332" />
         -->
 
-
-        <!-- 测试 -->
-        <meta-data
-            android:name="UMENG_APPKEY"
-            android:value="55d5453567e58ed077000332" />
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="e69c78d00ceddb2c8d41b4dc4f62eeea" />
@@ -77,7 +77,7 @@
         <!-- 是否打开调试信息 -->
         <meta-data
             android:name="DEBUG"
-            android:value="yes" />
+            android:value="no" />
         <!-- 是否打开友盟统计 -->
         <meta-data
             android:name="UMENG"

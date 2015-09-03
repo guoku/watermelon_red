@@ -374,5 +374,11 @@
         <item name="android:textColor">@color/title_bar_gray</item>
         <item name="android:paddingRight">16dp</item>
     </style>
+    
+    <!-- 更多操作  喜欢、评论、分享 -->
+    <style name="layout_width_more">
+        <item name="android:layout_width">25dp</item>
+        <item name="android:layout_height">25dp</item>
+    </style>
 
 </resources>

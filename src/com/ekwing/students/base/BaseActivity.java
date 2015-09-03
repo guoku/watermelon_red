@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVAnalytics;
@@ -177,5 +178,11 @@ public abstract class BaseActivity extends FragmentActivity{
 	
 	public void leftOnClick(){
 		
+	}
+	
+	public LinearLayout getTitleLayout(){
+		
+		LinearLayout linearLayout = (LinearLayout) findViewById(R.id.layout_title_more);
+		return linearLayout;
 	}
 }

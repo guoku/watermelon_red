@@ -37,5 +37,8 @@
 	<string name="tv_email_update_ok">邮箱修改成功</string>
 	<string name="tv_email_update_error">邮箱修改失败，请稍后重试</string>
 	<string name="tv_email_input_email_error">请输入正确的邮箱</string>
+	
+	<!-- 商品详情页 -->
+	<string name="tv_commodity_go_buy" formatted="false">￥ %s 去购买</string>
 
 </resources>

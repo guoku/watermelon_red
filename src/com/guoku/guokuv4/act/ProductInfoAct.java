@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import u.aly.ck;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,13 +20,6 @@ import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -35,15 +28,20 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -73,10 +71,12 @@ import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.gragment.JingXuanFragment;
 import com.guoku.guokuv4.parse.ParseUtil;
-import com.guoku.guokuv4.utils.CheckTextNumModel;
+import com.guoku.guokuv4.utils.BroadUtil;
 import com.guoku.guokuv4.utils.ImgUtils;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.StringUtils.OnNoteTag;
+import com.guoku.guokuv4.view.MyScrollView;
+import com.guoku.guokuv4.view.MyScrollView.OnScrollListener;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -89,7 +89,8 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.UMSsoHandler;
 
 public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
-		DialogInterface.OnClickListener {
+		DialogInterface.OnClickListener, OnScrollListener,
+		OnCheckedChangeListener {
 	private static final int GUESS = 10;
 	private static final int PROINFO = 11;
 	private static final int PY1 = 12;
@@ -115,14 +116,15 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 	@ViewInject(R.id.product_iv_like)
 	private ImageView product_iv_like;
-	@ViewInject(R.id.product_sv)
-	private ScrollView sv;
 
-	@ViewInject(R.id.product_tv_likes)
-	private TextView product_tv_likes;
+	@ViewInject(R.id.product_sv)
+	private MyScrollView sv;
 
 	@ViewInject(R.id.product_tv_like_size)
 	private TextView product_tv_like_size;
+
+	@ViewInject(R.id.product_iv_likes)
+	private CheckBox cbliks;// title上的喜欢按钮
 
 	@ViewInject(R.id.product_tv_price)
 	private TextView product_tv_price;
@@ -141,6 +143,17 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 	@ViewInject(R.id.title_bar_left_iv)
 	private ImageView left;
+
+	@ViewInject(R.id.layout2)
+	LinearLayout view2;// 价格按钮layout
+
+	@ViewInject(R.id.layout3)
+	LinearLayout view3;// 价格按钮layout
+
+	@ViewInject(R.id.layout_more)
+	LinearLayout viewMore;
+
+	int priceBtTop;// 记录价格按钮顶部的位置
 
 	private ArrayListAdapter<UserBean> gv1Adapter;
 	private ArrayListAdapter<EntityBean> gv2Adapter;
@@ -168,11 +181,38 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	private NoteBean myNoteBean;
 	String checkId;
 
+	private Animation animationIn;
+	private Animation animationOut;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.product_act);
 		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+
+		init();
+	}
+
+	private void init() {
+		sv.setOnScrollListener(this);
+		cbliks.setOnCheckedChangeListener(this);
+		isLikes();
+	}
+
+	private void isLikes() {
+
+		if ("1".equals(productBean.getEntity().getLike_already())) {
+			product_iv_like.setImageResource(R.drawable.like_red);
+			cbliks.setOnCheckedChangeListener(null);// 为了不触发cbliks事件
+			cbliks.setChecked(true);
+			cbliks.setOnCheckedChangeListener(this);
+		} else {
+			product_iv_like.setImageResource(R.drawable.like_gary);
+			cbliks.setOnCheckedChangeListener(null);
+			cbliks.setChecked(false);
+			cbliks.setOnCheckedChangeListener(this);
+		}
+
 	}
 
 	@Override
@@ -229,13 +269,11 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			if (productBean == null) {
 				return;
 			}
-			// ToastUtil.show(context, "取消喜爱");
 			productBean.getEntity().setLike_already("0");
-			product_iv_like.setBackgroundResource(R.drawable.like_gary);
-			product_tv_likes.setText("喜爱 "
-					+ productBean.getEntity().getLike_countCut());
-
 			isLike = 1;
+			isLikes();
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY,
+					Constant.INTENT_ACTION_VALUE_LIKE);
 			break;
 		case LIKE1:
 			AVAnalytics.onEvent(this, "like");
@@ -244,12 +282,11 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			if (productBean == null) {
 				return;
 			}
-			ToastUtil.show(context, "喜爱成功");
 			productBean.getEntity().setLike_already("1");
-			product_iv_like.setBackgroundResource(R.drawable.like_red);
-			product_tv_likes.setText("喜爱 "
-					+ productBean.getEntity().getLike_countAdd());
 			isLike = 2;
+			isLikes();
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY,
+					Constant.INTENT_ACTION_VALUE_LIKE);
 			break;
 		case PY1:
 			AVAnalytics.onEvent(this, "poke");
@@ -295,7 +332,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	protected void setupData() {
 		setGCenter(true, "商品");
 		setGLeft(true, R.drawable.back_selector);
-		setGRigth(true, R.drawable.more);
+		setGRigth(false, 0);
 
 		mHandler = new Handler() {
 			@Override
@@ -337,20 +374,21 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		// product_tv_likes.setText(productBean.getEntity().getLike_count());
 
 		if (!productBean.getEntity().getLike_count().equals("")) {
-			product_tv_likes.setText("喜爱 "
-					+ productBean.getEntity().getLike_count());
 			product_tv_like_size.setText(productBean.getEntity()
 					.getLike_count() + " 人喜爱");
 		}
-		product_tv_price.setText("￥ " + productBean.getEntity().getPrice());
+		product_tv_price.setText(getResources().getString(
+				R.string.tv_commodity_go_buy,
+				productBean.getEntity().getPrice()));
 		// imageLoader.displayImage(productBean.getPic(), product_iv_pic);
 
 		try {
 			android.widget.RelativeLayout.LayoutParams param = new android.widget.RelativeLayout.LayoutParams(
-					EkwingApplication.screenW - BitmapUtil.dip2px(mContext, 8),
-					EkwingApplication.screenW - BitmapUtil.dip2px(mContext, 8));
+					EkwingApplication.screenW,
+					EkwingApplication.screenW);
 			param.addRule(RelativeLayout.CENTER_IN_PARENT);
 			vp.setLayoutParams(param);
+			sv.smoothScrollTo(0, 0);
 
 			JSONArray thumbs = new JSONArray(productBean.getEntity()
 					.getDetail_images());
@@ -435,10 +473,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		} catch (Exception e) {
 		}
 
-		if ("1".equals(productBean.getEntity().getLike_already())) {
-			product_iv_like.setBackgroundResource(R.drawable.like_red);
-		} else
-			product_iv_like.setBackgroundResource(R.drawable.like_gary);
+		isLikes();
 
 		gv1Adapter = new ArrayListAdapter<UserBean>(context) {
 
@@ -543,15 +578,17 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 							public void setTagClick(String tagName) {
 								// TODO Auto-generated method stub
 
-								if(EkwingApplication
-										.getInstance().getBean() == null){
-									startActivity(new Intent(ProductInfoAct.this,
-											LoginAct.class));
-								}else{
+								if (EkwingApplication.getInstance().getBean() == null) {
+									startActivity(new Intent(
+											ProductInfoAct.this, LoginAct.class));
+								} else {
 									tagName = tagName.trim().replace("#", "");
-									Intent intent = new Intent(ProductInfoAct.this, EntityAct.class);
+									Intent intent = new Intent(
+											ProductInfoAct.this,
+											EntityAct.class);
 									intent.putExtra("data", EkwingApplication
-											.getInstance().getBean().getUser().getUser_id());
+											.getInstance().getBean().getUser()
+											.getUser_id());
 									intent.putExtra("name", tagName);
 									startActivity(intent);
 								}
@@ -626,8 +663,17 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 	}
 
-	@OnClick(R.id.title_bar_rigth_iv)
-	public void right(View v) {
+	@OnClick(R.id.product_tv_more)
+	public void more(View v) {
+		moreClick();
+	}
+
+	@OnClick(R.id.product_tv_mores)
+	public void mores(View v) {
+		moreClick();
+	}
+
+	private void moreClick() {
 		postShare(productBean.getEntity().getTitle(), new UMImage(this,
 				productBean.getEntity().get240()), "", productBean.getEntity()
 				.getEntity_id(), productBean);
@@ -656,8 +702,13 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 	}
 
-	@OnClick(R.id.product_ll_like)
+	@OnClick(R.id.product_iv_like)
 	public void Like(View v) {
+		likeClick();
+	}
+
+	private void likeClick() {
+
 		if (productBean.getEntity().getLike_already().equals("0")) {
 			sendConnectionPOST(Constant.TOLIKE
 					+ productBean.getEntity().getEntity_id() + "/like/1/",
@@ -667,7 +718,6 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			sendConnectionPOST(Constant.TOLIKE
 					+ productBean.getEntity().getEntity_id() + "/like/0/",
 					new String[] {}, new String[] {}, LIKE0, false);
-
 		}
 	}
 
@@ -695,7 +745,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		}
 	}
 
-	@OnClick(R.id.product_ll_price)
+	@OnClick(R.id.product_tv_price)
 	public void Price(View v) {
 		gotoTaoBao();
 	}
@@ -767,6 +817,15 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 	@OnClick(R.id.product_tv_comment)
 	public void Comment(View v) {
+		setComments();
+	}
+
+	@OnClick(R.id.product_tv_comments)
+	public void Comments(View v) {
+		setComments();
+	}
+
+	private void setComments() {
 		if (EkwingApplication.getInstance().getBean() != null) {
 			Intent intent = new Intent(mContext, CommentAct.class);
 			intent.putExtra("data", JSON.toJSONString(productBean));
@@ -980,6 +1039,86 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			}
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	/**
+	 * 获取购买按钮的顶部位置，也就是商品图片底部的位置
+	 */
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		// TODO Auto-generated method stub
+		super.onWindowFocusChanged(hasFocus);
+		if (hasFocus) {
+			priceBtTop = viewMore.getBottom();
+		}
+	}
+
+	@Override
+	public void onScroll(int scrollY) {
+		// TODO Auto-generated method stub
+		if (scrollY >= priceBtTop) {
+
+			/**** 购买按钮 ****/
+			if (product_tv_price.getParent() != view3) {
+				view2.removeView(product_tv_price);
+				view3.addView(product_tv_price);
+
+				/**** 喜欢 分享 更多 ****/
+				if(getTitleLayout().getVisibility() == View.GONE){
+					if (animationIn == null) {
+						animationIn = AnimationUtils.loadAnimation(this,
+								R.anim.alpha_in);
+					}
+					getTitleLayout().startAnimation(animationIn);
+					getTitleLayout().setVisibility(View.VISIBLE);
+				}
+			}
+		} else {
+			if (product_tv_price.getParent() != view2) {
+				view3.removeView(product_tv_price);
+				view2.addView(product_tv_price);
+
+				if(getTitleLayout().getVisibility() == View.VISIBLE){
+					if (animationOut == null) {
+						animationOut = AnimationUtils.loadAnimation(this,
+								R.anim.alpha_out);
+					}
+					getTitleLayout().startAnimation(animationOut);
+
+					animationOut.setAnimationListener(new AnimationListener() {
+
+						@Override
+						public void onAnimationStart(Animation arg0) {
+							// TODO Auto-generated method stub
+							getTitleLayout().setVisibility(View.GONE);
+						}
+
+						@Override
+						public void onAnimationRepeat(Animation arg0) {
+							// TODO Auto-generated method stub
+
+						}
+
+						@Override
+						public void onAnimationEnd(Animation arg0) {
+							// TODO Auto-generated method stub
+						}
+					});
+				}
+			}
+		}
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+		// TODO Auto-generated method stub
+		if (arg0 == cbliks) {
+			if (arg1) {
+				likeClick();
+			} else {
+				likeClick();
+			}
+		}
 	}
 
 }

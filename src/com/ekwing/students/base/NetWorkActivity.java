@@ -286,65 +286,7 @@ public abstract class NetWorkActivity extends BaseActivity {
 		} else
 			ToastUtil.show(getApplicationContext(), "网络连接失败");
 	}
-
-	/**
-	 * 除登录忘记密码界面外都要调用的方法（不传递任务参数） 连网时不转圈
-	 * 
-	 * @param url
-	 * @param where
-	 */
-	// public void sendConnection(String url, int where, int umengId) {
-	// sendConnectionNoLoginOrPsw(HttpMethod.POST, url, new String[] {},
-	// new String[] {}, where, false, umengId);
-	// }
-
-	/**
-	 * 除登录忘记密码界面外都要调用的方法、 连网时可选择是否转圈
-	 * showDialog=true--->会转。showDialog=false----->不会
-	 * 
-	 * @param url
-	 *            地址
-	 * @param argsKeys
-	 *            传递的参数名
-	 * @param argsValues
-	 *            参数对应的值
-	 * @param where
-	 *            连网结果的状态值
-	 * @param showDialog
-	 *            是否显示dialog
-	 */
-	// public void sendConnectionNoLoginOrPsw(String url, String[] argsKeys,
-	// String[] argsValues, int where, boolean showDialog, int umengId) {
-	// sendConnectionNoLoginOrPsw(HttpMethod.POST, url, argsKeys, argsValues,
-	// where, showDialog, umengId);
-	// }
-
-	// public void sendConnection(String url, String[] argsKeys, String[]
-	// argsValues, int where) {
-	// sendConnection(HttpMethod.POST, url, argsKeys, argsValues, where, false);
-	// }
-	//
-	// public void sendConnection(HttpMethod method, String url, String[]
-	// argsKeys, String[] argsValues, int where) {
-	// sendConnection(method, url, argsKeys, argsValues, where, false);
-	// }
-
-	// public void sendConnection(String url, String[] argsKeys, String[]
-	// argsValues) {
-	// sendConnection(HttpMethod.GET, url, argsKeys, argsValues, 0, false);
-	// }
-
-	// public void sendConnection(String url, String[] argsKeys, String[]
-	// argsValues, boolean isShow) {
-	// sendConnection(HttpMethod.GET, url, argsKeys, argsValues, 0, isShow);
-	// }
-	//
-	// public void sendConnection(String url, int where, boolean showDialog) {
-	// sendConnection(HttpMethod.GET, url, new String[] {}, new String[] {},
-	// where, showDialog);
-	// }
-	//
-	// -------------------------需要重写或实现的方法---------------------
+	
 	/**
 	 * 联网开始
 	 * 

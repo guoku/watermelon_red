@@ -6,6 +6,7 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/layout_title"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -23,8 +24,7 @@
             android:layout_width="1px"
             android:layout_height="fill_parent"
             android:background="@color/g_line"
-            android:visibility="gone" 
-            />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/title_bar_centrt_tv"
@@ -43,14 +43,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="8dp" />
-        
-        <TextView 
+            android:layout_marginRight="8dp"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/title_bar_rigth_tv"
+            style="@style/right_top_bar_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/layout_title_more"
+            layout="@layout/layout_more_item" 
             android:visibility="gone"
-            style="@style/right_top_bar_tv"
             />
     </LinearLayout>
 

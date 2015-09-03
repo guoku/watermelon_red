@@ -50,14 +50,12 @@
 
             <ImageView
                 android:id="@+id/jingxuan_item_iv_like"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/layout_width_more"
                 android:src="@drawable/like_gary" />
 
             <TextView
                 android:id="@+id/jingxuan_item_tv_likes"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                style="@style/layout_width_more"
                 android:layout_marginLeft="8dp"
                 android:background="@drawable/likecounter_bg"
                 android:gravity="center"
