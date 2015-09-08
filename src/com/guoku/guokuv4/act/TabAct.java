@@ -204,23 +204,6 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 				new String[] {}, STAT, false);
 	}
 
-	// private void getCATABLIST(String off) {
-	// if (isLike == null) {
-	// sendConnection(Constant.CATAB + cid + "/entity/", new String[] {
-	// "count", "offset", "reverse" }, new String[] { "30", off,
-	// "0" }, CATABLIST, true);
-	// } else if (EkwingApplication.getInstance().getBean() != null) {
-	// sendConnection(Constant.CATAB + cid + "/user/"
-	// + EkwingApplication.getInstance().getBean().getUser()
-	// .getUser_id() + "/like/", new String[] { "count",
-	// "offset", "reverse" }, new String[] { "30", off, "0" },
-	// CATABLIST, true);
-	// } else {
-	// startActivity(new Intent(mContext, LoginAct.class));
-	// finish();
-	// }
-	// }
-
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
@@ -248,6 +231,10 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 				tab_gv.setVisibility(View.VISIBLE);
 				tab_lv.setVisibility(View.GONE);
 			}
+			if(tvWhatlike.getVisibility() == View.VISIBLE){
+				showView(tvWhatlike);
+			}
+			
 		}
 		if (arg0 == tvWhatDef) {
 			showView(tvWhatlike);

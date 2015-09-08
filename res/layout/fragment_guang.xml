@@ -58,88 +58,31 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="推荐品类"
-                android:textColor="@color/g_other" 
                 android:layout_margin="10dp"
-                />
+                android:text="推荐品类"
+                android:textColor="@color/g_other" />
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" 
-                android:scrollbars="none"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                >
+                android:scrollbars="none" >
 
                 <LinearLayout
                     android:id="@+id/gallery_recommend_sort"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:orientation="horizontal" 
                     android:gravity="center"
-                    />
+                    android:orientation="horizontal" />
             </HorizontalScrollView>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
+            
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="horizontal" >
-
-                <LinearLayout
-                    android:id="@+id/faxian_ll_tab1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:id="@+id/faxian_tv_tab1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="热门商品" />
-
-                    <ImageView
-                        android:id="@+id/faxian_iv_tab1"
-                        android:layout_width="54dp"
-                        android:layout_height="2dp"
-                        android:layout_marginTop="12dp"
-                        android:background="#ff1f77" />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="1px"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/g_line"
-                    android:visibility="gone" />
-
-                <LinearLayout
-                    android:id="@+id/faxian_ll_tab2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:id="@+id/faxian_tv_tab2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="推荐品类"
-                        android:textColor="@color/g_other" />
-
-                    <ImageView
-                        android:id="@+id/faxian_iv_tab2"
-                        android:layout_width="54dp"
-                        android:layout_height="2dp"
-                        android:layout_marginTop="12dp"
-                        android:background="#ff1f77"
-                        android:visibility="invisible" />
-                </LinearLayout>
-            </LinearLayout>
+                android:layout_margin="10dp"
+                android:text="热门商品"
+                android:textColor="@color/g_other" />
 
             <ImageView
                 android:layout_width="fill_parent"
@@ -160,19 +103,6 @@
                 android:scrollbars="none"
                 android:verticalSpacing="4dp" >
             </com.ekwing.students.customview.ScrollViewWithGridView>
-
-            <com.ekwing.students.customview.ScrollViewWithListView
-                android:id="@+id/faxian_lv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:background="#ffffffff"
-                android:divider="#000000"
-                android:dividerHeight="0px"
-                android:numColumns="3"
-                android:visibility="gone" >
-            </com.ekwing.students.customview.ScrollViewWithListView>
         </LinearLayout>
     </ScrollView>
 

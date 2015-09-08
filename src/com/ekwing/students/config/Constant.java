@@ -333,7 +333,8 @@ public class Constant {
 	public static final String USERINFO = URL + "/mobile/v4/user/";
 	/** 修改密码*/
 	public static final String PASSWORD_CHANGE = URL + "/mobile/v4/user/reset/password/";
-	
+	/** 热门商品列表*/
+	public static final String DISCOVER = URL + "/mobile/v4/discover/";
 	
 	
 	public static final String DESCRIPTOR = "1";

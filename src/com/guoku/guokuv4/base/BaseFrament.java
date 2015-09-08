@@ -23,7 +23,6 @@ import android.view.ViewGroup;
 
 import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.config.Constant;
-import com.ekwing.students.config.Logger;
 import com.ekwing.students.customview.CustomProgressDialog;
 import com.ekwing.students.utils.HttputilHelp;
 import com.ekwing.students.utils.NetUtil;
@@ -33,6 +32,7 @@ import com.ekwing.students.utils.ToastUtil;
 import com.ekwing.students.utils.Utils;
 import com.guoku.R;
 import com.guoku.guokuv4.act.LoginAct;
+import com.guoku.guokuv4.utils.LogGK;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -47,6 +47,7 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.umeng.analytics.MobclickAgent;
 
 public abstract class BaseFrament extends Fragment {
+	
 	protected final String TAG = getClass().getSimpleName();
 	private CustomProgressDialog progressDialog;
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
@@ -91,32 +92,9 @@ public abstract class BaseFrament extends Fragment {
 		sb.append("47b41864d64bd46");
 		String strParam = sb.toString();
 		String sign = StringUtil.md5(strParam);
-		Logger.e("genSign", "genSign----->" + sign);
+		LogGK.e(sign);
 		return sign;
 	}
-
-	// private static String genReqBody(Map<String, String> paramsMap) {
-	// StringBuilder builder = new StringBuilder();
-	// String sign = genSign(paramsMap);
-	// TreeMap<String, String> copy = new TreeMap<String, String>(paramsMap);
-	// copy.put("sign", sign);
-	// copy.put("api_key", "0b19c2b93687347e95c6b6f5cc91bb87");
-	// Set<String> keySet = copy.keySet();
-	// try {
-	// for (String key : keySet) {
-	// builder.append(key).append("=")
-	// .append(URLEncoder.encode(copy.get(key), HTTP.UTF_8))
-	// .append("&");
-	//
-	// }
-	// } catch (UnsupportedEncodingException e) {
-	// e.printStackTrace();
-	// }
-	// builder.deleteCharAt(builder.length() - 1);
-	//
-	// return builder.toString();
-	//
-	// }
 
 	protected abstract void init();
 
@@ -188,7 +166,7 @@ public abstract class BaseFrament extends Fragment {
 		Map<String, String> paramsMap = new TreeMap<String, String>();
 		for (int i = 0; i < argsKeys.length; i++) {
 			params.addQueryStringParameter(argsKeys[i], argsValues[i]);
-			Logger.e("params", "params----->" + argsKeys[i] + ":"
+			LogGK.e(argsKeys[i] + ":"
 					+ argsValues[i]);
 			paramsMap.put(argsKeys[i], argsValues[i]);
 		}
@@ -211,7 +189,7 @@ public abstract class BaseFrament extends Fragment {
 		// .getLoginInfo(getActivity()).getUid());
 		// params.addQueryStringParameter("uid",
 		// SharePrenceUtil.getLoginInfo(getActivity()).getUid());
-		Logger.e("params", "params----->" + ":" + params.toString());
+		LogGK.e("params----->" + ":" + params.toString());
 		if (showDialog && !getActivity().isFinishing()) {
 			showDialog();
 		}
@@ -233,7 +211,7 @@ public abstract class BaseFrament extends Fragment {
 		Map<String, String> paramsMap = new TreeMap<String, String>();
 		for (int i = 0; i < argsKeys.length; i++) {
 			params.addBodyParameter(argsKeys[i], argsValues[i]);
-			Logger.e("params", "params----->" + argsKeys[i] + ":"
+			LogGK.e("params----->" + argsKeys[i] + ":"
 					+ argsValues[i]);
 			paramsMap.put(argsKeys[i], argsValues[i]);
 		}
@@ -252,7 +230,7 @@ public abstract class BaseFrament extends Fragment {
 		params.addBodyParameter("sign", genSign(paramsMap));
 		params.addBodyParameter("api_key", "0b19c2b93687347e95c6b6f5cc91bb87");
 
-		Logger.e("params", "params----->" + ":" + params.toString());
+		LogGK.e("params----->" + ":" + params.toString());
 		if (showDialog && !getActivity().isFinishing()) {
 			showDialog();
 		}
@@ -273,17 +251,16 @@ public abstract class BaseFrament extends Fragment {
 		RequestParams params = new RequestParams();
 		for (int i = 0; i < argsKeys.length; i++) {
 			params.addBodyParameter(argsKeys[i], argsValues[i]);
-			Logger.e("", "=========length==============>" + argsKeys.length);
-			Logger.e("params", "params----->" + argsKeys[i] + ":"
+			LogGK.e("=========length==============>" + argsKeys.length);
+			LogGK.e("params----->" + argsKeys[i] + ":"
 					+ argsValues[i]);
 		}
-		Logger.e("params",
-				"params----->v" + ":" + Utils.getVersionName(getActivity()));
-		Logger.e("params", "params----->token" + ":"
+		LogGK.e("params----->v" + ":" + Utils.getVersionName(getActivity()));
+		LogGK.e("params----->token" + ":"
 				+ SharePrenceUtil.getLoginInfo(getActivity()).getToken());
-		Logger.e("params", "params----->author_id" + ":"
+		LogGK.e("params----->author_id" + ":"
 				+ SharePrenceUtil.getLoginInfo(getActivity()).getUid());
-		Logger.e("params", "params----->uid" + ":"
+		LogGK.e("params----->uid" + ":"
 				+ SharePrenceUtil.getLoginInfo(getActivity()).getUid());
 		params.addBodyParameter("v", Utils.getVersionName(getActivity()));
 		params.addBodyParameter("token",
@@ -469,7 +446,7 @@ public abstract class BaseFrament extends Fragment {
 		public void onStart() {
 			// TODO Auto-generated method stub
 			super.onStart();
-			Logger.e("请求", "---------------->" + this.getRequestUrl());
+			LogGK.e("请求---------------->" + this.getRequestUrl());
 			BaseFrament.this.onStart(where);
 		}
 
@@ -481,15 +458,15 @@ public abstract class BaseFrament extends Fragment {
 		}
 
 		public void onStopped() {
-			Logger.e("请求", "---------------->onStopped");
+			LogGK.e("请求---------------->onStopped");
 			BaseFrament.this.onStopped(where);
 		}
 
 		@Override
 		public void onFailure(HttpException ex, String msg) {
-			Logger.e("请求", "---------------->url:>:" + this.getRequestUrl());
-			Logger.e("请求", "---------------->onFailure" + ex);
-			Logger.e("请求", "---------------->onFailure" + msg);
+			LogGK.e("请求---------------->url:>:" + this.getRequestUrl());
+			LogGK.e("请求---------------->onFailure" + ex);
+			LogGK.e("请求---------------->onFailure" + msg);
 			dismissDialog();
 			String result = context.getResources().getString(
 					R.string.result_failure);
@@ -500,7 +477,7 @@ public abstract class BaseFrament extends Fragment {
 		public void onSuccess(ResponseInfo<String> arg0) {
 			dismissDialog();
 			String result = arg0.result;
-			Logger.e("NetWorkActivity", "返回:url--->" + this.getRequestUrl()
+			LogGK.e("返回:url--->" + this.getRequestUrl()
 					+ "------------>" + result);
 			BaseFrament.this.onSuccess(result, where);
 		}
@@ -515,7 +492,7 @@ public abstract class BaseFrament extends Fragment {
 	// if (root.has("status") && "1".equals(root.getString("status"))) {
 	// JSONObject data = root.getJSONObject("data");
 	// if (data.has("intend")) {
-	// Logger.e(
+	// LogGK.e(
 	// "aa",
 	// "Baserament===================>"
 	// + data.getInt("intend"));
@@ -523,7 +500,7 @@ public abstract class BaseFrament extends Fragment {
 	// case Constants.MASTLOGIN:
 	// LightHttpUtils.showFailureResult(context,
 	// data.toString());
-	// Logger.e("aa",
+	// LogGK.e("aa",
 	// "Baserament111111111111===================>"
 	// + data.getInt("intend"));
 	// errIntent = true;

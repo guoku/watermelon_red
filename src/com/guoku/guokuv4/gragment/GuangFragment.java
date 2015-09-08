@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,12 +26,12 @@ import android.view.ViewGroup;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Gallery;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -40,27 +41,28 @@ import com.avos.avoscloud.AVAnalytics;
 import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.config.Constant;
 import com.ekwing.students.utils.ArrayListAdapter;
-import com.ekwing.students.utils.SharePrenceUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.act.SeachAct;
 import com.guoku.guokuv4.act.TabAct;
 import com.guoku.guokuv4.act.UserAct;
 import com.guoku.guokuv4.act.WebAct;
-import com.guoku.guokuv4.adapter.TagListAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
+import com.guoku.guokuv4.bean.Categories;
+import com.guoku.guokuv4.bean.Categories.Category;
 import com.guoku.guokuv4.entity.test.BannerBean;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
-import com.guoku.guokuv4.entity.test.TAB1Bean;
 import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.ImgUtils;
+import com.guoku.guokuv4.view.ImageAddTextLayout;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.umeng.analytics.MobclickAgent;
 
 public class GuangFragment extends BaseFrament {
@@ -68,6 +70,7 @@ public class GuangFragment extends BaseFrament {
 	private static final int PROINFO = 12;
 	private static final int FAXIANHOME = 13;
 	private static final int USERINFO = 14;
+	private static final int DISCOVER = 15;// 推荐品类
 
 	@ViewInject(R.id.user_et_name)
 	private TextView user_et_name;
@@ -85,38 +88,18 @@ public class GuangFragment extends BaseFrament {
 	private boolean onTouchTrue;
 	private MyViewPagerAdapter adapter;
 
-	@ViewInject(R.id.faxian_ll_tab1)
-	private LinearLayout faxian_ll_tab1;
-
-	@ViewInject(R.id.faxian_ll_tab2)
-	private LinearLayout faxian_ll_tab2;
-
-	@ViewInject(R.id.faxian_tv_tab2)
-	private TextView faxian_tv_tab2;
-
-	@ViewInject(R.id.faxian_tv_tab1)
-	private TextView faxian_tv_tab1;
-
-	@ViewInject(R.id.faxian_iv_tab1)
-	private ImageView faxian_iv_tab1;
-
-	@ViewInject(R.id.faxian_iv_tab2)
-	private ImageView faxian_iv_tab2;
-
-	@ViewInject(R.id.faxian_lv)
-	private ListView faxian_lv;
-
 	@ViewInject(R.id.faxian_gv)
 	private GridView faxian_gv;
 
 	private ArrayListAdapter<EntityBean> gvAdapter;
-	private TagListAdapter lvAdapter;
 
 	private DisplayImageOptions options;
+	private DisplayImageOptions optionsRound;// 圆角的
 	private ArrayList<EntityBean> hotList;
-	private ArrayList<TAB1Bean> tabList;
 	private ArrayList<BannerBean> list;
 	private ArrayList<Tab2Bean> list_cid;
+
+	private ArrayList<EntityBean> discover;// 分类
 
 	private int currentItem;
 	private Handler handler = new Handler() {
@@ -182,27 +165,6 @@ public class GuangFragment extends BaseFrament {
 							.getString("entity"), EntityBean.class));
 				}
 				gvAdapter.setList(hotList);
-
-				/**
-				 * 推荐品类测试
-				 */
-				List<ImageView> list = new ArrayList<ImageView>();
-				for (int i = 0; i < 15; i++) {
-					final ImageView image = new ImageView(getActivity());
-					LayoutParams params = new LayoutParams(280, 280);
-					image.setLayoutParams(params);
-					if(i == 0){
-						image.setPadding(0, 0, 10, 0);
-					}else{
-						image.setPadding(10, 0, 10, 0);
-					}
-					imageLoader.displayImage(hotList.get(i).getChief_image(),
-							image, options,
-							new ImgUtils.AnimateFirstDisplayListener());
-					list.add(image);
-					vpRecommendSort.addView(image);
-				}
-
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -287,7 +249,44 @@ public class GuangFragment extends BaseFrament {
 			}
 
 			break;
+		case DISCOVER:
+			try {
+				JSONObject root = new JSONObject(result);
+				ArrayList<Categories> arrayList = new ArrayList<Categories>();
+				arrayList = (ArrayList<Categories>) JSON.parseArray(
+						root.getString("categories"), Categories.class);
+				for (int i = 0; i < arrayList.size(); i++) {
+					final ImageAddTextLayout imagTextLayout = new ImageAddTextLayout(getActivity());
+					LayoutParams params = new LayoutParams(280, 280);
+					imagTextLayout.setLayoutParams(params);
+					imagTextLayout.setPadding(10, 0, 10, 0);
+					imageLoader.displayImage(arrayList.get(i).getCategory()
+							.getCover_url(), imagTextLayout.imView, optionsRound,
+							new ImgUtils.AnimateFirstDisplayListener());
+					imagTextLayout.tView.setText(arrayList.get(i).getCategory().getTitle().trim().replace(" ", "\n"));
+					imagTextLayout.setTag(arrayList.get(i).getCategory());
+					vpRecommendSort.addView(imagTextLayout);
+					imagTextLayout.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View arg0) {
+							// TODO Auto-generated method stub
+							Categories.Category category = (Category) arg0.getTag();
+							Intent intent = new Intent(getActivity(), TabAct.class);
+							intent.putExtra("data", category.getId());
+							intent.putExtra("name", category.getTitle());
+							getActivity().startActivity(intent);
+						}
+					});
+				}
+
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
 		default:
+			sv.scrollTo(0, 0);
 			break;
 		}
 
@@ -308,6 +307,14 @@ public class GuangFragment extends BaseFrament {
 				.showImageOnLoading(R.drawable.item240)
 				.showImageForEmptyUri(R.drawable.item240)
 				.showImageOnFail(R.drawable.item240).build();
+
+		optionsRound = new DisplayImageOptions.Builder()
+				.imageScaleType(ImageScaleType.EXACTLY)
+				.considerExifParams(true).bitmapConfig(Config.RGB_565)
+				.showImageOnLoading(R.drawable.item240)
+				.showImageForEmptyUri(R.drawable.item240)
+				.showImageOnFail(R.drawable.item240)
+				.displayer(new RoundedBitmapDisplayer(20)).build();
 
 		gvAdapter = new ArrayListAdapter<EntityBean>(context) {
 
@@ -330,12 +337,9 @@ public class GuangFragment extends BaseFrament {
 				return convertView;
 			}
 		};
-		lvAdapter = new TagListAdapter(getActivity());
 
 		hotList = new ArrayList<EntityBean>();
-		tabList = SharePrenceUtil.getTab1List(context);
 
-		faxian_lv.setAdapter(lvAdapter);
 		faxian_gv.setAdapter(gvAdapter);
 
 		faxian_gv.setOnItemClickListener(new OnItemClickListener() {
@@ -350,7 +354,6 @@ public class GuangFragment extends BaseFrament {
 
 			}
 		});
-		lvAdapter.setList(tabList);
 
 		try {
 			android.widget.RelativeLayout.LayoutParams param = new android.widget.RelativeLayout.LayoutParams(
@@ -390,10 +393,6 @@ public class GuangFragment extends BaseFrament {
 			adapter = new MyViewPagerAdapter();
 			vp.setAdapter(adapter);
 
-//			LayoutParams params = new LayoutParams(EkwingApplication.screenW,
-//					EkwingApplication.screenW / 4 - 10);
-//			vpRecommendSort.setLayoutParams(params);
-
 		} catch (Exception e) {
 		}
 
@@ -406,36 +405,9 @@ public class GuangFragment extends BaseFrament {
 				false);
 		sendConnection(Constant.FAXIANHOME, new String[] {}, new String[] {},
 				FAXIANHOME, false);
-	}
+		sendConnection(Constant.DISCOVER, new String[] {}, new String[] {},
+				DISCOVER, false);
 
-	@OnClick(R.id.faxian_ll_tab1)
-	public void Tab1(View v) {
-		faxian_tv_tab1.setTextColor(Color.rgb(65, 66, 67));
-		faxian_tv_tab2.setTextColor(Color.rgb(157, 158, 159));
-		faxian_iv_tab1.setVisibility(View.VISIBLE);
-		faxian_iv_tab2.setVisibility(View.INVISIBLE);
-		faxian_gv.setVisibility(View.VISIBLE);
-		faxian_lv.setVisibility(View.GONE);
-		if (hotList.size() <= 0) {
-			sendConnection(Constant.HOT, new String[] {}, new String[] {}, HOT,
-					false);
-		}
-
-		sv.smoothScrollTo(0, 0);
-	}
-
-	@OnClick(R.id.faxian_ll_tab2)
-	public void Tab2(View v) {
-		faxian_tv_tab2.setTextColor(Color.rgb(65, 66, 67));
-		faxian_tv_tab1.setTextColor(Color.rgb(157, 158, 159));
-
-		faxian_iv_tab1.setVisibility(View.INVISIBLE);
-		faxian_iv_tab2.setVisibility(View.VISIBLE);
-		faxian_gv.setVisibility(View.GONE);
-		faxian_lv.setVisibility(View.VISIBLE);
-		lvAdapter.setList(tabList);
-
-		sv.smoothScrollTo(0, 0);
 	}
 
 	@OnClick(R.id.user_et_name)
