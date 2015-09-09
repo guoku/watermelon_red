@@ -40,5 +40,10 @@
 	
 	<!-- 商品详情页 -->
 	<string name="tv_commodity_go_buy" formatted="false">￥ %s 去购买</string>
+	
+	<!-- 首页图文精选流-->
+	<string name="tv_tab_recommend">推荐</string>
+	<string name="tv_tab_commodity">商品</string>
+	<string name="tv_tab_image_text">图文</string>
 
 </resources>

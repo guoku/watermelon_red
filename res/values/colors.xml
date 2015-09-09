@@ -177,6 +177,9 @@
     
     <!--  评论里的标签tv-->
     <color name="tv_note_tag">#427EC0</color>
+    <!--  玫瑰红 （首页viewpage tab 下划线）-->
+    <color name="rose_red">#FF1F77</color>
+    
      
 
 </resources>

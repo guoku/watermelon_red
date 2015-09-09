@@ -7,16 +7,14 @@ import java.util.List;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.widget.Toast;
 
 import com.alibaba.sdk.android.AlibabaSDK;
 import com.alibaba.sdk.android.callback.InitResultCallback;
-import com.alibaba.sdk.android.login.LoginService;
-import com.alibaba.sdk.android.login.callback.LogoutCallback;
 import com.avos.avoscloud.AVOSCloud;
 import com.ekwing.students.config.Constant;
 import com.ekwing.students.config.Logger;
 import com.ekwing.students.utils.SharePrenceUtil;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.guoku.guokuv4.entity.test.AccountBean;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.disc.naming.HashCodeFileNameGenerator;
@@ -52,7 +50,7 @@ public class EkwingApplication extends Application {
 		this.bean = null;
 		this.session = null;
 		SharePrenceUtil.setUserBean(instance, null);
-	   	}
+	}
 
 	public String getSession() {
 		return session;
@@ -89,16 +87,11 @@ public class EkwingApplication extends Application {
 		return page;
 	}
 
-	// public boolean isLogin() {
-	// return isLogin;
-	// }
-	//
-	// public void setLogin(boolean isLogin) {
-	// this.isLogin = isLogin;
-	// }
-
 	@Override
 	public void onCreate() {
+		
+		Fresco.initialize(getApplicationContext());//初始化Fresco
+		
 		super.onCreate();
 		instance = this;
 		Constant.init(this);
@@ -118,83 +111,16 @@ public class EkwingApplication extends Application {
 			@Override
 			public void onSuccess() {
 				Logger.i("taobao", "onSuccess---->");
-				// Toast.makeText(MainActivity.this, "初始化成功",
-				// Toast.LENGTH_SHORT)
-				// .show();
-				// ToastUtil.show(instance, "初始化成功");
 			}
 
 			@Override
 			public void onFailure(int code, String message) {
 				Logger.e("taobao", "fail---->" + message);
-				// Toast.makeText(MainActivity.this, "初始化异常",
-				// Toast.LENGTH_SHORT)
-				// .show();
-				// ToastUtil.show(instance, "初始化异常");
-
 			}
 
 		});
 
 	}
-
-	// public void finishRealName() {
-	// synchronized (this) {
-	// if (activityList != null && activityList.size() > 0) {
-	// for (Activity a : activityList) {
-	// if (a.getClass().getSimpleName()
-	// .equals(SelectProvinceAct.class.getSimpleName())
-	// || a.getClass()
-	// .getSimpleName()
-	// .equals(SelectCityAct.class.getSimpleName())
-	// || a.getClass().getSimpleName()
-	// .equals(SelectXAct.class.getSimpleName())
-	// || a.getClass()
-	// .getSimpleName()
-	// .equals(LoginPagerActivity.class
-	// .getSimpleName())) {
-	// a.finish();
-	// }
-	// }
-	// }
-	// }
-	// }
-
-	// public void finishRealName1() {
-	// synchronized (this) {
-	// if (activityList != null && activityList.size() > 0) {
-	// for (Activity a : activityList) {
-	// if (a.getClass().getSimpleName()
-	// .equals(SelectSchoolAct.class.getSimpleName())
-	// || a.getClass()
-	// .getSimpleName()
-	// .equals(LoginPagerActivity.class
-	// .getSimpleName())) {
-	// a.finish();
-	// }
-	// }
-	// }
-	// }
-	// }
-	//
-	// public void finishPhone() {
-	// synchronized (this) {
-	// if (activityList != null && activityList.size() > 0) {
-	// for (Activity a : activityList) {
-	// if (a.getClass()
-	// .getSimpleName()
-	// .equals(UserInputPhoneActivity.class
-	// .getSimpleName())
-	// || a.getClass()
-	// .getSimpleName()
-	// .equals(UserInputValidationActivity.class
-	// .getSimpleName())) {
-	// a.finish();
-	// }
-	// }
-	// }
-	// }
-	// }
 
 	public void addActivity(Activity activity) {
 		try {
@@ -237,42 +163,6 @@ public class EkwingApplication extends Application {
 		}
 	}
 
-	// public void goToMain() {
-	// synchronized (this) {
-	// if (activityList != null && activityList.size() > 0) {
-	// for (Activity a : activityList) {
-	// // if (!MainActivity.class.getSimpleName().equals(
-	// // a.getClass().getSimpleName())) {
-	// a.finish();
-	// // }
-	// }
-	// }
-	// }
-	// startActivity(new Intent(this, MainActivity2.class));
-	// }
-
-	// public void goToExercise() {
-	// synchronized (this) {
-	// if (activityList != null && activityList.size() > 0) {
-	// for (Activity a : activityList) {
-	// if (WordsConfirmResultActivity.class.getSimpleName()
-	// .equals(a.getClass().getSimpleName())) {
-	// a.finish();
-	// }
-	// // if (ConfirmDiffActivity.class.getSimpleName().equals(
-	// // a.getClass().getSimpleName())) {
-	// // a.finish();
-	// // }
-	// // if
-	// // (WordsConfirmModeActivity.class.getSimpleName().equals(
-	// // a.getClass().getSimpleName())) {
-	// // a.finish();
-	// // }
-	// }
-	// }
-	// }
-	// }
-
 	// 有Activity手动finish的时候需要将其引用在集合中删除
 	public void removeActivity(Activity activity) {
 		synchronized (this) {
@@ -281,49 +171,6 @@ public class EkwingApplication extends Application {
 		}
 		System.gc();
 	}
-
-	// // ------用于jpush跳转－－
-	// /**
-	// * 以jpush方式打开程序后的返回逻辑 返回
-	// *
-	// * @param activityclass对象
-	// * 要跳转的activity
-	// */
-	// public void backActivity(Class<?> activityClass, Context context) {
-	// boolean findIt = false;
-	// synchronized (this) {
-	// if (activityList != null && activityList.size() > 0) {
-	// for (int i = activityList.size() - 1; i >= 0; i--) {
-	// Activity tempActivity = activityList.get(i);
-	// String simpleName = tempActivity.getClass().getSimpleName();
-	// if (!simpleName.equals(activityClass.getSimpleName())) {
-	// // 因销毁其中任意一个 整个程序将退出
-	// if (!simpleName.equals("UserCenterActivity")
-	// && !simpleName
-	// .equals("DestinationMainActivity")
-	// && !simpleName.equals("ProductMainActivity")
-	// && !simpleName.equals("ImHereMainActivity")
-	// && !simpleName.equals("MainActivity")) {
-	// tempActivity.finish();
-	// }
-	// } else {
-	// findIt = true;
-	// break;
-	// }
-	// }
-	// }
-	// if (!findIt) {
-	// // 如果主界面都没有被启动过，则启动主界面
-	// if (activityClass.getSimpleName().equals("UserCenterActivity")) {
-	// Intent intent = new Intent(context, MainActivity.class);
-	// context.startActivity(intent);
-	// } else {
-	// Intent intent = new Intent(context, activityClass);
-	// context.startActivity(intent);
-	// }
-	// }
-	// }
-	// }
 
 	public static void initImageLoader(Context context) {
 		File cacheDir = StorageUtils.getCacheDirectory(instance);

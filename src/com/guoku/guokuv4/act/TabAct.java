@@ -13,18 +13,14 @@ import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
-import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -32,13 +28,14 @@ import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.base.NetWorkActivity;
 import com.ekwing.students.config.Constant;
 import com.ekwing.students.utils.SharePrenceUtil;
-import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.adapter.EntityAdapter;
 import com.guoku.guokuv4.adapter.GVAdapter;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.view.HeaderGridView;
+import com.guoku.guokuv4.view.HeaderListview;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
@@ -52,11 +49,14 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 	private static final int LIST = 1;
 	private static final int GRID = 2;
 
+//	@ViewInject(R.id.scroll_view)
+//	private ScrollView scrollView;
+	
 	@ViewInject(R.id.tab_lv)
-	private ListView tab_lv;
+	private HeaderListview tab_lv;
 
 	@ViewInject(R.id.tab_gv)
-	private GridView tab_gv;
+	private HeaderGridView tab_gv;
 
 	@ViewInject(R.id.tab_tv_count)
 	private TextView tab_tv_count;
@@ -167,8 +167,14 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 
 		gvAdapter = new GVAdapter(context);
 		lvAdapter = new EntityAdapter(context);
+		
+		
+		
+//		tab_gv.addHeaderView(v)
+		
 		tab_lv.setAdapter(lvAdapter);
 		tab_gv.setAdapter(gvAdapter);
+		
 
 		tab_lv.setOnItemClickListener(new OnItemClickListener() {
 
@@ -234,6 +240,8 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 			if(tvWhatlike.getVisibility() == View.VISIBLE){
 				showView(tvWhatlike);
 			}
+//			scrollView.scrollTo(0, 0);
+//			scrollView.smoothScrollTo(0, 0);
 			
 		}
 		if (arg0 == tvWhatDef) {

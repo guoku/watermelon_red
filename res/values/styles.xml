@@ -361,7 +361,7 @@
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/title_bar_gray</item>
     </style>
-    
+
     <style name="edit_item_left2">
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/title_bar_gray</item>
@@ -374,11 +374,28 @@
         <item name="android:textColor">@color/title_bar_gray</item>
         <item name="android:paddingRight">16dp</item>
     </style>
-    
+
     <!-- 更多操作  喜欢、评论、分享 -->
     <style name="layout_width_more">
         <item name="android:layout_width">25dp</item>
         <item name="android:layout_height">25dp</item>
+    </style>
+
+    <!-- 首页图文流tab字体 -->
+    <style name="home_page_tab_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/title_bar_gray</item>
+        <item name="android:gravity">center</item>
+    </style>
+    
+    <!-- 首页图文流tab下img -->
+    <style name="home_page_tab_img">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">3dp</item>
+        <item name="android:layout_weight">1</item>
     </style>
 
 </resources>

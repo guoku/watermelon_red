@@ -18,6 +18,7 @@ import com.guoku.guokuv4.act.LoginAct;
 import com.guoku.guokuv4.act.SettingAct;
 import com.guoku.guokuv4.gragment.GuangFragment;
 import com.guoku.guokuv4.gragment.JingXuanFragment;
+import com.guoku.guokuv4.gragment.JingXuanPageFragment;
 import com.guoku.guokuv4.gragment.OrderFragment;
 import com.guoku.guokuv4.gragment.PersonalFragment;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -69,7 +70,10 @@ public class MainActivity2 extends NetWorkActivity {
 	// private ImageView iv_order;//
 	// private ImageView iv_personal;//
 	private Fragment mContent;
-	private JingXuanFragment destinationFragment;
+	
+	private JingXuanPageFragment jingXuanPageFragment;
+	
+//	private JingXuanFragment destinationFragment;
 	private GuangFragment qunaerFragment;
 	private PersonalFragment personalFragment;
 	private OrderFragment orderFragment;
@@ -83,13 +87,19 @@ public class MainActivity2 extends NetWorkActivity {
 
 	@Override
 	protected void setupData() {
-		destinationFragment = new JingXuanFragment();
+		
+		jingXuanPageFragment = new JingXuanPageFragment();
+		
+//		destinationFragment = new JingXuanFragment();
 		qunaerFragment = new GuangFragment();
 		personalFragment = new PersonalFragment();
 		orderFragment = new OrderFragment();
 
-		commitFragment(R.id.fl_content, destinationFragment);
-		mContent = destinationFragment;
+//		commitFragment(R.id.fl_content, destinationFragment);
+//		mContent = destinationFragment;
+		
+		commitFragment(R.id.fl_content, jingXuanPageFragment);
+		mContent = jingXuanPageFragment;
 
 		if (EkwingApplication.getInstance().getBean() == null) {
 			main_bar_4.setImageResource(R.drawable.tabbar_icon_setting);
@@ -150,14 +160,20 @@ public class MainActivity2 extends NetWorkActivity {
 
 	@OnClick(R.id.ll_destination)
 	public void ll_destination(View v) {
-		if (destinationFragment == null) {
-			destinationFragment = new JingXuanFragment();
+//		if (destinationFragment == null) {
+//			destinationFragment = new JingXuanFragment();
+//		}
+		
+		if (jingXuanPageFragment == null) {
+			jingXuanPageFragment = new JingXuanPageFragment();
 		}
+		
 		main_bar_tv_1.setTextColor(Color.WHITE);
 		main_bar_tv_2.setTextColor(Color.rgb(157, 158, 159));
 		main_bar_tv_3.setTextColor(Color.rgb(157, 158, 159));
 		main_bar_tv_4.setTextColor(Color.rgb(157, 158, 159));
-		switchContent(destinationFragment);
+//		switchContent(destinationFragment);
+		switchContent(jingXuanPageFragment);
 		main_bar_1.setImageResource(R.drawable.tabbar_icon_selection_press);
 		main_bar_2.setImageResource(R.drawable.tabbar_icon_discover);
 		main_bar_3.setImageResource(R.drawable.tabbar_icon_notifaction);
@@ -252,7 +268,8 @@ public class MainActivity2 extends NetWorkActivity {
 	@Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
-		switchContent(destinationFragment);
+//		switchContent(destinationFragment);
+		switchContent(jingXuanPageFragment);
 		// iv_destination.setBackgroundResource(R.drawable.tabbar_home_press);
 		// iv_guang.setBackgroundResource(R.drawable.tabbar_guang_normal);
 		// iv_order.setBackgroundResource(R.drawable.tabbar_order_normal);
