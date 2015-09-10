@@ -27,7 +27,6 @@ import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.entity.test.AccountBean;
 import com.guoku.guokuv4.entity.test.UserBean;
-import com.guoku.guokuv4.gragment.JingXuanFragment;
 import com.guoku.guokuv4.gragment.PersonalFragment;
 import com.guoku.guokuv4.my.ChangeEmailAct;
 import com.guoku.guokuv4.my.ChangePasswordAct;

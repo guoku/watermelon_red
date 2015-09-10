@@ -8,7 +8,6 @@ import android.os.Environment;
 
 import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.utils.Utils;
-import com.guoku.guokuv4.gragment.JingXuanFragment;
 import com.lidroid.xutils.util.LogUtils;
 
 public class Constant {
@@ -335,6 +334,8 @@ public class Constant {
 	public static final String PASSWORD_CHANGE = URL + "/mobile/v4/user/reset/password/";
 	/** 热门商品列表*/
 	public static final String DISCOVER = URL + "/mobile/v4/discover/";
+	/** 首页商品图文banner流*/
+	public static final String HOME = URL + "/mobile/v4/home/";
 	
 	
 	public static final String DESCRIPTOR = "1";

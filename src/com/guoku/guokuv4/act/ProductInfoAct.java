@@ -9,8 +9,6 @@ import java.util.concurrent.TimeUnit;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import u.aly.ck;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -59,7 +57,6 @@ import com.ekwing.students.customview.CustomShareBoard;
 import com.ekwing.students.customview.ScrollViewWithGridView;
 import com.ekwing.students.customview.ScrollViewWithListView;
 import com.ekwing.students.utils.ArrayListAdapter;
-import com.ekwing.students.utils.BitmapUtil;
 import com.ekwing.students.utils.DateUtils;
 import com.ekwing.students.utils.StringUtil;
 import com.ekwing.students.utils.ToastUtil;
@@ -69,7 +66,7 @@ import com.guoku.guokuv4.entity.test.NoteBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.UserBean;
-import com.guoku.guokuv4.gragment.JingXuanFragment;
+import com.guoku.guokuv4.homepage.TwoFragmnet;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.BroadUtil;
 import com.guoku.guokuv4.utils.ImgUtils;
@@ -1013,12 +1010,12 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 		Intent intent = new Intent();
 		if (isLike == 1) {
-			intent.putExtra(JingXuanFragment.INTNT_KEY, false);
+			intent.putExtra(TwoFragmnet.INTNT_KEY, false);
 		}
 		if (isLike == 2) {
-			intent.putExtra(JingXuanFragment.INTNT_KEY, true);
+			intent.putExtra(TwoFragmnet.INTNT_KEY, true);
 		}
-		setResult(JingXuanFragment.UPDATA_LIKE, intent);
+		setResult(TwoFragmnet.UPDATA_LIKE, intent);
 		finish();
 	}
 

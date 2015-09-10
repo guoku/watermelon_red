@@ -20,7 +20,6 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.umeng.analytics.MobclickAgent;
 
 public class WelAct extends NetWorkActivity {
-	private static final int TAB = 11;
 
 	@ViewInject(R.id.wecome)
 	private RelativeLayout wecome;
@@ -37,9 +36,6 @@ public class WelAct extends NetWorkActivity {
 		setContentView(R.layout.welact);
 		ViewUtils.inject(this);
 		MobclickAgent.updateOnlineConfig(this);
-
-		sendConnection(Constant.TAB, new String[] {}, new String[] {}, TAB,
-				false);
 
 		if (SharePrenceUtil.getFirstUsed(WelAct.this, Constant.SP_FIRST_URED)) {
 			anim = new AlphaAnimation(0.5f, 1.0f);
@@ -102,14 +98,6 @@ public class WelAct extends NetWorkActivity {
 	@Override
 	protected void onSuccess(String result, int where) {
 		// TODO Auto-generated method stub
-		switch (where) {
-		case TAB:
-			SharePrenceUtil.setTabList(context, result);
-			break;
-
-		default:
-			break;
-		}
 
 	}
 

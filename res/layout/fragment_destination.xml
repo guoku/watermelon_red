@@ -5,60 +5,6 @@
     android:background="#ffffffff"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="48dp"
-        android:background="#fafafa" >
-
-        <ImageView
-            android:id="@+id/jingxuan_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="left"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="2dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/copy" />
-
-        <TextView
-            android:id="@+id/jingxuan_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="left"
-            android:layout_marginLeft="8dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:gravity="center_vertical"
-            android:padding="8dp"
-            android:textColor="@color/g_main"
-            android:textSize="17sp"
-            android:textStyle="bold"
-            android:visibility="gone" />
-
-        <ImageView
-            android:id="@+id/jingxuan_iv_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:scaleType="centerInside"
-            android:src="@drawable/open_list" />
-
-        <ImageView
-            android:id="@+id/refresh"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:scaleType="fitEnd"
-            android:src="@drawable/refresh" />
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/g_line" />
-
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         xmlns:ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/jingxuan_lv_1"

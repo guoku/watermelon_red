@@ -484,54 +484,6 @@ public abstract class BaseFrament extends Fragment {
 
 	}
 
-	// public boolean GetErrorIntent(String result, Context context) {
-	//
-	// boolean errIntent = false;
-	// try {
-	// JSONObject root = new JSONObject(result);
-	// if (root.has("status") && "1".equals(root.getString("status"))) {
-	// JSONObject data = root.getJSONObject("data");
-	// if (data.has("intend")) {
-	// LogGK.e(
-	// "aa",
-	// "Baserament===================>"
-	// + data.getInt("intend"));
-	// switch (data.getInt("intend")) {
-	// case Constants.MASTLOGIN:
-	// LightHttpUtils.showFailureResult(context,
-	// data.toString());
-	// LogGK.e("aa",
-	// "Baserament111111111111===================>"
-	// + data.getInt("intend"));
-	// errIntent = true;
-	// // Log.i("MUST", "must");
-	// // UserInfoBean bean1 = new UserInfoBean();
-	// UserLoginBean bean = new UserLoginBean();
-	// SharePrenceUtil.setLoginInfo(context, bean);
-	// // SharePrenceUtil.setUserInfoBean1(context, bean1);
-	// SharePrenceUtil.setLogin(context, false);
-	// EkwingApplication.getInstance().finishAll();
-	// Intent intent = new Intent(context,
-	// LoginPagerActivity.class);
-	// intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK);
-	// context.startActivity(intent);
-	// // System.exit(0);
-	// break;
-	//
-	// default:
-	// break;
-	// }
-	// }
-	// }
-	//
-	// } catch (JSONException e) {
-	// e.printStackTrace();
-	// return errIntent;
-	// }
-	// return errIntent;
-	//
-	// }
-
 	/**
 	 * 隐藏加载对话框
 	 */

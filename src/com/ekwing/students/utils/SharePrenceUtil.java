@@ -284,4 +284,9 @@ public class SharePrenceUtil {
 		return ParseUtil.getTabList(context.getSharedPreferences(
 				Constant.GUOKU_TAB, 0).getString(Constant.GUOKU_TAB_LIST, ""));
 	}
+	
+//	public static ArrayList<TAB1Bean> getTab1List(Context context) {
+//		return ParseUtil.getTab1List(context.getSharedPreferences(
+//				Constant.GUOKU_TAB, 0).getString(Constant.GUOKU_TAB_LIST, ""));
+//	}
 }

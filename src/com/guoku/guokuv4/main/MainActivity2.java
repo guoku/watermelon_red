@@ -17,7 +17,6 @@ import com.guoku.R;
 import com.guoku.guokuv4.act.LoginAct;
 import com.guoku.guokuv4.act.SettingAct;
 import com.guoku.guokuv4.gragment.GuangFragment;
-import com.guoku.guokuv4.gragment.JingXuanFragment;
 import com.guoku.guokuv4.gragment.JingXuanPageFragment;
 import com.guoku.guokuv4.gragment.OrderFragment;
 import com.guoku.guokuv4.gragment.PersonalFragment;
@@ -270,10 +269,6 @@ public class MainActivity2 extends NetWorkActivity {
 		super.onNewIntent(intent);
 //		switchContent(destinationFragment);
 		switchContent(jingXuanPageFragment);
-		// iv_destination.setBackgroundResource(R.drawable.tabbar_home_press);
-		// iv_guang.setBackgroundResource(R.drawable.tabbar_guang_normal);
-		// iv_order.setBackgroundResource(R.drawable.tabbar_order_normal);
-		// iv_personal.setBackgroundResource(R.drawable.tabbar_personal_normal);
 	}
 
 	/** 修改显示的内容 不会重新加载 **/

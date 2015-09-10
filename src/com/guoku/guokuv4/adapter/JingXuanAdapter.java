@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Bitmap.Config;
+import android.net.Uri;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.utils.ArrayListAdapter;
 import com.ekwing.students.utils.DateUtils;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
 import com.guoku.guokuv4.entity.test.PBean;
 import com.guoku.guokuv4.entity.test.UserBean;
@@ -26,23 +28,12 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 public class JingXuanAdapter extends ArrayListAdapter<PBean> {
-	private ImageLoader loader = ImageLoader.getInstance();
 	private int w = EkwingApplication.screenW * 9 / 10;
 	private OnClickListener listener;
-	private DisplayImageOptions options;
 
 	public JingXuanAdapter(Context context, OnClickListener listener) {
 		super(context);
 		this.listener = listener;
-		options = new DisplayImageOptions.Builder()
-				.imageScaleType(ImageScaleType.EXACTLY)
-				.considerExifParams(true).bitmapConfig(Config.RGB_565)
-				.showImageOnLoading(R.drawable.item800)
-				.showImageForEmptyUri(R.drawable.item800)
-				.showImageOnFail(R.drawable.item800)
-				.cacheInMemory(true)
-				.build();
-
 	}
 
 	@Override
@@ -61,10 +52,10 @@ public class JingXuanAdapter extends ArrayListAdapter<PBean> {
 		LayoutParams params = (LayoutParams) holder.iv_img.getLayoutParams();
 		params.height = w;
 		params.width = w;
-		loader.displayImage(bean.getContent().getEntity().get800(),
-				holder.iv_img, options,
-				new ImgUtils.AnimateFirstDisplayListener());
-
+		
+		holder.iv_img.setImageURI(Uri.parse(bean.getContent().getEntity().get800()));
+		holder.iv_img.setLayoutParams(params);
+		
 		holder.ll_likes.setTag(bean);
 		holder.ll_likes.setOnClickListener(listener);
 
@@ -110,7 +101,7 @@ public class JingXuanAdapter extends ArrayListAdapter<PBean> {
 	private class ViewHolder {
 
 		@ViewInject(R.id.jingxuan_item_iv_img)
-		private ImageView iv_img;
+		private SimpleDraweeView iv_img;
 		@ViewInject(R.id.jingxuan_item_iv_like)
 		private ImageView iv_isLike;
 		@ViewInject(R.id.jingxuan_item_iv_last)
