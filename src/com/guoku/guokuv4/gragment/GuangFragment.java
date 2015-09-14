@@ -30,14 +30,11 @@ import com.guoku.R;
 import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.act.SeachAct;
 import com.guoku.guokuv4.act.TabAct;
-import com.guoku.guokuv4.act.UserAct;
 import com.guoku.guokuv4.base.BaseFrament;
 import com.guoku.guokuv4.bean.Categories;
-import com.guoku.guokuv4.bean.Categories.Category;
+import com.guoku.guokuv4.bean.Category;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
-import com.guoku.guokuv4.entity.test.Tab2Bean;
-import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.ImgUtils;
 import com.guoku.guokuv4.view.ImageAddTextLayout;
@@ -111,31 +108,33 @@ public class GuangFragment extends BaseFrament {
 			break;
 		case DISCOVER:
 			try {
+//				JSONObject root = new JSONObject(result);
+//				ArrayList<Categories> arrayList = new ArrayList<Categories>();
+//				arrayList = (ArrayList<Categories>) JSON.parseArray(
+//						root.getString("categories"), Categories.class);
 				JSONObject root = new JSONObject(result);
-				ArrayList<Categories> arrayList = new ArrayList<Categories>();
-				arrayList = (ArrayList<Categories>) JSON.parseArray(
-						root.getString("categories"), Categories.class);
+				ArrayList<Categories> arrayList = (ArrayList<Categories>) JSON.parseArray(root.getString(result), Categories.class);
+				
 				for (int i = 0; i < arrayList.size(); i++) {
 					final ImageAddTextLayout imagTextLayout = new ImageAddTextLayout(
 							getActivity());
 					LayoutParams params = new LayoutParams(280, 280);
 					imagTextLayout.setLayoutParams(params);
 					imagTextLayout.setPadding(10, 0, 10, 0);
-					imageLoader.displayImage(arrayList.get(i).getCategory()
+					imageLoader.displayImage(arrayList.get(i)
 							.getCover_url(), imagTextLayout.imView,
 							optionsRound,
 							new ImgUtils.AnimateFirstDisplayListener());
-					imagTextLayout.tView.setText(arrayList.get(i).getCategory()
+					imagTextLayout.tView.setText(arrayList.get(i)
 							.getTitle().trim().replace(" ", "\n"));
-					imagTextLayout.setTag(arrayList.get(i).getCategory());
+					imagTextLayout.setTag(arrayList.get(i));
 					vpRecommendSort.addView(imagTextLayout);
 					imagTextLayout.setOnClickListener(new OnClickListener() {
 
 						@Override
 						public void onClick(View arg0) {
 							// TODO Auto-generated method stub
-							Categories.Category category = (Category) arg0
-									.getTag();
+							Categories category = (Categories) arg0.getTag();
 							Intent intent = new Intent(getActivity(),
 									TabAct.class);
 							intent.putExtra("data", category.getId());
@@ -145,7 +144,7 @@ public class GuangFragment extends BaseFrament {
 					});
 				}
 
-			} catch (JSONException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

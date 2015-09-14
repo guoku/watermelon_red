@@ -6,9 +6,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
@@ -21,6 +18,8 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
@@ -32,20 +31,26 @@ import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
 import com.guoku.guokuv4.act.WebAct;
+import com.guoku.guokuv4.adapter.HomeOneArticlesAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
-import com.guoku.guokuv4.entity.test.BannerBean;
-import com.guoku.guokuv4.utils.LogGK;
+import com.guoku.guokuv4.bean.HomePageOneBean;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.umeng.analytics.MobclickAgent;
 
-public class OneFragment extends BaseFrament {
+public class HomeOneFragment extends BaseFrament {
 
 	private static final int HOME = 1001;// 图文banner
 
 	@ViewInject(R.id.product_vp_img)
 	private ViewPager vPagerBaner;
-
-	List<BannerBean> bannerList;
+	
+	@ViewInject(R.id.listView_article)
+	private ListView lvArticle;//文章
+	
+	HomePageOneBean bean;
+	
+	HomeOneArticlesAdapter articlesAdapter;
+	
 
 	private ScheduledExecutorService scheduledExecutorService;
 	private boolean onTouchTrue;
@@ -61,6 +66,7 @@ public class OneFragment extends BaseFrament {
 	protected void init() {
 		// TODO Auto-generated method stub
 		initbaner();
+		initArticle();
 	}
 
 	@Override
@@ -93,6 +99,11 @@ public class OneFragment extends BaseFrament {
 		// TODO Auto-generated method stub
 		sendConnection(Constant.HOME, new String[] {}, new String[] {}, HOME,
 				false);
+	}
+	
+	private void initArticle(){
+		articlesAdapter = new HomeOneArticlesAdapter(getActivity());
+		lvArticle.setAdapter(articlesAdapter);
 	}
 
 	private void initbaner() {
@@ -134,7 +145,6 @@ public class OneFragment extends BaseFrament {
 			});
 			adapter = new MyViewPagerAdapter();
 			vPagerBaner.setAdapter(adapter);
-
 		} catch (Exception e) {
 		}
 	}
@@ -157,15 +167,13 @@ public class OneFragment extends BaseFrament {
 	private void setResult(String result) {
 
 		try {
-			JSONObject root = new JSONObject(result);
-			bannerList = (ArrayList<BannerBean>) JSON.parseArray(
-					root.getString("banner"), BannerBean.class);
+			bean = JSON.parseObject(result, HomePageOneBean.class);
 			List<SimpleDraweeView> imgs = new ArrayList<SimpleDraweeView>();
 
 			GenericDraweeHierarchyBuilder builder = new GenericDraweeHierarchyBuilder(
 					getResources());
 
-			for (int i = 0; i < bannerList.size(); i++) {
+			for (int i = 0; i < bean.getBanner().size(); i++) {
 				final SimpleDraweeView image = new SimpleDraweeView(
 						getActivity());
 				GenericDraweeHierarchy hierarchy = builder.setPlaceholderImage(
@@ -173,14 +181,14 @@ public class OneFragment extends BaseFrament {
 				image.setHierarchy(hierarchy);
 				image.setTag(i);
 				image.setScaleType(ScaleType.FIT_XY);
-				image.setImageURI(Uri.parse(bannerList.get(i).getImg()));
+				image.setImageURI(Uri.parse(bean.getBanner().get(i).getImg()));
+				image.setLayoutParams(new LayoutParams(200, 200));
 				image.setOnClickListener(new OnClickListener() {
 
 					@Override
 					public void onClick(View arg0) {
 						int index = (Integer) arg0.getTag();
-						String url = bannerList.get(index).getUrl();
-						String last = bannerList.get(index).getUrlLast();
+						String url = bean.getBanner().get(index).getUrl();
 						AVAnalytics.onEvent(getActivity(), "banner");
 						MobclickAgent.onEvent(getActivity(), "banner");
 
@@ -196,7 +204,8 @@ public class OneFragment extends BaseFrament {
 				imgs.add(image);
 			}
 			adapter.setList(imgs);
-		} catch (JSONException e) {
+			articlesAdapter.setList(bean.getArticles());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -235,7 +244,12 @@ public class OneFragment extends BaseFrament {
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) { // 这个方法用来实例化页卡
 			container.addView(mListViews.get(position), 0);// 添加页卡
-			return mListViews.get(position);
+			SimpleDraweeView sView = mListViews.get(position);
+//			GenericDraweeHierarchy hierarchy = sView.getHierarchy();
+//			hierarchy.setPlaceholderImage(getResources().getDrawable(R.drawable.item800));
+//			hierarchy.setPlaceholderImage(R.drawable.ic_logo);
+//			sView.setHierarchy(hierarchy);
+			return sView;
 		}
 
 		@Override

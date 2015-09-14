@@ -294,6 +294,7 @@ public class Constant {
 	public static final String KEY_STATUS = "KEY_STATUS";
 	
 	
+	public static final String IMG_URL = "http://imgcdn.guoku.com/";//图片前缀
 	public static final String URL = "http://api.guoku.com";//生产环境地址
 //	public static final String URL = "http://10.0.0.101:8000";//测试环境地址
 //	public static final String URL = "http://test.guoku.com";//测试环境地址

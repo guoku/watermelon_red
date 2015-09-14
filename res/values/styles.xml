@@ -391,11 +391,44 @@
         <item name="android:gravity">center</item>
     </style>
     
-    <!-- 首页图文流tab下img -->
+    <!-- 首页图文流tab下img line -->
     <style name="home_page_tab_img">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">3dp</item>
         <item name="android:layout_weight">1</item>
+    </style>
+    
+    <!-- 首页图文流tab页中文章item字体title -->
+    <style name="home_page_item_article_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:lines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">top</item>
+    </style>
+    
+        <!-- 首页图文流tab页中文章item内容 -->
+    <style name="home_page_item_article_context">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:lines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">top</item>
+    </style>
+    
+    <!-- 首页图文流tab页中文章item字体 下面的标签 -->
+    <style name="home_page_item_article_below">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">bottom</item>
     </style>
 
 </resources>

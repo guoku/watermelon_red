@@ -33,7 +33,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import com.umeng.analytics.MobclickAgent;
 
-public class TwoFragmnet extends BaseFrament implements OnClickListener {
+public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
 	private static final int JINGXUANUP = 10;
 	private static final int PROINFO = 12;
@@ -41,7 +41,7 @@ public class TwoFragmnet extends BaseFrament implements OnClickListener {
 	private static final int LIKE0 = 14;
 	private static final int TYPE = 15;
 	public static final int UPDATA_LIKE = 16;
-	public static final String INTNT_KEY = TwoFragmnet.class.getName();
+	public static final String INTNT_KEY = GoodTwoFragmnet.class.getName();
 	// private static final int UPDATA_LIKE_UN = 17;
 	@ViewInject(R.id.jingxuan_lv_1)
 	private PullToRefreshListView jingxuan_lv_1;

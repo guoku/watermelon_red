@@ -1,21 +1,13 @@
-/**
-
- */
 package com.guoku.guokuv4.bean;
 
-/**
- * @zhangyao
- * @Description: TODO
- * @date 2015-9-8 下午3:00:29 商品一级分类
- */
-public class Categories {
-
+public class Category {
+	
 	String cover_url;
-
+	
 	String id;
-
+	
 	String status;
-
+	
 	String title;
 
 	public String getCover_url() {
@@ -49,4 +41,5 @@ public class Categories {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 }

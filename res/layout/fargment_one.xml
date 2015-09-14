@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ScrollView
+    <!-- <ScrollView
         android:id="@+id/faxian_sv"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -14,17 +14,18 @@
             android:layout_height="match_parent"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:orientation="vertical" >
+            android:orientation="vertical" > -->
 
             <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:id="@+id/relayout"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
                 android:layout_marginTop="4dp" >
 
                 <android.support.v4.view.ViewPager
                     android:id="@+id/product_vp_img"
                     android:layout_width="fill_parent"
-                    android:layout_height="40dp" />
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/tv_point"
@@ -32,7 +33,14 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/g_w" />
             </RelativeLayout>
-     </LinearLayout>
-    </ScrollView>
+
+            <ListView
+                android:id="@+id/listView_article"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relayout" >
+            </ListView>
+        <!-- </LinearLayout>
+    </ScrollView> -->
 
 </RelativeLayout>

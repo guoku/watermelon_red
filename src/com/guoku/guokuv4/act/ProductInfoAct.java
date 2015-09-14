@@ -66,7 +66,7 @@ import com.guoku.guokuv4.entity.test.NoteBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.UserBean;
-import com.guoku.guokuv4.homepage.TwoFragmnet;
+import com.guoku.guokuv4.homepage.GoodTwoFragmnet;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.BroadUtil;
 import com.guoku.guokuv4.utils.ImgUtils;
@@ -1010,12 +1010,12 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 		Intent intent = new Intent();
 		if (isLike == 1) {
-			intent.putExtra(TwoFragmnet.INTNT_KEY, false);
+			intent.putExtra(GoodTwoFragmnet.INTNT_KEY, false);
 		}
 		if (isLike == 2) {
-			intent.putExtra(TwoFragmnet.INTNT_KEY, true);
+			intent.putExtra(GoodTwoFragmnet.INTNT_KEY, true);
 		}
-		setResult(TwoFragmnet.UPDATA_LIKE, intent);
+		setResult(GoodTwoFragmnet.UPDATA_LIKE, intent);
 		finish();
 	}
 
