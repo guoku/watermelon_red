@@ -293,8 +293,8 @@ public class Constant {
 	public static final String SP_KEY = "SP_KEY";
 	public static final String KEY_STATUS = "KEY_STATUS";
 	
-	
-	public static final String IMG_URL = "http://imgcdn.guoku.com/";//图片前缀
+	public static final String URL_ARTICLES = "http://m.guoku.com/";//文章前缀
+	public static final String URL_IMG = "http://imgcdn.guoku.com/";//图片前缀
 	public static final String URL = "http://api.guoku.com";//生产环境地址
 //	public static final String URL = "http://10.0.0.101:8000";//测试环境地址
 //	public static final String URL = "http://test.guoku.com";//测试环境地址
@@ -337,6 +337,9 @@ public class Constant {
 	public static final String DISCOVER = URL + "/mobile/v4/discover/";
 	/** 首页商品图文banner流*/
 	public static final String HOME = URL + "/mobile/v4/home/";
+	/** 首页图文流*/
+	public static final String ARTICLES = URL + "/mobile/v4/articles/";
+	
 	
 	
 	public static final String DESCRIPTOR = "1";

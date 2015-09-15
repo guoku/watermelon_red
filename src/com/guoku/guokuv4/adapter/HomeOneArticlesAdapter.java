@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.ekwing.students.config.Constant;
 import com.ekwing.students.utils.ArrayListAdapter;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
@@ -46,7 +47,7 @@ public class HomeOneArticlesAdapter extends ArrayListAdapter<Articles>{
 		Articles articles = mList.get(position);
 		holder.tvName.setText(articles.getTitle());
 		holder.tvBelow.setText(articles.getTitle());
-		holder.imgIcon.setImageURI(Uri.parse(articles.getCreator().getAvatar_small()));
+		holder.imgIcon.setImageURI(Uri.parse(Constant.URL_IMG + articles.getCover()));
 		
 		return convertView;
 	}

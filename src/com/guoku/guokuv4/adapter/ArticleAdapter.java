@@ -13,9 +13,11 @@ import android.widget.TextView;
 import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.config.Constant;
 import com.ekwing.students.utils.ArrayListAdapter;
+import com.ekwing.students.utils.BitmapUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
-import com.guoku.guokuv4.bean.Articles;
+import com.guoku.guokuv4.bean.ArticlesList;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -24,7 +26,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
  * @Description: TODO
  * @date 2015-9-14 下午6:46:17 文章列表
  */
-public class ArticleAdapter extends ArrayListAdapter<Articles> {
+public class ArticleAdapter extends ArrayListAdapter<ArticlesList> {
 
 	private int w = EkwingApplication.screenW;
 	
@@ -47,17 +49,18 @@ public class ArticleAdapter extends ArrayListAdapter<Articles> {
 			holder = (ViewHold) convertView.getTag();
 		}
 
-		Articles articles = mList.get(position);
+		ArticlesList articles = mList.get(position);
 		holder.tvName.setText(articles.getTitle());
-		holder.tvBelow.setText(articles.getTitle());
-		holder.imgIcon.setImageURI(Uri.parse(Constant.IMG_URL
+		holder.tvContext.setText(articles.getContent());
+		holder.imgIcon.setImageURI(Uri.parse(Constant.URL_IMG
 				+ articles.getCover()));
 		
 		LayoutParams params = (LayoutParams) holder.imgIcon.getLayoutParams();
 		params.height = w / 2;
-		params.width = w;
+		params.width = w - BitmapUtil.dip2pix(mContext, 20);
 		holder.imgIcon.setLayoutParams(params);
-
+		holder.tvTime.setText(StringUtils.getStandardDate(String.valueOf(articles.getPub_time())));
+		
 		return convertView;
 	}
 

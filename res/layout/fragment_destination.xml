@@ -20,6 +20,7 @@
         android:headerDividersEnabled="false"
         android:smoothScrollbar="true"
         ptr:ptrAnimationStyle="flip"
-        ptr:ptrListViewExtrasEnabled="true" />
+        ptr:ptrListViewExtrasEnabled="true" 
+        />
 
 </LinearLayout>

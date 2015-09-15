@@ -403,21 +403,19 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@android:color/black</item>
-        <item name="android:lines">2</item>
+        <item name="android:textColor">@color/black_body</item>
+        <item name="android:maxLines">2</item>
         <item name="android:ellipsize">end</item>
-        <item name="android:gravity">top</item>
     </style>
     
-        <!-- 首页图文流tab页中文章item内容 -->
+        <!-- 首页图文流tab页中文章item中间内容 -->
     <style name="home_page_item_article_context">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">15sp</item>
-        <item name="android:textColor">@color/gray</item>
-        <item name="android:lines">2</item>
+        <item name="android:textColor">@color/gray_fzxx</item>
+        <item name="android:maxLines">2</item>
         <item name="android:ellipsize">end</item>
-        <item name="android:gravity">top</item>
     </style>
     
     <!-- 首页图文流tab页中文章item字体 下面的标签 -->
@@ -425,10 +423,20 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/gray</item>
-        <item name="android:maxLines">2</item>
+        <item name="android:textColor">@color/gray_fzxx</item>
+        <item name="android:lines">1</item>
         <item name="android:ellipsize">end</item>
         <item name="android:gravity">bottom</item>
+    </style>
+    
+     <!-- 灰色背景的text -->
+    <style name="gray_bg_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/g_other</item>
+        <item name="android:background">@color/gray_bg</item>
+        <item name="android:padding">12dp</item>
     </style>
 
 </resources>

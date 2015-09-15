@@ -3,14 +3,14 @@
  */
 package com.guoku.guokuv4.view;
 
-import com.guoku.R;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.guoku.R;
 
 /**
  * @zhangyao
@@ -20,7 +20,7 @@ import android.widget.TextView;
  */
 public class ImageAddTextLayout extends FrameLayout{
 
-	public ImageView imView;
+	public SimpleDraweeView imView;
 	
 	public TextView tView;
 	
@@ -41,7 +41,7 @@ public class ImageAddTextLayout extends FrameLayout{
 	
 	private void init (){
 		
-		imView = (ImageView)findViewById(R.id.img);
+		imView = (SimpleDraweeView)findViewById(R.id.img);
 		tView = (TextView)findViewById(R.id.text);
 	}
 

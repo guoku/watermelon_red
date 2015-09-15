@@ -4,28 +4,39 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    >
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/article_img"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center"
-        fresco:placeholderImage="@drawable/item800" />
+        fresco:placeholderImage="@drawable/item800" 
+        android:layout_margin="10dp"
+        />
 
     <TextView
         android:id="@+id/article_title"
         style="@style/home_page_item_article_title"
-        android:text="wwwwww" />
+        android:text="wwwwww33333333333dssd" 
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        />
     
     <TextView
         android:id="@+id/article_context"
         style="@style/home_page_item_article_context"
-        android:text="yyyyyy" />
+        android:text="yyyyyy" 
+        android:gravity="top"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        />
     
     <RelativeLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         >
         
         <TextView
@@ -33,6 +44,7 @@
         style="@style/home_page_item_article_below"
         android:text="fffffff" 
         android:layout_alignParentLeft="true"
+        android:visibility="invisible"
         />
         
         <TextView

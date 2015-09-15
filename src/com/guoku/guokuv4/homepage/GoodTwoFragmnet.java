@@ -54,12 +54,6 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
 	private int pos;// 纪录商品
 
-	@Override
-	public void onLowMemory() {
-		// TODO Auto-generated method stub
-		super.onLowMemory();
-		imageLoader.clearMemoryCache();
-	}
 
 	@Override
 	protected void init() {
@@ -67,9 +61,6 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 		context.getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		EkwingApplication.screenW = metrics.widthPixels;
 		EkwingApplication.screenH = metrics.heightPixels;
-
-		jingxuan_lv_1.setOnScrollListener(new PauseOnScrollListener(
-				imageLoader, true, true));
 
 		// list = new ArrayList<ProductBean>();
 		adapter = new JingXuanAdapter(context, this);
