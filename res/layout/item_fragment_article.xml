@@ -31,6 +31,7 @@
         android:gravity="top"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
         />
     
     <RelativeLayout 
@@ -52,6 +53,8 @@
         style="@style/home_page_item_article_below"
         android:text="fvvvvvvv" 
         android:layout_alignParentRight="true"
+        android:drawableLeft="@drawable/time"
+        android:drawablePadding="3dp"
         />
         
     </RelativeLayout>

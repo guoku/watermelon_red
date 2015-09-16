@@ -20,7 +20,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -49,9 +48,15 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 	private static final int LIST = 1;
 	private static final int GRID = 2;
 
-//	@ViewInject(R.id.scroll_view)
-//	private ScrollView scrollView;
-	
+	// @ViewInject(R.id.scroll_view)
+	// private ScrollView scrollView;
+
+	@ViewInject(R.id.check_box_like_time)
+	CheckBox cbLikeTime;// tab上的喜欢、时间切换按钮
+
+	@ViewInject(R.id.check_box_show)
+	CheckBox cbShow;// tab上的显示方式按钮
+
 	@ViewInject(R.id.tab_lv)
 	private HeaderListview tab_lv;
 
@@ -69,7 +74,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 
 	@ViewInject(R.id.tv_what)
 	private CheckBox tvWhatlike;// 按喜爱
-	
+
 	@ViewInject(R.id.img_arrws)
 	private ImageView arrowsImg;
 
@@ -105,15 +110,11 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		cBoxLayout.setOnCheckedChangeListener(this);
 		tvWhatDef.setOnCheckedChangeListener(this);
 		tvWhatlike.setOnCheckedChangeListener(this);
-	}
 
-	@OnClick(R.id.title_bar_rigth_iv)
-	public void setLike(View v) {
-		Intent intent = new Intent(mContext, TabAct.class);
-		intent.putExtra("data", cid);
-		intent.putExtra("name", "我喜爱的 " + getIntent().getStringExtra("name"));
-		intent.putExtra("add", "like");
-		mContext.startActivity(intent);
+		cbLikeTime.setOnCheckedChangeListener(this);
+		cbShow.setOnCheckedChangeListener(this);
+
+		getTitleLayoutSeach().setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -160,21 +161,15 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		setGCenter(true, getIntent().getStringExtra("name"));
 		isLike = getIntent().getStringExtra("add");
 		setGLeft(true, R.drawable.back_selector);
-		if (isLike == null) {
-			setGRigth(true, R.drawable.filter_ilike);
-		}
 		list = new ArrayList<EntityBean>();
 
 		gvAdapter = new GVAdapter(context);
 		lvAdapter = new EntityAdapter(context);
-		
-		
-		
-//		tab_gv.addHeaderView(v)
-		
+
+		// tab_gv.addHeaderView(v)
+
 		tab_lv.setAdapter(lvAdapter);
 		tab_gv.setAdapter(gvAdapter);
-		
 
 		tab_lv.setOnItemClickListener(new OnItemClickListener() {
 
@@ -237,12 +232,12 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 				tab_gv.setVisibility(View.VISIBLE);
 				tab_lv.setVisibility(View.GONE);
 			}
-			if(tvWhatlike.getVisibility() == View.VISIBLE){
+			if (tvWhatlike.getVisibility() == View.VISIBLE) {
 				showView(tvWhatlike);
 			}
-//			scrollView.scrollTo(0, 0);
-//			scrollView.smoothScrollTo(0, 0);
-			
+			// scrollView.scrollTo(0, 0);
+			// scrollView.smoothScrollTo(0, 0);
+
 		}
 		if (arg0 == tvWhatDef) {
 			showView(tvWhatlike);
@@ -250,6 +245,25 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		if (arg0 == tvWhatlike) {
 			showView(tvWhatlike);
 			whatText();
+		}
+
+		if (arg0 == cbLikeTime) {
+			if (arg1) {
+				sendData("like");
+			} else {
+				sendData("null");
+			}
+		}
+		if (arg0 == cbShow) {
+			if (arg1) {
+				curTab = GRID;
+				tab_gv.setVisibility(View.VISIBLE);
+				tab_lv.setVisibility(View.GONE);
+			} else {
+				curTab = LIST;
+				tab_gv.setVisibility(View.GONE);
+				tab_lv.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 
@@ -294,8 +308,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 					0.0f, Animation.RELATIVE_TO_SELF, -1.0f);
 			view.setVisibility(View.GONE);
 			hideBackBlack();
-			
-			
+
 		} else {
 			view.setVisibility(View.VISIBLE);
 			animationll = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0,
@@ -315,7 +328,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		}
 		animationBackShow.setDuration(animationTiem);
 		backblack.startAnimation(animationBackShow);
-		
+
 		arrowsImg.setImageResource(R.drawable.arrws_close);
 	}
 
@@ -326,7 +339,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		}
 		animationBackHide.setDuration(animationTiem);
 		backblack.startAnimation(animationBackHide);
-		
+
 		arrowsImg.setImageResource(R.drawable.arrws_open);
 	}
 

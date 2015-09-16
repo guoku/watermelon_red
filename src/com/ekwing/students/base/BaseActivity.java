@@ -26,7 +26,7 @@ import com.umeng.analytics.MobclickAgent;
  * @date 2013-12-12
  */
 
-public abstract class BaseActivity extends FragmentActivity{
+public abstract class BaseActivity extends FragmentActivity {
 	protected final String TAG = getClass().getSimpleName();
 	protected Context mContext;
 	protected Handler mHandler;
@@ -104,7 +104,7 @@ public abstract class BaseActivity extends FragmentActivity{
 			view.setVisibility(View.GONE);
 		}
 	}
-	
+
 	protected void setGRigthText(boolean show, int resid) {
 		TextView rightTv = (TextView) findViewById(R.id.title_bar_rigth_tv);
 		if (show) {
@@ -114,7 +114,7 @@ public abstract class BaseActivity extends FragmentActivity{
 			rightTv.setVisibility(View.GONE);
 		}
 		rightTv.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -122,7 +122,6 @@ public abstract class BaseActivity extends FragmentActivity{
 			}
 		});
 	}
-	
 
 	protected void setGCenter(boolean show, int resid) {
 		TextView view = (TextView) findViewById(R.id.title_bar_centrt_tv);
@@ -143,46 +142,53 @@ public abstract class BaseActivity extends FragmentActivity{
 			view.setVisibility(View.GONE);
 		}
 	}
-	
+
 	protected void rightTextOnClick() {
-		
+
 	}
-	
-    protected void openActivity(Class<?> pClass)
-    {
-        openActivity(pClass, null);
-    }
 
-    protected void openActivity(Class<?> pClass, Bundle pBundle)
-    {
-        Intent intent = new Intent(this, pClass);
-        if (pBundle != null)
-        {
-            intent.putExtras(pBundle);
-        }
+	protected void openActivity(Class<?> pClass) {
+		openActivity(pClass, null);
+	}
 
-        startActivity(intent);
-    }
-	
+	protected void openActivity(Class<?> pClass, Bundle pBundle) {
+		Intent intent = new Intent(this, pClass);
+		if (pBundle != null) {
+			intent.putExtras(pBundle);
+		}
+
+		startActivity(intent);
+	}
+
 	protected void openActivityForResult(Class<?> pClass, int requestCode) {
 		openActivityForResult(pClass, null, requestCode);
 	}
-	
-	protected void openActivityForResult(Class<?> pClass, Bundle pBundle, int requestCode) {
+
+	protected void openActivityForResult(Class<?> pClass, Bundle pBundle,
+			int requestCode) {
 		Intent intent = new Intent(this, pClass);
 		if (pBundle != null) {
 			intent.putExtras(pBundle);
 		}
 		startActivityForResult(intent, requestCode);
 	}
-	
-	public void leftOnClick(){
-		
+
+	public void leftOnClick() {
+
 	}
-	
-	public LinearLayout getTitleLayout(){
-		
+
+	public LinearLayout getTitleLayout() {
+
 		LinearLayout linearLayout = (LinearLayout) findViewById(R.id.layout_title_more);
+		return linearLayout;
+	}
+
+	/***
+	 * 搜索及品类列表右上角的
+	 * @return
+	 */
+	public LinearLayout getTitleLayoutSeach() {
+		LinearLayout linearLayout = (LinearLayout) findViewById(R.id.layout_title_seach);
 		return linearLayout;
 	}
 }

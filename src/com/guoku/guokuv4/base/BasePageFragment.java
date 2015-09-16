@@ -105,7 +105,7 @@ public abstract class BasePageFragment extends BaseFrament{
 			}else{
 				tView.setTextColor(unSelectedColor);
 			}
-			tView.setOnClickListener(new MyOnClickListener(getTabCount(), tView));
+			tView.setOnClickListener(new MyOnClickListener(i, tView));
 			tView.setGravity(Gravity.CENTER);
 			LayoutParams lParams = new LinearLayout.LayoutParams(
 					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1.0f);

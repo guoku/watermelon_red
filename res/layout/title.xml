@@ -58,6 +58,30 @@
             layout="@layout/layout_more_item" 
             android:visibility="gone"
             />
+        
+        <LinearLayout
+            android:id="@+id/layout_title_seach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" 
+            android:visibility="gone"
+            >
+            
+            <CheckBox
+            android:id="@+id/check_box_like_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/laylut_check_box_black_like_time_bg" />
+            
+            <CheckBox
+            android:id="@+id/check_box_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/laylut_check_box_black_bg" />
+            
+        </LinearLayout>
+        
+        
     </LinearLayout>
 
     <ImageView
