@@ -252,7 +252,7 @@ public class LoginAct extends NetWorkActivity {
 
 			@Override
 			public void onFailure(int code, String message) {
-				Toast.makeText(LoginAct.this, "授权取消" + code + message,
+				Toast.makeText(LoginAct.this, "授权取消",
 						Toast.LENGTH_SHORT).show();
 			}
 		});
@@ -313,7 +313,7 @@ public class LoginAct extends NetWorkActivity {
 					startActivity(new Intent(this, MainActivity2.class));
 					finish();
 				} else {
-					ToastUtil.show(context, "用户名或密码错误");
+					ToastUtil.show(context, "邮箱或密码错误");
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

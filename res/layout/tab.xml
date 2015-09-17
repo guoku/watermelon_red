@@ -17,7 +17,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content" 
+        android:visibility="gone"
+        >
 
         <CheckBox
             android:id="@+id/tv_what_def"
@@ -66,6 +68,43 @@
             android:layout_centerVertical="true"
             android:button="@drawable/laylut_check_box_bg" />
     </RelativeLayout>
+    
+        <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp" 
+        android:gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        >
+        
+            <LinearLayout
+                android:id="@+id/layout_add_tag" 
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:layout_toLeftOf="@+id/tv_more"
+                android:layout_marginLeft="15dp"
+                >
+                
+            </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+			android:text="更多"       
+			android:textColor="@color/title_bar_blue"
+			android:drawableRight="@drawable/more_right" 
+			android:drawablePadding="3dp"  
+			
+            />
+    </RelativeLayout>
+    
+    
 
     <ImageView
         android:layout_width="match_parent"

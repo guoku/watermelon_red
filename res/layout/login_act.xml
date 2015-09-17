@@ -3,9 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_bg"
-    android:orientation="vertical" >
-
-    <LinearLayout
+    android:orientation="vertical" 
+    android:layout_gravity="center_horizontal"
+    >
+    
+        <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="48dp"
         android:gravity="center_vertical"
@@ -17,7 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
-            android:src="@drawable/login_cancle" />
+            android:src="@drawable/login_cancle" 
+            />
 
         <TextView
             android:id="@+id/reg_tv_r"
@@ -143,14 +146,41 @@
             android:layout_marginTop="10dp"
             android:background="#40ffffff" />
 
+
+        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            >
+            
+            <Button
+                android:id="@+id/login_btn_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/login_shap"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
+                android:text="登录"
+                android:textColor="@color/g_w" 
+                />
+            
+        </LinearLayout>
+        
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:orientation="horizontal" 
+            android:gravity="center"
+            android:layout_gravity="center"
+            >
 
             <ImageView
                 android:id="@+id/login_no_tao2"
@@ -158,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/taobao"
                 android:visibility="visible" 
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="10dp"
                 />
 
             <ImageView
@@ -167,7 +197,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/sina"
                 android:visibility="visible" 
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="10dp"
                 />
 
             <ImageView
@@ -177,24 +207,6 @@
                 android:src="@drawable/wechat"
                 android:visibility="visible" />
 
-            <TextView
-                android:id="@+id/login_no_login"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1" />
-
-            <Button
-                android:id="@+id/login_btn_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/login_shap"
-                android:gravity="center_vertical|right"
-                android:paddingLeft="24dp"
-                android:paddingRight="24dp"
-                android:text="登录"
-                android:textColor="@color/g_w" />
         </LinearLayout>
     </LinearLayout>
 

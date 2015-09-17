@@ -20,6 +20,7 @@ import com.guoku.R;
 import com.guoku.guokuv4.entity.test.AccountBean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.main.MainActivity2;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
@@ -69,26 +70,36 @@ public class RegisterAct extends NetWorkActivity {
 		if (email != null && pass != null && name != null) {
 			if (StringUtil.checkEmail(email)) {
 				if (16 >= ed_pass.length() && ed_pass.length() >= 6) {
-					if (name.length() >= 3) {
-
-						if (type != null && type.equals("sina")) {
-							sendConnectionPOST(
-									Constant.SINAREGISTER,
-									new String[] { "nickname", "email",
-											"password", "screen_name",
-											"sina_id", "sina_token" },
-									new String[] { name, email, pass,
-											getIntent().getStringExtra("name"),
-											getIntent().getStringExtra("id"),
-											getIntent().getStringExtra("token") },
-									REGISTER, false);
-						} else
-							sendConnectionPOST(Constant.REGISTER, new String[] {
-									"nickname", "email", "password" },
-									new String[] { name, email, pass },
-									REGISTER, false);
+					if (name.length() >= 3 && name.length() <= 30) {
+						if (StringUtils.isNickName(name)) {
+							if (type != null && type.equals("sina")) {
+								sendConnectionPOST(
+										Constant.SINAREGISTER,
+										new String[] { "nickname", "email",
+												"password", "screen_name",
+												"sina_id", "sina_token" },
+										new String[] {
+												name,
+												email,
+												pass,
+												getIntent().getStringExtra(
+														"name"),
+												getIntent()
+														.getStringExtra("id"),
+												getIntent().getStringExtra(
+														"token") }, REGISTER,
+										false);
+							} else
+								sendConnectionPOST(Constant.REGISTER,
+										new String[] { "nickname", "email",
+												"password" }, new String[] {
+												name, email, pass }, REGISTER,
+										false);
+						} else {
+							ToastUtil.show(mContext, "请输入合法昵称");
+						}
 					} else {
-						ToastUtil.show(mContext, "请输入4位以上文字/字母");
+						ToastUtil.show(mContext, "请输入3位以上－30位以下的文字或字母");
 					}
 				} else {
 					ToastUtil.show(mContext, "密码必须为6-16位");

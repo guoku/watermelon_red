@@ -137,7 +137,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="24dp"
             android:background="#00ffffff"
-            android:hint="4位以上文字/字母"
+            android:hint="3位以上文字/字母"
             android:singleLine="true"
             android:textColor="#ffffffff"
             android:textSize="14sp" 

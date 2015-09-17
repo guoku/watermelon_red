@@ -243,6 +243,7 @@ public class PersonalFragment extends BaseFrament {
 	@Override
 	protected void init() {
 		userBean = EkwingApplication.getInstance().getBean();
+		iv_set.setVisibility(View.VISIBLE);
 		if (userBean == null) {
 			iv_set.setImageResource(R.drawable.setting);
 			title.setText("我");

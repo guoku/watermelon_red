@@ -208,5 +208,16 @@ public class StringUtils {
 		}
 		return sb.toString();
 	}
+	
+	/**
+	 * 是否为合法用户名
+	 * @param mobiles
+	 * @return
+	 */
+	 public static boolean isNickName(String name) {  
+	        Pattern p = Pattern.compile("^[^0-9][\\w-]{3,30}$");  
+	        Matcher m = p.matcher(name);  
+	        return m.matches();  
+	    }  
 
 }

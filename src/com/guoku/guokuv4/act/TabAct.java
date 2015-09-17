@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -20,6 +21,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -30,6 +32,8 @@ import com.ekwing.students.utils.SharePrenceUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.adapter.EntityAdapter;
 import com.guoku.guokuv4.adapter.GVAdapter;
+import com.guoku.guokuv4.bean.TagBean;
+import com.guoku.guokuv4.bean.TagTwo;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;
@@ -47,9 +51,13 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 	private static final int PROINFO = 12;
 	private static final int LIST = 1;
 	private static final int GRID = 2;
+	private static final int TAG_CATEGORY = 3;//分类
 
 	// @ViewInject(R.id.scroll_view)
 	// private ScrollView scrollView;
+	
+	@ViewInject(R.id.layout_add_tag)
+	LinearLayout layoutAddTag;//标签layout
 
 	@ViewInject(R.id.check_box_like_time)
 	CheckBox cbLikeTime;// tab上的喜欢、时间切换按钮
@@ -145,6 +153,16 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 			intent.putExtra("data", JSON.toJSONString(bean));
 			startActivity(intent);
 			break;
+		case TAG_CATEGORY:
+			try {
+				ArrayList<TagBean> tBean = (ArrayList<TagBean>) JSON.parseArray(result, TagBean.class);
+			
+				initTag(tBean);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
 		default:
 			break;
 		}
@@ -195,15 +213,47 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 			}
 		});
 	}
+	
+	private void initTag(ArrayList<TagBean> tBean){
+		
+		for(int i = 0; i < tBean.size(); i ++){
+			
+			if(String.valueOf(tBean.get(i).getGroup_id()).equals(cid)){
+				
+				for(int j = 0; j < 5; j ++){
+					final TagTwo tagtwo = tBean.get(i).getContent().get(j);
+					TextView textView = new TextView(this);
+					LayoutParams lParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
+					textView.setLayoutParams(lParams);
+					textView.setText(tagtwo.getCategory_title());
+					textView.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View arg0) {
+							// TODO Auto-generated method stub
+							cid = ((TextView)arg0).getText().toString();
+							sendConnection(Constant.CATAB + tagtwo.getCategory_title() + "/entity/", new String[] {},
+									new String[] {}, STAT, false);
+						}
+					});
+					layoutAddTag.addView(textView);
+				}
+			}
+		}
+	}
 
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
 		sendData(null);
-		sendConnection(Constant.CATAB + cid + "/stat/", new String[] {},
+		sendConnection(Constant.CATAB + cid + "/selection/", new String[] {},
 				new String[] {}, STAT, false);
+		
+		sendConnection(Constant.CATAB, new String[] {},
+				new String[] {}, TAG_CATEGORY, false);
 	}
+	
+	
 
 	@Override
 	public void onClick(View arg0) {
@@ -271,11 +321,11 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 
 		if (EkwingApplication.getInstance().getBean() != null) {
 			if (like == null) {
-				sendConnection(Constant.CATAB + cid + "/entity/", new String[] {
+				sendConnection(Constant.CATAB + cid + "/selection/", new String[] {
 						"count", "offset", "reverse" }, new String[] { "30",
 						"0", "0" }, CATABLIST, true);
 			} else {
-				sendConnection(Constant.CATAB + cid + "/entity/", new String[] {
+				sendConnection(Constant.CATAB + cid + "/selection/", new String[] {
 						"count", "offset", "sort", "reverse" }, new String[] {
 						"30", "0", like, "0" }, CATABLIST, true);
 			}
@@ -375,5 +425,14 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 			animIsRunning = false;
 		}
 	};
+	
+	@OnClick(R.id.tv_more)
+	private void onClickMore(View v){
+		
+		Intent intent = new Intent(mContext, TabListAct.class);
+		intent.putExtra("data", cid);
+		mContext.startActivity(intent);
+		
+	}
 
 }
