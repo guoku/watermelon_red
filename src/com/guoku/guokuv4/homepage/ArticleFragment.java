@@ -6,6 +6,7 @@ package com.guoku.guokuv4.homepage;
 import java.util.ArrayList;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,9 +16,11 @@ import com.alibaba.fastjson.JSON;
 import com.ekwing.students.config.Constant;
 import com.guoku.R;
 import com.guoku.guokuv4.act.WebAct;
+import com.guoku.guokuv4.act.WebShareAct;
 import com.guoku.guokuv4.adapter.ArticleAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
 import com.guoku.guokuv4.bean.ArticlesList;
+import com.guoku.guokuv4.bean.Sharebean;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -124,7 +127,7 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 			articleAdapter.setList(listbean);
 		}
 		if (type == TAG_ARTICLE_ADD) {
-			articleAdapter.addLists(listbean);
+			articleAdapter.addListsLast(listbean);
 		}
 
 	}
@@ -132,11 +135,17 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-		Intent intent = new Intent(context, WebAct.class);
-		intent.putExtra("data", Constant.URL_ARTICLES
-				+ articleAdapter.getList().get(arg2).getUrl());
-		intent.putExtra("name", "  ");
-		intent.putExtra("type", "banner");
-		startActivity(intent);
+		arg2-=1;
+		Bundle bundle = new Bundle();
+		Sharebean sharebean = new Sharebean();
+		sharebean.setTitle(articleAdapter.getList().get(arg2).getTitle());
+		sharebean.setContext(articleAdapter.getList().get(arg2).getContent().substring(0, 50));
+		sharebean.setAricleUrl(articleAdapter.getList().get(arg2).getUrl());
+		sharebean.setImgUrl(articleAdapter.getList().get(arg2).getCover());
+		bundle.putSerializable(WebShareAct.class.getName(), sharebean);
+		
+		openActivity(WebShareAct.class, bundle);
+		
+		
 	}
 }

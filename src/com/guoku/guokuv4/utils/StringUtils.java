@@ -219,5 +219,13 @@ public class StringUtils {
 	        Matcher m = p.matcher(name);  
 	        return m.matches();  
 	    }  
+	 
+	 /**
+	  * 获取string中的entity id 或 user id
+	  */
+	 public static String isStringId(String oldStr, String newStr){
+		 String value = oldStr.replace(newStr, "");
+		 return value.substring(0, value.length() - 1);
+	 }
 
 }

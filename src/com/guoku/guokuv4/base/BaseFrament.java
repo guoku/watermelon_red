@@ -538,9 +538,16 @@ public abstract class BaseFrament extends Fragment {
 		MobclickAgent.onPageEnd("MainScreen");
 	}
 	
-	private void test(){
-		
-		
+	protected void openActivity(Class<?> pClass) {
+		openActivity(pClass, null);
 	}
 
+	protected void openActivity(Class<?> pClass, Bundle pBundle) {
+		Intent intent = new Intent(getActivity(), pClass);
+		if (pBundle != null) {
+			intent.putExtras(pBundle);
+		}
+
+		startActivity(intent);
+	}
 }

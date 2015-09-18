@@ -2,9 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@color/gray_bg"
+    >
+    
+        <include
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/title" />
 
-    <com.ekwing.students.customview.ScrollViewWithGridView
+    <GridView
         android:id="@+id/tab_list_gv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +23,8 @@
         android:numColumns="4"
         android:paddingTop="4dp"
         android:scrollbars="none"
-        android:verticalSpacing="4dp" >
-    </com.ekwing.students.customview.ScrollViewWithGridView>
+        android:verticalSpacing="20dp" 
+        >
+    </GridView>
 
 </LinearLayout>

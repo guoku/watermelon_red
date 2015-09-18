@@ -2,6 +2,8 @@ package com.guoku.guokuv4.entity.test;
 
 import java.io.Serializable;
 
+import com.guoku.guokuv4.utils.StringUtils;
+
 public class UserBean implements Serializable {
 	private String is_censor, bio, avatar_large, user_id, following_count,
 			fan_count, city, gender, avatar_small, is_active,
@@ -97,11 +99,15 @@ public class UserBean implements Serializable {
 	}
 
 	public String getGender() {
-		if (gender.equals("F")) {
-			return "女";
-		} else {
-			return "男";
+		if(!StringUtils.isEmpty(gender)){
+			if (gender.equals("F")) {
+				return "女";
+			} else {
+				return "男";
+			}
 		}
+		return "男"; 
+		
 	}
 
 	public void setGender(String gender) {

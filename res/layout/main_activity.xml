@@ -32,13 +32,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/tabbar_icon_selection_press" />
-
-            <TextView
-                android:id="@+id/main_bar_tv_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="精选"
-                android:textColor="@color/g_w" />
         </LinearLayout>
 
         <View
@@ -60,13 +53,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/tabbar_icon_discover" />
-
-            <TextView
-                android:id="@+id/main_bar_tv_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="发现"
-                android:textColor="@color/g_other" />
         </LinearLayout>
 
         <View
@@ -88,13 +74,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/tabbar_icon_notifaction" />
-
-            <TextView
-                android:id="@+id/main_bar_tv_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="通知"
-                android:textColor="@color/g_other" />
         </LinearLayout>
 
         <View
@@ -116,13 +95,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/tabbar_icon_me" />
-
-            <TextView
-                android:id="@+id/main_bar_tv_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="我"
-                android:textColor="@color/g_other" />
         </LinearLayout>
     </LinearLayout>
 

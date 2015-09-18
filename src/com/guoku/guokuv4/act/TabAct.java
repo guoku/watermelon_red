@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -29,6 +30,7 @@ import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.base.NetWorkActivity;
 import com.ekwing.students.config.Constant;
 import com.ekwing.students.utils.SharePrenceUtil;
+import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.adapter.EntityAdapter;
 import com.guoku.guokuv4.adapter.GVAdapter;
@@ -47,11 +49,12 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		OnCheckedChangeListener {
 
 	private static final int CATABLIST = 10;
-	private static final int STAT = 11;
 	private static final int PROINFO = 12;
 	private static final int LIST = 1;
 	private static final int GRID = 2;
 	private static final int TAG_CATEGORY = 3;//分类
+	public static final int requestCode = 1001;
+	public static final String CID = "CID";//二级分类ui返回的选择分类
 
 	// @ViewInject(R.id.scroll_view)
 	// private ScrollView scrollView;
@@ -104,6 +107,8 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 
 	private int animationTiem = 300;
 	private boolean isWhat = false;// 用来纪录排序方式 false：默认按时间 true：喜欢
+	
+	TagBean tagBean;//一级全部
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -134,19 +139,6 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 			gvAdapter.setList(list);
 			lvAdapter.setList(list);
 			break;
-		case STAT:
-			JSONObject root;
-			try {
-				root = new JSONObject(result);
-				if (isLike == null) {
-					tab_tv_count
-							.setText(root.getString("entity_count") + "件商品");
-				} else
-					tab_tv_count.setText(root.getString("like_count") + "件商品");
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-			break;
 		case PROINFO:
 			PInfoBean bean = ParseUtil.getPI(result);
 			Intent intent = new Intent(context, ProductInfoAct.class);
@@ -170,7 +162,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 
 	@Override
 	protected void onFailure(String result, int where) {
-
+		ToastUtil.show(mContext, "没有此结果");
 	}
 
 	@Override
@@ -212,27 +204,33 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 						PROINFO, true);
 			}
 		});
+		
+		sendData("time");//默认按时间排序
+		sendConnection(Constant.CATAB, new String[] {},
+				new String[] {}, TAG_CATEGORY, false);
 	}
 	
-	private void initTag(ArrayList<TagBean> tBean){
+	@SuppressLint("NewApi") private void initTag(ArrayList<TagBean> tBean){
 		
 		for(int i = 0; i < tBean.size(); i ++){
 			
 			if(String.valueOf(tBean.get(i).getGroup_id()).equals(cid)){
-				
+				tagBean = tBean.get(i);
 				for(int j = 0; j < 5; j ++){
 					final TagTwo tagtwo = tBean.get(i).getContent().get(j);
-					TextView textView = new TextView(this);
-					LayoutParams lParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
+					final TextView textView = new TextView(this);
+					LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
+					lParams.setMargins(3, 5, 3, 5);
 					textView.setLayoutParams(lParams);
 					textView.setText(tagtwo.getCategory_title());
+					textView.setBackgroundResource(R.drawable.text_bg_box_gray);
+					textView.setGravity(Gravity.CENTER);
+					textView.setPadding(3, 3, 3, 3);
 					textView.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View arg0) {
 							// TODO Auto-generated method stub
-							cid = ((TextView)arg0).getText().toString();
-							sendConnection(Constant.CATAB + tagtwo.getCategory_title() + "/entity/", new String[] {},
-									new String[] {}, STAT, false);
+							sendData(textView.getText().toString());
 						}
 					});
 					layoutAddTag.addView(textView);
@@ -245,12 +243,6 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		sendData(null);
-		sendConnection(Constant.CATAB + cid + "/selection/", new String[] {},
-				new String[] {}, STAT, false);
-		
-		sendConnection(Constant.CATAB, new String[] {},
-				new String[] {}, TAG_CATEGORY, false);
 	}
 	
 	
@@ -301,7 +293,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 			if (arg1) {
 				sendData("like");
 			} else {
-				sendData("null");
+				sendData("time");
 			}
 		}
 		if (arg0 == cbShow) {
@@ -317,22 +309,11 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		}
 	}
 
-	private void sendData(String like) {
+	private void sendData(String value) {
 
-		if (EkwingApplication.getInstance().getBean() != null) {
-			if (like == null) {
-				sendConnection(Constant.CATAB + cid + "/selection/", new String[] {
-						"count", "offset", "reverse" }, new String[] { "30",
-						"0", "0" }, CATABLIST, true);
-			} else {
-				sendConnection(Constant.CATAB + cid + "/selection/", new String[] {
-						"count", "offset", "sort", "reverse" }, new String[] {
-						"30", "0", like, "0" }, CATABLIST, true);
-			}
-		} else {
-			startActivity(new Intent(mContext, LoginAct.class));
-			finish();
-		}
+		sendConnection(Constant.CATAB + cid + "/selection/", new String[] {
+				"count", "offset", "sort", "reverse" }, new String[] {
+				"30", "0", value, "0" }, CATABLIST, true);
 
 	}
 
@@ -341,7 +322,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 			isWhat = false;
 			tvWhatDef.setText(R.string.tv_seach_time);
 			tvWhatlike.setText(R.string.tv_seach_like);
-			sendData(null);
+			sendData("time");
 		} else {
 			isWhat = true;
 			tvWhatDef.setText(R.string.tv_seach_like);
@@ -429,10 +410,22 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 	@OnClick(R.id.tv_more)
 	private void onClickMore(View v){
 		
-		Intent intent = new Intent(mContext, TabListAct.class);
-		intent.putExtra("data", cid);
-		mContext.startActivity(intent);
-		
+		if(tagBean != null){
+			Bundle bundle = new Bundle();
+			bundle.putSerializable(TabAct.class.getName(), tagBean);
+			openActivityForResult(CategoryListAct.class, bundle, requestCode);
+		}
 	}
+	
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		// TODO Auto-generated method stub
+			if (arg1 == requestCode) {
+				cid = arg2.getStringExtra(CID);
+				sendData(cid);
+			}
+	}
+	
+	
 
 }

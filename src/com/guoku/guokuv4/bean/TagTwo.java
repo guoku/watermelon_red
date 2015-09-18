@@ -3,12 +3,14 @@
  */
 package com.guoku.guokuv4.bean;
 
+import java.io.Serializable;
+
 /**
  * @zhangyao
  * @Description: TODO
  * @date 2015-9-17 下午4:55:08 
  */
-public class TagTwo {
+public class TagTwo implements Serializable{
 	
 	String category_icon_large;
 	

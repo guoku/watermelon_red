@@ -145,6 +145,12 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="com.guoku.guokuv4.act.WebShareAct"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" 
+            android:hardwareAccelerated="true"
+            ></activity>
+        <activity
             android:name="com.guoku.guokuv4.act.WebAct"
             android:configChanges="orientation"
             android:screenOrientation="portrait" 

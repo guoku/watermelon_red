@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -46,9 +47,12 @@ import com.guoku.guokuv4.act.SeachAct;
 import com.guoku.guokuv4.act.TabAct;
 import com.guoku.guokuv4.act.UserAct;
 import com.guoku.guokuv4.act.WebAct;
+import com.guoku.guokuv4.act.WebShareAct;
 import com.guoku.guokuv4.adapter.HomeOneArticlesAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
+import com.guoku.guokuv4.bean.Articles;
 import com.guoku.guokuv4.bean.HomePageOneBean;
+import com.guoku.guokuv4.bean.Sharebean;
 import com.guoku.guokuv4.entity.test.BannerBean;
 import com.guoku.guokuv4.entity.test.Categories;
 import com.guoku.guokuv4.entity.test.Categories.Category;
@@ -203,12 +207,23 @@ public class GuangFragment extends BaseFrament {
 							MobclickAgent.onEvent(getActivity(), "banner");
 
 							if (url.contains("http")) {
-								Intent intent = new Intent(context,
-										WebAct.class);
-								intent.putExtra("data", url);
-								intent.putExtra("name", "  ");
-								intent.putExtra("type", "banner");
-								startActivity(intent);
+//								Intent intent = new Intent(context,
+//										WebAct.class);
+//								intent.putExtra("data", url);
+//								intent.putExtra("name", "  ");
+//								intent.putExtra("type", "banner");
+//								startActivity(intent);
+								
+								
+								Bundle bundle = new Bundle();
+								Sharebean sharebean = new Sharebean();
+								sharebean.setTitle("");
+								sharebean.setContext("");
+								sharebean.setAricleUrl(url);
+								sharebean.setImgUrl(list.get(index).getImg());
+								bundle.putSerializable(WebShareAct.class.getName(), sharebean);
+								openActivity(WebShareAct.class, bundle);
+								
 							} else if (url.contains("entity")) {
 								sendConnection(Constant.PROINFO + last + "/",
 										new String[] { "entity_id" },
@@ -393,12 +408,16 @@ public class GuangFragment extends BaseFrament {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(context,
-						WebAct.class);
-				intent.putExtra("data", Constant.URL_ARTICLES + articlesAdapter.getList().get(arg2).getUrl());
-				intent.putExtra("name", "  ");
-				intent.putExtra("type", "banner");
-				startActivity(intent);
+				
+				Bundle bundle = new Bundle();
+				Sharebean sharebean = new Sharebean();
+				sharebean.setTitle(articlesAdapter.getList().get(arg2).getTitle());
+				sharebean.setContext(articlesAdapter.getList().get(arg2).getContent().substring(0, 50));
+				sharebean.setAricleUrl(articlesAdapter.getList().get(arg2).getUrl());
+				sharebean.setImgUrl(articlesAdapter.getList().get(arg2).getCover());
+				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
+				
+				openActivity(WebShareAct.class, bundle);
 			}
 		});
 	}

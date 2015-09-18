@@ -85,7 +85,8 @@
                 android:layout_centerVertical="true"
                 android:gravity="center"
                 android:layout_toLeftOf="@+id/tv_more"
-                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 >
                 
             </LinearLayout>
@@ -93,14 +94,13 @@
         <TextView
             android:id="@+id/tv_more"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
 			android:text="更多"       
 			android:textColor="@color/title_bar_blue"
 			android:drawableRight="@drawable/more_right" 
-			android:drawablePadding="3dp"  
-			
+			android:gravity="center"
             />
     </RelativeLayout>
     

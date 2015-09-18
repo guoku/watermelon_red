@@ -3,6 +3,7 @@
  */
 package com.guoku.guokuv4.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  * @Description: TODO
  * @date 2015-9-17 下午4:37:33 品类
  */
-public class TagBean {
+public class TagBean implements Serializable{
 
 	int category_count;
 	

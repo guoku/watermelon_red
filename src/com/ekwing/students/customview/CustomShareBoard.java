@@ -105,6 +105,32 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		mController.setShareMedia(sinaShareContent);
 	}
 
+	public void setShareContext(Context mContext, String context, String url, String imgUrl, String title) {
+		configPlatforms();
+		this.url = url;
+
+		WeiXinShareContent weixinContent = new WeiXinShareContent();
+		weixinContent.setTargetUrl(url);
+		weixinContent.setShareContent(context);
+		weixinContent.setShareImage(new UMImage(mContext, imgUrl));
+		mController.setShareMedia(weixinContent);
+
+		CircleShareContent circleMedia = new CircleShareContent();
+		circleMedia.setTargetUrl(url);
+		circleMedia.setShareImage(new UMImage(mContext, imgUrl));
+		circleMedia.setShareContent(context);
+		mController.setShareMedia(circleMedia);
+
+		SinaShareContent sinaShareContent = new SinaShareContent();
+		sinaShareContent.setShareContent(title + context + "（分享自 @果库）"+ url);
+		sinaShareContent.setTargetUrl(url);
+		sinaShareContent.setShareImage(new UMImage(mContext, imgUrl));
+		mController.setShareMedia(sinaShareContent);
+
+		rootView.findViewById(R.id.share_jubao).setVisibility(View.GONE);
+		rootView.findViewById(R.id.share_llq).setVisibility(View.VISIBLE);
+	}
+	
 	public void setShareContext(String title, String url) {
 		configPlatforms();
 		this.url = url;
