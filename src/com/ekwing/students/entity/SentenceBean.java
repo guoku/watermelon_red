@@ -78,8 +78,9 @@ public class SentenceBean implements Serializable {
 
 	public String getAnswers() {
 		if (answers == null) {
-			return "{\"id\":\"" + id + "\",\"text\":\"" + TextUtils.replaceBlank(getText()) + "\",\"score\":\"" + -1 + "\",\"speed\":\"" + 1
-					+ "\",\"difficulty\":0}";
+			return "{\"id\":\"" + id + "\",\"text\":\""
+					+ TextUtils.replaceBlank(getText()) + "\",\"score\":\""
+					+ -1 + "\",\"speed\":\"" + 1 + "\",\"difficulty\":0}";
 		}
 		return answers;
 	}

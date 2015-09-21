@@ -1,18 +1,18 @@
 package com.ekwing.students.entity;
 
 import java.io.Serializable;
+
 /**
  * 
- * @author guoshasha
- * 我的作业 ——作业类型
+ * @author guoshasha 我的作业 ——作业类型
  */
-public class HhwListbean implements Serializable{
+public class HhwListbean implements Serializable {
 	private String tname;
-	private String tid,ttype,tctype,tdescribe,tstatus,tscore,tscorenum;
-	
+	private String tid, ttype, tctype, tdescribe, tstatus, tscore, tscorenum;
+
 	public String getTid() {
-		if(tid ==null){
-			tid="";
+		if (tid == null) {
+			tid = "";
 		}
 		return tid;
 	}
@@ -22,8 +22,8 @@ public class HhwListbean implements Serializable{
 	}
 
 	public String getTtype() {
-		if(ttype ==null){
-			ttype="";
+		if (ttype == null) {
+			ttype = "";
 		}
 		return ttype;
 	}
@@ -33,8 +33,8 @@ public class HhwListbean implements Serializable{
 	}
 
 	public String getTctype() {
-		if(tctype ==null){
-			tctype="";
+		if (tctype == null) {
+			tctype = "";
 		}
 		return tctype;
 	}
@@ -44,8 +44,8 @@ public class HhwListbean implements Serializable{
 	}
 
 	public String getTdescribe() {
-		if(tdescribe ==null){
-			tdescribe="";
+		if (tdescribe == null) {
+			tdescribe = "";
 		}
 		return tdescribe;
 	}
@@ -55,8 +55,8 @@ public class HhwListbean implements Serializable{
 	}
 
 	public String getTstatus() {
-		if(tstatus ==null){
-			tstatus="";
+		if (tstatus == null) {
+			tstatus = "";
 		}
 		return tstatus;
 	}
@@ -66,8 +66,8 @@ public class HhwListbean implements Serializable{
 	}
 
 	public String getTscore() {
-		if(tscore ==null){
-			tscore="";
+		if (tscore == null) {
+			tscore = "";
 		}
 		return tscore;
 	}
@@ -77,8 +77,8 @@ public class HhwListbean implements Serializable{
 	}
 
 	public String getTscorenum() {
-		if(tscorenum ==null){
-			tscorenum="";
+		if (tscorenum == null) {
+			tscorenum = "";
 		}
 		return tscorenum;
 	}
@@ -88,8 +88,8 @@ public class HhwListbean implements Serializable{
 	}
 
 	public String getTname() {
-		if(tname ==null){
-			tname="";
+		if (tname == null) {
+			tname = "";
 		}
 		return tname;
 	}
@@ -98,5 +98,4 @@ public class HhwListbean implements Serializable{
 		this.tname = tname;
 	}
 
-	
 }

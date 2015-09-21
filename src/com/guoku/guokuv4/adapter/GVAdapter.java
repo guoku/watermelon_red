@@ -29,8 +29,7 @@ public class GVAdapter extends ArrayListAdapter<EntityBean> {
 				.considerExifParams(true).bitmapConfig(Config.RGB_565)
 				.showImageOnLoading(R.color.g_w)
 				.showImageForEmptyUri(R.color.g_w).showImageOnFail(R.color.g_w)
-				.cacheInMemory(true)
-				.build();
+				.cacheInMemory(true).build();
 	}
 
 	@Override

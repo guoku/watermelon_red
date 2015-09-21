@@ -38,6 +38,7 @@ import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.BroadUtil;
 import com.guoku.guokuv4.utils.ImgUtils;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
@@ -285,24 +286,30 @@ public class UserAct extends NetWorkActivity {
 			setGCenter(true, "我");
 			// psrson_tv_btn.setText("修改个人资料");
 			// psrson_ll_btn.setBackgroundColor(color.g_224);
-		} else if (userBean.getRelation().equals("1")) {
-			setGCenter(true, userBean.getNickname());
-			// psrson_tv_btn.setVisibility(View.GONE);
-			// psrson_iv_btn.setBackgroundResource(R.drawable.has);
-			psrson_ll_btn.setBackgroundResource(R.drawable.tfz_shap);
-			psrson_tv_btn.setText("已关注");
-			psrson_iv_btn.setImageResource(R.drawable.hai_to);
-			psrson_tv_btn.setTextColor(Color.argb(255, 19, 143, 215));
-		} else if (userBean.getRelation().equals("3")) {
-			setGCenter(true, userBean.getNickname());
-			// psrson_iv_btn.setBackgroundResource(R.drawable.double1);
-			// psrson_tv_btn.setVisibility(View.GONE);
-			psrson_ll_btn.setBackgroundResource(R.drawable.tfz_shap);
-			// psrson_ll_btn.setBackgroundColor(color.g_blue);
-			psrson_tv_btn.setText("互相关注");
-			psrson_iv_btn.setImageResource(R.drawable.to);
-			psrson_tv_btn.setTextColor(Color.argb(255, 19, 143, 215));
-		} else {
+		} 
+		
+		if (!StringUtils.isEmpty(userBean.getRelation())) {
+			if (userBean.getRelation().equals("1")) {
+				setGCenter(true, userBean.getNickname());
+				// psrson_tv_btn.setVisibility(View.GONE);
+				// psrson_iv_btn.setBackgroundResource(R.drawable.has);
+				psrson_ll_btn.setBackgroundResource(R.drawable.tfz_shap);
+				psrson_tv_btn.setText("已关注");
+				psrson_iv_btn.setImageResource(R.drawable.hai_to);
+				psrson_tv_btn.setTextColor(Color.argb(255, 19, 143, 215));
+			} else if (userBean.getRelation().equals("3")) {
+				setGCenter(true, userBean.getNickname());
+				// psrson_iv_btn.setBackgroundResource(R.drawable.double1);
+				// psrson_tv_btn.setVisibility(View.GONE);
+				psrson_ll_btn.setBackgroundResource(R.drawable.tfz_shap);
+				// psrson_ll_btn.setBackgroundColor(color.g_blue);
+				psrson_tv_btn.setText("互相关注");
+				psrson_iv_btn.setImageResource(R.drawable.to);
+				psrson_tv_btn.setTextColor(Color.argb(255, 19, 143, 215));
+			}
+		}
+		
+		 else {
 			setGCenter(true, userBean.getNickname());
 			// psrson_iv_btn.setBackgroundResource(R.drawable.add);
 			psrson_ll_btn.setBackgroundResource(R.drawable.blue_shap);

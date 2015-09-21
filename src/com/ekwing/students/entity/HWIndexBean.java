@@ -154,7 +154,7 @@ public class HWIndexBean implements Serializable {
 	}
 
 	public List<HWListBean> getHwList() {
-		if (hwList == null ||"".equals(hwList)) {
+		if (hwList == null || "".equals(hwList)) {
 			hwList = new ArrayList<HWListBean>();
 		}
 		return hwList;
@@ -165,7 +165,7 @@ public class HWIndexBean implements Serializable {
 	}
 
 	public List<DownUrlBean> getDownUrl() {
-		if (downUrl == null ||"".equals(downUrl)) {
+		if (downUrl == null || "".equals(downUrl)) {
 			downUrl = new ArrayList<DownUrlBean>();
 		}
 		return downUrl;
@@ -181,9 +181,13 @@ public class HWIndexBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "HWIndexBean [hwId=" + hwId + ", teachetid=" + teachetid + ", hwStatus=" + hwStatus + ", hwName=" + hwName + ", hwDescribe="
-				+ hwDescribe + ", hwLeave=" + hwLeave + ", hwLastTime=" + hwLastTime + ", teacherComment=" + teacherComment + ", classScore="
-				+ classScore + ", lastPrompt=" + lastPrompt + ", hwList=" + hwList + ", downUrl=" + downUrl + "]";
+		return "HWIndexBean [hwId=" + hwId + ", teachetid=" + teachetid
+				+ ", hwStatus=" + hwStatus + ", hwName=" + hwName
+				+ ", hwDescribe=" + hwDescribe + ", hwLeave=" + hwLeave
+				+ ", hwLastTime=" + hwLastTime + ", teacherComment="
+				+ teacherComment + ", classScore=" + classScore
+				+ ", lastPrompt=" + lastPrompt + ", hwList=" + hwList
+				+ ", downUrl=" + downUrl + "]";
 	}
 
 }

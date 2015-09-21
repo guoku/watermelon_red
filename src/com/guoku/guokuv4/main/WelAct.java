@@ -26,9 +26,8 @@ public class WelAct extends NetWorkActivity {
 	@ViewInject(R.id.wecome_flash_iv)
 	private ImageView wecome_iv;
 	@ViewInject(R.id.imageView1)
-	private ImageView imgBaidu;//百度首发icon
+	private ImageView imgBaidu;// 百度首发icon
 	String channel;
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +47,12 @@ public class WelAct extends NetWorkActivity {
 		}
 		init();
 	}
-	
-	private void init(){
-		
+
+	private void init() {
+
 		channel = StringUtils.getAppMetaData(this, "UMENG_CHANNEL");
-		if(!StringUtils.isEmpty(channel)){
-			if(channel.equals(ConfigGK.CHANNEL_BAIDU)){
+		if (!StringUtils.isEmpty(channel)) {
+			if (channel.equals(ConfigGK.CHANNEL_BAIDU)) {
 				imgBaidu.setVisibility(View.VISIBLE);
 			}
 		}

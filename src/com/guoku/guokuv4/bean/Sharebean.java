@@ -10,18 +10,17 @@ import com.ekwing.students.config.Constant;
 /**
  * @zhangyao
  * @Description: TODO
- * @date 2015-9-18 下午2:46:09 
- * 分享实体类数据
+ * @date 2015-9-18 下午2:46:09 分享实体类数据
  */
-public class Sharebean implements Serializable{
-	
-	String title;//标题
-	
-	String context;//内容
-	
-	String  aricleUrl;//文章url
-	
-	String imgUrl;//图片url
+public class Sharebean implements Serializable {
+
+	String title;// 标题
+
+	String context;// 内容
+
+	String aricleUrl;// 文章url
+
+	String imgUrl;// 图片url
 
 	public String getTitle() {
 		return title;
@@ -54,7 +53,5 @@ public class Sharebean implements Serializable{
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
-	
-	
 
 }

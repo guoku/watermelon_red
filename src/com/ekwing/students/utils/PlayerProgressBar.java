@@ -59,7 +59,8 @@ public class PlayerProgressBar extends ImageView {
 		canvas.drawArc(oval, -90, 360, false, paint); // 绘制白色圆圈，即进度条背景
 		// paint.setColor(Color.rgb(0x57, 0x87, 0xb6)); //0b6ac4
 		paint.setColor(Color.rgb(124, 162, 12)); // 蓝色的圆圈：即进度条
-		canvas.drawArc(oval, -90, ((float) progress / maxProgress) * 360, false, paint); // 绘制进度圆弧，这里是蓝色
+		canvas.drawArc(oval, -90, ((float) progress / maxProgress) * 360,
+				false, paint); // 绘制进度圆弧，这里是蓝色
 	}
 
 	public void setImageAndTime(int resid, int time) {

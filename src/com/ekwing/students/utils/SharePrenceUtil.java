@@ -252,7 +252,6 @@ public class SharePrenceUtil {
 				.putString(Constant.STUDENT_TAB, tab).commit();
 	}
 
-
 	public static int getTAG(Context context) {
 		return context.getSharedPreferences(Constant.TAG, 0).getInt(
 				Constant.TAG, 1);
@@ -284,9 +283,9 @@ public class SharePrenceUtil {
 		return ParseUtil.getTabList(context.getSharedPreferences(
 				Constant.GUOKU_TAB, 0).getString(Constant.GUOKU_TAB_LIST, ""));
 	}
-	
-//	public static ArrayList<TAB1Bean> getTab1List(Context context) {
-//		return ParseUtil.getTab1List(context.getSharedPreferences(
-//				Constant.GUOKU_TAB, 0).getString(Constant.GUOKU_TAB_LIST, ""));
-//	}
+
+	// public static ArrayList<TAB1Bean> getTab1List(Context context) {
+	// return ParseUtil.getTab1List(context.getSharedPreferences(
+	// Constant.GUOKU_TAB, 0).getString(Constant.GUOKU_TAB_LIST, ""));
+	// }
 }

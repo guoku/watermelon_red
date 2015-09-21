@@ -38,11 +38,13 @@ public class DownUtils extends RequestCallBack<File> {
 		http = new HttpUtils();
 	}
 
-	public void downByUrl(final Context context, final String themeid, final String levelid, final String title, final String url,
+	public void downByUrl(final Context context, final String themeid,
+			final String levelid, final String title, final String url,
 			final Handler handler, final TextView v, final ImageView iv) {
 		Logger.e("downByUrl", "downByUrl--------------------?" + url);
 		this.handler = handler;
-		http.download(url, Constant.BASE_PATH + "/db/" + convertUrlToFileName(url), new RequestCallBack<File>() {
+		http.download(url, Constant.BASE_PATH + "/db/"
+				+ convertUrlToFileName(url), new RequestCallBack<File>() {
 
 			@Override
 			public void onStart() {
@@ -57,7 +59,8 @@ public class DownUtils extends RequestCallBack<File> {
 				// TODO Auto-generated method stub
 				Logger.e("onSuccess", "onSuccess---------------------->");
 				try {
-					ZipUtil.unzip(Constant.BASE_PATH + "/db/" + convertUrlToFileName(url), Constant.BASE_PATH);
+					ZipUtil.unzip(Constant.BASE_PATH + "/db/"
+							+ convertUrlToFileName(url), Constant.BASE_PATH);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -82,8 +85,10 @@ public class DownUtils extends RequestCallBack<File> {
 
 				String srt = Utils.decimal2Percent((double) current / total);
 				Logger.e("onLoading", "cuttent-str--------------------->" + srt);
-				Logger.e("onLoading", "percent---------------------->" + (double) current / total);
-				Logger.e("onLoading", "current---------------------->" + current);
+				Logger.e("onLoading", "percent---------------------->"
+						+ (double) current / total);
+				Logger.e("onLoading", "current---------------------->"
+						+ current);
 				Logger.e("onLoading", "total---------------------->" + total);
 				v.setText("下载" + srt);
 
@@ -98,11 +103,13 @@ public class DownUtils extends RequestCallBack<File> {
 		});
 	}
 
-	public void downByUrl(final Context context, final String themeid, final String levelid, final String title, final String url,
+	public void downByUrl(final Context context, final String themeid,
+			final String levelid, final String title, final String url,
 			final Handler handler, final TextView v) {
 		Logger.e("downByUrl", "downByUrl--------------------?" + url);
 		this.handler = handler;
-		http.download(url, Constant.BASE_PATH + "/db/" + convertUrlToFileName(url), new RequestCallBack<File>() {
+		http.download(url, Constant.BASE_PATH + "/db/"
+				+ convertUrlToFileName(url), new RequestCallBack<File>() {
 
 			@Override
 			public void onStart() {
@@ -117,7 +124,8 @@ public class DownUtils extends RequestCallBack<File> {
 				// TODO Auto-generated method stub
 				Logger.e("onSuccess", "onSuccess---------------------->");
 				try {
-					ZipUtil.unzip(Constant.BASE_PATH + "/db/" + convertUrlToFileName(url), Constant.BASE_PATH);
+					ZipUtil.unzip(Constant.BASE_PATH + "/db/"
+							+ convertUrlToFileName(url), Constant.BASE_PATH);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -142,8 +150,10 @@ public class DownUtils extends RequestCallBack<File> {
 
 				String srt = Utils.decimal2Percent((double) current / total);
 				Logger.e("onLoading", "cuttent-str--------------------->" + srt);
-				Logger.e("onLoading", "percent---------------------->" + (double) current / total);
-				Logger.e("onLoading", "current---------------------->" + current);
+				Logger.e("onLoading", "percent---------------------->"
+						+ (double) current / total);
+				Logger.e("onLoading", "current---------------------->"
+						+ current);
 				Logger.e("onLoading", "total---------------------->" + total);
 				v.setText("下载" + srt);
 
@@ -165,58 +175,75 @@ public class DownUtils extends RequestCallBack<File> {
 	 * @param handler
 	 * @param tv
 	 */
-	public void downListenQueryAudio(final String url, final Handler handler, final TextView tv) {
-		Logger.e("downListenQueryAudio", "downListenQueryAudio--------------------?" + url);
+	public void downListenQueryAudio(final String url, final Handler handler,
+			final TextView tv) {
+		Logger.e("downListenQueryAudio",
+				"downListenQueryAudio--------------------?" + url);
 		this.handler = handler;
 		// if (isloading) {
-		Logger.e("downListenQueryAudio", "downListenQueryAudio---convertUrlToFileName1-----------------?" + convertUrlToFileName(url));
-		Logger.e("downListenQueryAudio", "downListenQueryAudio---convertUrlToFileName-----------------?" + Constant.SOUND_PATH);
-		Logger.e("downListenQueryAudio", "downListenQueryAudio---convertUrlToFileName-----------------?" + Constant.SOUND_PATH
-				+ convertUrlToFileName(url));
+		Logger.e("downListenQueryAudio",
+				"downListenQueryAudio---convertUrlToFileName1-----------------?"
+						+ convertUrlToFileName(url));
+		Logger.e("downListenQueryAudio",
+				"downListenQueryAudio---convertUrlToFileName-----------------?"
+						+ Constant.SOUND_PATH);
+		Logger.e("downListenQueryAudio",
+				"downListenQueryAudio---convertUrlToFileName-----------------?"
+						+ Constant.SOUND_PATH + convertUrlToFileName(url));
 
-		http.download(url, Constant.SOUND_PATH + convertUrlToFileName(url), new RequestCallBack<File>() {
+		http.download(url, Constant.SOUND_PATH + convertUrlToFileName(url),
+				new RequestCallBack<File>() {
 
-			@Override
-			public void onStart() {
-				super.onStart();
-				Logger.e("downListenQueryAudio", "onStart---------------------->");
-			}
+					@Override
+					public void onStart() {
+						super.onStart();
+						Logger.e("downListenQueryAudio",
+								"onStart---------------------->");
+					}
 
-			@Override
-			public void onSuccess(ResponseInfo<File> arg0) {
-				Logger.e("downListenQueryAudio", "onSuccess---------------------->");
-				tv.setText("播放");
-			}
+					@Override
+					public void onSuccess(ResponseInfo<File> arg0) {
+						Logger.e("downListenQueryAudio",
+								"onSuccess---------------------->");
+						tv.setText("播放");
+					}
 
-			@Override
-			public void onLoading(long total, long current, boolean isUploading) {
-				super.onLoading(total, current, isUploading);
-				Message message = Message.obtain();
-				message.what = DOWNLONDING;
-				double aa = (double) current / total;
-				Logger.e("downListenQueryAudio", "onloading----aaaaaaaaaaaa-------------------->" + aa);
-				String srt = Utils.decimal2Percent((double) current / total);
-				tv.setText("下载" + srt);
+					@Override
+					public void onLoading(long total, long current,
+							boolean isUploading) {
+						super.onLoading(total, current, isUploading);
+						Message message = Message.obtain();
+						message.what = DOWNLONDING;
+						double aa = (double) current / total;
+						Logger.e("downListenQueryAudio",
+								"onloading----aaaaaaaaaaaa-------------------->"
+										+ aa);
+						String srt = Utils.decimal2Percent((double) current
+								/ total);
+						tv.setText("下载" + srt);
 
-				handler.sendMessage(message);
-			}
+						handler.sendMessage(message);
+					}
 
-			@Override
-			public void onFailure(HttpException arg0, String arg1) {
-				// isloading = true;
-				// ll.setClickable(true);
-				// ll.setEnabled(true);
-				// handler.sendEmptyMessage(DOWNFAIL);
-			}
-		});
+					@Override
+					public void onFailure(HttpException arg0, String arg1) {
+						// isloading = true;
+						// ll.setClickable(true);
+						// ll.setEnabled(true);
+						// handler.sendEmptyMessage(DOWNFAIL);
+					}
+				});
 		// }
 	}
 
-	public void downReading(final String url, final Handler handler, final LinearLayout ll, final TextView v, final ImageView iv, final int position) {
+	public void downReading(final String url, final Handler handler,
+			final LinearLayout ll, final TextView v, final ImageView iv,
+			final int position) {
 		Logger.e("downByUrl", "downByUrl--------------------?" + url);
 		this.handler = handler;
 		if (isloading) {
-			http.download(url, Constant.BASE_PATH + "/sound/" + convertUrlToFileName(url), new RequestCallBack<File>() {
+			http.download(url, Constant.BASE_PATH + "/sound/"
+					+ convertUrlToFileName(url), new RequestCallBack<File>() {
 
 				@Override
 				public void onStart() {
@@ -246,14 +273,17 @@ public class DownUtils extends RequestCallBack<File> {
 				}
 
 				@Override
-				public void onLoading(long total, long current, boolean isUploading) {
+				public void onLoading(long total, long current,
+						boolean isUploading) {
 					super.onLoading(total, current, isUploading);
 					Message message = Message.obtain();
 					message.what = DOWNLONDING;
 					double aa = (double) current / total;
-					Logger.e("onLoading", "aaaaaaaaaaaa-------------------->" + aa);
+					Logger.e("onLoading", "aaaaaaaaaaaa-------------------->"
+							+ aa);
 
-					String srt = Utils.decimal2Percent((double) current / total);
+					String srt = Utils
+							.decimal2Percent((double) current / total);
 					v.setText("下载" + srt);
 
 					handler.sendMessage(message);
@@ -274,10 +304,12 @@ public class DownUtils extends RequestCallBack<File> {
 		if (urls.size() > index) {
 			boolean isenable = false;
 			if (method == GIF) {
-				isenable = fileIsExistsInImages2(convertUrlToFileName(urls.get(index)));
+				isenable = fileIsExistsInImages2(convertUrlToFileName(urls
+						.get(index)));
 				Logger.e("downUtils", "isenable===========>" + index);
 				Logger.e("downUtils", "isenable===========>" + isenable);
-				Logger.e("downUtils", "gif名字===========>" + convertUrlToFileName(urls.get(index)));
+				Logger.e("downUtils", "gif名字===========>"
+						+ convertUrlToFileName(urls.get(index)));
 				Logger.e("downUtils", "gif地址===========>" + urls.get(index));
 			} else if (method == SOUND) {
 				isenable = fileIsExists(convertUrlToFileName(urls.get(index)));
@@ -293,20 +325,24 @@ public class DownUtils extends RequestCallBack<File> {
 					break;
 				}
 				if (method == GIF) {
-					isenable = fileIsExistsInImages2(convertUrlToFileName(urls.get(index)));
+					isenable = fileIsExistsInImages2(convertUrlToFileName(urls
+							.get(index)));
 				} else if (method == SOUND) {
-					isenable = fileIsExists(convertUrlToFileName(urls.get(index)));
+					isenable = fileIsExists(convertUrlToFileName(urls
+							.get(index)));
 				}
 			}
 			if (urls.size() > index) {
 				switch (method) {
 				case GIF:
 					Logger.d("downutils", "gif===index============>" + index);
-					http.download(this.urls.get(index), Constant.IMAGES_PATH + convertUrlToFileName(urls.get(index)), this);
+					http.download(this.urls.get(index), Constant.IMAGES_PATH
+							+ convertUrlToFileName(urls.get(index)), this);
 					break;
 
 				case SOUND:
-					http.download(this.urls.get(index), Constant.SOUND_PATH + convertUrlToFileName(urls.get(index)), this);
+					http.download(this.urls.get(index), Constant.SOUND_PATH
+							+ convertUrlToFileName(urls.get(index)), this);
 					break;
 				}
 			} else {
@@ -342,7 +378,8 @@ public class DownUtils extends RequestCallBack<File> {
 	public void onSuccess(ResponseInfo arg0) {
 		// TODO Auto-generated method stub
 		Logger.e("onSuccess", "--onSuccess----------------------->" + arg0);
-		Logger.e("onSuccess", "--onSuccess-index---------------------->" + index);
+		Logger.e("onSuccess", "--onSuccess-index---------------------->"
+				+ index);
 		if (index == urls.size()) {
 			handler.sendEmptyMessage(DOWNSUCCESS);
 			index = 0;

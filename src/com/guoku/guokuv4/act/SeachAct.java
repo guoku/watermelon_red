@@ -54,7 +54,9 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
-@SuppressLint("ClickableViewAccessibility") public class SeachAct extends NetWorkActivity implements OnClickListener, OnTouchListener {
+@SuppressLint("ClickableViewAccessibility")
+public class SeachAct extends NetWorkActivity implements OnClickListener,
+		OnTouchListener {
 	private static final int SEARCH = 10;
 	private static final int SEARCHADD = 15;
 	private static final int TAB = 11;
@@ -107,7 +109,7 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 
 	UserBean beanFowllow;// 刷新关注按钮相关
 	ImageView imgFowllow;
-	
+
 	private String seachConten;
 
 	@Override
@@ -121,8 +123,9 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 
 		ed_text.addTextChangedListener(watcher);
 		view_def.setLayoutParams(new LinearLayout.LayoutParams(ScreenSizeUtil
-				.getScreenWidth(this) / 2, ScreenSizeUtil.getScreenHeight(this) / 2));
-		
+				.getScreenWidth(this) / 2,
+				ScreenSizeUtil.getScreenHeight(this) / 2));
+
 		lv.setOnPullEventListener(new OnPullEventListener<ListView>() {
 
 			@Override
@@ -378,10 +381,9 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 		sGridView.setAdapter(seachCommodityTypeAdapter);
 		curList.clear();
 		if (listTab.size() > 0) {
-			if(!StringUtils.isEmpty(seachConten)){
+			if (!StringUtils.isEmpty(seachConten)) {
 				for (Tab2Bean bean : listTab) {
-					if (bean.getCategory_title().contains(
-							seachConten)) {
+					if (bean.getCategory_title().contains(seachConten)) {
 						curList.add(bean);
 					}
 				}
@@ -503,7 +505,7 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 			seachConten = s.toString();
 			if (s.length() > 0) {
 				search(0, seachConten);
-			}else{
+			} else {
 				isShowSeachResult(false);
 			}
 		}
@@ -514,19 +516,17 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 		// TODO Auto-generated method stub
 		if (arg1.getAction() == MotionEvent.ACTION_MOVE) {
 			hideKeyBoard();
-        }
+		}
 		return false;
 	}
-	
-    public void hideKeyBoard()
-    {
-        InputMethodManager im = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        if (this.getCurrentFocus() != null
-                && this.getCurrentFocus().getWindowToken() != null)
-        {
-            im.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),
-                    InputMethodManager.HIDE_NOT_ALWAYS);
-        }
-    }
+
+	public void hideKeyBoard() {
+		InputMethodManager im = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+		if (this.getCurrentFocus() != null
+				&& this.getCurrentFocus().getWindowToken() != null) {
+			im.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),
+					InputMethodManager.HIDE_NOT_ALWAYS);
+		}
+	}
 
 }

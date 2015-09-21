@@ -135,17 +135,17 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-		arg2-=1;
+		arg2 -= 1;
 		Bundle bundle = new Bundle();
 		Sharebean sharebean = new Sharebean();
 		sharebean.setTitle(articleAdapter.getList().get(arg2).getTitle());
-		sharebean.setContext(articleAdapter.getList().get(arg2).getContent().substring(0, 50));
+		sharebean.setContext(articleAdapter.getList().get(arg2).getContent()
+				.substring(0, 50));
 		sharebean.setAricleUrl(articleAdapter.getList().get(arg2).getUrl());
 		sharebean.setImgUrl(articleAdapter.getList().get(arg2).getCover());
 		bundle.putSerializable(WebShareAct.class.getName(), sharebean);
-		
+
 		openActivity(WebShareAct.class, bundle);
-		
-		
+
 	}
 }

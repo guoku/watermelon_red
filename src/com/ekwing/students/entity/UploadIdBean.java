@@ -18,7 +18,7 @@ public class UploadIdBean {
 	@Column(column = "type")
 	private String type; // 1:作业， 2：闯关
 
-	public String getType() {  
+	public String getType() {
 		return type;
 	}
 
@@ -60,7 +60,8 @@ public class UploadIdBean {
 
 	@Override
 	public String toString() {
-		return "UploadIdBean [_id=" + _id + ", sid=" + sid + ", path=" + path + ", cid=" + cid + ", type=" + type + "]";
+		return "UploadIdBean [_id=" + _id + ", sid=" + sid + ", path=" + path
+				+ ", cid=" + cid + ", type=" + type + "]";
 	}
 
 }

@@ -29,7 +29,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 public class ArticleAdapter extends ArrayListAdapter<ArticlesList> {
 
 	private int w = EkwingApplication.screenW;
-	
+
 	public ArticleAdapter(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -54,13 +54,14 @@ public class ArticleAdapter extends ArrayListAdapter<ArticlesList> {
 		holder.tvContext.setText(articles.getContent());
 		holder.imgIcon.setImageURI(Uri.parse(Constant.URL_IMG
 				+ articles.getCover()));
-		
+
 		LayoutParams params = (LayoutParams) holder.imgIcon.getLayoutParams();
 		params.height = w / 2;
 		params.width = w - BitmapUtil.dip2pix(mContext, 20);
 		holder.imgIcon.setLayoutParams(params);
-		holder.tvTime.setText(StringUtils.getStandardDate(String.valueOf(articles.getPub_time())));
-		
+		holder.tvTime.setText(StringUtils.getStandardDate(String
+				.valueOf(articles.getPub_time())));
+
 		return convertView;
 	}
 

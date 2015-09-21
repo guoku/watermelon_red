@@ -19,28 +19,29 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 /**
  * @zhangyao
  * @Description: TODO
- * @date 2015-9-17 下午6:09:21 
- * 品类二级列表
+ * @date 2015-9-17 下午6:09:21 品类二级列表
  */
-public class CategoryListAct extends BaseActivity implements OnItemClickListener{
-	
+public class CategoryListAct extends BaseActivity implements
+		OnItemClickListener {
+
 	@ViewInject(R.id.tab_list_gv)
 	private GridView gv_1;
-	
+
 	CategoryListAdapter cAdapter;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_category_list);
-		
+
 		init();
 	}
-	
-	private void init(){
-		
+
+	private void init() {
+
 		setGLeft(true, R.drawable.back_selector);
-		TagBean tagBean = (TagBean) getIntent().getExtras().getSerializable(TabAct.class.getName());
+		TagBean tagBean = (TagBean) getIntent().getExtras().getSerializable(
+				TabAct.class.getName());
 		setGCenter(true, tagBean.getTitle());
 		cAdapter = new CategoryListAdapter(mContext);
 		cAdapter.addLists(tagBean.getContent());

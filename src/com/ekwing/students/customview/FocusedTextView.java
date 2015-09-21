@@ -17,6 +17,7 @@ public class FocusedTextView extends TextView {
 	public FocusedTextView(Context context) {
 		super(context);
 	}
+
 	/**
 	 * 欺骗系统
 	 */

@@ -2,7 +2,7 @@ package com.ekwing.students.entity;
 
 import java.io.Serializable;
 
-public class UserAnsBean implements Serializable{
+public class UserAnsBean implements Serializable {
 	private String correct;
 	private String ans;
 	private String right;

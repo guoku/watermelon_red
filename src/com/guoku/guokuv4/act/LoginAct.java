@@ -252,8 +252,8 @@ public class LoginAct extends NetWorkActivity {
 
 			@Override
 			public void onFailure(int code, String message) {
-				Toast.makeText(LoginAct.this, "授权取消",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(LoginAct.this, "授权取消", Toast.LENGTH_SHORT)
+						.show();
 			}
 		});
 

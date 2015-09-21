@@ -20,10 +20,9 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 /**
  * @zhangyao
  * @Description: TODO
- * @date 2015-9-11 下午3:36:50 
- * 首页流文章adapter
+ * @date 2015-9-11 下午3:36:50 首页流文章adapter
  */
-public class HomeOneArticlesAdapter extends ArrayListAdapter<Articles>{
+public class HomeOneArticlesAdapter extends ArrayListAdapter<Articles> {
 
 	public HomeOneArticlesAdapter(Context context) {
 		super(context);
@@ -33,33 +32,34 @@ public class HomeOneArticlesAdapter extends ArrayListAdapter<Articles>{
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		
+
 		ViewHold holder = null;
 		if (convertView == null) {
-			convertView = View.inflate(mContext, R.layout.home_one_articles_item, null);
+			convertView = View.inflate(mContext,
+					R.layout.home_one_articles_item, null);
 			holder = new ViewHold();
 			ViewUtils.inject(holder, convertView);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHold) convertView.getTag();
 		}
-		
+
 		Articles articles = mList.get(position);
 		holder.tvName.setText(articles.getTitle());
 		holder.tvBelow.setText(articles.getTitle());
-		holder.imgIcon.setImageURI(Uri.parse(Constant.URL_IMG + articles.getCover()));
-		
+		holder.imgIcon.setImageURI(Uri.parse(Constant.URL_IMG
+				+ articles.getCover()));
+
 		return convertView;
 	}
-	
+
 	class ViewHold {
 		@ViewInject(R.id.article_title)
-		TextView tvName;//文章名称
+		TextView tvName;// 文章名称
 		@ViewInject(R.id.article_below)
-		TextView tvBelow;//底部标签
+		TextView tvBelow;// 底部标签
 		@ViewInject(R.id.img_article)
-		SimpleDraweeView imgIcon;//文章icon
+		SimpleDraweeView imgIcon;// 文章icon
 	}
-
 
 }

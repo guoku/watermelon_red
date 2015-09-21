@@ -34,7 +34,8 @@ public class CustomSubmitDialog extends Dialog {
 		wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
 
 		name_tv = (TextView) view.findViewById(R.id.name_tv);
-		submit_message_tv = (TextView) view.findViewById(R.id.submit_message_tv);
+		submit_message_tv = (TextView) view
+				.findViewById(R.id.submit_message_tv);
 		submit_close_tv = (TextView) view.findViewById(R.id.submit_close_tv);
 		submit_tv = (TextView) view.findViewById(R.id.submit_open_tv);
 		submit_tv.setOnClickListener(new View.OnClickListener() {
@@ -57,7 +58,8 @@ public class CustomSubmitDialog extends Dialog {
 		setContentView(view);
 	}
 
-	public void setMessage(String title ,String message,String cancel ,String submit) {
+	public void setMessage(String title, String message, String cancel,
+			String submit) {
 		name_tv.setText(title);
 		submit_message_tv.setText(message);
 		submit_close_tv.setText(cancel);

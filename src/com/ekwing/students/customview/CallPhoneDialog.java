@@ -64,11 +64,12 @@ public class CallPhoneDialog extends Dialog {
 
 			@Override
 			public void onClick(View v) {
-//				Logger.e("", "-------------------->"+);
+				// Logger.e("", "-------------------->"+);
 				if (Utils.isTabletDevice(context)) {
 					ToastUtil.show(context, "该设备不能打电话~");
 				} else {
-					Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:400-015-1011"));
+					Intent intent = new Intent(Intent.ACTION_CALL, Uri
+							.parse("tel:400-015-1011"));
 					context.startActivity(intent);
 				}
 			}
@@ -94,18 +95,21 @@ public class CallPhoneDialog extends Dialog {
 			// TODO Auto-generated method stub
 			// Toast.makeText(ctx, "" + mUrl, Toast.LENGTH_SHORT).show();
 			ToastUtil.show(context, "1111111111111111111111");
-			ToastUtil.show(context, "1111111111111111111111" + Utils.isTabletDevice(context));
+			ToastUtil.show(context,
+					"1111111111111111111111" + Utils.isTabletDevice(context));
 			if (Utils.isTabletDevice(context)) {
 				ToastUtil.show(context, "该设备不能打电话~");
 			} else {
-				Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:400-015-1011"));
+				Intent intent = new Intent(Intent.ACTION_CALL,
+						Uri.parse("tel:400-015-1011"));
 				context.startActivity(intent);
 			}
 		}
 	}
 
 	private void setStringText(TextView tv, int color) {
-		SpannableStringBuilder builder = new SpannableStringBuilder(tv.getText().toString());
+		SpannableStringBuilder builder = new SpannableStringBuilder(tv
+				.getText().toString());
 		ForegroundColorSpan blueSpan = new ForegroundColorSpan(color);
 		builder.setSpan(blueSpan, 14, 26, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		tv.setText(builder);

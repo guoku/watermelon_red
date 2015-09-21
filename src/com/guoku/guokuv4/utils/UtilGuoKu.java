@@ -11,10 +11,8 @@ import android.widget.ListView;
 /**
  * @zhangyao
  * @Description: TODO
- * @date 2015-9-9 上午10:31:43 
+ * @date 2015-9-9 上午10:31:43
  */
 public class UtilGuoKu {
-	
-
 
 }

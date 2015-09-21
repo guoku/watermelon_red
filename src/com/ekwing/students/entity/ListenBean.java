@@ -71,7 +71,8 @@ public class ListenBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ListenBean [pid=" + pid + ", soundPath=" + soundPath + ", partTitle=" + partTitle + ", itemlist=" + itemlist + "]";
+		return "ListenBean [pid=" + pid + ", soundPath=" + soundPath
+				+ ", partTitle=" + partTitle + ", itemlist=" + itemlist + "]";
 	}
 
 	private String id; // 作业 hwcid

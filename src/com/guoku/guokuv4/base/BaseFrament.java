@@ -47,7 +47,7 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.umeng.analytics.MobclickAgent;
 
 public abstract class BaseFrament extends Fragment {
-	
+
 	protected final String TAG = getClass().getSimpleName();
 	private CustomProgressDialog progressDialog;
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
@@ -166,8 +166,7 @@ public abstract class BaseFrament extends Fragment {
 		Map<String, String> paramsMap = new TreeMap<String, String>();
 		for (int i = 0; i < argsKeys.length; i++) {
 			params.addQueryStringParameter(argsKeys[i], argsValues[i]);
-			LogGK.e(argsKeys[i] + ":"
-					+ argsValues[i]);
+			LogGK.e(argsKeys[i] + ":" + argsValues[i]);
 			paramsMap.put(argsKeys[i], argsValues[i]);
 		}
 		if (EkwingApplication.getInstance().getBean() != null) {
@@ -211,8 +210,7 @@ public abstract class BaseFrament extends Fragment {
 		Map<String, String> paramsMap = new TreeMap<String, String>();
 		for (int i = 0; i < argsKeys.length; i++) {
 			params.addBodyParameter(argsKeys[i], argsValues[i]);
-			LogGK.e("params----->" + argsKeys[i] + ":"
-					+ argsValues[i]);
+			LogGK.e("params----->" + argsKeys[i] + ":" + argsValues[i]);
 			paramsMap.put(argsKeys[i], argsValues[i]);
 		}
 		if (EkwingApplication.getInstance().getBean() != null) {
@@ -252,8 +250,7 @@ public abstract class BaseFrament extends Fragment {
 		for (int i = 0; i < argsKeys.length; i++) {
 			params.addBodyParameter(argsKeys[i], argsValues[i]);
 			LogGK.e("=========length==============>" + argsKeys.length);
-			LogGK.e("params----->" + argsKeys[i] + ":"
-					+ argsValues[i]);
+			LogGK.e("params----->" + argsKeys[i] + ":" + argsValues[i]);
 		}
 		LogGK.e("params----->v" + ":" + Utils.getVersionName(getActivity()));
 		LogGK.e("params----->token" + ":"
@@ -477,8 +474,8 @@ public abstract class BaseFrament extends Fragment {
 		public void onSuccess(ResponseInfo<String> arg0) {
 			dismissDialog();
 			String result = arg0.result;
-			LogGK.e("返回:url--->" + this.getRequestUrl()
-					+ "------------>" + result);
+			LogGK.e("返回:url--->" + this.getRequestUrl() + "------------>"
+					+ result);
 			BaseFrament.this.onSuccess(result, where);
 		}
 
@@ -537,7 +534,7 @@ public abstract class BaseFrament extends Fragment {
 		super.onDestroy();
 		MobclickAgent.onPageEnd("MainScreen");
 	}
-	
+
 	protected void openActivity(Class<?> pClass) {
 		openActivity(pClass, null);
 	}

@@ -27,7 +27,8 @@ public class NumChangeChineUtils {
 
 	private static String chengNumToChina(int a) {
 		StringBuffer sb = new StringBuffer();
-		String[] str = new String[] { "零", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
+		String[] str = new String[] { "零", "一", "二", "三", "四", "五", "六", "七",
+				"八", "九" };
 		return sb.append(str[a]).toString();
 	}
 }

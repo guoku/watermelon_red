@@ -14,7 +14,10 @@
         android:layout_alignParentRight="true"
         android:layout_gravity="center"
         android:background="@color/gray"
-        fresco:placeholderImage="@drawable/item240" />
+        fresco:placeholderImage="@drawable/item240"
+        fresco:roundedCornerRadius="22dp"
+        fresco:roundWithOverlayColor="@color/white"
+        />
 
     <TextView
         android:id="@+id/text"

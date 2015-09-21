@@ -292,16 +292,14 @@ public class Constant {
 	public static final String REAL_SELECT_PROVINCE = "REAL_PROVINCE";
 	public static final String SP_KEY = "SP_KEY";
 	public static final String KEY_STATUS = "KEY_STATUS";
-	
-	public static final String URL_ARTICLES = "http://m.guoku.com";//文章前缀
-	public static final String URL_ARTICLES_SHARE = "http://www.guoku.com";//分享果库文章前缀
-	public static final String URL_IMG = "http://imgcdn.guoku.com/";//图片前缀
-	public static final String URL = "http://api.guoku.com";//生产环境地址
-//	public static final String URL = "http://10.0.0.101:8000";//测试环境地址
-//	public static final String URL = "http://test.guoku.com";//测试环境地址
-	
-	
-	
+
+	public static final String URL_ARTICLES = "http://m.guoku.com";// 文章前缀
+	public static final String URL_ARTICLES_SHARE = "http://www.guoku.com";// 分享果库文章前缀
+	public static final String URL_IMG = "http://imgcdn.guoku.com/";// 图片前缀
+	public static final String URL = "http://api.guoku.com";// 生产环境地址
+	// public static final String URL = "http://10.0.0.101:8000";//测试环境地址
+	// public static final String URL = "http://test.guoku.com";//测试环境地址
+
 	public static final String JINGXUAN = URL + "/mobile/v4/selection/";
 	public static final String PROINFO = URL + "/mobile/v4/entity/";
 	public static final String GUESS = URL + "/mobile/v4/entity/guess/";
@@ -329,34 +327,33 @@ public class Constant {
 	public static final String SINALOGIN = URL + "/mobile/v4/weibo/login/";
 	public static final String WXLOGIN = URL + "/mobile/v4/wechat/login/";
 	public static final String SINAREGISTER = URL + "/mobile/v4/sina/register/";
-	public static final String TAOREGISTER = URL + "/mobile/v4/taobao/register/";
+	public static final String TAOREGISTER = URL
+			+ "/mobile/v4/taobao/register/";
 	public static final String FORGET = URL + "/mobile/v4/forget/password/";
 	public static final String USERINFO = URL + "/mobile/v4/user/";
-	/** 修改密码*/
-	public static final String PASSWORD_CHANGE = URL + "/mobile/v4/user/reset/password/";
-	/** 热门商品列表*/
+	/** 修改密码 */
+	public static final String PASSWORD_CHANGE = URL
+			+ "/mobile/v4/user/reset/password/";
+	/** 热门商品列表 */
 	public static final String DISCOVER = URL + "/mobile/v4/discover/";
-	/** 首页商品图文banner流*/
+	/** 首页商品图文banner流 */
 	public static final String HOME = URL + "/mobile/v4/home/";
-	/** 首页图文流*/
+	/** 首页图文流 */
 	public static final String ARTICLES = URL + "/mobile/v4/articles/";
-	
-	
-	
+
 	public static final String DESCRIPTOR = "1";
 	public static final String WX_APPID = "wx59118ccde8270caa";
 	public static final String WX_SECRET = "2200ad1c64775d37bcb0e7f74c8a0641";
 
 	/** 是否打印友盟的log */
 	public static boolean UMENG_LOG = true;
-	
-	
-	/**关注、喜欢等广播action*/
+
+	/** 关注、喜欢等广播action */
 	public static final String INTENT_ACTION = Constant.class.getName();
-	public static final String INTENT_ACTION_KEY = Constant.class.getName() + "_KEY";
-	public static final int INTENT_ACTION_VALUE_LIKE = 1;//喜欢
-	public static final int INTENT_ACTION_VALUE_FOLLOW = 2;//关注
-	
+	public static final String INTENT_ACTION_KEY = Constant.class.getName()
+			+ "_KEY";
+	public static final int INTENT_ACTION_VALUE_LIKE = 1;// 喜欢
+	public static final int INTENT_ACTION_VALUE_FOLLOW = 2;// 关注
 
 	public static void init(EkwingApplication lezyoApplication) {
 		if (lezyoApplication != null) {

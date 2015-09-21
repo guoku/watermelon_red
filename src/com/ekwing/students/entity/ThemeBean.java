@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ThemeBean implements Serializable {
-	private String levelid, levelStatus, levelave, levelUrl, levelPic, compid, dataid, attribute, localUrl;
+	private String levelid, levelStatus, levelave, levelUrl, levelPic, compid,
+			dataid, attribute, localUrl;
 	private String levelName; // 1/2/3/4/管卡数字
 	private String isLocked; // 是否处于加锁状态 0、加锁 2、解锁
 	private String exp; // 经验

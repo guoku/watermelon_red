@@ -40,7 +40,7 @@ public class WebAct extends BaseActivity {
 		if ("banner".equals(getIntent().getStringExtra("type"))) {
 			setGRigth(true, R.drawable.more);
 		}
-		
+
 		view.setWebChromeClient(wvcc);
 		setGLeft(true, R.drawable.back_selector);
 		url = getIntent().getStringExtra("data");
@@ -48,7 +48,7 @@ public class WebAct extends BaseActivity {
 		view.getSettings().setJavaScriptEnabled(true);
 		view.getSettings().setUseWideViewPort(true);
 		view.getSettings().setLoadWithOverviewMode(true);
-		
+
 		if ("UA".equals(getIntent().getStringExtra("UA"))) {
 
 		} else

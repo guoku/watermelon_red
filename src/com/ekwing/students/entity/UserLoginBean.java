@@ -58,7 +58,8 @@ public class UserLoginBean {
 
 	@Override
 	public String toString() {
-		return "UserLoginBean [uid=" + uid + ", token=" + token + ", pmm=" + pmm + "]";
+		return "UserLoginBean [uid=" + uid + ", token=" + token + ", pmm="
+				+ pmm + "]";
 	}
 
 }

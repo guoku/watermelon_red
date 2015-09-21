@@ -39,7 +39,8 @@ public class ExerciseMainBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ExerciseMainBean [id=" + id + ", name=" + name + ", type=" + type + "]";
+		return "ExerciseMainBean [id=" + id + ", name=" + name + ", type="
+				+ type + "]";
 	}
 
 }

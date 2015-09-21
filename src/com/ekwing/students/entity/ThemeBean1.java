@@ -5,11 +5,14 @@ import java.io.Serializable;
 public class ThemeBean1 implements Serializable {
 	@Override
 	public String toString() {
-		return "ThemeBean1 [levelid=" + levelid + ", levelStatus=" + levelStatus + ", levelave=" + levelave + ", levelUrl=" + levelUrl
-				+ ", levelPic=" + levelPic + ", compid=" + compid + ", dataid=" + dataid + ", attribute=" + attribute + "]";
+		return "ThemeBean1 [levelid=" + levelid + ", levelStatus="
+				+ levelStatus + ", levelave=" + levelave + ", levelUrl="
+				+ levelUrl + ", levelPic=" + levelPic + ", compid=" + compid
+				+ ", dataid=" + dataid + ", attribute=" + attribute + "]";
 	}
 
-	private String levelid, levelStatus, levelave, levelUrl, levelPic, compid, dataid;
+	private String levelid, levelStatus, levelave, levelUrl, levelPic, compid,
+			dataid;
 	private String attribute, audioUrl, method;
 
 	public String getMethod() {

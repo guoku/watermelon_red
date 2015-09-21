@@ -12,15 +12,19 @@ import java.util.zip.ZipOutputStream;
 
 /**
  * zip解压工具类
+ * 
  * @author think
- *
+ * 
  */
 public class ZipUtil {
 
 	/**
 	 * 压缩
-	 * @param src：源目录
-	 * @param dest：目标目录
+	 * 
+	 * @param src
+	 *            ：源目录
+	 * @param dest
+	 *            ：目标目录
 	 * @throws IOException
 	 */
 	public static void zip(String src, String dest) throws IOException {
@@ -88,8 +92,11 @@ public class ZipUtil {
 
 	/**
 	 * 解压
-	 * @param zipFileName：源目录
-	 * @param outputDirectory：目标目录
+	 * 
+	 * @param zipFileName
+	 *            ：源目录
+	 * @param outputDirectory
+	 *            ：目标目录
 	 * @throws IOException
 	 */
 	public static void unzip(String zipFileName, String outputDirectory)

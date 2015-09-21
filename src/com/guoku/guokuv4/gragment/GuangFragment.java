@@ -75,7 +75,6 @@ public class GuangFragment extends BaseFrament {
 	private static final int USERINFO = 14;
 	private static final int DISCOVER = 15;// 推荐品类
 	private static final int HOME_ARTICLES = 16;// 热门图文
-	
 
 	@ViewInject(R.id.user_et_name)
 	private TextView user_et_name;
@@ -88,11 +87,11 @@ public class GuangFragment extends BaseFrament {
 
 	@ViewInject(R.id.gallery_recommend_sort)
 	private LinearLayout vpRecommendSort;// 推荐品类
-	
+
 	@ViewInject(R.id.listView_article)
-	private ScrollViewWithListView lvArticle;//热门图文
-	
-	HomeOneArticlesAdapter articlesAdapter;//热门图文
+	private ScrollViewWithListView lvArticle;// 热门图文
+
+	HomeOneArticlesAdapter articlesAdapter;// 热门图文
 
 	private ScheduledExecutorService scheduledExecutorService;
 	private boolean onTouchTrue;
@@ -207,23 +206,23 @@ public class GuangFragment extends BaseFrament {
 							MobclickAgent.onEvent(getActivity(), "banner");
 
 							if (url.contains("http")) {
-//								Intent intent = new Intent(context,
-//										WebAct.class);
-//								intent.putExtra("data", url);
-//								intent.putExtra("name", "  ");
-//								intent.putExtra("type", "banner");
-//								startActivity(intent);
-								
-								
+								// Intent intent = new Intent(context,
+								// WebAct.class);
+								// intent.putExtra("data", url);
+								// intent.putExtra("name", "  ");
+								// intent.putExtra("type", "banner");
+								// startActivity(intent);
+
 								Bundle bundle = new Bundle();
 								Sharebean sharebean = new Sharebean();
 								sharebean.setTitle("");
 								sharebean.setContext("");
 								sharebean.setAricleUrl(url);
 								sharebean.setImgUrl(list.get(index).getImg());
-								bundle.putSerializable(WebShareAct.class.getName(), sharebean);
+								bundle.putSerializable(
+										WebShareAct.class.getName(), sharebean);
 								openActivity(WebShareAct.class, bundle);
-								
+
 							} else if (url.contains("entity")) {
 								sendConnection(Constant.PROINFO + last + "/",
 										new String[] { "entity_id" },
@@ -275,33 +274,30 @@ public class GuangFragment extends BaseFrament {
 				arrayList = (ArrayList<Categories>) JSON.parseArray(
 						root.getString("categories"), Categories.class);
 				for (int i = 0; i < arrayList.size(); i++) {
-					final ImageAddTextLayout imagTextLayout = new ImageAddTextLayout(getActivity());
+					final ImageAddTextLayout imagTextLayout = new ImageAddTextLayout(
+							getActivity());
 					LayoutParams params = new LayoutParams(280, 280);
 					imagTextLayout.setLayoutParams(params);
 					imagTextLayout.setPadding(10, 0, 10, 0);
-					imagTextLayout.imView.setImageURI(Uri.parse(arrayList.get(i).getCategory()
-							.getCover_url()));
-					imagTextLayout.tView.setText(arrayList.get(i).getCategory().getTitle().trim().replace(" ", "\n"));
+					imagTextLayout.imView.setImageURI(Uri.parse(arrayList
+							.get(i).getCategory().getCover_url()));
+					imagTextLayout.tView.setText(arrayList.get(i).getCategory()
+							.getTitle().trim().replace(" ", "\n"));
 					imagTextLayout.setTag(arrayList.get(i).getCategory());
-//					imagTextLayout.setTag(i);
+					// imagTextLayout.setTag(i);
 					vpRecommendSort.addView(imagTextLayout);
 					imagTextLayout.setOnClickListener(new OnClickListener() {
-						
+
 						@Override
 						public void onClick(View arg0) {
 							// TODO Auto-generated method stub
-							Categories.Category category = (Category) arg0.getTag();
-							Intent intent = new Intent(getActivity(), TabAct.class);
+							Categories.Category category = (Category) arg0
+									.getTag();
+							Intent intent = new Intent(getActivity(),
+									TabAct.class);
 							intent.putExtra("data", category.getId());
 							intent.putExtra("name", category.getTitle());
 							getActivity().startActivity(intent);
-							
-//							int temp = (Integer) arg0.getTag();
-//							ArrayList<TAB1Bean> tabList = SharePrenceUtil.getTab1List(context);
-//							tabList.get(temp);
-//							Intent intent = new Intent(getActivity(), TabListAct.class);
-//							intent.putExtra("data", tabList.get(temp));
-//							getActivity().startActivity(intent);
 						}
 					});
 				}
@@ -312,9 +308,10 @@ public class GuangFragment extends BaseFrament {
 			}
 			break;
 		case HOME_ARTICLES:
-			HomePageOneBean beans = JSON.parseObject(result, HomePageOneBean.class);
+			HomePageOneBean beans = JSON.parseObject(result,
+					HomePageOneBean.class);
 			articlesAdapter.setList(beans.getArticles());
-			
+
 			sv.scrollTo(0, 0);
 			sv.smoothScrollTo(0, 0);
 			break;
@@ -391,15 +388,15 @@ public class GuangFragment extends BaseFrament {
 			});
 			adapter = new MyViewPagerAdapter();
 			vp.setAdapter(adapter);
-			
+
 			initArticle();
 
 		} catch (Exception e) {
 		}
 
 	}
-	
-	private void initArticle(){
+
+	private void initArticle() {
 		articlesAdapter = new HomeOneArticlesAdapter(getActivity());
 		lvArticle.setAdapter(articlesAdapter);
 		lvArticle.setOnItemClickListener(new OnItemClickListener() {
@@ -408,15 +405,19 @@ public class GuangFragment extends BaseFrament {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				
+
 				Bundle bundle = new Bundle();
 				Sharebean sharebean = new Sharebean();
-				sharebean.setTitle(articlesAdapter.getList().get(arg2).getTitle());
-				sharebean.setContext(articlesAdapter.getList().get(arg2).getContent().substring(0, 50));
-				sharebean.setAricleUrl(articlesAdapter.getList().get(arg2).getUrl());
-				sharebean.setImgUrl(articlesAdapter.getList().get(arg2).getCover());
+				sharebean.setTitle(articlesAdapter.getList().get(arg2)
+						.getTitle());
+				sharebean.setContext(articlesAdapter.getList().get(arg2)
+						.getContent().substring(0, 50));
+				sharebean.setAricleUrl(articlesAdapter.getList().get(arg2)
+						.getUrl());
+				sharebean.setImgUrl(articlesAdapter.getList().get(arg2)
+						.getCover());
 				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
-				
+
 				openActivity(WebShareAct.class, bundle);
 			}
 		});
@@ -431,8 +432,8 @@ public class GuangFragment extends BaseFrament {
 				FAXIANHOME, false);
 		sendConnection(Constant.DISCOVER, new String[] {}, new String[] {},
 				DISCOVER, false);
-		sendConnection(Constant.HOME, new String[] {}, new String[] {}, HOME_ARTICLES,
-				false);
+		sendConnection(Constant.HOME, new String[] {}, new String[] {},
+				HOME_ARTICLES, false);
 
 	}
 
@@ -481,8 +482,8 @@ public class GuangFragment extends BaseFrament {
 			return super.getPageWidth(position);
 		}
 	}
-	
-	class GridViewAdapter extends ArrayListAdapter<EntityBean>{
+
+	class GridViewAdapter extends ArrayListAdapter<EntityBean> {
 
 		public GridViewAdapter(Context context) {
 			super(context);
@@ -492,30 +493,30 @@ public class GuangFragment extends BaseFrament {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
-			
+
 			ViewHold holder = null;
 			if (convertView == null) {
-				convertView = View.inflate(mContext, R.layout.grid_view_img_item, null);
+				convertView = View.inflate(mContext,
+						R.layout.grid_view_img_item, null);
 				holder = new ViewHold();
 				ViewUtils.inject(holder, convertView);
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHold) convertView.getTag();
 			}
-			
+
 			EntityBean eBean = mList.get(position);
-			
+
 			holder.imgIcon.setImageURI(Uri.parse(eBean.get240()));
-			
+
 			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 					EkwingApplication.screenW / 3 - 10,
 					EkwingApplication.screenW / 3 - 10);
 			holder.imgIcon.setLayoutParams(params);
-			
+
 			return convertView;
 		}
-		
-		
+
 		class ViewHold {
 			@ViewInject(R.id.img)
 			SimpleDraweeView imgIcon;

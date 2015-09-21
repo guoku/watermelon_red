@@ -54,8 +54,8 @@ public class ReadBean implements Serializable {
 	}
 
 	public String getWPM() {
-		if(WPM == null){
-			WPM ="";
+		if (WPM == null) {
+			WPM = "";
 		}
 		return WPM;
 	}

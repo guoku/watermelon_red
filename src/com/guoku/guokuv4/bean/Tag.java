@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * @zhangyao
  * @Description: TODO
- * @date 2015-9-17 下午4:46:36 
+ * @date 2015-9-17 下午4:46:36
  */
 public class Tag {
 

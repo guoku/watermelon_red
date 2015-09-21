@@ -12,7 +12,7 @@ public class UnderstandItemBean implements Serializable {
 
 	private String keys; // 选项
 	private String text; // 内容
-//	private String selected; // 是否被选中
+	// private String selected; // 是否被选中
 	private UnderstandQuestionBean bean;
 
 	public UnderstandQuestionBean getBean() {
@@ -23,12 +23,12 @@ public class UnderstandItemBean implements Serializable {
 		this.bean = bean;
 	}
 
-//	public String getSelected() {
-//		if (selected == null) {
-//			selected = "-1";
-//		}
-//		return selected;
-//	}
+	// public String getSelected() {
+	// if (selected == null) {
+	// selected = "-1";
+	// }
+	// return selected;
+	// }
 	//
 	// public void setSelected(String selected) {
 	// this.selected = selected;

@@ -11,7 +11,7 @@ public class WordConfirmBean implements Serializable {
 	private List<TestBean> list = new ArrayList<TestBean>();
 
 	public String getUnitId() {
-		if(unitId==null){
+		if (unitId == null) {
 			unitId = "";
 		}
 		return unitId;
@@ -56,7 +56,8 @@ public class WordConfirmBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "WordConfirmBean [unitId=" + unitId + ", qtype=" + qtype + ", trans=" + trans + ", list=" + list + "]";
+		return "WordConfirmBean [unitId=" + unitId + ", qtype=" + qtype
+				+ ", trans=" + trans + ", list=" + list + "]";
 	}
 
 }

@@ -159,11 +159,12 @@ public class StringUtils {
 
 		return resultData;
 	}
-	
 
 	/**
 	 * 将时间戳转为代表"距现在多久之前"的字符串
-	 * @param timeStr	时间戳
+	 * 
+	 * @param timeStr
+	 *            时间戳
 	 * @return
 	 */
 	public static String getStandardDate(String timeStr) {
@@ -171,14 +172,14 @@ public class StringUtils {
 		StringBuffer sb = new StringBuffer();
 
 		long t = Long.parseLong(timeStr);
-		long time = System.currentTimeMillis() - (t*1000);
-		long mill = (long) Math.ceil(time /1000);//秒前
+		long time = System.currentTimeMillis() - (t * 1000);
+		long mill = (long) Math.ceil(time / 1000);// 秒前
 
-		long minute = (long) Math.ceil(time/60/1000.0f);// 分钟前
+		long minute = (long) Math.ceil(time / 60 / 1000.0f);// 分钟前
 
-		long hour = (long) Math.ceil(time/60/60/1000.0f);// 小时
+		long hour = (long) Math.ceil(time / 60 / 60 / 1000.0f);// 小时
 
-		long day = (long) Math.ceil(time/24/60/60/1000.0f);// 天前
+		long day = (long) Math.ceil(time / 24 / 60 / 60 / 1000.0f);// 天前
 
 		if (day - 1 > 0) {
 			sb.append(day + "天");
@@ -208,24 +209,25 @@ public class StringUtils {
 		}
 		return sb.toString();
 	}
-	
+
 	/**
 	 * 是否为合法用户名
+	 * 
 	 * @param mobiles
 	 * @return
 	 */
-	 public static boolean isNickName(String name) {  
-	        Pattern p = Pattern.compile("^[^0-9][\\w-]{3,30}$");  
-	        Matcher m = p.matcher(name);  
-	        return m.matches();  
-	    }  
-	 
-	 /**
-	  * 获取string中的entity id 或 user id
-	  */
-	 public static String isStringId(String oldStr, String newStr){
-		 String value = oldStr.replace(newStr, "");
-		 return value.substring(0, value.length() - 1);
-	 }
+	public static boolean isNickName(String name) {
+		Pattern p = Pattern.compile("^[^0-9][\\w-]{3,30}$");
+		Matcher m = p.matcher(name);
+		return m.matches();
+	}
+
+	/**
+	 * 获取string中的entity id 或 user id
+	 */
+	public static String isStringId(String oldStr, String newStr) {
+		String value = oldStr.replace(newStr, "");
+		return value.substring(0, value.length() - 1);
+	}
 
 }

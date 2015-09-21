@@ -12,8 +12,8 @@ public class QuestionItemBean implements Serializable {
 	private String itemPosition;
 
 	public String getItemPosition() {
-		if(itemPosition ==null){
-			itemPosition ="";
+		if (itemPosition == null) {
+			itemPosition = "";
 		}
 		return itemPosition;
 	}

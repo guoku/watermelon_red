@@ -3,6 +3,9 @@
  */
 package com.guoku.guokuv4.act;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -31,14 +34,14 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
  * @Description: TODO
  * @date 2015-9-18 下午2:37:34 可以分享的webview
  */
-public class WebShareAct extends NetWorkActivity{
-	
-	private static final int INFO_GOOD = 1001;//商品
-	private static final int INFO_USER = 1002;//用户
-	
+public class WebShareAct extends NetWorkActivity {
+
+	private static final int INFO_GOOD = 1001;// 商品
+	private static final int INFO_USER = 1002;// 用户
+
 	String IF_ENTITY = "guoku://entity/";
 	String IF_USER = "guoku://user/";
-	
+
 	@ViewInject(R.id.webview)
 	private WebView view;
 	Sharebean sharebean = new Sharebean();
@@ -65,9 +68,9 @@ public class WebShareAct extends NetWorkActivity{
 		view.setWebChromeClient(wvcc);
 		setGLeft(true, R.drawable.back_selector);
 		setGRigth(true, R.drawable.more);
-		if(StringUtils.isEmpty(sharebean.getTitle())){//banner过来的
+		if (StringUtils.isEmpty(sharebean.getTitle())) {// banner过来的
 			view.loadUrl(sharebean.getAricleUrl());
-		}else{
+		} else {
 			view.loadUrl(Constant.URL_ARTICLES + sharebean.getAricleUrl());
 		}
 		view.getSettings().setJavaScriptEnabled(true);
@@ -77,23 +80,22 @@ public class WebShareAct extends NetWorkActivity{
 		view.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				if(url.contains(IF_ENTITY)){//如果是商品链接
+				if (url.contains(IF_ENTITY)) {// 如果是商品链接
 					url = StringUtils.isStringId(url, IF_ENTITY);
 					sendConnection(Constant.PROINFO + url + "/",
-							new String[] { "entity_id" },
-							new String[] { url }, INFO_GOOD, true);
-					
+							new String[] { "entity_id" }, new String[] { url },
+							INFO_GOOD, true);
+
 					return true;
 				}
-				if(url.contains(IF_USER)){//如果是用户
+				if (url.contains(IF_USER)) {// 如果是用户
 					url = StringUtils.isStringId(url, IF_USER);
 					sendConnection(Constant.USERINFO + url + "/",
-							new String[] { "user_id" },
-							new String[] { url }, INFO_USER, true);
+							new String[] {}, new String[] {}, INFO_USER, true);
+
 					return true;
 				}
-				
-				
+
 				return super.shouldOverrideUrlLoading(view, url);
 			}
 		});
@@ -107,16 +109,16 @@ public class WebShareAct extends NetWorkActivity{
 
 	private void postShare() {
 		CustomShareBoard shareBoard = new CustomShareBoard(this);
-		if(StringUtils.isEmpty(sharebean.getTitle())){//banner过来的
-			shareBoard.setShareContext(this, "",
-					sharebean.getAricleUrl(),
+		if (StringUtils.isEmpty(sharebean.getTitle())) {// banner过来的
+			shareBoard.setShareContext(this, "", sharebean.getAricleUrl(),
 					sharebean.getImgUrl(), view.getTitle());
-		}else{
+		} else {
 			shareBoard.setShareContext(this, sharebean.getContext() + "…… ",
 					Constant.URL_ARTICLES_SHARE + sharebean.getAricleUrl(),
-					Constant.URL_IMG + sharebean.getImgUrl(), sharebean.getTitle() + "：");
+					Constant.URL_IMG + sharebean.getImgUrl(),
+					sharebean.getTitle() + "：");
 		}
-		
+
 		shareBoard.showAtLocation(this.getWindow().getDecorView(),
 				Gravity.BOTTOM, 0, 0);
 		WindowManager.LayoutParams params = getWindow().getAttributes();
@@ -148,28 +150,37 @@ public class WebShareAct extends NetWorkActivity{
 			startActivity(intent);
 			break;
 		case INFO_USER:
-			UserBean ussrBean = JSON.parseObject(result, UserBean.class);
-			intent = new Intent(mContext, UserAct.class);
-			intent.putExtra("data",ussrBean);
-			startActivity(intent);
+
+			JSONObject root;
+			try {
+				root = new JSONObject(result);
+				UserBean userBean = (UserBean) JSON.parseObject(
+						root.getString("user"), UserBean.class);
+				intent = new Intent(mContext, UserAct.class);
+				intent.putExtra("data", userBean);
+				startActivity(intent);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 
 		default:
 			break;
 		}
-		
+
 	}
 
 	@Override
 	protected void onFailure(String result, int where) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void setupData() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

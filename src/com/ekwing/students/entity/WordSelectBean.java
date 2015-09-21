@@ -4,7 +4,8 @@ public class WordSelectBean {
 	private String book_content_id, id, select, text, units_id;
 	private chooses chooses;
 
-	public WordSelectBean(String book_content_id, String select, String text, String units_id, String id, chooses chooses) {
+	public WordSelectBean(String book_content_id, String select, String text,
+			String units_id, String id, chooses chooses) {
 		this.book_content_id = book_content_id;
 		this.id = id;
 		this.select = select;

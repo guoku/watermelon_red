@@ -48,7 +48,8 @@ public class GalleryView extends Gallery {
 
 	/** 获取Gallery的中心x */
 	private int getCenterOfCoverflow() {
-		return (getWidth() - getPaddingLeft() - getPaddingRight()) / 2 + getPaddingLeft();
+		return (getWidth() - getPaddingLeft() - getPaddingRight()) / 2
+				+ getPaddingLeft();
 	}
 
 	/** 获取View的中心x */
@@ -63,7 +64,8 @@ public class GalleryView extends Gallery {
 	}
 
 	@Override
-	protected boolean getChildStaticTransformation(View child, Transformation trans) {
+	protected boolean getChildStaticTransformation(View child,
+			Transformation trans) {
 		final int childCenter = getCenterOfView(child);
 		final int childWidth = child.getWidth();
 		int rotationAngle = 0;
@@ -76,7 +78,8 @@ public class GalleryView extends Gallery {
 		} else { // 两侧的childView
 			rotationAngle = (int) (((float) (mCoveflowCenter - childCenter) / childWidth) * mMaxRotationAngle);
 			if (Math.abs(rotationAngle) > mMaxRotationAngle) {
-				rotationAngle = (rotationAngle < 0) ? -mMaxRotationAngle : mMaxRotationAngle;
+				rotationAngle = (rotationAngle < 0) ? -mMaxRotationAngle
+						: mMaxRotationAngle;
 			}
 			transformImageBitmap((View) child, trans, rotationAngle);
 		}
@@ -84,7 +87,8 @@ public class GalleryView extends Gallery {
 		return true;
 	}
 
-	private void transformImageBitmap(View child, Transformation trans, int rotationAngle) {
+	private void transformImageBitmap(View child, Transformation trans,
+			int rotationAngle) {
 		mCamera.save();
 
 		final Matrix imageMatrix = trans.getMatrix();

@@ -27,15 +27,15 @@ public class GridBean implements Serializable {
 	}
 
 	public void setType(String type) {
-		if(type ==null){
-			type ="";
+		if (type == null) {
+			type = "";
 		}
 		this.type = type;
 	}
 
 	public String getName() {
-		if(name ==null){
-			name ="";
+		if (name == null) {
+			name = "";
 		}
 		return name;
 	}

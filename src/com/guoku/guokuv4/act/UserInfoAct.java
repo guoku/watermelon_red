@@ -64,13 +64,13 @@ public class UserInfoAct extends NetWorkActivity {
 
 	@ViewInject(R.id.user_info_tv_sex)
 	private TextView tv_sex;
-	
+
 	@ViewInject(R.id.title_bar_left_iv)
 	private ImageView left;
-	
+
 	private DisplayImageOptions optionsRound1;
-	
-	private boolean isUpdata;//是否有刷新
+
+	private boolean isUpdata;// 是否有刷新
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -204,9 +204,9 @@ public class UserInfoAct extends NetWorkActivity {
 		bean.setUser(JSON.parseObject(result, UserBean.class));
 		Logger.e("USER", bean.toString());
 		EkwingApplication.getInstance().login(bean);
-		if(where == PIC){
+		if (where == PIC) {
 			refreshTv(false);
-		}else{
+		} else {
 			refreshTv(true);
 		}
 		switch (where) {
@@ -259,10 +259,9 @@ public class UserInfoAct extends NetWorkActivity {
 	protected void setupData() {
 		refreshTv(true);
 	}
-	
-	
-	private void refreshTv(Boolean isHead){
-		
+
+	private void refreshTv(Boolean isHead) {
+
 		bean = EkwingApplication.getInstance().getBean();
 		tv_add.setText(bean.getUser().getLocation());
 		tv_email.setText(bean.getUser().getEmail());
@@ -273,23 +272,23 @@ public class UserInfoAct extends NetWorkActivity {
 		// bean.getUser().getAvatar_large(),
 		// options, iv_pic);
 
-		if(isHead){
+		if (isHead) {
 			optionsRound1 = new DisplayImageOptions.Builder()
-			.bitmapConfig(Bitmap.Config.RGB_565)
-			.imageScaleType(ImageScaleType.EXACTLY)
-			.displayer(new RoundedBitmapDisplayer(300))
-			.showImageForEmptyUri(R.drawable.user100)
-			.showImageOnFail(R.drawable.user100)
-			.showImageOnLoading(R.drawable.user100).build();
+					.bitmapConfig(Bitmap.Config.RGB_565)
+					.imageScaleType(ImageScaleType.EXACTLY)
+					.displayer(new RoundedBitmapDisplayer(300))
+					.showImageForEmptyUri(R.drawable.user100)
+					.showImageOnFail(R.drawable.user100)
+					.showImageOnLoading(R.drawable.user100).build();
 
-	imageLoader
-			.displayImage(bean.getUser().get240(), iv_pic, optionsRound1);
+			imageLoader.displayImage(bean.getUser().get240(), iv_pic,
+					optionsRound1);
 
-	LayoutParams params = (LayoutParams) iv_pic.getLayoutParams();
-	params.topMargin = BitmapUtil.dip2pix(context, 32);
-	params.bottomMargin = BitmapUtil.dip2pix(context, 32);
+			LayoutParams params = (LayoutParams) iv_pic.getLayoutParams();
+			params.topMargin = BitmapUtil.dip2pix(context, 32);
+			params.bottomMargin = BitmapUtil.dip2pix(context, 32);
 		}
-		
+
 	}
 
 	@Override
@@ -336,15 +335,14 @@ public class UserInfoAct extends NetWorkActivity {
 			}
 		}
 	}
-	
+
 	@Override
 	public void leftOnClick() {
 		// TODO Auto-generated method stub
-		if(isUpdata){
+		if (isUpdata) {
 			requestIntent();
 		}
 	}
-
 
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -357,7 +355,7 @@ public class UserInfoAct extends NetWorkActivity {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-	
+
 	private void requestIntent() {
 
 		Intent intent = new Intent();

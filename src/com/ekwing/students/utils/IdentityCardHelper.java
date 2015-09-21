@@ -58,9 +58,9 @@ public class IdentityCardHelper {
 	 * @return
 	 */
 	public boolean isValidatedAllIdcard(String idcard) {
-//		if (idcard.length() == 15) {
-//			idcard = this.convertIdcarBy15bit(idcard);
-//		}
+		// if (idcard.length() == 15) {
+		// idcard = this.convertIdcarBy15bit(idcard);
+		// }
 		return this.isValidate18Idcard(idcard);
 	}
 
@@ -112,7 +112,7 @@ public class IdentityCardHelper {
 		// 是否都为数字
 		if (isDigital(idcard17)) {
 			c = idcard17.toCharArray();
-			//生日验证
+			// 生日验证
 			String provinceid = idcard.substring(0, 2);
 			String birthday = idcard.substring(6, 14);
 			int year = Integer.parseInt(idcard.substring(6, 10));

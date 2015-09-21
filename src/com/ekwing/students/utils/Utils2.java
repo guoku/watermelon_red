@@ -58,7 +58,6 @@ public class Utils2 {
 	private static boolean isSDCardWriteable = false;
 	private static Context saveContext;
 
-
 	public static boolean isNull(Object o) {
 		return o == null ? true : false;
 	}
@@ -131,9 +130,12 @@ public class Utils2 {
 	 */
 	public static void statueBarVisible(Activity active, final int visible) {
 		if (visible == View.VISIBLE) {
-			active.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+			active.getWindow().setFlags(
+					WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
+					WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		} else {
-			active.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+			active.getWindow().clearFlags(
+					WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		}
 	}
 
@@ -166,7 +168,8 @@ public class Utils2 {
 	/**
 	 * open the SD card state listener. Generally call it in "onStart" method.
 	 */
-	public static synchronized void sdCardStartListener(Context context, sdcardListener lis) {
+	public static synchronized void sdCardStartListener(Context context,
+			sdcardListener lis) {
 		if (saveContext != null && saveContext != context) {
 			sdCardStopListener(saveContext);
 		}
@@ -177,7 +180,8 @@ public class Utils2 {
 			public void onReceive(Context context, Intent intent) {
 				sdCardUpdateState(context);
 				if (mSdcardListener != null)
-					mSdcardListener.onReceiver(isSDCardAvailable, isSDCardWriteable);
+					mSdcardListener.onReceiver(isSDCardAvailable,
+							isSDCardWriteable);
 			}
 		};
 		IntentFilter filter = new IntentFilter();
@@ -222,6 +226,7 @@ public class Utils2 {
 
 	/**
 	 * 判断是否是锁屏状态
+	 * 
 	 * @param act
 	 * @param isLock
 	 */
@@ -242,11 +247,13 @@ public class Utils2 {
 
 	/**
 	 * 判断网络是否可用
+	 * 
 	 * @param context
 	 * @return
 	 */
 	public static boolean isNetworkAvailable(Context context) {
-		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager cm = (ConnectivityManager) context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (cm != null && cm.getActiveNetworkInfo() != null) {
 			return cm.getActiveNetworkInfo().isAvailable();
 		}
@@ -255,34 +262,42 @@ public class Utils2 {
 
 	/**
 	 * 判断gps是否可用
+	 * 
 	 * @param context
 	 * @return
 	 */
 	public static boolean isGpsEnabled(Context context) {
-		LocationManager lm = ((LocationManager) context.getSystemService(Context.LOCATION_SERVICE));
+		LocationManager lm = ((LocationManager) context
+				.getSystemService(Context.LOCATION_SERVICE));
 		List<String> accessibleProviders = lm.getProviders(true);
 		return accessibleProviders != null && accessibleProviders.size() > 0;
 	}
 
 	/**
 	 * 判断wifi是否可用
+	 * 
 	 * @param context
 	 * @return
 	 */
 	public static boolean isWifiEnabled(Context context) {
-		ConnectivityManager mgrConn = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		TelephonyManager mgrTel = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-		return ((mgrConn.getActiveNetworkInfo() != null && mgrConn.getActiveNetworkInfo().getState() == NetworkInfo.State.CONNECTED) || mgrTel
+		ConnectivityManager mgrConn = (ConnectivityManager) context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		TelephonyManager mgrTel = (TelephonyManager) context
+				.getSystemService(Context.TELEPHONY_SERVICE);
+		return ((mgrConn.getActiveNetworkInfo() != null && mgrConn
+				.getActiveNetworkInfo().getState() == NetworkInfo.State.CONNECTED) || mgrTel
 				.getNetworkType() == TelephonyManager.NETWORK_TYPE_UMTS);
 	}
 
 	/**
 	 * 打开GPS
+	 * 
 	 * @param context
 	 */
 	public static final void openGPS(Context context) {
 		Intent GPSIntent = new Intent();
-		GPSIntent.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
+		GPSIntent.setClassName("com.android.settings",
+				"com.android.settings.widget.SettingsAppWidgetProvider");
 		GPSIntent.addCategory("android.intent.category.ALTERNATIVE");
 		GPSIntent.setData(Uri.parse("custom:3"));
 		try {
@@ -293,18 +308,20 @@ public class Utils2 {
 	}
 
 	/**
-	 * 判断是否是3g网络 
+	 * 判断是否是3g网络
+	 * 
 	 * @param context
 	 * @return
 	 */
 	public static boolean is3rd(Context context) {
-		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		ConnectivityManager cm = (ConnectivityManager) context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkINfo = cm.getActiveNetworkInfo();
-		if (networkINfo != null && networkINfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+		if (networkINfo != null
+				&& networkINfo.getType() == ConnectivityManager.TYPE_MOBILE) {
 			return true;
 		}
 		return false;
 	}
-
 
 }

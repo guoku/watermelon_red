@@ -12,11 +12,11 @@ import android.view.View;
 import com.guoku.R;
 
 public class LandscapeProgressBar extends View {
-	
+
 	private int maxProgress = 100;
 	private int progress = 1;
 	private int progressStrokeWidth = 30;
-	
+
 	RectF mRectF;
 	Paint mPaint;
 
@@ -25,39 +25,45 @@ public class LandscapeProgressBar extends View {
 		mRectF = new RectF();
 		mPaint = new Paint();
 	}
+
 	public LandscapeProgressBar(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mRectF = new RectF();
 		mPaint = new Paint();
 	}
-	public LandscapeProgressBar(Context context, AttributeSet attrs,int defStyleAttr) {
+
+	public LandscapeProgressBar(Context context, AttributeSet attrs,
+			int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		mRectF = new RectF();
 		mPaint = new Paint();
 	}
+
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		
+
 		int width = this.getWidth();
 		int height = this.getHeight();
-		
+
 		mPaint.setAntiAlias(true);
 		mPaint.setColor(Color.GRAY);
 		canvas.drawColor(Color.TRANSPARENT);
 		mPaint.setStrokeWidth(progressStrokeWidth);
 		mPaint.setStyle(Style.STROKE);
-		
+
 		mRectF.left = progressStrokeWidth;
 		mRectF.top = progressStrokeWidth;
 		mRectF.right = width - progressStrokeWidth;
 		mRectF.bottom = height - progressStrokeWidth;
-		
+
 		canvas.drawArc(mRectF, 0, width, false, mPaint);
 		mPaint.setColor(getResources().getColor(R.color.base_blue));
-		canvas.drawArc(mRectF, 0, ((float) progress / maxProgress) * 360, false, mPaint);
-		
+		canvas.drawArc(mRectF, 0, ((float) progress / maxProgress) * 360,
+				false, mPaint);
+
 	}
+
 	public int getMaxProgress() {
 		return maxProgress;
 	}
@@ -79,5 +85,4 @@ public class LandscapeProgressBar extends View {
 		this.postInvalidate();
 	}
 
-	
 }

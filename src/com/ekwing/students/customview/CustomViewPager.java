@@ -12,13 +12,13 @@ public class CustomViewPager extends ViewPager {
 	public CustomViewPager(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
+
 	@Override
 	public boolean onInterceptTouchEvent(MotionEvent arg0) {
 		try {
-		return super.onInterceptTouchEvent(arg0);
-		}
-		catch (IllegalArgumentException ex) {
-		  LogUtils.d("处理4.1系统中的bug", ex);
+			return super.onInterceptTouchEvent(arg0);
+		} catch (IllegalArgumentException ex) {
+			LogUtils.d("处理4.1系统中的bug", ex);
 		}
 		return false;
 	}

@@ -139,8 +139,11 @@ public class UnderstandQuestionBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "UnderstandQuestionBean [id=" + id + ", question=" + question + ", subtypes=" + subtypes + ", items=" + items + ", itemstype="
-				+ itemstype + ", related_id=" + related_id + ", related_type=" + related_type + ", selected=" + selected + "]";
+		return "UnderstandQuestionBean [id=" + id + ", question=" + question
+				+ ", subtypes=" + subtypes + ", items=" + items
+				+ ", itemstype=" + itemstype + ", related_id=" + related_id
+				+ ", related_type=" + related_type + ", selected=" + selected
+				+ "]";
 	}
 
 }

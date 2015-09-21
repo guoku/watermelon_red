@@ -10,7 +10,8 @@ import com.lidroid.xutils.db.annotation.Table;
 public class LevelBean implements Serializable {
 	@Id
 	private String themeid;
-	private String themeName, themeNameEng, themePic, totals, curProgress, levels, aveGread, themeStues, attribute, progress, count, locaUrl;
+	private String themeName, themeNameEng, themePic, totals, curProgress,
+			levels, aveGread, themeStues, attribute, progress, count, locaUrl;
 	private List<ThemeBean> themees;
 	private String themeString;
 
@@ -221,9 +222,11 @@ public class LevelBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "LevelBean [themeid=" + themeid + ", themeName=" + themeName + ", themeNameEng=" + themeNameEng + ", themePic=" + themePic
-				+ ", totals=" + totals + ", curProgress=" + curProgress + ", levels=" + levels + ", aveGread=" + aveGread + ", themeStues="
-				+ themeStues + ", themees=" + themees + "]";
+		return "LevelBean [themeid=" + themeid + ", themeName=" + themeName
+				+ ", themeNameEng=" + themeNameEng + ", themePic=" + themePic
+				+ ", totals=" + totals + ", curProgress=" + curProgress
+				+ ", levels=" + levels + ", aveGread=" + aveGread
+				+ ", themeStues=" + themeStues + ", themees=" + themees + "]";
 	}
 
 }

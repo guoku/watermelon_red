@@ -6,13 +6,12 @@ package com.guoku.guokuv4.entity.test;
 /**
  * @zhangyao
  * @Description: TODO
- * @date 2015-9-8 下午3:00:29 
- * 商品一级分类
+ * @date 2015-9-8 下午3:00:29 商品一级分类
  */
 public class Categories {
-	
+
 	Category category;
-	
+
 	public Category getCategory() {
 		return category;
 	}
@@ -21,14 +20,14 @@ public class Categories {
 		this.category = category;
 	}
 
-	public class Category{
-		
+	public class Category {
+
 		String cover_url;
-		
+
 		String id;
-		
+
 		String status;
-		
+
 		String title;
 
 		public String getCover_url() {
@@ -62,7 +61,7 @@ public class Categories {
 		public void setTitle(String title) {
 			this.title = title;
 		}
-		
+
 	}
 
 }

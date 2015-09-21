@@ -25,7 +25,8 @@ public class ImageMemoryCache {
 	private ImageFileCache fileCache;
 
 	public ImageMemoryCache(Context context) {
-		int memClass = ((ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryClass();
+		int memClass = ((ActivityManager) context
+				.getSystemService(Context.ACTIVITY_SERVICE)).getMemoryClass();
 		int cacheSize = 1024 * 1024 * memClass / 2; // 硬引用缓存容量，为系统可用内存的1/4
 		mLruCache = new LruCache<String, Bitmap>(cacheSize) {
 			@Override
@@ -37,17 +38,20 @@ public class ImageMemoryCache {
 			}
 
 			@Override
-			protected void entryRemoved(boolean evicted, String key, Bitmap oldValue, Bitmap newValue) {
+			protected void entryRemoved(boolean evicted, String key,
+					Bitmap oldValue, Bitmap newValue) {
 				if (oldValue != null)
 					// 硬引用缓存容量满的时候，会根据LRU算法把最近没有被使用的图片转入此软引用缓存?
 					mSoftCache.put(key, new SoftReference<Bitmap>(oldValue));
 			}
 		};
-		mSoftCache = new LinkedHashMap<String, SoftReference<Bitmap>>(SOFT_CACHE_SIZE, 0.75f, true) {
+		mSoftCache = new LinkedHashMap<String, SoftReference<Bitmap>>(
+				SOFT_CACHE_SIZE, 0.75f, true) {
 			private static final long serialVersionUID = 6040103833179403725L;
 
 			@Override
-			protected boolean removeEldestEntry(Entry<String, SoftReference<Bitmap>> eldest) {
+			protected boolean removeEldestEntry(
+					Entry<String, SoftReference<Bitmap>> eldest) {
 				if (size() > SOFT_CACHE_SIZE) {
 					return true;
 				}
@@ -57,7 +61,8 @@ public class ImageMemoryCache {
 		fileCache = new ImageFileCache();
 	}
 
-	public void loadImage(final String url, final Handler handler, final ImageView view, final int default_image) {
+	public void loadImage(final String url, final Handler handler,
+			final ImageView view, final int default_image) {
 		view.setImageResource(default_image);
 		new Thread(new Runnable() {
 
@@ -95,7 +100,8 @@ public class ImageMemoryCache {
 		}).start();
 	}
 
-	public void loadImageBG(final String url, final Handler handler, final View view, final int default_image) {
+	public void loadImageBG(final String url, final Handler handler,
+			final View view, final int default_image) {
 
 		handler.post(new Runnable() {
 
@@ -132,7 +138,8 @@ public class ImageMemoryCache {
 					@Override
 					public void run() {
 						if (getBitmapFromCache(url) != null) {
-							BitmapDrawable drawable = new BitmapDrawable(getBitmapFromCache(url));
+							BitmapDrawable drawable = new BitmapDrawable(
+									getBitmapFromCache(url));
 							view.setBackgroundDrawable(drawable);
 						} else {
 							view.setBackgroundResource(default_image);

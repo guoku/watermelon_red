@@ -73,7 +73,7 @@ public class PersonalFragment extends BaseFrament {
 	private static final int COMMENTLIST = 14;
 	private static final int PROINFO = 13;
 	private static final int USERINFO = 18;
-	public static final int RESULT_CODE = 1001;//编辑个人资料
+	public static final int RESULT_CODE = 1001;// 编辑个人资料
 
 	@ViewInject(R.id.psrson_tv_tab2)
 	private TextView psrson_tv_tab2;
@@ -253,9 +253,7 @@ public class PersonalFragment extends BaseFrament {
 		iv_set.setImageResource(R.drawable.setting);
 		psrson_tv_fans.setText(userBean.getUser().getFan_count());
 		psrson_tv_guanzhu.setText(userBean.getUser().getFollowing_count());
-		
-		
-		
+
 		psrson_tv_name.setText(userBean.getUser().getNickname());
 		psrson_tv_sign.setText(userBean.getUser().getBio());
 
@@ -269,8 +267,6 @@ public class PersonalFragment extends BaseFrament {
 			psrson_iv_sex.setTextColor(Color.rgb(253, 189, 217));
 			setTextRightImg(psrson_iv_sex, R.drawable.female);
 		}
-		
-		
 
 		psrson_tv_tab2.setText("点评 "
 				+ userBean.getUser().getEntity_note_count());
@@ -690,26 +686,28 @@ public class PersonalFragment extends BaseFrament {
 			context.unregisterReceiver(receiveBroadCast);
 		}
 	}
-	
-	private void setTextRightImg(TextView view, int id){
-		
-		Drawable drawable= getResources().getDrawable(id);  
-		drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());  
-		view.setCompoundDrawables(null,null,drawable,null);  
+
+	private void setTextRightImg(TextView view, int id) {
+
+		Drawable drawable = getResources().getDrawable(id);
+		drawable.setBounds(0, 0, drawable.getMinimumWidth(),
+				drawable.getMinimumHeight());
+		view.setCompoundDrawables(null, null, drawable, null);
 	}
-	
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
-		if(resultCode == RESULT_CODE){
-			
+		if (resultCode == RESULT_CODE) {
+
 			userBean = EkwingApplication.getInstance().getBean();
-			
+
 			psrson_tv_name.setText(userBean.getUser().getNickname());
 			psrson_tv_sign.setText(userBean.getUser().getBio());
 
-			imageLoader.displayImage(userBean.getUser().get240(), psrson_iv_pic,
-					optionsRound, new ImgUtils.AnimateFirstDisplayListener());
+			imageLoader.displayImage(userBean.getUser().get240(),
+					psrson_iv_pic, optionsRound,
+					new ImgUtils.AnimateFirstDisplayListener());
 
 			if (userBean.getUser().getGender().equals("男")) {
 				psrson_iv_sex.setTextColor(Color.rgb(19, 143, 215));
@@ -718,7 +716,7 @@ public class PersonalFragment extends BaseFrament {
 				psrson_iv_sex.setTextColor(Color.rgb(253, 189, 217));
 				setTextRightImg(psrson_iv_sex, R.drawable.female);
 			}
-			
+
 		}
 	}
 

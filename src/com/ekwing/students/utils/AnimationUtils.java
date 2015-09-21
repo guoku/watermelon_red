@@ -5,7 +5,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 
 public class AnimationUtils {
-	public static void setTransAnimation(View v,int a) {
+	public static void setTransAnimation(View v, int a) {
 		TranslateAnimation animation = new TranslateAnimation(
 				Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
 				Animation.RELATIVE_TO_SELF, 9, Animation.RELATIVE_TO_SELF, 0);

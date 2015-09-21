@@ -10,19 +10,6 @@ public class UserBean implements Serializable {
 			entity_note_count, tag_count, website, like_count, relation,
 			location, nickname, email;
 
-	@Override
-	public String toString() {
-		return "UserBean [is_censor=" + is_censor + ", bio=" + bio
-				+ ", avatar_large=" + avatar_large + ", user_id=" + user_id
-				+ ", following_count=" + following_count + ", fan_count="
-				+ fan_count + ", city=" + city + ", gender=" + gender
-				+ ", avatar_small=" + avatar_small + ", is_active=" + is_active
-				+ ", entity_note_count=" + entity_note_count + ", tag_count="
-				+ tag_count + ", website=" + website + ", like_count="
-				+ like_count + ", relation=" + relation + ", location="
-				+ location + ", nickname=" + nickname + ", email=" + email
-				+ "]";
-	}
 
 	public String getIs_censor() {
 		return is_censor;
@@ -45,10 +32,12 @@ public class UserBean implements Serializable {
 	}
 
 	public String get240() {
-		if (avatar_large.contains("images")
-				&& !avatar_large.contains("woman.png")
-				&& !avatar_large.contains("man.png")) {
-			return avatar_large.replaceFirst("images", "images/240");
+		if(!StringUtils.isEmpty(avatar_large)){
+			if (avatar_large.contains("images")
+					&& !avatar_large.contains("woman.png")
+					&& !avatar_large.contains("man.png")) {
+				return avatar_large.replaceFirst("images", "images/240");
+			}
 		}
 		return avatar_large;
 	}
@@ -99,15 +88,15 @@ public class UserBean implements Serializable {
 	}
 
 	public String getGender() {
-		if(!StringUtils.isEmpty(gender)){
+		if (!StringUtils.isEmpty(gender)) {
 			if (gender.equals("F")) {
 				return "女";
 			} else {
 				return "男";
 			}
 		}
-		return "男"; 
-		
+		return "男";
+
 	}
 
 	public void setGender(String gender) {

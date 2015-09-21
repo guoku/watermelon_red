@@ -13,11 +13,13 @@ import com.guoku.R;
 /**
  * 
  * UserPetsDialog
+ * 
  * @author ytbnkkf
  * 
  */
 public class UserPetsDialog extends Dialog {
 	private Context context;
+
 	public UserPetsDialog(Context context) {
 		super(context, R.style.CustomProgressDialog);
 		this.context = context;
@@ -34,11 +36,11 @@ public class UserPetsDialog extends Dialog {
 		callBack.setControlView(view);
 		getWindow().getAttributes().gravity = Gravity.CENTER;
 		getWindow().setDimAmount(0.75f);
-		 WindowManager.LayoutParams wl = getWindow().getAttributes();
-//		 wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
-//		 wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-		 wl.width = Utils.getScreenWidth(context)-100;
-		 wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+		WindowManager.LayoutParams wl = getWindow().getAttributes();
+		// wl.width = ViewGroup.LayoutParams.MATCH_PARENT;
+		// wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+		wl.width = Utils.getScreenWidth(context) - 100;
+		wl.height = ViewGroup.LayoutParams.WRAP_CONTENT;
 		UserPetsDialog.this.setCancelable(true);
 		UserPetsDialog.this.setCanceledOnTouchOutside(true);
 		callBack.setListen();

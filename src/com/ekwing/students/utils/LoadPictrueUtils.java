@@ -30,9 +30,9 @@ public class LoadPictrueUtils {
 		this.imageView = imageView;
 		new Thread(runnable).start();
 	}
-	
-	public void getLocalPicture(){
-		
+
+	public void getLocalPicture() {
+
 	}
 
 	Handler handle = new Handler() {
@@ -41,19 +41,21 @@ public class LoadPictrueUtils {
 			super.handleMessage(msg);
 			if (msg.what == 1) {
 				if (picByte != null) {
-					Bitmap bitmap = BitmapFactory.decodeByteArray(picByte, 0, picByte.length);
-					saveBitmap(bitmap, Constant.IMAGES_PATH+convertUrlToFileName(uri));
+					Bitmap bitmap = BitmapFactory.decodeByteArray(picByte, 0,
+							picByte.length);
+					saveBitmap(bitmap, Constant.IMAGES_PATH
+							+ convertUrlToFileName(uri));
 					imageView.setImageBitmap(bitmap);
 				}
 			}
 		}
 	};
-	
+
 	private String convertUrlToFileName(String url) {
 		String[] strs = url.split("/");
 		return strs[strs.length - 1];
 	}
-	
+
 	public static void saveBitmap(Bitmap bitmap, String descPath) {
 		File file = new File(descPath);
 		if (!file.getParentFile().exists()) {
@@ -61,7 +63,8 @@ public class LoadPictrueUtils {
 		}
 		if (!file.exists()) {
 			try {
-				bitmap.compress(CompressFormat.JPEG, 30, new FileOutputStream(file));
+				bitmap.compress(CompressFormat.JPEG, 30, new FileOutputStream(
+						file));
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -73,7 +76,8 @@ public class LoadPictrueUtils {
 		public void run() {
 			try {
 				URL url = new URL(uri);
-				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				HttpURLConnection conn = (HttpURLConnection) url
+						.openConnection();
 				conn.setRequestMethod("GET");
 				conn.setReadTimeout(10000);
 

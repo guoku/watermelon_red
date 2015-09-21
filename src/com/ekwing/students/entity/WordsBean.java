@@ -101,8 +101,8 @@ public class WordsBean implements Serializable {
 	}
 
 	public String getReSoundPath() {
-		if(reSoundPath==null){
-			reSoundPath ="";
+		if (reSoundPath == null) {
+			reSoundPath = "";
 		}
 		return reSoundPath;
 	}
@@ -178,7 +178,8 @@ public class WordsBean implements Serializable {
 
 	public String getRet() {
 		if (ret == null) {
-			return "{\"id\":\"" + id + "\",\"text\":\"" + getRetext() + "\",\"score\":\"" + -1 + "\",\"details\":[]}";
+			return "{\"id\":\"" + id + "\",\"text\":\"" + getRetext()
+					+ "\",\"score\":\"" + -1 + "\",\"details\":[]}";
 		}
 		return ret;
 	}
@@ -236,9 +237,12 @@ public class WordsBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "WordsBean [id=" + id + ", retext=" + retext + ", soundPath=" + soundPath + ", reSoundPath=" + reSoundPath + ", dur=" + dur
-				+ ", trans=" + trans + ", expSend=" + expSend + ", start=" + start + ", keep=" + keep + ", qtype=" + qtype + ", ret=" + ret
-				+ ", SBCResult=" + SBCResult + ", isShow=" + isShow + ", grade=" + grade + ", sendShow=" + sendShow + "]";
+		return "WordsBean [id=" + id + ", retext=" + retext + ", soundPath="
+				+ soundPath + ", reSoundPath=" + reSoundPath + ", dur=" + dur
+				+ ", trans=" + trans + ", expSend=" + expSend + ", start="
+				+ start + ", keep=" + keep + ", qtype=" + qtype + ", ret="
+				+ ret + ", SBCResult=" + SBCResult + ", isShow=" + isShow
+				+ ", grade=" + grade + ", sendShow=" + sendShow + "]";
 	}
 
 }

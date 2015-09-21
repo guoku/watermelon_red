@@ -19,8 +19,8 @@ public class MineBean implements Serializable {
 	private List<UrlBean> imgs = new ArrayList<UrlBean>(); // 头像或者勋章地址
 
 	public String getMid() {
-		if(mid == null){
-			mid="";
+		if (mid == null) {
+			mid = "";
 		}
 		return mid;
 	}
@@ -52,17 +52,17 @@ public class MineBean implements Serializable {
 	}
 
 	public String getTimes() {
-		if (times == null||"".equals(times)) {
+		if (times == null || "".equals(times)) {
 			times = "0";
 		}
-		int parTime =0;
+		int parTime = 0;
 		try {
 			parTime = (int) Double.parseDouble(times);
 		} catch (Exception e) {
 			parTime = 0;
 		}
-		
-		return parTime+"";
+
+		return parTime + "";
 	}
 
 	public String getSrtImpotContext() {
@@ -103,7 +103,7 @@ public class MineBean implements Serializable {
 	}
 
 	public List<ChangeColorBean> getImpotContext() {
-		if (impotContext == null||"".equals(impotContext)) {
+		if (impotContext == null || "".equals(impotContext)) {
 			impotContext = new ArrayList<ChangeColorBean>();
 		}
 
@@ -115,7 +115,7 @@ public class MineBean implements Serializable {
 	}
 
 	public List<UrlBean> getImgs() {
-		if (imgs == null||"".equals(imgs)) {
+		if (imgs == null || "".equals(imgs)) {
 			imgs = new ArrayList<UrlBean>();
 		}
 		return imgs;
@@ -127,8 +127,11 @@ public class MineBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "MineBean [mid=" + mid + ", type=" + type + ", times=" + times + ", context=" + context + ", others=" + others + ", srtImpotContext="
-				+ srtImpotContext + ", srtImgs=" + srtImgs + ", impotContext=" + impotContext + ", imgs=" + imgs + "]";
+		return "MineBean [mid=" + mid + ", type=" + type + ", times=" + times
+				+ ", context=" + context + ", others=" + others
+				+ ", srtImpotContext=" + srtImpotContext + ", srtImgs="
+				+ srtImgs + ", impotContext=" + impotContext + ", imgs=" + imgs
+				+ "]";
 	}
 
 }

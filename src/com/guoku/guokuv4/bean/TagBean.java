@@ -11,16 +11,16 @@ import java.util.ArrayList;
  * @Description: TODO
  * @date 2015-9-17 下午4:37:33 品类
  */
-public class TagBean implements Serializable{
+public class TagBean implements Serializable {
 
 	int category_count;
-	
+
 	ArrayList<TagTwo> content;
-	
+
 	int group_id;
-	
+
 	int status;
-	
+
 	String title;
 
 	public int getCategory_count() {

@@ -14,18 +14,20 @@ import com.guoku.R;
 
 /**
  * 支付对话框
+ * 
  * @author di.chao
  */
 public class CustomPayDialog extends Dialog {
 	private Context context;
-    private TextView title;
-    private Button okBtn;
-    private Button cancle;
-    private PayDialogListener listener;
-    
-    private View vLine,hLine;
-    private static final int WAIT_TIME = 32;
-    private TimerCount timer;
+	private TextView title;
+	private Button okBtn;
+	private Button cancle;
+	private PayDialogListener listener;
+
+	private View vLine, hLine;
+	private static final int WAIT_TIME = 32;
+	private TimerCount timer;
+
 	public CustomPayDialog(Context context) {
 		super(context, R.style.CustomProgressDialog);
 		this.context = context;
@@ -34,7 +36,7 @@ public class CustomPayDialog extends Dialog {
 		this.setCancelable(false);
 		title = (TextView) this.findViewById(R.id.title);
 		title.setText("感谢您对来这游的支持,点击确认后进行付款?");
-        cancle = (Button) this.findViewById(R.id.cancle);
+		cancle = (Button) this.findViewById(R.id.cancle);
 		okBtn = (Button) this.findViewById(R.id.ok);
 		vLine = this.findViewById(R.id.vline);
 		hLine = this.findViewById(R.id.hline);
@@ -46,14 +48,16 @@ public class CustomPayDialog extends Dialog {
 			}
 		});
 	}
-	public void setBtnListener (PayDialogListener listener) {
+
+	public void setBtnListener(PayDialogListener listener) {
 		this.listener = listener;
 		okBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				if (CustomPayDialog.this.listener != null) {
-					CustomPayDialog.this.listener.doPayButton(okBtn, CustomPayDialog.this);
-					//确定按钮被点击
+					CustomPayDialog.this.listener.doPayButton(okBtn,
+							CustomPayDialog.this);
+					// 确定按钮被点击
 					timer = new TimerCount(WAIT_TIME);
 					timer.start();
 					CustomPayDialog.this.setMessage("付款中...");
@@ -62,39 +66,47 @@ public class CustomPayDialog extends Dialog {
 			}
 		});
 	}
+
 	/**
 	 * 延迟2s消失
 	 */
 	public void holdDismiss() {
 		new HoldTimer(2).start();
 	}
-	public void setButtonHide () {
+
+	public void setButtonHide() {
 		okBtn.setVisibility(View.INVISIBLE);
 		cancle.setVisibility(View.INVISIBLE);
 		hLine.setVisibility(View.INVISIBLE);
 		vLine.setVisibility(View.INVISIBLE);
 	}
-	public void setButtonShow () {
+
+	public void setButtonShow() {
 		okBtn.setVisibility(View.VISIBLE);
 		cancle.setVisibility(View.VISIBLE);
 		hLine.setVisibility(View.VISIBLE);
 		vLine.setVisibility(View.VISIBLE);
 	}
+
 	/**
 	 * 设置消息提示
 	 */
 	public void setMessage(String strMessage) {
 		title.setText(strMessage);
 	}
-   public interface PayDialogListener {
-	   public void doPayButton(Button btn , CustomPayDialog dialog);
-   }
+
+	public interface PayDialogListener {
+		public void doPayButton(Button btn, CustomPayDialog dialog);
+	}
+
 	private class TimerCount extends CountDownTimer implements Serializable {
 		private static final long serialVersionUID = 1L;
-        private int count = 0;
+		private int count = 0;
+
 		public TimerCount(int second) {
 			super(second * 1000l, 1000l);
 		}
+
 		@Override
 		public void onFinish() {
 			count = 0;
@@ -111,20 +123,24 @@ public class CustomPayDialog extends Dialog {
 			}
 		}
 	}
+
 	private class HoldTimer extends CountDownTimer implements Serializable {
 		private static final long serialVersionUID = 1L;
+
 		public HoldTimer(int second) {
 			super(second * 1000l, 1000l);
 		}
+
 		@Override
 		public void onFinish() {
-			if  (timer != null) {
-			timer.cancel();
+			if (timer != null) {
+				timer.cancel();
 			}
 			CustomPayDialog.this.dismiss();
 			setMessage("感谢您对来这游的支持,点击确认后进行付款?");
 			setButtonShow();
 		}
+
 		@Override
 		public void onTick(long millisUntilFinished) {
 		}

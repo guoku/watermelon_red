@@ -54,7 +54,8 @@ public class SoundListBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "SoundListBean [url=" + url + ", start=" + start + ", keep=" + keep + "]";
+		return "SoundListBean [url=" + url + ", start=" + start + ", keep="
+				+ keep + "]";
 	}
 
 }

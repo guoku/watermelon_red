@@ -48,7 +48,8 @@ public class GetSimpleDateTime {
 	 * @return
 	 */
 	public static String getSimeDate() {
-		SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd   HH:mm:ss");
+		SimpleDateFormat sDateFormat = new SimpleDateFormat(
+				"yyyy-MM-dd   HH:mm:ss");
 		String date = sDateFormat.format(new java.util.Date());
 		return date;
 	}
@@ -78,22 +79,21 @@ public class GetSimpleDateTime {
 	}
 
 	public static String getFormaatTime(long lefttime) {
-//		String lasttime = String.valueOf(lefttime);
+		// String lasttime = String.valueOf(lefttime);
 		StringBuffer result = new StringBuffer();
-		int day = (int)(lefttime / (24 * 60 * 60));
+		int day = (int) (lefttime / (24 * 60 * 60));
 		result.append(day).append("天");
 		if (day > 0) {
-			lefttime = lefttime - (long)(day*24*3600); 
+			lefttime = lefttime - (long) (day * 24 * 3600);
 		}
-		int hour = (int)(lefttime / 3600);
+		int hour = (int) (lefttime / 3600);
 		result.append(hour).append("时");
 		if (hour > 0) {
-			lefttime = lefttime - hour *3600;
+			lefttime = lefttime - hour * 3600;
 		}
-		int minute = (int)(lefttime / 60);
+		int minute = (int) (lefttime / 60);
 		result.append(minute).append("分");
 		return result.toString();
 	}
-
 
 }

@@ -89,9 +89,9 @@ public class EkwingApplication extends Application {
 
 	@Override
 	public void onCreate() {
-		
-		Fresco.initialize(getApplicationContext());//初始化Fresco
-		
+
+		Fresco.initialize(getApplicationContext());// 初始化Fresco
+
 		super.onCreate();
 		instance = this;
 		Constant.init(this);

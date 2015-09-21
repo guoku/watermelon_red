@@ -21,7 +21,7 @@ public class ListenQueryBean implements Serializable {
 	}
 
 	public List<RecordListBean> getRecordList() {
-		if (recordList == null||"".equals(recordList)) {
+		if (recordList == null || "".equals(recordList)) {
 			recordList = new ArrayList<RecordListBean>();
 		}
 		return recordList;
@@ -32,7 +32,7 @@ public class ListenQueryBean implements Serializable {
 	}
 
 	public List<RetListBean> getRetList() {
-		if (retList == null||"".equals(retList)) {
+		if (retList == null || "".equals(retList)) {
 			retList = new ArrayList<RetListBean>();
 		}
 		return retList;
@@ -44,7 +44,8 @@ public class ListenQueryBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ListenQueryBean [soundList=" + soundList + ", recordList=" + recordList + ", retList=" + retList + "]";
+		return "ListenQueryBean [soundList=" + soundList + ", recordList="
+				+ recordList + ", retList=" + retList + "]";
 	}
 
 }

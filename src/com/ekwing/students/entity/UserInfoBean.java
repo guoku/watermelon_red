@@ -253,10 +253,14 @@ public class UserInfoBean {
 
 	@Override
 	public String toString() {
-		return "UserInfoBean [codePic=" + codePic + ", classes=" + classes + ", birthday=" + birthday + ", sex=" + sex + ", nextLevel=" + nextLevel
-				+ ", ebean=" + ebean + ", userEmail=" + userEmail + ", nicename=" + nicename + ", avatar=" + avatar + ", username=" + username
-				+ ", school=" + school + ", levels=" + levels + ", hasFlower=" + hasFlower + ", userPhone=" + userPhone + ", parentPhone="
-				+ parentPhone + ", icon=" + icon + ", hasIcon=" + hasIcon + "]";
+		return "UserInfoBean [codePic=" + codePic + ", classes=" + classes
+				+ ", birthday=" + birthday + ", sex=" + sex + ", nextLevel="
+				+ nextLevel + ", ebean=" + ebean + ", userEmail=" + userEmail
+				+ ", nicename=" + nicename + ", avatar=" + avatar
+				+ ", username=" + username + ", school=" + school + ", levels="
+				+ levels + ", hasFlower=" + hasFlower + ", userPhone="
+				+ userPhone + ", parentPhone=" + parentPhone + ", icon=" + icon
+				+ ", hasIcon=" + hasIcon + "]";
 	}
 
 }

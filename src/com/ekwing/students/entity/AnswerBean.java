@@ -2,14 +2,14 @@ package com.ekwing.students.entity;
 
 import java.io.Serializable;
 
-public class AnswerBean implements Serializable{
+public class AnswerBean implements Serializable {
 	private String id;
 	private String choose;
 	private String selected;
 	private String text;
-	private String type;           //img/text  ,img--->图片   text---->文字
+	private String type; // img/text ,img--->图片 text---->文字
 	private ListItemBean bean;
-	
+
 	public String getType() {
 		return type;
 	}

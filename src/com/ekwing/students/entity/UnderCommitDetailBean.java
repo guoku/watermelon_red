@@ -37,7 +37,8 @@ public class UnderCommitDetailBean {
 
 	@Override
 	public String toString() {
-		return "UnderCommitDetailBean [id=" + id + ", answer=" + answer + ", user_answer=" + user_answer + "]";
+		return "UnderCommitDetailBean [id=" + id + ", answer=" + answer
+				+ ", user_answer=" + user_answer + "]";
 	}
 
 }

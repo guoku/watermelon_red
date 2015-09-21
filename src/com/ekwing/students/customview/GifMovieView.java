@@ -71,7 +71,8 @@ public class GifMovieView extends View {
 	}
 
 	@SuppressLint("NewApi")
-	private void setViewAttributes(Context context, AttributeSet attrs, int defStyle) {
+	private void setViewAttributes(Context context, AttributeSet attrs,
+			int defStyle) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 		}
@@ -80,7 +81,8 @@ public class GifMovieView extends View {
 
 	public void setMovieResource(int movieResId) {
 		this.mMovieResourceId = movieResId;
-		mMovie = Movie.decodeStream(getResources().openRawResource(mMovieResourceId));
+		mMovie = Movie.decodeStream(getResources().openRawResource(
+				mMovieResourceId));
 		requestLayout();
 	}
 
@@ -88,7 +90,8 @@ public class GifMovieView extends View {
 		try {
 			InputStream is = null;
 			try {
-				is = new BufferedInputStream(new FileInputStream(path), 16 * 1024);
+				is = new BufferedInputStream(new FileInputStream(path),
+						16 * 1024);
 				is.mark(16 * 1024);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -100,7 +103,8 @@ public class GifMovieView extends View {
 		}
 	}
 
-	public void setMovieResource(ArrayList<String> movieResIds, final Handler handler) {
+	public void setMovieResource(ArrayList<String> movieResIds,
+			final Handler handler) {
 		this.resIds = movieResIds;
 		show = true;
 		this.maxIndex = movieResIds.size();
@@ -179,7 +183,8 @@ public class GifMovieView extends View {
 		 * frame.
 		 */
 		if (!paused) {
-			mMovieStart = android.os.SystemClock.uptimeMillis() - mCurrentAnimationTime;
+			mMovieStart = android.os.SystemClock.uptimeMillis()
+					- mCurrentAnimationTime;
 		}
 
 		invalidate();
@@ -236,7 +241,8 @@ public class GifMovieView extends View {
 			/*
 			 * No movie set, just set minimum available size.
 			 */
-			setMeasuredDimension(getSuggestedMinimumWidth(), getSuggestedMinimumHeight());
+			setMeasuredDimension(getSuggestedMinimumWidth(),
+					getSuggestedMinimumHeight());
 		}
 	}
 

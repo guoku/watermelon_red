@@ -52,10 +52,11 @@ public class JingXuanAdapter extends ArrayListAdapter<PBean> {
 		LayoutParams params = (LayoutParams) holder.iv_img.getLayoutParams();
 		params.height = w;
 		params.width = w;
-		
-		holder.iv_img.setImageURI(Uri.parse(bean.getContent().getEntity().get800()));
+
+		holder.iv_img.setImageURI(Uri.parse(bean.getContent().getEntity()
+				.get800()));
 		holder.iv_img.setLayoutParams(params);
-		
+
 		holder.ll_likes.setTag(bean);
 		holder.ll_likes.setOnClickListener(listener);
 
@@ -79,10 +80,12 @@ public class JingXuanAdapter extends ArrayListAdapter<PBean> {
 	public void setUserBeans(ArrayList<PBean> beans) {
 		setList(beans);
 	}
-	
+
 	public void setStatus(View view, PBean bean) {
-		ImageView iv_isLike = (ImageView) view.findViewById(R.id.jingxuan_item_iv_like);
-		TextView tv_like_count = (TextView) view.findViewById(R.id.jingxuan_item_tv_likes);
+		ImageView iv_isLike = (ImageView) view
+				.findViewById(R.id.jingxuan_item_iv_like);
+		TextView tv_like_count = (TextView) view
+				.findViewById(R.id.jingxuan_item_tv_likes);
 		if ("1".equals(bean.getContent().getEntity().getLike_already())) {
 			iv_isLike.setImageResource(R.drawable.like_red);
 		} else {

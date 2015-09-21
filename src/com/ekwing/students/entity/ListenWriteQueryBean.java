@@ -2,7 +2,7 @@ package com.ekwing.students.entity;
 
 import java.io.Serializable;
 
-public class ListenWriteQueryBean implements Serializable{
+public class ListenWriteQueryBean implements Serializable {
 	private String id; // 单词id
 	// private String isTure;
 	private boolean isTure; // 用户输入的是否正确
@@ -21,7 +21,6 @@ public class ListenWriteQueryBean implements Serializable{
 		this.id = id;
 	}
 
-
 	public boolean isTure() {
 		return isTure;
 	}
@@ -30,9 +29,8 @@ public class ListenWriteQueryBean implements Serializable{
 		this.isTure = isTure;
 	}
 
-
 	public String getAns() {
-		if(ans == null){
+		if (ans == null) {
 			ans = "";
 		}
 		return ans;
@@ -52,8 +50,6 @@ public class ListenWriteQueryBean implements Serializable{
 	public void setText(String text) {
 		this.text = text;
 	}
-
-	
 
 	public String getUrl() {
 		if (url == null) {

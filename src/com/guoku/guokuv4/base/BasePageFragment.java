@@ -32,77 +32,80 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 /**
  * @zhangyao
  * @Description: TODO
- * @date 2015-9-14 下午1:38:08 
- * 滑动的标签页
+ * @date 2015-9-14 下午1:38:08 滑动的标签页
  */
-public abstract class BasePageFragment extends BaseFrament{
-	
+public abstract class BasePageFragment extends BaseFrament {
+
 	private ViewPager viewPager;// 页卡内容
-	
+
 	LinearLayout layoutText;
-	
-	ImageView imageView;//动画图片
-	
+
+	ImageView imageView;// 动画图片
+
 	private int offset = 0;// 动画图片偏移量
 	private int currIndex = 0;// 当前页卡编号
 	private int bmpW;// 动画图片宽度
 	private int selectedColor, unSelectedColor;
-	
+
 	ArrayList<TextView> lTextViews;
 
 	@Override
 	protected void init() {
 		// TODO Auto-generated method stub
-		
+
 		selectedColor = getResources().getColor(R.color.rose_red);
 		unSelectedColor = getResources().getColor(R.color.title_bar_gray);
-		
+
 		InitTextView(initTitleList());
 		InitImageView();
 		InitViewPager(initFragmentList());
 	}
-	
+
 	/**
 	 * 标签页数量
+	 * 
 	 * @return
 	 */
 	public abstract int tabCount();
-	
+
 	/**
 	 * 标签页数量
+	 * 
 	 * @return
 	 */
-	public int getTabCount(){
+	public int getTabCount() {
 		return tabCount();
 	};
-	
+
 	/**
 	 * 标签页title
+	 * 
 	 * @return
 	 */
 	public abstract ArrayList<TextView> initTitleList();
-	
+
 	/**
 	 * 标签页fragment
+	 * 
 	 * @return
 	 */
 	public abstract ArrayList<Fragment> initFragmentList();
-	
 
 	/**
 	 * 初始化头标
 	 * 
 	 */
 	private void InitTextView(ArrayList<TextView> arrayList) {
-		
+
 		lTextViews = arrayList;
-		
-		layoutText = (LinearLayout) contentView.findViewById(R.id.linearLayout1);
-		for(int i = 0; i < lTextViews.size(); i ++){
+
+		layoutText = (LinearLayout) contentView
+				.findViewById(R.id.linearLayout1);
+		for (int i = 0; i < lTextViews.size(); i++) {
 			TextView tView = arrayList.get(i);
-			if(i == 0){
+			if (i == 0) {
 				tView.setTextColor(selectedColor);
-			}else{
+			} else {
 				tView.setTextColor(unSelectedColor);
 			}
 			tView.setOnClickListener(new MyOnClickListener(i, tView));
@@ -113,37 +116,36 @@ public abstract class BasePageFragment extends BaseFrament{
 			layoutText.addView(tView);
 		}
 	}
-	
+
 	/**
 	 * 初始化动画，这个就是页卡滑动时，下面的横线也滑动的效果
 	 */
 
 	private void InitImageView() {
-		
-		imageView = (ImageView)contentView.findViewById(R.id.cursor);
+
+		imageView = (ImageView) contentView.findViewById(R.id.cursor);
 		bmpW = BitmapFactory.decodeResource(getResources(),
 				R.drawable.tab_focus).getWidth();// 获取图片宽度
 		DisplayMetrics dm = new DisplayMetrics();
 		context.getWindowManager().getDefaultDisplay().getMetrics(dm);
 		int screenW = dm.widthPixels;// 获取分辨率宽度
 		offset = (screenW / tabCount()) / 2 - bmpW * 2;// 计算偏移量--(屏幕宽度/页卡总数)/2-图片实际宽度*2
-													// = 偏移量
+														// = 偏移量
 		Matrix matrix = new Matrix();
 		matrix.postTranslate(offset, 0);
 		imageView.setImageMatrix(matrix);// 设置动画初始位置
 	}
-	
+
 	/**
 	 * 初始化Viewpager页
 	 */
 	private void InitViewPager(ArrayList<Fragment> fragments) {
-		viewPager = (ViewPager)contentView.findViewById(R.id.vPager);
+		viewPager = (ViewPager) contentView.findViewById(R.id.vPager);
 		viewPager.setAdapter(new myPagerAdapter(getChildFragmentManager(),
 				fragments));
 		viewPager.setCurrentItem(0);
 		viewPager.setOnPageChangeListener(new MyOnPageChangeListener());
 	}
-
 
 	@Override
 	protected int getContentId() {
@@ -154,21 +156,21 @@ public abstract class BasePageFragment extends BaseFrament{
 	@Override
 	protected void onSuccess(String result, int where) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void onFailure(String result, int where) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	protected void setData() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	/**
 	 * 头标点击监听
 	 */
@@ -176,7 +178,7 @@ public abstract class BasePageFragment extends BaseFrament{
 		private int index = 0;
 
 		private TextView tView;
-		
+
 		public MyOnClickListener(int i, TextView textView) {
 			this.index = i;
 			this.tView = textView;
@@ -184,16 +186,16 @@ public abstract class BasePageFragment extends BaseFrament{
 
 		public void onClick(View v) {
 			int tag = (Integer) v.getTag();
-			if(tag == index){
+			if (tag == index) {
 				tView.setTextColor(selectedColor);
-			}else{
+			} else {
 				tView.setTextColor(unSelectedColor);
 			}
 			viewPager.setCurrentItem(index);
 		}
 
 	}
-	
+
 	/**
 	 * 为选项卡绑定监听器
 	 */
@@ -201,9 +203,9 @@ public abstract class BasePageFragment extends BaseFrament{
 
 		int one = offset * 2 + bmpW;// 页卡1 -> 页卡2 偏移量
 		int two = one * 2;// 页卡1 -> 页卡3 偏移量
-		
-		MyOnPageChangeListener(){
-			
+
+		MyOnPageChangeListener() {
+
 		}
 
 		public void onPageScrollStateChanged(int index) {
@@ -214,29 +216,29 @@ public abstract class BasePageFragment extends BaseFrament{
 
 		public void onPageSelected(int index) {
 			Animation animation = new TranslateAnimation(one * currIndex, one
-					* index, 0, 0);// 
+					* index, 0, 0);//
 			currIndex = index;
 			animation.setFillAfter(true);// True:图片停在动画结束位置
 			animation.setDuration(300);
 			imageView.startAnimation(animation);
-			
-			for(int i = 0; i < lTextViews.size(); i ++){
-				if((Integer) initTitleList().get(i).getTag() == index){
+
+			for (int i = 0; i < lTextViews.size(); i++) {
+				if ((Integer) initTitleList().get(i).getTag() == index) {
 					lTextViews.get(i).setTextColor(selectedColor);
-				}else{
+				} else {
 					lTextViews.get(i).setTextColor(unSelectedColor);
 				}
 			}
-			
+
 		}
 	}
-	
+
 	/**
 	 * 定义适配器
 	 */
 	class myPagerAdapter extends FragmentPagerAdapter {
 		private List<Fragment> fragmentList;
-		
+
 		public myPagerAdapter(FragmentManager fm, List<Fragment> fragmentList) {
 			super(fm);
 			this.fragmentList = fragmentList;

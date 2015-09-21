@@ -15,8 +15,9 @@ public class RankBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "RankBean [myclasses=" + myclasses + ", myschool=" + myschool + ", mycontry=" + mycontry + ", classes=" + classes + ", school="
-				+ school + ", coutry=" + coutry + "]";
+		return "RankBean [myclasses=" + myclasses + ", myschool=" + myschool
+				+ ", mycontry=" + mycontry + ", classes=" + classes
+				+ ", school=" + school + ", coutry=" + coutry + "]";
 	}
 
 	public String getMyclasses() {

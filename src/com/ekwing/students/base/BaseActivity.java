@@ -185,6 +185,7 @@ public abstract class BaseActivity extends FragmentActivity {
 
 	/***
 	 * 搜索及品类列表右上角的
+	 * 
 	 * @return
 	 */
 	public LinearLayout getTitleLayoutSeach() {

@@ -8,7 +8,8 @@ public class RankPartBean {
 
 	@Override
 	public String toString() {
-		return "RankPartBean [numb=" + numb + ", pic=" + pic + ", name=" + name + ", gread=" + gread + "]";
+		return "RankPartBean [numb=" + numb + ", pic=" + pic + ", name=" + name
+				+ ", gread=" + gread + "]";
 	}
 
 	public String getNumb() {

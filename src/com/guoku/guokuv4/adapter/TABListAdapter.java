@@ -20,7 +20,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 public class TABListAdapter extends ArrayListAdapter<Tab2Bean> {
-	ImageLoader loader =ImageLoader.getInstance();
+	ImageLoader loader = ImageLoader.getInstance();
 
 	private DisplayImageOptions options;
 

@@ -148,9 +148,12 @@ public class SBCDetailsBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "SBCDetailsBean [chars=" + chars + ", score=" + score + ", start=" + start + ", end=" + end + ", dur=" + dur + ", fluency=" + fluency
-				+ ", stressref=" + stressref + ", stressscore=" + stressscore + ", toneref=" + toneref + ", tonescore=" + tonescore + ", senseref="
-				+ senseref + ", sensescore=" + sensescore + ", text=" + text + "]";
+		return "SBCDetailsBean [chars=" + chars + ", score=" + score
+				+ ", start=" + start + ", end=" + end + ", dur=" + dur
+				+ ", fluency=" + fluency + ", stressref=" + stressref
+				+ ", stressscore=" + stressscore + ", toneref=" + toneref
+				+ ", tonescore=" + tonescore + ", senseref=" + senseref
+				+ ", sensescore=" + sensescore + ", text=" + text + "]";
 	}
 
 	public SBCDetailsBean(String chars, String score) {

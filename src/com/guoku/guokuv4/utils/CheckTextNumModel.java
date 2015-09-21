@@ -1,40 +1,40 @@
 package com.guoku.guokuv4.utils;
 
-/** 
+/**
  * 
  * @author zhangyao
  */
 
 public class CheckTextNumModel {
-    
-    String value;
-    
-    int startPosttion;
-    
-    int endPosttion;
 
-    public String getValue() {
-        return value;
-    }
+	String value;
 
-    public void setValue(String values) {
-        this.value = values;
-    }
+	int startPosttion;
 
-    public int getStartPosttion() {
-        return startPosttion;
-    }
+	int endPosttion;
 
-    public void setStartPosttion(int startPosttion) {
-        this.startPosttion = startPosttion;
-    }
+	public String getValue() {
+		return value;
+	}
 
-    public int getEndPosttion() {
-        return endPosttion;
-    }
+	public void setValue(String values) {
+		this.value = values;
+	}
 
-    public void setEndPosttion(int endPosttion) {
-        this.endPosttion = endPosttion;
-    }
+	public int getStartPosttion() {
+		return startPosttion;
+	}
+
+	public void setStartPosttion(int startPosttion) {
+		this.startPosttion = startPosttion;
+	}
+
+	public int getEndPosttion() {
+		return endPosttion;
+	}
+
+	public void setEndPosttion(int endPosttion) {
+		this.endPosttion = endPosttion;
+	}
 
 }

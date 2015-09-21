@@ -4,15 +4,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ReadUnderstandBean implements Serializable {
-	private String id; 															// 文章id
-	private String units_id; 													// 单元id
-	private String content; 												// 文章内容 html方式
-	private String pics; 														// 图片url
-	private String words; 												 	// 重点词汇
-	private String types; 												 	// 文章篇 A篇
-	private String word_num; 										    	// 单词数量
-	private String key_word_num; 										 // 重点词个数
-	private String title;														 // 文章标题
+	private String id; // 文章id
+	private String units_id; // 单元id
+	private String content; // 文章内容 html方式
+	private String pics; // 图片url
+	private String words; // 重点词汇
+	private String types; // 文章篇 A篇
+	private String word_num; // 单词数量
+	private String key_word_num; // 重点词个数
+	private String title; // 文章标题
 	private ArrayList<UnderstandQuestionBean> question; // 问题
 
 	public String getId() {

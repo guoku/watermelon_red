@@ -2,7 +2,7 @@ package com.ekwing.students.entity;
 
 import java.io.Serializable;
 
-public class HaveItemBean implements Serializable{
+public class HaveItemBean implements Serializable {
 	private String item; // "item": "A| ",
 	private String type; // "type":"text/img
 	private String value;

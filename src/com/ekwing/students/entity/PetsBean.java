@@ -42,7 +42,8 @@ public class PetsBean {
 	}
 
 	public String getNext_level_need_experience() {
-		if (next_level_need_experience == null || "".equals(next_level_need_experience)) {
+		if (next_level_need_experience == null
+				|| "".equals(next_level_need_experience)) {
 			next_level_need_experience = "0";
 		}
 		int parseInt = 0;
@@ -59,7 +60,8 @@ public class PetsBean {
 	}
 
 	public String getCurrent_level_get_experience() {
-		if (current_level_get_experience == null || "".equals(current_level_get_experience)) {
+		if (current_level_get_experience == null
+				|| "".equals(current_level_get_experience)) {
 			current_level_get_experience = "0";
 		}
 		int parseInt = 0;
@@ -71,7 +73,8 @@ public class PetsBean {
 		return parseInt + "";
 	}
 
-	public void setCurrent_level_get_experience(String current_level_get_experience) {
+	public void setCurrent_level_get_experience(
+			String current_level_get_experience) {
 		this.current_level_get_experience = current_level_get_experience;
 	}
 

@@ -144,8 +144,10 @@ public class ConfirmResultBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ConfirmResultBean [grades=" + grades + ", title=" + title + ", total=" + total + ", right=" + right + ", error=" + error + ", get1="
-				+ get1 + ", get2=" + get2 + ", p1=" + p1 + ", p2=" + p2 + ", p3=" + p3 + "]";
+		return "ConfirmResultBean [grades=" + grades + ", title=" + title
+				+ ", total=" + total + ", right=" + right + ", error=" + error
+				+ ", get1=" + get1 + ", get2=" + get2 + ", p1=" + p1 + ", p2="
+				+ p2 + ", p3=" + p3 + "]";
 	}
 
 }

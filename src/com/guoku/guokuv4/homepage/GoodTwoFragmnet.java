@@ -54,7 +54,6 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
 	private int pos;// 纪录商品
 
-
 	@Override
 	protected void init() {
 		DisplayMetrics metrics = new DisplayMetrics();

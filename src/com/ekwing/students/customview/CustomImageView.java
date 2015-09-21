@@ -19,9 +19,11 @@ public class CustomImageView extends ImageView {
 		super(context);
 		// TODO Auto-generated constructor stub
 	}
+
 	public CustomImageView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
+
 	public CustomImageView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
@@ -41,7 +43,6 @@ public class CustomImageView extends ImageView {
 		Bitmap roundBitmap = getCroppedBitmap(bitmap, w);
 		canvas.drawBitmap(roundBitmap, 0, 0, null);
 	}
-
 
 	public static Bitmap getCroppedBitmap(Bitmap bmp, int radius) {
 		Bitmap sbmp;
@@ -68,6 +69,5 @@ public class CustomImageView extends ImageView {
 
 		return output;
 	}
-
 
 }

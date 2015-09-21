@@ -52,15 +52,15 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 	private static final int PROINFO = 12;
 	private static final int LIST = 1;
 	private static final int GRID = 2;
-	private static final int TAG_CATEGORY = 3;//分类
+	private static final int TAG_CATEGORY = 3;// 分类
 	public static final int requestCode = 1001;
-	public static final String CID = "CID";//二级分类ui返回的选择分类
+	public static final String CID = "CID";// 二级分类ui返回的选择分类
 
 	// @ViewInject(R.id.scroll_view)
 	// private ScrollView scrollView;
-	
+
 	@ViewInject(R.id.layout_add_tag)
-	LinearLayout layoutAddTag;//标签layout
+	LinearLayout layoutAddTag;// 标签layout
 
 	@ViewInject(R.id.check_box_like_time)
 	CheckBox cbLikeTime;// tab上的喜欢、时间切换按钮
@@ -107,8 +107,8 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 
 	private int animationTiem = 300;
 	private boolean isWhat = false;// 用来纪录排序方式 false：默认按时间 true：喜欢
-	
-	TagBean tagBean;//一级全部
+
+	TagBean tagBean;// 一级全部
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -147,8 +147,9 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 			break;
 		case TAG_CATEGORY:
 			try {
-				ArrayList<TagBean> tBean = (ArrayList<TagBean>) JSON.parseArray(result, TagBean.class);
-			
+				ArrayList<TagBean> tBean = (ArrayList<TagBean>) JSON
+						.parseArray(result, TagBean.class);
+
 				initTag(tBean);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -204,22 +205,25 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 						PROINFO, true);
 			}
 		});
-		
-		sendData("time");//默认按时间排序
-		sendConnection(Constant.CATAB, new String[] {},
-				new String[] {}, TAG_CATEGORY, false);
+
+		sendData("time");// 默认按时间排序
+		sendConnection(Constant.CATAB, new String[] {}, new String[] {},
+				TAG_CATEGORY, false);
 	}
-	
-	@SuppressLint("NewApi") private void initTag(ArrayList<TagBean> tBean){
-		
-		for(int i = 0; i < tBean.size(); i ++){
-			
-			if(String.valueOf(tBean.get(i).getGroup_id()).equals(cid)){
+
+	@SuppressLint("NewApi")
+	private void initTag(ArrayList<TagBean> tBean) {
+
+		for (int i = 0; i < tBean.size(); i++) {
+
+			if (String.valueOf(tBean.get(i).getGroup_id()).equals(cid)) {
 				tagBean = tBean.get(i);
-				for(int j = 0; j < 5; j ++){
+				for (int j = 0; j < 5; j++) {
 					final TagTwo tagtwo = tBean.get(i).getContent().get(j);
 					final TextView textView = new TextView(this);
-					LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
+					LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
+							LinearLayout.LayoutParams.WRAP_CONTENT,
+							LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
 					lParams.setMargins(3, 5, 3, 5);
 					textView.setLayoutParams(lParams);
 					textView.setText(tagtwo.getCategory_title());
@@ -244,8 +248,6 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		// TODO Auto-generated method stub
 		super.onStart();
 	}
-	
-	
 
 	@Override
 	public void onClick(View arg0) {
@@ -312,8 +314,8 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 	private void sendData(String value) {
 
 		sendConnection(Constant.CATAB + cid + "/selection/", new String[] {
-				"count", "offset", "sort", "reverse" }, new String[] {
-				"30", "0", value, "0" }, CATABLIST, true);
+				"count", "offset", "sort", "reverse" }, new String[] { "30",
+				"0", value, "0" }, CATABLIST, true);
 
 	}
 
@@ -406,26 +408,24 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 			animIsRunning = false;
 		}
 	};
-	
+
 	@OnClick(R.id.tv_more)
-	private void onClickMore(View v){
-		
-		if(tagBean != null){
+	private void onClickMore(View v) {
+
+		if (tagBean != null) {
 			Bundle bundle = new Bundle();
 			bundle.putSerializable(TabAct.class.getName(), tagBean);
 			openActivityForResult(CategoryListAct.class, bundle, requestCode);
 		}
 	}
-	
+
 	@Override
 	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
 		// TODO Auto-generated method stub
-			if (arg1 == requestCode) {
-				cid = arg2.getStringExtra(CID);
-				sendData(cid);
-			}
+		if (arg1 == requestCode) {
+			cid = arg2.getStringExtra(CID);
+			sendData(cid);
+		}
 	}
-	
-	
 
 }

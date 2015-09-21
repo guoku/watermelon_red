@@ -52,7 +52,8 @@ public class WeekBean {
 
 	@Override
 	public String toString() {
-		return "WeekBean [days=" + days + ", weeks=" + weeks + ", status=" + status + ", times=" + times + "]";
+		return "WeekBean [days=" + days + ", weeks=" + weeks + ", status="
+				+ status + ", times=" + times + "]";
 	}
 
 	public WeekBean(String days, String weeks, String status, String times) {
@@ -66,7 +67,5 @@ public class WeekBean {
 	public WeekBean() {
 		super();
 	}
-	
-	
 
 }

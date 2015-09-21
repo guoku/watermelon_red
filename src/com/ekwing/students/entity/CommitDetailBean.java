@@ -23,7 +23,7 @@ public class CommitDetailBean implements Serializable {
 	}
 
 	public String getId() {
-		if(id ==null){
+		if (id == null) {
 			id = "";
 		}
 		return id;
@@ -34,8 +34,8 @@ public class CommitDetailBean implements Serializable {
 	}
 
 	public String getText() {
-		if(text ==null){
-			text="";
+		if (text == null) {
+			text = "";
 		}
 		return text;
 	}

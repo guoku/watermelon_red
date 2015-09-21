@@ -216,8 +216,11 @@ public class WordWriteBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "WordWriteBean [id=" + id + ", dataId=" + dataId + ", book_content_id=" + book_content_id + ", units_id=" + units_id + ", text="
-				+ text + ", realtext=" + realtext + ", audio=" + audio + ", start=" + start + ", duration=" + duration + "]";
+		return "WordWriteBean [id=" + id + ", dataId=" + dataId
+				+ ", book_content_id=" + book_content_id + ", units_id="
+				+ units_id + ", text=" + text + ", realtext=" + realtext
+				+ ", audio=" + audio + ", start=" + start + ", duration="
+				+ duration + "]";
 	}
 
 }

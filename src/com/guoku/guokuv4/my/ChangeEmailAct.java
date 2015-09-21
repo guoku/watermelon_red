@@ -60,12 +60,13 @@ public class ChangeEmailAct extends NetWorkActivity {
 
 		tvEmailNew.tv1.setTextAppearance(mContext, R.style.edit_item_left);
 		tvEmailPsd.tv1.setTextAppearance(mContext, R.style.edit_item_left);
-		
-		tvEmailPsd.edDel.setTransformationMethod(PasswordTransformationMethod.getInstance());
-		
+
+		tvEmailPsd.edDel.setTransformationMethod(PasswordTransformationMethod
+				.getInstance());
+
 		tvEmailNew.edDel.addTextChangedListener(tWatcher1);
 		tvEmailPsd.edDel.addTextChangedListener(tWatcher2);
-		
+
 		rightTv.setEnabled(false);
 	}
 
@@ -88,7 +89,8 @@ public class ChangeEmailAct extends NetWorkActivity {
 		switch (where) {
 		case EMAIL:
 			ToastUtil.show(mContext, R.string.tv_email_update_ok);
-			EkwingApplication.getInstance().getBean().getUser().setEmail(tvEmailNew.edDel.getText().toString());
+			EkwingApplication.getInstance().getBean().getUser()
+					.setEmail(tvEmailNew.edDel.getText().toString());
 			Intent intent = new Intent();
 			setResult(UserInfoAct.INTENT_REQUEST_CODE, intent);
 			finish();
@@ -121,72 +123,76 @@ public class ChangeEmailAct extends NetWorkActivity {
 			ToastUtil.show(mContext, "2");
 			return false;
 		}
-		if(!StringUtils.isEmail(tvEmailPsd.edDel.getText().toString())){
+		if (!StringUtils.isEmail(tvEmailPsd.edDel.getText().toString())) {
 			ToastUtil.show(mContext, R.string.tv_email_input_email_error);
 			return false;
 		}
 
 		return true;
 	}
-	
+
 	TextWatcher tWatcher1 = new TextWatcher() {
-		
+
 		@Override
-		public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+		public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+				int arg3) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 		@Override
 		public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
 				int arg3) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 		@Override
 		public void afterTextChanged(Editable arg0) {
 			// TODO Auto-generated method stub
-			if(arg0.length() > 0){
+			if (arg0.length() > 0) {
 				isSave();
 			}
-			
+
 		}
 	};
-	
+
 	TextWatcher tWatcher2 = new TextWatcher() {
-		
+
 		@Override
-		public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+		public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+				int arg3) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 		@Override
 		public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
 				int arg3) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 		@Override
 		public void afterTextChanged(Editable arg0) {
 			// TODO Auto-generated method stub
-			if(arg0.length() > 0){
+			if (arg0.length() > 0) {
 				isSave();
 			}
 		}
 	};
-	
-	private void isSave(){
-		
-		if(StringUtils.isEmpty(tvEmailNew.edDel.getText().toString())
-				|| StringUtils.isEmpty(tvEmailPsd.edDel.getText().toString())){
+
+	private void isSave() {
+
+		if (StringUtils.isEmpty(tvEmailNew.edDel.getText().toString())
+				|| StringUtils.isEmpty(tvEmailPsd.edDel.getText().toString())) {
 			rightTv.setEnabled(false);
-			rightTv.setTextColor(getResources().getColor(R.color.title_bar_gray));
-		}else{
+			rightTv.setTextColor(getResources()
+					.getColor(R.color.title_bar_gray));
+		} else {
 			rightTv.setEnabled(true);
-			rightTv.setTextColor(getResources().getColor(R.color.title_bar_blue));
+			rightTv.setTextColor(getResources()
+					.getColor(R.color.title_bar_blue));
 		}
 	}
 

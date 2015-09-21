@@ -2,11 +2,11 @@ package com.ekwing.students.entity;
 
 import java.io.Serializable;
 
-public class UrlBean implements Serializable{
+public class UrlBean implements Serializable {
 	private String url;
 
 	public String getUrl() {
-		if(url ==null){
+		if (url == null) {
 			url = "";
 		}
 		return url;
@@ -20,5 +20,5 @@ public class UrlBean implements Serializable{
 	public String toString() {
 		return "UrlBean [url=" + url + "]";
 	}
-	
+
 }

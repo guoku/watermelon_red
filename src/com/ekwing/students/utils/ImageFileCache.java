@@ -15,7 +15,8 @@ import android.os.StatFs;
 import android.util.Log;
 
 public class ImageFileCache {
-	private static final String CACHDIR = Environment.getExternalStorageDirectory()+"/ekwing/student/images";
+	private static final String CACHDIR = Environment
+			.getExternalStorageDirectory() + "/ekwing/student/images";
 	private static final String WHOLESALE_CONV = "";
 
 	private static final int MB = 1024 * 1024;
@@ -83,7 +84,8 @@ public class ImageFileCache {
 		if (files == null) {
 			return true;
 		}
-		if (!android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+		if (!android.os.Environment.getExternalStorageState().equals(
+				android.os.Environment.MEDIA_MOUNTED)) {
 			return false;
 		}
 
@@ -94,7 +96,8 @@ public class ImageFileCache {
 			}
 		}
 
-		if (dirSize > CACHE_SIZE * MB || FREE_SD_SPACE_NEEDED_TO_CACHE > freeSpaceOnSd()) {
+		if (dirSize > CACHE_SIZE * MB
+				|| FREE_SD_SPACE_NEEDED_TO_CACHE > freeSpaceOnSd()) {
 			int removeFactor = (int) ((0.4 * files.length) + 1);
 			Arrays.sort(files, new FileLastModifSort());
 			for (int i = 0; i < removeFactor; i++) {
@@ -121,8 +124,10 @@ public class ImageFileCache {
 	/** 计算sdcard上的剩余空间 **/
 	@SuppressWarnings("deprecation")
 	private int freeSpaceOnSd() {
-		StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
-		double sdFreeMB = ((double) stat.getAvailableBlocks() * (double) stat.getBlockSize()) / MB;
+		StatFs stat = new StatFs(Environment.getExternalStorageDirectory()
+				.getPath());
+		double sdFreeMB = ((double) stat.getAvailableBlocks() * (double) stat
+				.getBlockSize()) / MB;
 		return (int) sdFreeMB;
 	}
 
@@ -141,7 +146,8 @@ public class ImageFileCache {
 	/** 取SD卡路径 **/
 	private String getSDPath() {
 		File sdDir = null;
-		boolean sdCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED);
+		boolean sdCardExist = Environment.getExternalStorageState().equals(
+				android.os.Environment.MEDIA_MOUNTED);
 		if (sdCardExist) {
 			sdDir = Environment.getExternalStorageDirectory();
 		}

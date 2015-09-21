@@ -381,8 +381,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 		try {
 			android.widget.RelativeLayout.LayoutParams param = new android.widget.RelativeLayout.LayoutParams(
-					EkwingApplication.screenW,
-					EkwingApplication.screenW);
+					EkwingApplication.screenW, EkwingApplication.screenW);
 			param.addRule(RelativeLayout.CENTER_IN_PARENT);
 			vp.setLayoutParams(param);
 			sv.smoothScrollTo(0, 0);
@@ -1061,7 +1060,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				view3.addView(product_tv_price);
 
 				/**** 喜欢 分享 更多 ****/
-				if(getTitleLayout().getVisibility() == View.GONE){
+				if (getTitleLayout().getVisibility() == View.GONE) {
 					if (animationIn == null) {
 						animationIn = AnimationUtils.loadAnimation(this,
 								R.anim.alpha_in);
@@ -1075,7 +1074,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				view3.removeView(product_tv_price);
 				view2.addView(product_tv_price);
 
-				if(getTitleLayout().getVisibility() == View.VISIBLE){
+				if (getTitleLayout().getVisibility() == View.VISIBLE) {
 					if (animationOut == null) {
 						animationOut = AnimationUtils.loadAnimation(this,
 								R.anim.alpha_out);

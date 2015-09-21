@@ -25,72 +25,84 @@ public class LightHttpUtils {
 	private static final int ON_LOADING = 1;
 	public static final int ON_FAIL = 3;
 
-//	public static void getDataByNet(final Handler handler, String url, String[] key, String[] value, final int what) {
-//		RequestParams params = new RequestParams();
-//		for (int i = 0; i < key.length; i++) {
-//			params.addQueryStringParameter(key[i], value[i]);
-//		}
-//		// 附加参数
-////		params.addQueryStringParameter("referer", "android_traveler_app");
-//		com.lidroid.xutils.HttpUtils utils = new com.lidroid.xutils.HttpUtils();
-//		utils.configUserAgent(EkwingApplication.userAgent);
-//		utils.send(HttpRequest.HttpMethod.POST, url, params, new RequestCallBack<String>() {
-//
-//			@Override
-//			public void onStart() {
-//				handler.sendEmptyMessage(ON_START);
-//				Logger.i("hu", "start:" + getRequestUrl());
-//			}
-//
-//			@Override
-//			public void onLoading(long total, long current, boolean isUploading) {
-//				Logger.i("hu", "onLoading:" + current);
-//
-//				Message message = Message.obtain();
-//				message.what = ON_LOADING;
-//				message.arg1 = (int) current;
-//				handler.sendMessage(message);
-//			}
-//
-//			@Override
-//			public void onSuccess(ResponseInfo<String> responseInfo) {
-//				Logger.i("hu", "onSuccess:" + responseInfo.result);
-//
-//				String result = responseInfo.result;
-//				Message message = Message.obtain();
-//				message.what = what;
-//				message.obj = result;
-//				handler.sendMessage(message);
-//			}
-//
-//			@Override
-//			public void onFailure(HttpException error, String msg) {
-//				Logger.i("hu", "onFailure:" + msg);
-//
-//				Message message = Message.obtain();
-//				message.what = ON_FAIL;
-//				message.obj = msg;
-//				handler.sendMessage(message);
-//
-//			}
-//		});
-//	}
+	// public static void getDataByNet(final Handler handler, String url,
+	// String[] key, String[] value, final int what) {
+	// RequestParams params = new RequestParams();
+	// for (int i = 0; i < key.length; i++) {
+	// params.addQueryStringParameter(key[i], value[i]);
+	// }
+	// // 附加参数
+	// // params.addQueryStringParameter("referer", "android_traveler_app");
+	// com.lidroid.xutils.HttpUtils utils = new com.lidroid.xutils.HttpUtils();
+	// utils.configUserAgent(EkwingApplication.userAgent);
+	// utils.send(HttpRequest.HttpMethod.POST, url, params, new
+	// RequestCallBack<String>() {
+	//
+	// @Override
+	// public void onStart() {
+	// handler.sendEmptyMessage(ON_START);
+	// Logger.i("hu", "start:" + getRequestUrl());
+	// }
+	//
+	// @Override
+	// public void onLoading(long total, long current, boolean isUploading) {
+	// Logger.i("hu", "onLoading:" + current);
+	//
+	// Message message = Message.obtain();
+	// message.what = ON_LOADING;
+	// message.arg1 = (int) current;
+	// handler.sendMessage(message);
+	// }
+	//
+	// @Override
+	// public void onSuccess(ResponseInfo<String> responseInfo) {
+	// Logger.i("hu", "onSuccess:" + responseInfo.result);
+	//
+	// String result = responseInfo.result;
+	// Message message = Message.obtain();
+	// message.what = what;
+	// message.obj = result;
+	// handler.sendMessage(message);
+	// }
+	//
+	// @Override
+	// public void onFailure(HttpException error, String msg) {
+	// Logger.i("hu", "onFailure:" + msg);
+	//
+	// Message message = Message.obtain();
+	// message.what = ON_FAIL;
+	// message.obj = msg;
+	// handler.sendMessage(message);
+	//
+	// }
+	// });
+	// }
 
-	public static void getDataByNetPost(final Context context, final Handler handler, String url, String[] key, String[] value, final int what,boolean istoken) {
-		Logger.d("lightHttpUtils", "pramas=========>url:"+url);
+	public static void getDataByNetPost(final Context context,
+			final Handler handler, String url, String[] key, String[] value,
+			final int what, boolean istoken) {
+		Logger.d("lightHttpUtils", "pramas=========>url:" + url);
 		RequestParams params = new RequestParams();
 		for (int i = 0; i < key.length; i++) {
 			params.addBodyParameter(key[i], value[i]);
-			Logger.d("lightHttpUtils", "pramas=========>"+key[i]+":"+value[i]);
+			Logger.d("lightHttpUtils", "pramas=========>" + key[i] + ":"
+					+ value[i]);
 		}
-		if(istoken){
+		if (istoken) {
 			params.addBodyParameter("driverCode", Utils.getVersionName(context));
-			params.addBodyParameter("token", SharePrenceUtil.getLoginInfo(context).getToken());
-			params.addBodyParameter("author_id", SharePrenceUtil.getLoginInfo(context).getUid());
-			Logger.d("lightHttpUtils", "pramas=========>driverCode:"+Utils.getVersionName(context));
-			Logger.d("lightHttpUtils", "pramas=========>token:"+SharePrenceUtil.getLoginInfo(context).getToken());
-			Logger.d("lightHttpUtils", "pramas=========>author_id"+SharePrenceUtil.getLoginInfo(context).getUid());
-			
+			params.addBodyParameter("token",
+					SharePrenceUtil.getLoginInfo(context).getToken());
+			params.addBodyParameter("author_id",
+					SharePrenceUtil.getLoginInfo(context).getUid());
+			Logger.d(
+					"lightHttpUtils",
+					"pramas=========>driverCode:"
+							+ Utils.getVersionName(context));
+			Logger.d("lightHttpUtils", "pramas=========>token:"
+					+ SharePrenceUtil.getLoginInfo(context).getToken());
+			Logger.d("lightHttpUtils", "pramas=========>author_id"
+					+ SharePrenceUtil.getLoginInfo(context).getUid());
+
 		}
 
 		// 附加参数
@@ -98,99 +110,108 @@ public class LightHttpUtils {
 
 		com.lidroid.xutils.HttpUtils utils = new com.lidroid.xutils.HttpUtils();
 		utils.configUserAgent(EkwingApplication.userAgent);
-		utils.send(HttpRequest.HttpMethod.POST, url, params, new RequestCallBack<String>() {
+		utils.send(HttpRequest.HttpMethod.POST, url, params,
+				new RequestCallBack<String>() {
 
-			@Override
-			public void onStart() {
-				handler.sendEmptyMessage(ON_START);
-				Logger.i("hu", "start:" + getRequestUrl());
-			}
+					@Override
+					public void onStart() {
+						handler.sendEmptyMessage(ON_START);
+						Logger.i("hu", "start:" + getRequestUrl());
+					}
 
-			@Override
-			public void onLoading(long total, long current, boolean isUploading) {
-				Logger.i("hu", "onLoading:" + current);
+					@Override
+					public void onLoading(long total, long current,
+							boolean isUploading) {
+						Logger.i("hu", "onLoading:" + current);
 
-				Message message = Message.obtain();
-				message.what = ON_LOADING;
-				message.arg1 = (int) current;
-				handler.sendMessage(message);
-			}
+						Message message = Message.obtain();
+						message.what = ON_LOADING;
+						message.arg1 = (int) current;
+						handler.sendMessage(message);
+					}
 
-			@Override
-			public void onSuccess(ResponseInfo<String> responseInfo) {
-				Logger.i("hu", "onSuccess:" + responseInfo.result);
+					@Override
+					public void onSuccess(ResponseInfo<String> responseInfo) {
+						Logger.i("hu", "onSuccess:" + responseInfo.result);
 
-				String result = responseInfo.result;
-				Message message = Message.obtain();
-				message.what = what;
-				message.obj = result;
-				handler.sendMessage(message);
-			}
+						String result = responseInfo.result;
+						Message message = Message.obtain();
+						message.what = what;
+						message.obj = result;
+						handler.sendMessage(message);
+					}
 
-			@Override
-			public void onFailure(HttpException error, String msg) {
-				Logger.i("hu", "onFailure:" + msg);
+					@Override
+					public void onFailure(HttpException error, String msg) {
+						Logger.i("hu", "onFailure:" + msg);
 
-				Message message = Message.obtain();
-				message.what = ON_FAIL;
-				message.obj = msg;
-				handler.sendMessage(message);
+						Message message = Message.obtain();
+						message.what = ON_FAIL;
+						message.obj = msg;
+						handler.sendMessage(message);
 
-			}
-		});
+					}
+				});
 	}
-	public static void getDataByNetPost2(final Context context, final Handler handler, String url, String[] key, String[] value, final int what) {
-		Logger.d("lightHttpUtils", "pramas=========>url:"+url);
+
+	public static void getDataByNetPost2(final Context context,
+			final Handler handler, String url, String[] key, String[] value,
+			final int what) {
+		Logger.d("lightHttpUtils", "pramas=========>url:" + url);
 		RequestParams params = new RequestParams();
 		for (int i = 0; i < key.length; i++) {
 			params.addBodyParameter(key[i], value[i]);
-			Logger.d("lightHttpUtils", "pramas=========>"+key[i]+":"+value[i]);
+			Logger.d("lightHttpUtils", "pramas=========>" + key[i] + ":"
+					+ value[i]);
 		}
 		com.lidroid.xutils.HttpUtils utils = new com.lidroid.xutils.HttpUtils();
 		utils.configUserAgent(EkwingApplication.userAgent);
-		utils.send(HttpRequest.HttpMethod.POST, url, params, new RequestCallBack<String>() {
-			
-			@Override
-			public void onStart() {
-				handler.sendEmptyMessage(ON_START);
-				Logger.i("hu", "start:" + getRequestUrl());
-			}
-			
-			@Override
-			public void onLoading(long total, long current, boolean isUploading) {
-				Logger.i("hu", "onLoading:" + current);
-				
-				Message message = Message.obtain();
-				message.what = ON_LOADING;
-				message.arg1 = (int) current;
-				handler.sendMessage(message);
-			}
-			
-			@Override
-			public void onSuccess(ResponseInfo<String> responseInfo) {
-				Logger.i("hu", "onSuccess:" + responseInfo.result);
-				
-				String result = responseInfo.result;
-				Message message = Message.obtain();
-				message.what = what;
-				message.obj = result;
-				handler.sendMessage(message);
-			}
-			
-			@Override
-			public void onFailure(HttpException error, String msg) {
-				Logger.i("hu", "onFailure:" + msg);
-				
-				Message message = Message.obtain();
-				message.what = ON_FAIL;
-				message.obj = msg;
-				handler.sendMessage(message);
-				
-			}
-		});
+		utils.send(HttpRequest.HttpMethod.POST, url, params,
+				new RequestCallBack<String>() {
+
+					@Override
+					public void onStart() {
+						handler.sendEmptyMessage(ON_START);
+						Logger.i("hu", "start:" + getRequestUrl());
+					}
+
+					@Override
+					public void onLoading(long total, long current,
+							boolean isUploading) {
+						Logger.i("hu", "onLoading:" + current);
+
+						Message message = Message.obtain();
+						message.what = ON_LOADING;
+						message.arg1 = (int) current;
+						handler.sendMessage(message);
+					}
+
+					@Override
+					public void onSuccess(ResponseInfo<String> responseInfo) {
+						Logger.i("hu", "onSuccess:" + responseInfo.result);
+
+						String result = responseInfo.result;
+						Message message = Message.obtain();
+						message.what = what;
+						message.obj = result;
+						handler.sendMessage(message);
+					}
+
+					@Override
+					public void onFailure(HttpException error, String msg) {
+						Logger.i("hu", "onFailure:" + msg);
+
+						Message message = Message.obtain();
+						message.what = ON_FAIL;
+						message.obj = msg;
+						handler.sendMessage(message);
+
+					}
+				});
 	}
 
-	public static void getDataByNetGet(final Handler handler, String url, String[] key, String[] value, final int what) {
+	public static void getDataByNetGet(final Handler handler, String url,
+			String[] key, String[] value, final int what) {
 		RequestParams params = new RequestParams();
 		for (int i = 0; i < key.length; i++) {
 			params.addQueryStringParameter(key[i], value[i]);
@@ -201,46 +222,48 @@ public class LightHttpUtils {
 		com.lidroid.xutils.HttpUtils utils = new com.lidroid.xutils.HttpUtils();
 		utils.configUserAgent(EkwingApplication.userAgent);
 		utils.configTimeout(30 * 1000);
-		utils.send(HttpRequest.HttpMethod.GET, url, params, new RequestCallBack<String>() {
+		utils.send(HttpRequest.HttpMethod.GET, url, params,
+				new RequestCallBack<String>() {
 
-			@Override
-			public void onStart() {
-				handler.sendEmptyMessage(ON_START);
-				Logger.i("hu", "start:" + getRequestUrl());
-			}
+					@Override
+					public void onStart() {
+						handler.sendEmptyMessage(ON_START);
+						Logger.i("hu", "start:" + getRequestUrl());
+					}
 
-			@Override
-			public void onLoading(long total, long current, boolean isUploading) {
-				Logger.i("hu", "onLoading:" + current);
+					@Override
+					public void onLoading(long total, long current,
+							boolean isUploading) {
+						Logger.i("hu", "onLoading:" + current);
 
-				Message message = Message.obtain();
-				message.what = ON_LOADING;
-				message.arg1 = (int) current;
-				handler.sendMessage(message);
-			}
+						Message message = Message.obtain();
+						message.what = ON_LOADING;
+						message.arg1 = (int) current;
+						handler.sendMessage(message);
+					}
 
-			@Override
-			public void onSuccess(ResponseInfo<String> responseInfo) {
-				Logger.i("hu", "onSuccess:" + responseInfo.result);
+					@Override
+					public void onSuccess(ResponseInfo<String> responseInfo) {
+						Logger.i("hu", "onSuccess:" + responseInfo.result);
 
-				String result = responseInfo.result;
-				Message message = Message.obtain();
-				message.what = what;
-				message.obj = result;
-				handler.sendMessage(message);
-			}
+						String result = responseInfo.result;
+						Message message = Message.obtain();
+						message.what = what;
+						message.obj = result;
+						handler.sendMessage(message);
+					}
 
-			@Override
-			public void onFailure(HttpException error, String msg) {
-				Logger.i("hu", "onFailure:" + msg);
+					@Override
+					public void onFailure(HttpException error, String msg) {
+						Logger.i("hu", "onFailure:" + msg);
 
-				Message message = Message.obtain();
-				message.what = ON_FAIL;
-				message.obj = msg;
-				handler.sendMessage(message);
+						Message message = Message.obtain();
+						message.what = ON_FAIL;
+						message.obj = msg;
+						handler.sendMessage(message);
 
-			}
-		});
+					}
+				});
 	}
 
 	public static boolean isRigth(String json) {
@@ -277,7 +300,11 @@ public class LightHttpUtils {
 				object = new JSONObject(json);
 				if (object.has("data")) {
 					if (object.getJSONObject("data").has("errlog")) {
-						Toast.makeText(context, object.getJSONObject("data").getString("errlog"), Toast.LENGTH_SHORT).show();
+						Toast.makeText(
+								context,
+								object.getJSONObject("data")
+										.getString("errlog"),
+								Toast.LENGTH_SHORT).show();
 					}
 				}
 			} catch (JSONException e) {

@@ -18,8 +18,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 /**
  * @zhangyao
  * @Description: TODO
- * @date 2015-9-18 上午10:06:37 
- * 二级品类
+ * @date 2015-9-18 上午10:06:37 二级品类
  */
 public class CategoryListAdapter extends ArrayListAdapter<TagTwo> {
 
@@ -34,8 +33,8 @@ public class CategoryListAdapter extends ArrayListAdapter<TagTwo> {
 		// TODO Auto-generated method stub
 		GVViewHold holder = null;
 		if (convertView == null) {
-			convertView = View.inflate(mContext, R.layout.category_list_adapter_item,
-					null);
+			convertView = View.inflate(mContext,
+					R.layout.category_list_adapter_item, null);
 			holder = new GVViewHold();
 			ViewUtils.inject(holder, convertView);
 			convertView.setTag(holder);

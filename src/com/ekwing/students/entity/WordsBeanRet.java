@@ -7,6 +7,4 @@ import com.lidroid.xutils.db.annotation.Id;
 
 public class WordsBeanRet implements Serializable {
 
-
-	
 }

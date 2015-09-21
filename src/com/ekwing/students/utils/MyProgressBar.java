@@ -49,7 +49,8 @@ public class MyProgressBar extends ProgressBar {
 		// TODO Auto-generated method stub
 		super.onDraw(canvas);
 		Rect rect = new Rect();
-		this.mPaint.getTextBounds(this.text_progress, 0, this.text_progress.length(), rect);
+		this.mPaint.getTextBounds(this.text_progress, 0,
+				this.text_progress.length(), rect);
 		int x = (getWidth() / 2) - rect.centerX();
 		int y = (getHeight() / 2) - rect.centerY();
 		canvas.drawText(this.text_progress, x, y, this.mPaint);

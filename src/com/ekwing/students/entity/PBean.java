@@ -2,12 +2,12 @@ package com.ekwing.students.entity;
 
 import java.io.Serializable;
 
-public class PBean implements Serializable{
-	private String id,name,key,allkey;
+public class PBean implements Serializable {
+	private String id, name, key, allkey;
 
 	public String getId() {
-		if(id==null){
-			id ="";
+		if (id == null) {
+			id = "";
 		}
 		return id;
 	}
@@ -17,8 +17,8 @@ public class PBean implements Serializable{
 	}
 
 	public String getName() {
-		if(name==null){
-			name ="";
+		if (name == null) {
+			name = "";
 		}
 		return name;
 	}
@@ -28,8 +28,8 @@ public class PBean implements Serializable{
 	}
 
 	public String getKey() {
-		if(key==null){
-			key ="";
+		if (key == null) {
+			key = "";
 		}
 		return key;
 	}
@@ -39,8 +39,8 @@ public class PBean implements Serializable{
 	}
 
 	public String getAllkey() {
-		if(allkey==null){
-			allkey ="";
+		if (allkey == null) {
+			allkey = "";
 		}
 		return allkey;
 	}
@@ -48,8 +48,5 @@ public class PBean implements Serializable{
 	public void setAllkey(String allkey) {
 		this.allkey = allkey;
 	}
-	
-	
-	
-	
+
 }

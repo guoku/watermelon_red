@@ -16,7 +16,8 @@ public class DataCleanManager {
 
 	/** * 清除本应用所有数据库(/data/data/com.xxx.xxx/databases) * * @param context */
 	public static void cleanDatabases(Context context) {
-		deleteFilesByDirectory(new File("/data/data/" + context.getPackageName() + "/databases"));
+		deleteFilesByDirectory(new File("/data/data/"
+				+ context.getPackageName() + "/databases"));
 	}
 
 	/**
@@ -24,24 +25,27 @@ public class DataCleanManager {
 	 * context
 	 */
 	public static void cleanSharedPreference(Context context) {
-		deleteFilesByDirectory(new File("/data/data/" + context.getPackageName() + "/shared_prefs"));
+		deleteFilesByDirectory(new File("/data/data/"
+				+ context.getPackageName() + "/shared_prefs"));
 	}
 
 	/**
 	 * 清除SharedPreference目录下指定的文件.xml
+	 * 
 	 * @param context
-	 * @param name 
+	 * @param name
 	 */
 	public static void cleanSharedPreference(Context context, String name) {
-		File file = new File("/data/data/" + context.getPackageName() + "/shared_prefs", name);
-		Logger.e("", "file======>"+file.exists());
-		boolean isfile=false;
+		File file = new File("/data/data/" + context.getPackageName()
+				+ "/shared_prefs", name);
+		Logger.e("", "file======>" + file.exists());
+		boolean isfile = false;
 		if (file.exists())
-			isfile =file.delete();
-		Logger.e("", "file=delete=====>"+isfile);
-		Logger.e("", "file=1=====>"+file.exists());
-		Logger.e("", "file=1=====>+"+"/data/data/" + context.getPackageName() + "/shared_prefs/"+name);
-		
+			isfile = file.delete();
+		Logger.e("", "file=delete=====>" + isfile);
+		Logger.e("", "file=1=====>" + file.exists());
+		Logger.e("", "file=1=====>+" + "/data/data/" + context.getPackageName()
+				+ "/shared_prefs/" + name);
 
 	}
 
@@ -60,7 +64,8 @@ public class DataCleanManager {
 	 * context
 	 */
 	public static void cleanExternalCache(Context context) {
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+		if (Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
 			deleteFilesByDirectory(context.getExternalCacheDir());
 		}
 	}

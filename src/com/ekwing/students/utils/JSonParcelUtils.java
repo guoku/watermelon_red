@@ -57,7 +57,8 @@ public class JSonParcelUtils {
 	 * @param applicationContext
 	 * @param json
 	 */
-	public static SBCWordBean getSBCResult(Context applicationContext, String json, String id, String url, String text) {
+	public static SBCWordBean getSBCResult(Context applicationContext,
+			String json, String id, String url, String text) {
 		SBCWordBean bean = new SBCWordBean(url, text, id);
 		int score = 0;
 		ArrayList<String> er = new ArrayList<String>();
@@ -119,7 +120,8 @@ public class JSonParcelUtils {
 							if (sc < 60) {
 								er.add(item.getString("char"));
 							}
-							score = score + Integer.parseInt(item.getString("score"));
+							score = score
+									+ Integer.parseInt(item.getString("score"));
 						}
 						if (item.has("start")) {
 							detailsBean.setStart(item.getString("start"));
@@ -134,22 +136,26 @@ public class JSonParcelUtils {
 							detailsBean.setFluency(item.getString("fluency"));
 						}
 						if (item.has("stressref")) {
-							detailsBean.setStressref(item.getString("stressref"));
+							detailsBean.setStressref(item
+									.getString("stressref"));
 						}
 						if (item.has("stressscore")) {
-							detailsBean.setStressscore(item.getString("stressscore"));
+							detailsBean.setStressscore(item
+									.getString("stressscore"));
 						}
 						if (item.has("toneref")) {
 							detailsBean.setToneref(item.getString("toneref"));
 						}
 						if (item.has("tonescore")) {
-							detailsBean.setTonescore(item.getString("tonescore"));
+							detailsBean.setTonescore(item
+									.getString("tonescore"));
 						}
 						if (item.has("senseref")) {
 							detailsBean.setSenseref(item.getString("senseref"));
 						}
 						if (item.has("sensescore")) {
-							detailsBean.setSensescore(item.getString("sensescore"));
+							detailsBean.setSensescore(item
+									.getString("sensescore"));
 						}
 						listd.add(detailsBean);
 					}
@@ -175,10 +181,12 @@ public class JSonParcelUtils {
 							staticsBean.setCount(items.getString("count"));
 						}
 						if (items.has("score")) {
-							int scr = Integer.parseInt(items.getString("score"));
+							int scr = Integer
+									.parseInt(items.getString("score"));
 							staticsBean.setScore(scr + "");
 							if (scr < 60) {
-								errStatic.add(CharUtil.getChar(items.getString("char")));
+								errStatic.add(CharUtil.getChar(items
+										.getString("char")));
 							}
 							staticsBean.setScore(items.getString("score"));
 						}
@@ -217,10 +225,13 @@ public class JSonParcelUtils {
 
 	}
 
-	public static List<MineBean> getMyStudyLevel1(Context context, String myjson, String type) {
+	public static List<MineBean> getMyStudyLevel1(Context context,
+			String myjson, String type) {
 		List<MineBean> lists = null;
-		Logger.e("getMyStudyLevel1", "getMyStudyLevel1------------------------>" + type);
-		Logger.e("getMyStudyLevel1", "getMyStudyLevel1------------------------>" + myjson);
+		Logger.e("getMyStudyLevel1",
+				"getMyStudyLevel1------------------------>" + type);
+		Logger.e("getMyStudyLevel1",
+				"getMyStudyLevel1------------------------>" + myjson);
 		try {
 			lists = new ArrayList<MineBean>();
 			MineBean bean = null;
@@ -230,27 +241,36 @@ public class JSonParcelUtils {
 				item = dataArray.getJSONObject(i);
 				bean = new MineBean();
 				if (item.has("mid")) {
-					Logger.e("bean", "bean----------------------------->" + item.getString("mid"));
+					Logger.e("bean", "bean----------------------------->"
+							+ item.getString("mid"));
 					bean.setMid(type + item.getString("mid"));
 				}
 				if (item.has("times")) {
-					Logger.e("bean", "bean----------------times------------->" + item.getString("times"));
+					Logger.e("bean", "bean----------------times------------->"
+							+ item.getString("times"));
 					bean.setTimes(item.getString("times"));
 				}
 				if (item.has("context")) {
-					Logger.e("bean", "bean-------------context---------------->" + item.getString("context"));
+					Logger.e(
+							"bean",
+							"bean-------------context---------------->"
+									+ item.getString("context"));
 					bean.setContext(item.getString("context"));
 				}
 				if (item.has("impotContext")) {
-					Logger.e("bean", "bean----------------impotContext------------->" + item.getString("impotContext"));
+					Logger.e("bean",
+							"bean----------------impotContext------------->"
+									+ item.getString("impotContext"));
 					bean.setSrtImpotContext(item.getString("impotContext"));
 				}
 				if (item.has("others")) {
-					Logger.e("bean", "bean------------others----------------->" + item.getString("others"));
+					Logger.e("bean", "bean------------others----------------->"
+							+ item.getString("others"));
 					bean.setOthers(item.getString("others"));
 				}
 				if (item.has("imgs")) {
-					Logger.e("bean", "bean----------imgs------------------->" + item.getString("imgs"));
+					Logger.e("bean", "bean----------imgs------------------->"
+							+ item.getString("imgs"));
 					bean.setSrtImgs(item.getString("imgs"));
 				}
 				bean.setType(type);
@@ -259,7 +279,8 @@ public class JSonParcelUtils {
 			return lists;
 
 		} catch (JSONException e) {
-			Logger.e("JSONException", "JSONException-------------->" + e.toString());
+			Logger.e("JSONException",
+					"JSONException-------------->" + e.toString());
 			e.printStackTrace();
 		}
 		return null;
@@ -281,11 +302,13 @@ public class JSonParcelUtils {
 	 * @param isCompleteHWActivity
 	 * @param result
 	 */
-	public static ListenQueryBean getNotCompleteButCommit(Context context, String result) {
+	public static ListenQueryBean getNotCompleteButCommit(Context context,
+			String result) {
 		ListenQueryBean queryBean = new ListenQueryBean();
 		List<SoundListBean> soundList = new ArrayList<SoundListBean>();
 		List<RetListBean> retList = new ArrayList<RetListBean>();
-		List<WordsBean> beanLists = JSON.parseArray(result.toString(), WordsBean.class);
+		List<WordsBean> beanLists = JSON.parseArray(result.toString(),
+				WordsBean.class);
 		SoundListBean soundBean;
 		RetListBean retBean;
 		int size = beanLists.size();
@@ -312,7 +335,8 @@ public class JSonParcelUtils {
 	 * @param result
 	 * @return
 	 */
-	public static ListenQueryBean getQueryComplete(Context context, String result) {
+	public static ListenQueryBean getQueryComplete(Context context,
+			String result) {
 		return JSON.parseObject(result, ListenQueryBean.class);
 	}
 
@@ -322,7 +346,8 @@ public class JSonParcelUtils {
 	 * @param context
 	 * @param json
 	 */
-	public static SBCWordBean getArticleConfirm(Context context, String json, String id, String url, String text) {
+	public static SBCWordBean getArticleConfirm(Context context, String json,
+			String id, String url, String text) {
 		SBCWordBean bean = new SBCWordBean(url, text, id);
 		String averageScore = null;
 		int sum = 0;
@@ -338,7 +363,9 @@ public class JSonParcelUtils {
 			if (size > 0) {
 
 				for (int i = 0; i < size; i++) {
-					sum = sum + Integer.parseInt(bean.getDetails().get(i).getScore());
+					sum = sum
+							+ Integer.parseInt(bean.getDetails().get(i)
+									.getScore());
 				}
 				averageScore = (sum / size) * 25 + "";
 				bean.setRet(json);
@@ -407,7 +434,8 @@ public class JSonParcelUtils {
 		ArrayList<RankBean> lists = new ArrayList<RankBean>();
 		RankBean bean = new RankBean();
 		try {
-			lists = (ArrayList<RankBean>) JSON.parseArray(result, RankBean.class);
+			lists = (ArrayList<RankBean>) JSON.parseArray(result,
+					RankBean.class);
 			bean = lists.get(0);
 			return bean;
 		} catch (Exception e) {
@@ -423,7 +451,8 @@ public class JSonParcelUtils {
 	 * @param result
 	 * @return
 	 */
-	public static ConfirmResultBean getCommitRestlt(Context context, String result) {
+	public static ConfirmResultBean getCommitRestlt(Context context,
+			String result) {
 		ConfirmResultBean bean = new ConfirmResultBean();
 		List<ConfirmResultBean> list = new ArrayList<ConfirmResultBean>();
 		try {
@@ -437,52 +466,14 @@ public class JSonParcelUtils {
 
 	}
 
-	public static String getRestluSmart(String json, String id, String url, String text, String score) {
+	public static String getRestluSmart(String json, String id, String url,
+			String text, String score) {
 		try {
 			JSONObject root = new JSONObject(json);
 			String result = root.getString("result");
-			result = "{\"id\":\"" + id + "\"," + "\"text\":\"" + TextUtils.replaceBlank(text) + "\"," + "\"url\":\"" + url + "\"," + "\"speed\":\""
-					+ 1 + "\"," + "\"score\":\"" + score + "\"," + result.substring(1, result.length());
-			return result;
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-
-		return "";
-	}
-
-	public static String getRestlu(String json, String id, String url, String text) {
-		try {
-			JSONObject root = new JSONObject(json);
-			String result = root.getString("result");
-			result = "{\"id\":\"" + id + "\"," + "\"text\":\"" + TextUtils.replaceBlank(text) + "\"," + "\"url\":\"" + url + "\","
-					+ result.substring(1, result.length());
-			return result;
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-
-		return "";
-	}
-
-	public static String getRestlu2(String id, String url, String text, List<OptionBean> choo, String select) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < choo.size(); i++) {
-			sb.append("," + choo.get(i).getKey() + ":" + choo.get(i).getText());
-		}
-		String sbr = sb.substring(1);
-		String result = "";
-		result = "{\"id\":\"" + id + "\"," + "\"text\":\"" + TextUtils.replaceBlank(text) + "\"," + "\"url\":\"" + url + "\"," + "\"chooses\":"
-				+ "\"{" + sbr + "}" + "\"," + "\"select\":\"" + select + "\"}";
-		return result;
-
-	}
-
-	public static String getRestlu1(String json, String id, String url, String text, String score) {
-		try {
-			JSONObject root = new JSONObject(json);
-			String result = root.getString("result");
-			result = "{\"id\":\"" + id + "\"," + "\"text\":\"" + TextUtils.replaceBlank(text) + "\"," + "\"url\":\"" + url + "\"," + "\"score\":\""
+			result = "{\"id\":\"" + id + "\"," + "\"text\":\""
+					+ TextUtils.replaceBlank(text) + "\"," + "\"url\":\"" + url
+					+ "\"," + "\"speed\":\"" + 1 + "\"," + "\"score\":\""
 					+ score + "\"," + result.substring(1, result.length());
 			return result;
 		} catch (JSONException e) {
@@ -492,16 +483,69 @@ public class JSonParcelUtils {
 		return "";
 	}
 
-	public static List<WordConfirmBean> getWordsConfirmData(Context context, String result) {
+	public static String getRestlu(String json, String id, String url,
+			String text) {
+		try {
+			JSONObject root = new JSONObject(json);
+			String result = root.getString("result");
+			result = "{\"id\":\"" + id + "\"," + "\"text\":\""
+					+ TextUtils.replaceBlank(text) + "\"," + "\"url\":\"" + url
+					+ "\"," + result.substring(1, result.length());
+			return result;
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return "";
+	}
+
+	public static String getRestlu2(String id, String url, String text,
+			List<OptionBean> choo, String select) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < choo.size(); i++) {
+			sb.append("," + choo.get(i).getKey() + ":" + choo.get(i).getText());
+		}
+		String sbr = sb.substring(1);
+		String result = "";
+		result = "{\"id\":\"" + id + "\"," + "\"text\":\""
+				+ TextUtils.replaceBlank(text) + "\"," + "\"url\":\"" + url
+				+ "\"," + "\"chooses\":" + "\"{" + sbr + "}" + "\","
+				+ "\"select\":\"" + select + "\"}";
+		return result;
+
+	}
+
+	public static String getRestlu1(String json, String id, String url,
+			String text, String score) {
+		try {
+			JSONObject root = new JSONObject(json);
+			String result = root.getString("result");
+			result = "{\"id\":\"" + id + "\"," + "\"text\":\""
+					+ TextUtils.replaceBlank(text) + "\"," + "\"url\":\"" + url
+					+ "\"," + "\"score\":\"" + score + "\","
+					+ result.substring(1, result.length());
+			return result;
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return "";
+	}
+
+	public static List<WordConfirmBean> getWordsConfirmData(Context context,
+			String result) {
 		List<WordConfirmBean> list = new ArrayList<WordConfirmBean>();
 		try {
-			Logger.i("getWordsConfirmData", "getWordsConfirmData------------------->" + result);
+			Logger.i("getWordsConfirmData",
+					"getWordsConfirmData------------------->" + result);
 			list = JSON.parseArray(result.toString(), WordConfirmBean.class);
-			Logger.i("getWordsConfirmData", "getWordsConfirmData------------------->" + list.size());
+			Logger.i("getWordsConfirmData",
+					"getWordsConfirmData------------------->" + list.size());
 			return list;
 		} catch (Exception e) {
 			list = new ArrayList<WordConfirmBean>();
-			Logger.i("getWordsConfirmData", "Exception------------------->" + e.toString());
+			Logger.i("getWordsConfirmData",
+					"Exception------------------->" + e.toString());
 			// TODO: handle exception
 		}
 		return list;
@@ -528,10 +572,12 @@ public class JSonParcelUtils {
 	 * @param context
 	 * @param result
 	 */
-	public static ArrayList<WordWriteBean> getWordsListenWriteBasicData(Context context, String result) {
+	public static ArrayList<WordWriteBean> getWordsListenWriteBasicData(
+			Context context, String result) {
 		ArrayList<WordWriteBean> lists = new ArrayList<WordWriteBean>();
 		try {
-			lists = (ArrayList<WordWriteBean>) JSON.parseArray(result, WordWriteBean.class);
+			lists = (ArrayList<WordWriteBean>) JSON.parseArray(result,
+					WordWriteBean.class);
 		} catch (Exception e) {
 			lists = new ArrayList<WordWriteBean>();
 		}
@@ -570,11 +616,13 @@ public class JSonParcelUtils {
 	 * @return
 	 * @return
 	 */
-	public static ScoreDetailsBean getCommitsResult(Context context, String result) {
+	public static ScoreDetailsBean getCommitsResult(Context context,
+			String result) {
 		ScoreDetailsBean bean = new ScoreDetailsBean();
 		ArrayList<ResultBean> lists = new ArrayList<ResultBean>();
 		try {
-			lists = (ArrayList<ResultBean>) JSON.parseArray(result, ResultBean.class);
+			lists = (ArrayList<ResultBean>) JSON.parseArray(result,
+					ResultBean.class);
 			if (lists != null && lists.size() > 0) {
 				bean = lists.get(0).getScoreDetail();
 			}
@@ -588,7 +636,8 @@ public class JSonParcelUtils {
 		ResultBean bean = new ResultBean();
 		ArrayList<ResultBean> lists = new ArrayList<ResultBean>();
 		try {
-			lists = (ArrayList<ResultBean>) JSON.parseArray(result, ResultBean.class);
+			lists = (ArrayList<ResultBean>) JSON.parseArray(result,
+					ResultBean.class);
 			if (lists != null && lists.size() > 0) {
 				bean = lists.get(0);
 			}
@@ -604,10 +653,12 @@ public class JSonParcelUtils {
 	 * @param context
 	 * @param result
 	 */
-	public static ArrayList<ListenWriteQueryBean> getWordsListenWriteParcelData(Context context, String result) {
+	public static ArrayList<ListenWriteQueryBean> getWordsListenWriteParcelData(
+			Context context, String result) {
 		ArrayList<ListenWriteQueryBean> lists = new ArrayList<ListenWriteQueryBean>();
 		try {
-			lists = (ArrayList<ListenWriteQueryBean>) JSON.parseArray(result, ListenWriteQueryBean.class);
+			lists = (ArrayList<ListenWriteQueryBean>) JSON.parseArray(result,
+					ListenWriteQueryBean.class);
 		} catch (Exception e) {
 			lists = new ArrayList<ListenWriteQueryBean>();
 		}
@@ -622,17 +673,20 @@ public class JSonParcelUtils {
 	 * @param context
 	 * @param result
 	 */
-	public static List<ReadUnderstandBean> getReadUnderstandData(Context context, String result) {
+	public static List<ReadUnderstandBean> getReadUnderstandData(
+			Context context, String result) {
 		List<ReadUnderstandBean> lists = new ArrayList<ReadUnderstandBean>();
 		try {
-			lists = JSON.parseArray(result.toString(), ReadUnderstandBean.class);
+			lists = JSON
+					.parseArray(result.toString(), ReadUnderstandBean.class);
 		} catch (Exception e) {
 			lists = new ArrayList<ReadUnderstandBean>();
 		}
 		return lists;
 	}
 
-	public static List<ReadEkwingBean> getSmartData(Context context, String result) {
+	public static List<ReadEkwingBean> getSmartData(Context context,
+			String result) {
 		List<ReadEkwingBean> lists = new ArrayList<ReadEkwingBean>();
 		try {
 			lists = JSON.parseArray(result, ReadEkwingBean.class);
@@ -651,7 +705,8 @@ public class JSonParcelUtils {
 		ExpDetailBean bean = new ExpDetailBean();
 		ArrayList<ResultBean> lists = new ArrayList<ResultBean>();
 		try {
-			lists = (ArrayList<ResultBean>) JSON.parseArray(result, ResultBean.class);
+			lists = (ArrayList<ResultBean>) JSON.parseArray(result,
+					ResultBean.class);
 			if (lists != null && lists.size() > 0) {
 				bean = lists.get(0).getExpDetail();
 			}
@@ -667,10 +722,12 @@ public class JSonParcelUtils {
 	 * @param selectMapAndThemeActivity
 	 * @param result
 	 */
-	public static ArrayList<SelectBean> parseSelect(Context context, String result) {
+	public static ArrayList<SelectBean> parseSelect(Context context,
+			String result) {
 		ArrayList<SelectBean> lists = new ArrayList<SelectBean>();
 		try {
-			lists = (ArrayList<SelectBean>) JSON.parseArray(result, SelectBean.class);
+			lists = (ArrayList<SelectBean>) JSON.parseArray(result,
+					SelectBean.class);
 		} catch (Exception e) {
 			lists = new ArrayList<SelectBean>();
 		}
@@ -684,10 +741,12 @@ public class JSonParcelUtils {
 	 * @param themePartActivity
 	 * @param result
 	 */
-	public static ArrayList<LevelBean> getSelectData(Context context, String result) {
+	public static ArrayList<LevelBean> getSelectData(Context context,
+			String result) {
 		ArrayList<LevelBean> lists = new ArrayList<LevelBean>();
 		try {
-			lists = (ArrayList<LevelBean>) JSON.parseArray(result, LevelBean.class);
+			lists = (ArrayList<LevelBean>) JSON.parseArray(result,
+					LevelBean.class);
 		} catch (Exception e) {
 			lists = new ArrayList<LevelBean>();
 		}
@@ -717,7 +776,8 @@ public class JSonParcelUtils {
 	 * @param context
 	 * @param result
 	 */
-	public static ListenResultBean getListenResult(Context context, String result) {
+	public static ListenResultBean getListenResult(Context context,
+			String result) {
 
 		ListenResultBean bean = new ListenResultBean();
 		List<ListenResultBean> lists = null;
@@ -741,12 +801,14 @@ public class JSonParcelUtils {
 		ArrayList<HWIndexBean> lists = new ArrayList<HWIndexBean>();
 		String json = "";
 		try {
-			json = FileUtils.readTxtFile(context.getAssets().open("homework.json"));
+			json = FileUtils.readTxtFile(context.getAssets().open(
+					"homework.json"));
 			Logger.e("", "home_json==============>" + json);
 			JSONObject root = new JSONObject(json);
 			if (root.has("data")) {
 				String result = root.getString("data");
-				lists = (ArrayList<HWIndexBean>) JSON.parseArray(result.toString(), HWIndexBean.class);
+				lists = (ArrayList<HWIndexBean>) JSON.parseArray(
+						result.toString(), HWIndexBean.class);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -760,22 +822,26 @@ public class JSonParcelUtils {
 	 * 
 	 * @param context
 	 */
-	public static ArrayList<WordWriteBean> getTravelWordsListenWrite(Context context) {
+	public static ArrayList<WordWriteBean> getTravelWordsListenWrite(
+			Context context) {
 		ArrayList<WordWriteBean> lists = new ArrayList<WordWriteBean>();
 		String json = "";
 		try {
-			json = FileUtils.readTxtFile(context.getAssets().open("listenwrite.json"));
+			json = FileUtils.readTxtFile(context.getAssets().open(
+					"listenwrite.json"));
 			Logger.e("", "得到单词听写的作业-----------json------>" + json);
 			JSONObject root = new JSONObject(json);
 			if (root.has("data")) {
 				String result = root.getString("data");
-				lists = (ArrayList<WordWriteBean>) JSON.parseArray(result, WordWriteBean.class);
+				lists = (ArrayList<WordWriteBean>) JSON.parseArray(result,
+						WordWriteBean.class);
 			}
 		} catch (Exception e) {
 			Logger.e("", "得到单词听写的作业--------------------->" + e.toString());
 			lists = new ArrayList<WordWriteBean>();
 		}
-		Logger.e("", "得到单词听写的作业--------------------->" + JSON.toJSONString(lists));
+		Logger.e("",
+				"得到单词听写的作业--------------------->" + JSON.toJSONString(lists));
 		return lists;
 	}
 
@@ -785,16 +851,19 @@ public class JSonParcelUtils {
 	 * @param context
 	 * @return
 	 */
-	public static ArrayList<ReadUnderstandBean> getTravelReadUndertand(Context context) {
+	public static ArrayList<ReadUnderstandBean> getTravelReadUndertand(
+			Context context) {
 		ArrayList<ReadUnderstandBean> lists = new ArrayList<ReadUnderstandBean>();
 		String json = "";
 		try {
-			json = FileUtils.readTxtFile(context.getAssets().open("readunderstand.json"));
+			json = FileUtils.readTxtFile(context.getAssets().open(
+					"readunderstand.json"));
 			Logger.e("", "得到单词听写的作业-----------json------>" + json);
 			JSONObject root = new JSONObject(json);
 			if (root.has("data")) {
 				String result = root.getString("data");
-				lists = (ArrayList<ReadUnderstandBean>) JSON.parseArray(result, ReadUnderstandBean.class);
+				lists = (ArrayList<ReadUnderstandBean>) JSON.parseArray(result,
+						ReadUnderstandBean.class);
 			}
 		} catch (Exception e) {
 			lists = new ArrayList<ReadUnderstandBean>();
@@ -808,20 +877,24 @@ public class JSonParcelUtils {
 	 * @param context
 	 * @return
 	 */
-	public static ArrayList<WordsBean> getTravelWordsArticle(String category, Context context) {
+	public static ArrayList<WordsBean> getTravelWordsArticle(String category,
+			Context context) {
 		ArrayList<WordsBean> lists = new ArrayList<WordsBean>();
 		String json = "";
 		try {
 			if ("1".equals(category)) {
-				json = FileUtils.readTxtFile(context.getAssets().open("word.json"));
+				json = FileUtils.readTxtFile(context.getAssets().open(
+						"word.json"));
 			} else if ("2".equals(category)) {
-				json = FileUtils.readTxtFile(context.getAssets().open("article.json"));
+				json = FileUtils.readTxtFile(context.getAssets().open(
+						"article.json"));
 			}
 			Logger.e("", "得到单词听写的作业-----------json------>" + json);
 			JSONObject root = new JSONObject(json);
 			if (root.has("data")) {
 				String result = root.getString("data");
-				lists = (ArrayList<WordsBean>) JSON.parseArray(result, WordsBean.class);
+				lists = (ArrayList<WordsBean>) JSON.parseArray(result,
+						WordsBean.class);
 			}
 		} catch (Exception e) {
 			lists = new ArrayList<WordsBean>();
@@ -836,7 +909,8 @@ public class JSonParcelUtils {
 	 * @param lists
 	 * @return
 	 */
-	public static ListenQueryBean getWordsAndArticle(Context context, ArrayList<WordsBean> lists) {
+	public static ListenQueryBean getWordsAndArticle(Context context,
+			ArrayList<WordsBean> lists) {
 		ListenQueryBean queryBean = new ListenQueryBean();
 		ArrayList<SoundListBean> soundList = new ArrayList<SoundListBean>();
 		ArrayList<RecordListBean> recordList = new ArrayList<RecordListBean>();
@@ -848,14 +922,16 @@ public class JSonParcelUtils {
 		if (lists != null && lists.size() > 0) {
 			for (int i = 0; i < size; i++) {
 
-				if (lists.get(i).getSoundPath() != null && !"".equals(lists.get(i).getSoundPath())) {
+				if (lists.get(i).getSoundPath() != null
+						&& !"".equals(lists.get(i).getSoundPath())) {
 					soundBean = new SoundListBean();
 					soundBean.setStart(lists.get(i).getStart() + "");
 					soundBean.setKeep(lists.get(i).getDur() + "");
 					soundBean.setUrl(lists.get(i).getSoundPath());
 					soundList.add(soundBean);
 				}
-				if (lists.get(i).getReSoundPath() != null && !"".equals(lists.get(i).getReSoundPath())) {
+				if (lists.get(i).getReSoundPath() != null
+						&& !"".equals(lists.get(i).getReSoundPath())) {
 					recordBean = new RecordListBean();
 					recordBean.setId(lists.get(i).getId());
 					// recordBean.setStart(0);
@@ -887,7 +963,8 @@ public class JSonParcelUtils {
 	 * @param context
 	 * @param articleLists
 	 */
-	public static ConfirmResultBean getTravelScorBean(Context context, ArrayList<WordsBean> lists) {
+	public static ConfirmResultBean getTravelScorBean(Context context,
+			ArrayList<WordsBean> lists) {
 		ConfirmResultBean bean = new ConfirmResultBean();
 		try {
 			if (lists != null && !"".equals(lists) && lists.size() > 0) {
@@ -898,9 +975,12 @@ public class JSonParcelUtils {
 				int count = 0; // 发音60以上的个数
 				for (int i = 0; i < size; i++) {
 					SBCWordBean sbcResult = lists.get(i).getSBCResult();
-					fluency = fluency + Integer.parseInt(sbcResult.getFluencyoverall());
-					integrity = integrity + Integer.parseInt(sbcResult.getIntegrity());
-					accuracy = accuracy + Integer.parseInt(sbcResult.getAccuracy());
+					fluency = fluency
+							+ Integer.parseInt(sbcResult.getFluencyoverall());
+					integrity = integrity
+							+ Integer.parseInt(sbcResult.getIntegrity());
+					accuracy = accuracy
+							+ Integer.parseInt(sbcResult.getAccuracy());
 					if (Integer.parseInt(sbcResult.getAccuracy()) >= 60) {
 						count++;
 					}
@@ -942,7 +1022,8 @@ public class JSonParcelUtils {
 		ArrayList<ListenBean> lists = new ArrayList<ListenBean>();
 		ListenBean bean = new ListenBean();
 		try {
-			lists = (ArrayList<ListenBean>) JSON.parseArray(result, ListenBean.class);
+			lists = (ArrayList<ListenBean>) JSON.parseArray(result,
+					ListenBean.class);
 			if (lists != null && !"".equals(lists) && lists.size() > 0) {
 				bean = lists.get(0);
 			}
@@ -961,11 +1042,13 @@ public class JSonParcelUtils {
 	 * @param result
 	 * @return
 	 */
-	public static ConSentenceBean getConnectionData(Context context, String result) {
+	public static ConSentenceBean getConnectionData(Context context,
+			String result) {
 		ArrayList<ConSentenceBean> lists = new ArrayList<ConSentenceBean>();
 		ConSentenceBean bean = new ConSentenceBean();
 		try {
-			lists = (ArrayList<ConSentenceBean>) JSON.parseArray(result, ConSentenceBean.class);
+			lists = (ArrayList<ConSentenceBean>) JSON.parseArray(result,
+					ConSentenceBean.class);
 			if (lists != null && !"".equals(lists) && lists.size() > 0) {
 				bean = lists.get(0);
 			}
@@ -982,10 +1065,12 @@ public class JSonParcelUtils {
 	 * @param result
 	 * @return
 	 */
-	public static ArrayList<ListenContentsBean> getListenUnderQuery(Context context, String result) {
+	public static ArrayList<ListenContentsBean> getListenUnderQuery(
+			Context context, String result) {
 		ArrayList<ListenContentsBean> lists = new ArrayList<ListenContentsBean>();
 		try {
-			lists = (ArrayList<ListenContentsBean>) JSON.parseArray(result, ListenContentsBean.class);
+			lists = (ArrayList<ListenContentsBean>) JSON.parseArray(result,
+					ListenContentsBean.class);
 		} catch (Exception e) {
 			// TODO: handle exception
 			lists = new ArrayList<ListenContentsBean>();
@@ -994,17 +1079,18 @@ public class JSonParcelUtils {
 
 	}
 
-	
-	public static ArrayList<HHWDetailsBean> getHWList(Context context, String result) {
+	public static ArrayList<HHWDetailsBean> getHWList(Context context,
+			String result) {
 		ArrayList<HHWDetailsBean> lists = new ArrayList<HHWDetailsBean>();
 		try {
-			lists = (ArrayList<HHWDetailsBean>) JSON.parseArray(result, HHWDetailsBean.class);
+			lists = (ArrayList<HHWDetailsBean>) JSON.parseArray(result,
+					HHWDetailsBean.class);
 		} catch (Exception e) {
 			// TODO: handle exception
 			lists = new ArrayList<HHWDetailsBean>();
 		}
 		return lists;
-		
+
 	}
 
 }

@@ -16,45 +16,48 @@ import com.guoku.R;
 /**
  * @zhangyao
  * @Description: 带删除按钮的edittext
- * @date 2015-8-12 下午5:38:23 
+ * @date 2015-8-12 下午5:38:23
  */
 public class EditTextWithDel extends EditText {
 	private final static String TAG = "EditTextWithDel";
 	private Drawable imgInable;
 	private Context mContext;
 	public boolean isShowDel = true;
-	
+
 	public EditTextWithDel(Context context) {
 		super(context);
 		mContext = context;
 		init();
 	}
-	
+
 	public EditTextWithDel(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		mContext = context;
 		init();
 	}
-	
+
 	public EditTextWithDel(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mContext = context;
 		init();
 	}
-	
+
 	@SuppressLint("NewApi")
 	private void init() {
 		setBackground(mContext.getResources().getDrawable(R.color.white));
-		imgInable = mContext.getResources().getDrawable(R.drawable.button_clear);
+		imgInable = mContext.getResources()
+				.getDrawable(R.drawable.button_clear);
 		addTextChangedListener(new TextWatcher() {
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
 			}
-			
+
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
 			}
-			
+
 			@Override
 			public void afterTextChanged(Editable s) {
 				setDrawable();
@@ -62,22 +65,23 @@ public class EditTextWithDel extends EditText {
 		});
 		setDrawable();
 	}
-	
+
 	private void setDrawable() {
 		if (length() < 1) {
 			setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 		} else {
-			if(isShowDel){
-				setCompoundDrawablesWithIntrinsicBounds(null, null, imgInable, null);
+			if (isShowDel) {
+				setCompoundDrawablesWithIntrinsicBounds(null, null, imgInable,
+						null);
 				setEnabled(true);
-			}else{
+			} else {
 				setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
 				setEnabled(false);
 			}
-			
+
 		}
 	}
-	
+
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		if (isShowDel) {
@@ -92,7 +96,7 @@ public class EditTextWithDel extends EditText {
 		}
 		return super.onTouchEvent(event);
 	}
-	
+
 	@Override
 	protected void finalize() throws Throwable {
 		super.finalize();

@@ -51,7 +51,8 @@ public class MineGridBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "GridBean [type=" + type + ", name=" + name + ", netType=" + netType + ", icon=" + icon + "]";
+		return "GridBean [type=" + type + ", name=" + name + ", netType="
+				+ netType + ", icon=" + icon + "]";
 	}
 
 }

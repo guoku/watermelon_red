@@ -1,13 +1,13 @@
 package com.guoku.guokuv4.bean;
 
 public class Category {
-	
+
 	String cover_url;
-	
+
 	String id;
-	
+
 	String status;
-	
+
 	String title;
 
 	public String getCover_url() {

@@ -36,16 +36,16 @@ public class JingXuanPageFragment extends BasePageFragment {
 		for (int i = 0; i < count; i++) {
 			TextView textView = new TextView(getActivity());
 			switch (i) {
-//			case 0:
-//				textView.setText(R.string.tv_tab_recommend);
-//				break;
-//			case 1:
-//				textView.setText(R.string.tv_tab_commodity);
-//				break;
-//			case 2:
-//				textView.setText(R.string.tv_tab_image_text);
-//				break;
-//			}
+			// case 0:
+			// textView.setText(R.string.tv_tab_recommend);
+			// break;
+			// case 1:
+			// textView.setText(R.string.tv_tab_commodity);
+			// break;
+			// case 2:
+			// textView.setText(R.string.tv_tab_image_text);
+			// break;
+			// }
 			case 0:
 				textView.setText(R.string.tv_tab_commodity);
 				break;
@@ -64,7 +64,7 @@ public class JingXuanPageFragment extends BasePageFragment {
 		// TODO Auto-generated method stub
 
 		ArrayList<Fragment> list = new ArrayList<Fragment>();
-//		list.add(new HomeOneFragment());
+		// list.add(new HomeOneFragment());
 		list.add(new GoodTwoFragmnet());
 		list.add(new ArticleFragment());
 		return list;

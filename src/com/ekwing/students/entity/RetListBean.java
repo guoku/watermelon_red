@@ -69,10 +69,12 @@ public class RetListBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "retListBean [id=" + id + ", retext=" + retext + ", chars=" + chars + ", score=" + score + ", errlist=" + errlist + "]";
+		return "retListBean [id=" + id + ", retext=" + retext + ", chars="
+				+ chars + ", score=" + score + ", errlist=" + errlist + "]";
 	}
 
-	public RetListBean(String id, String retext, String chars, String score, List<ErrListBean> errlist) {
+	public RetListBean(String id, String retext, String chars, String score,
+			List<ErrListBean> errlist) {
 		super();
 		this.id = id;
 		this.retext = retext;

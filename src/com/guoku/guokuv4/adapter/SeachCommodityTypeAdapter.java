@@ -26,22 +26,22 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 /**
  * @zhangyao
  * @Description: TODO
- * @date 2015-8-11 下午9:30:13 
+ * @date 2015-8-11 下午9:30:13
  */
 public class SeachCommodityTypeAdapter extends ArrayListAdapter<Tab2Bean> {
 
 	private ImageLoader loader = ImageLoader.getInstance();
 	private DisplayImageOptions options;
-	
+
 	public SeachCommodityTypeAdapter(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
 		options = new DisplayImageOptions.Builder()
-		.imageScaleType(ImageScaleType.EXACTLY)
-		.considerExifParams(true).bitmapConfig(Config.RGB_565)
-		.showImageOnLoading(R.color.g_g)
-		.showImageForEmptyUri(R.color.g_g).cacheOnDisk(true)
-		.showImageOnFail(R.color.g_g).build();
+				.imageScaleType(ImageScaleType.EXACTLY)
+				.considerExifParams(true).bitmapConfig(Config.RGB_565)
+				.showImageOnLoading(R.color.g_g)
+				.showImageForEmptyUri(R.color.g_g).cacheOnDisk(true)
+				.showImageOnFail(R.color.g_g).build();
 	}
 
 	@Override
@@ -49,8 +49,8 @@ public class SeachCommodityTypeAdapter extends ArrayListAdapter<Tab2Bean> {
 		// TODO Auto-generated method stub
 		GVViewHold holder = null;
 		if (convertView == null) {
-			convertView = View.inflate(mContext,
-					R.layout.faxian_lv_gv_item, null);
+			convertView = View.inflate(mContext, R.layout.faxian_lv_gv_item,
+					null);
 			holder = new GVViewHold();
 			ViewUtils.inject(holder, convertView);
 			convertView.setTag(holder);
@@ -62,8 +62,7 @@ public class SeachCommodityTypeAdapter extends ArrayListAdapter<Tab2Bean> {
 		loader.displayImage(bean.getCategory_icon_small(),
 				holder.faxian_lv_gv_item_iv_img, options,
 				new ImgUtils.AnimateFirstDisplayListener());
-		holder.faxian_lv_gv_item_tv_name.setText(bean
-				.getCategory_title());
+		holder.faxian_lv_gv_item_tv_name.setText(bean.getCategory_title());
 
 		convertView.setOnClickListener(new OnClickListener() {
 
@@ -77,7 +76,7 @@ public class SeachCommodityTypeAdapter extends ArrayListAdapter<Tab2Bean> {
 		});
 		return convertView;
 	}
-	
+
 	private class GVViewHold {
 		@ViewInject(R.id.faxian_lv_gv_item_tv_name)
 		TextView faxian_lv_gv_item_tv_name;

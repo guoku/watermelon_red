@@ -5,20 +5,17 @@ package com.guoku.guokuv4.bean;
 
 import java.util.ArrayList;
 
-
-
 /**
  * @zhangyao
  * @Description: TODO
- * @date 2015-9-11 上午11:02:24 
- * 首页图文banner流
+ * @date 2015-9-11 上午11:02:24 首页图文banner流
  */
 public class HomePageOneBean {
-	
+
 	ArrayList<Articles> articles;
-	
+
 	ArrayList<Banner> banner;
-	
+
 	ArrayList<Entities> entities;
 
 	public ArrayList<Articles> getArticles() {
@@ -45,7 +42,4 @@ public class HomePageOneBean {
 		this.entities = entities;
 	}
 
-
 }
-
-

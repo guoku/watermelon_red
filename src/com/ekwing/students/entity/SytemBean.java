@@ -56,16 +56,16 @@ public class SytemBean implements Serializable {
 		this.audio = audio;
 	}
 
-//	public OtherBean getOthers() {
-//		return others;
-//	}
-//
-//	public void setOthers(OtherBean others) {
-//		if ("".equals(others)) {
-//			others = new OtherBean();
-//		}
-//		this.others = others;
-//	}
+	// public OtherBean getOthers() {
+	// return others;
+	// }
+	//
+	// public void setOthers(OtherBean others) {
+	// if ("".equals(others)) {
+	// others = new OtherBean();
+	// }
+	// this.others = others;
+	// }
 
 	public String getTimes() {
 		if (times == null || "".equals(times)) {

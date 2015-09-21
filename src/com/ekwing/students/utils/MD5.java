@@ -11,7 +11,8 @@ public class MD5 {
 	public static String getMD5(String val) {
 		byte[] hash;
 		try {
-			hash = MessageDigest.getInstance("MD5").digest(val.getBytes("UTF-8"));
+			hash = MessageDigest.getInstance("MD5").digest(
+					val.getBytes("UTF-8"));
 		} catch (NoSuchAlgorithmException e) {
 			throw new RuntimeException("Huh, MD5 should be supported?", e);
 		} catch (UnsupportedEncodingException e) {

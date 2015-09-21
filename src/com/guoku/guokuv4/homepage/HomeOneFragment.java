@@ -43,14 +43,13 @@ public class HomeOneFragment extends BaseFrament {
 
 	@ViewInject(R.id.product_vp_img)
 	private ViewPager vPagerBaner;
-	
+
 	@ViewInject(R.id.listView_article)
-	private ListView lvArticle;//文章
-	
+	private ListView lvArticle;// 文章
+
 	HomePageOneBean bean;
-	
+
 	HomeOneArticlesAdapter articlesAdapter;
-	
 
 	private ScheduledExecutorService scheduledExecutorService;
 	private boolean onTouchTrue;
@@ -100,8 +99,8 @@ public class HomeOneFragment extends BaseFrament {
 		sendConnection(Constant.HOME, new String[] {}, new String[] {}, HOME,
 				false);
 	}
-	
-	private void initArticle(){
+
+	private void initArticle() {
 		articlesAdapter = new HomeOneArticlesAdapter(getActivity());
 		lvArticle.setAdapter(articlesAdapter);
 	}
@@ -223,7 +222,7 @@ public class HomeOneFragment extends BaseFrament {
 		super.onStop();
 		scheduledExecutorService.shutdown();
 	}
-	
+
 	public class MyViewPagerAdapter extends PagerAdapter {
 		private List<SimpleDraweeView> mListViews;
 
@@ -245,10 +244,10 @@ public class HomeOneFragment extends BaseFrament {
 		public Object instantiateItem(ViewGroup container, int position) { // 这个方法用来实例化页卡
 			container.addView(mListViews.get(position), 0);// 添加页卡
 			SimpleDraweeView sView = mListViews.get(position);
-//			GenericDraweeHierarchy hierarchy = sView.getHierarchy();
-//			hierarchy.setPlaceholderImage(getResources().getDrawable(R.drawable.item800));
-//			hierarchy.setPlaceholderImage(R.drawable.ic_logo);
-//			sView.setHierarchy(hierarchy);
+			// GenericDraweeHierarchy hierarchy = sView.getHierarchy();
+			// hierarchy.setPlaceholderImage(getResources().getDrawable(R.drawable.item800));
+			// hierarchy.setPlaceholderImage(R.drawable.ic_logo);
+			// sView.setHierarchy(hierarchy);
 			return sView;
 		}
 

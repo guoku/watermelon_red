@@ -204,8 +204,9 @@ public abstract class NetWorkActivity extends BaseActivity {
 		Logger.e("params", "api_key----->"
 				+ ":0b19c2b93687347e95c6b6f5cc91bb87");
 		Logger.e("params", "params----->" + ":" + params.toString());
-//		Logger.e("params", "session----->" + ":" + EkwingApplication.getInstance()
-//				.getBean().getSession());
+		// Logger.e("params", "session----->" + ":" +
+		// EkwingApplication.getInstance()
+		// .getBean().getSession());
 		if (showDialog && !isFinishing()) {
 			showDialog();
 		}
@@ -286,7 +287,7 @@ public abstract class NetWorkActivity extends BaseActivity {
 		} else
 			ToastUtil.show(getApplicationContext(), "网络连接失败");
 	}
-	
+
 	/**
 	 * 联网开始
 	 * 
@@ -373,7 +374,7 @@ public abstract class NetWorkActivity extends BaseActivity {
 			default:
 				break;
 			}
-			
+
 			NetWorkActivity.this.onFailure(msg, where);
 		}
 

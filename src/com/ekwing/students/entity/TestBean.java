@@ -80,8 +80,8 @@ public class TestBean extends WordsBean implements Serializable {
 	}
 
 	public String getQtypetest() {
-		if(qtypetest ==null){
-			qtypetest="";
+		if (qtypetest == null) {
+			qtypetest = "";
 		}
 		return qtypetest;
 	}
@@ -91,8 +91,8 @@ public class TestBean extends WordsBean implements Serializable {
 	}
 
 	public String getText() {
-		if(text == null){
-			text ="";
+		if (text == null) {
+			text = "";
 		}
 		return text;
 	}
@@ -110,7 +110,7 @@ public class TestBean extends WordsBean implements Serializable {
 	}
 
 	public List<OptionBean> getOption() {
-		if(option==null || "".equals(option)) {
+		if (option == null || "".equals(option)) {
 			option = new ArrayList<OptionBean>();
 		}
 		return option;
@@ -122,8 +122,9 @@ public class TestBean extends WordsBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TestBean [ret=" + ret + ", id=" + id + ", answer=" + answer + ", qtype=" + qtype + ", qtypetest=" + qtypetest + ", text=" + text
-				+ ", select=" + select + ", option=" + option + "]";
+		return "TestBean [ret=" + ret + ", id=" + id + ", answer=" + answer
+				+ ", qtype=" + qtype + ", qtypetest=" + qtypetest + ", text="
+				+ text + ", select=" + select + ", option=" + option + "]";
 	}
 
 }

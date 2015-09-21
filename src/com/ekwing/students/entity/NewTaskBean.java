@@ -77,8 +77,9 @@ public class NewTaskBean {
 
 	@Override
 	public String toString() {
-		return "NewTaskBean [expId=" + expId + ", exptitle=" + exptitle + ", expAward=" + expAward + ", expStatus=" + expStatus + ", impotContext="
-				+ impotContext + "]";
+		return "NewTaskBean [expId=" + expId + ", exptitle=" + exptitle
+				+ ", expAward=" + expAward + ", expStatus=" + expStatus
+				+ ", impotContext=" + impotContext + "]";
 	}
 
 }

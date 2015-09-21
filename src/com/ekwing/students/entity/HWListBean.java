@@ -11,8 +11,8 @@ public class HWListBean implements Serializable {
 	private String tscore; // 作业成绩
 
 	public String getTid() {
-		if(tid ==null){
-			tid ="";
+		if (tid == null) {
+			tid = "";
 		}
 		return tid;
 	}
@@ -22,8 +22,8 @@ public class HWListBean implements Serializable {
 	}
 
 	public String getTname() {
-		if(tname==null){
-			tname="";
+		if (tname == null) {
+			tname = "";
 		}
 		return tname;
 	}
@@ -44,8 +44,8 @@ public class HWListBean implements Serializable {
 	}
 
 	public String getTstatus() {
-		if(tstatus ==null){
-			tstatus="";
+		if (tstatus == null) {
+			tstatus = "";
 		}
 		return tstatus;
 	}

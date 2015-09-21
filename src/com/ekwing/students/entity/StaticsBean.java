@@ -44,7 +44,8 @@ public class StaticsBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "StaticsBean [chars=" + chars + ", count=" + count + ", score=" + score + "]";
+		return "StaticsBean [chars=" + chars + ", count=" + count + ", score="
+				+ score + "]";
 	}
 
 }

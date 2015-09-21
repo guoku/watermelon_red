@@ -10,8 +10,8 @@ public class RecordListBean implements Serializable {
 	private String id, tid;
 
 	public String getId() {
-		if(id==null){
-			id ="";
+		if (id == null) {
+			id = "";
 		}
 		return id;
 	}
@@ -21,8 +21,8 @@ public class RecordListBean implements Serializable {
 	}
 
 	public String getTid() {
-		if(tid ==null){
-			tid ="";
+		if (tid == null) {
+			tid = "";
 		}
 		return tid;
 	}
@@ -43,11 +43,11 @@ public class RecordListBean implements Serializable {
 		if (start == null || "".equals(start)) {
 			start = "0";
 		}
-		int parStart =0;
+		int parStart = 0;
 		try {
 			parStart = (int) Float.parseFloat(start);
 		} catch (Exception e) {
-			parStart =0;
+			parStart = 0;
 		}
 		return parStart;
 	}
@@ -60,11 +60,11 @@ public class RecordListBean implements Serializable {
 		if (keep == null || "".equals(keep)) {
 			keep = "0";
 		}
-		int parkeep=0;
+		int parkeep = 0;
 		try {
 			parkeep = (int) Float.parseFloat(keep);
 		} catch (Exception e) {
-			parkeep =0;
+			parkeep = 0;
 		}
 		return parkeep;
 	}
@@ -75,7 +75,8 @@ public class RecordListBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return "RecordListBean [url=" + url + ", start=" + start + ", keep=" + keep + "]";
+		return "RecordListBean [url=" + url + ", start=" + start + ", keep="
+				+ keep + "]";
 	}
 
 	public RecordListBean() {

@@ -9,7 +9,8 @@ import android.widget.ImageView;
 
 public class ListenerUtil {
 
-	public static TextWatcher EdTextListener(final EditText ed_text, final ImageView delete) {
+	public static TextWatcher EdTextListener(final EditText ed_text,
+			final ImageView delete) {
 		ed_text.setOnFocusChangeListener(new OnFocusChangeListener() {
 
 			@Override
@@ -28,19 +29,21 @@ public class ListenerUtil {
 			private CharSequence temp;
 
 			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
 				// TODO Auto-generated method stub
 				temp = s;
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
 			}
 
 			@Override
 			public void afterTextChanged(Editable arg0) {
 				// TODO Auto-generated method stub
-//				Log.i("aaaa", "长度:" + temp.length());
+				// Log.i("aaaa", "长度:" + temp.length());
 				if (temp.length() > 0) {
 					delete.setVisibility(View.VISIBLE);
 				} else {

@@ -360,13 +360,21 @@ public class SBCWordBean implements Serializable {
 
 	@Override
 	public String toString() {
-		return " [pron=" + pron + ", overall=" + overall + ", accuracy=" + accuracy + ", integrity=" + integrity + ", averageScore=" + averageScore
-				+ ", fluencyoverall=" + fluencyoverall + ", fluencypause=" + fluencypause + ", fluencyspeed=" + fluencyspeed + ", rhythmoverall="
-				+ rhythmoverall + ", rhythmsense=" + rhythmsense + ", rhythmstress=" + rhythmstress + ", rhythmtone=" + rhythmtone + ", errChars="
-				+ errChars + ", errStaticChars=" + errStaticChars + ", staticsSum=" + staticsSum + ", ret=" + ret + ", details=" + details
-				+ ", statics=" + statics + ", fluency=" + fluency + ", version=" + version + ", res=" + res + ", rank=" + rank + ", precision="
-				+ precision + ", pretime=" + pretime + ", systime=" + systime + ", vavetime=" + vavetime + ", delaytime=" + delaytime + ", url="
-				+ url + ", id=" + id + ", text=" + text + "]";
+		return " [pron=" + pron + ", overall=" + overall + ", accuracy="
+				+ accuracy + ", integrity=" + integrity + ", averageScore="
+				+ averageScore + ", fluencyoverall=" + fluencyoverall
+				+ ", fluencypause=" + fluencypause + ", fluencyspeed="
+				+ fluencyspeed + ", rhythmoverall=" + rhythmoverall
+				+ ", rhythmsense=" + rhythmsense + ", rhythmstress="
+				+ rhythmstress + ", rhythmtone=" + rhythmtone + ", errChars="
+				+ errChars + ", errStaticChars=" + errStaticChars
+				+ ", staticsSum=" + staticsSum + ", ret=" + ret + ", details="
+				+ details + ", statics=" + statics + ", fluency=" + fluency
+				+ ", version=" + version + ", res=" + res + ", rank=" + rank
+				+ ", precision=" + precision + ", pretime=" + pretime
+				+ ", systime=" + systime + ", vavetime=" + vavetime
+				+ ", delaytime=" + delaytime + ", url=" + url + ", id=" + id
+				+ ", text=" + text + "]";
 	}
 
 	// public SBCWordBean(String pron, String overall, String accuracy, String

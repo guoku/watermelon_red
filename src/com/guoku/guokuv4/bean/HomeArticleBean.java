@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * @date 2015-9-14 下午7:10:27 首页文章列表
  */
 public class HomeArticleBean {
-	
+
 	ArrayList<Articles> articles;
 
 	ArrayList<Banner> banner;

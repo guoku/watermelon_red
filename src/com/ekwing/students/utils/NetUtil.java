@@ -50,8 +50,10 @@ public class NetUtil {
 	 * @return
 	 */
 	public static boolean isWifi(Context context) {
-		ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+		ConnectivityManager manager = (ConnectivityManager) context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = manager
+				.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 		if (networkInfo != null) {
 			return networkInfo.isConnected();
 		}
@@ -65,8 +67,10 @@ public class NetUtil {
 	 * @return
 	 */
 	public static boolean isMobile(Context context) {
-		ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+		ConnectivityManager manager = (ConnectivityManager) context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo networkInfo = manager
+				.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 		if (networkInfo != null) {
 			return networkInfo.isConnected();
 		}

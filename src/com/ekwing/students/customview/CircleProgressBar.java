@@ -1,6 +1,5 @@
 package com.ekwing.students.customview;
 
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -16,15 +15,16 @@ public class CircleProgressBar extends View {
 	private int maxProgress = 100;
 	private int progress = 1;
 	private int progressStrokeWidth = 10;
-	//画圆所在的距形区域
+	// 画圆所在的距形区域
 	RectF oval;
 	Paint paint;
-	public CircleProgressBar (Context context){
+
+	public CircleProgressBar(Context context) {
 		super(context);
 		oval = new RectF();
 		paint = new Paint();
 	}
-	
+
 	public CircleProgressBar(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		// 自动生成的构造函数存根
@@ -34,21 +34,21 @@ public class CircleProgressBar extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		//  自动生成的方法存根
+		// 自动生成的方法存根
 		super.onDraw(canvas);
 		int width = this.getWidth();
 		int height = this.getHeight();
-		
-		if(width != height){
+
+		if (width != height) {
 			int min = Math.min(width, height);
 			width = min;
 			height = min;
 		}
-		
+
 		paint.setAntiAlias(true); // 设置画笔为抗锯齿
 		paint.setColor(getResources().getColor(R.color.circle_grey)); // 设置画笔颜色
 		canvas.drawColor(Color.TRANSPARENT); // 白色背景
-		paint.setStrokeWidth(progressStrokeWidth); //线宽
+		paint.setStrokeWidth(progressStrokeWidth); // 线宽
 		paint.setStyle(Style.STROKE);
 
 		oval.left = progressStrokeWidth / 2; // 左上角x
@@ -57,23 +57,24 @@ public class CircleProgressBar extends View {
 		oval.bottom = height - progressStrokeWidth / 2; // 右下角y
 
 		canvas.drawArc(oval, -90, 360, false, paint); // 绘制白色圆圈，即进度条背景
-//		paint.setColor(Color.rgb(0x57, 0x87, 0xb6)); //0b6ac4
-		paint.setColor(getResources().getColor(R.color.current_progress)); //蓝色的圆圈：即进度条
-		canvas.drawArc(oval, -90, ((float) progress / maxProgress) * 360, false, paint); // 绘制进度圆弧，这里是蓝色
-		
-//		LogUtils.i(  "进度===" + ((float) progress / maxProgress) * 360  + "progress/  maxProgress " + maxProgress + "/" + progress);
-		//显示进度，百分比
+		// paint.setColor(Color.rgb(0x57, 0x87, 0xb6)); //0b6ac4
+		paint.setColor(getResources().getColor(R.color.current_progress)); // 蓝色的圆圈：即进度条
+		canvas.drawArc(oval, -90, ((float) progress / maxProgress) * 360,
+				false, paint); // 绘制进度圆弧，这里是蓝色
+
+		// LogUtils.i( "进度===" + ((float) progress / maxProgress) * 360 +
+		// "progress/  maxProgress " + maxProgress + "/" + progress);
+		// 显示进度，百分比
 		paint.setStrokeWidth(1);
 		String text = progress + "%";
 		int textHeight = height / 4;
 		paint.setTextSize(textHeight);
 		int textWidth = (int) paint.measureText(text, 0, text.length());
 		paint.setStyle(Style.FILL);
-		canvas.drawText(text, width / 2 - textWidth / 2, height / 2 +textHeight/2, paint);
+		canvas.drawText(text, width / 2 - textWidth / 2, height / 2
+				+ textHeight / 2, paint);
 	}
-	
-	
-	
+
 	public int getMaxProgress() {
 		return maxProgress;
 	}
