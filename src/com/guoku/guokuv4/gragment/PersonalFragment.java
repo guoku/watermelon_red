@@ -12,8 +12,8 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +32,7 @@ import com.ekwing.students.customview.ScrollViewWithListView;
 import com.ekwing.students.utils.ArrayListAdapter;
 import com.ekwing.students.utils.DateUtils;
 import com.ekwing.students.utils.SharePrenceUtil;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
 import com.guoku.guokuv4.act.CommentTalkAct;
 import com.guoku.guokuv4.act.EntityAct;
@@ -41,6 +42,7 @@ import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.act.RegisterAct;
 import com.guoku.guokuv4.act.SettingAct;
 import com.guoku.guokuv4.act.UserInfoAct;
+import com.guoku.guokuv4.adapter.GridView3vAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
 import com.guoku.guokuv4.entity.test.AccountBean;
 import com.guoku.guokuv4.entity.test.EntityBean;
@@ -103,7 +105,7 @@ public class PersonalFragment extends BaseFrament {
 	private ImageView iv_set;
 
 	@ViewInject(R.id.psrson_iv_pic)
-	private ImageView psrson_iv_pic;
+	private SimpleDraweeView psrson_iv_pic;
 
 	@ViewInject(R.id.sv)
 	private PullToRefreshScrollView sv;
@@ -130,7 +132,7 @@ public class PersonalFragment extends BaseFrament {
 	@ViewInject(R.id.psrson_lv_2)
 	private ScrollViewWithListView psrson_lv_2;
 
-	private ArrayListAdapter<EntityBean> gvAdapter;
+	private GridView3vAdapter gvAdapter;
 	private ArrayListAdapter<TabNoteBean> lvAdapter;
 	private ArrayListAdapter<TagBean> tabAdapter;
 
@@ -178,7 +180,6 @@ public class PersonalFragment extends BaseFrament {
 
 			likeList = ParseUtil.getTabLikeList(result);
 			gvAdapter.setList(likeList);
-			psrson_tv_tab1.setText("喜爱 " + String.valueOf(likeList.size()));
 			break;
 		case TABLIKEADD:
 			try {
@@ -256,9 +257,8 @@ public class PersonalFragment extends BaseFrament {
 
 		psrson_tv_name.setText(userBean.getUser().getNickname());
 		psrson_tv_sign.setText(userBean.getUser().getBio());
-
-		imageLoader.displayImage(userBean.getUser().get240(), psrson_iv_pic,
-				optionsRound, new ImgUtils.AnimateFirstDisplayListener());
+		
+		psrson_iv_pic.setImageURI(Uri.parse(userBean.getUser().get240()));
 
 		if (userBean.getUser().getGender().equals("男")) {
 			psrson_iv_sex.setTextColor(Color.rgb(19, 143, 215));
@@ -270,7 +270,7 @@ public class PersonalFragment extends BaseFrament {
 
 		psrson_tv_tab2.setText("点评 "
 				+ userBean.getUser().getEntity_note_count());
-		psrson_tv_tab1.setText("喜爱 ");
+		psrson_tv_tab1.setText("喜爱 " + userBean.getUser().getLike_count());
 		psrson_tv_tab3.setText("标签 " + userBean.getUser().getTag_count());
 
 		// BitmapUtil.setRoundImage(imageLoader, userBean.getUser()
@@ -283,27 +283,8 @@ public class PersonalFragment extends BaseFrament {
 		psrson_gv.setOnScrollListener(new PauseOnScrollListener(imageLoader,
 				true, true));
 
-		gvAdapter = new ArrayListAdapter<EntityBean>(context) {
-
-			@Override
-			public View getView(int position, View convertView, ViewGroup parent) {
-				if (convertView == null) {
-					convertView = new ImageView(mContext);
-					LayoutParams params = new LayoutParams(
-							EkwingApplication.screenW / 3 - 10,
-							EkwingApplication.screenW / 3 - 10);
-					convertView.setLayoutParams(params);
-					((ImageView) convertView)
-							.setScaleType(ScaleType.FIT_CENTER);
-					convertView.setBackgroundColor(Color.WHITE);
-				}
-				imageLoader.displayImage(mList.get(position).get240(),
-						(ImageView) convertView, options,
-						new ImgUtils.AnimateFirstDisplayListener());
-
-				return convertView;
-			}
-		};
+		gvAdapter = new GridView3vAdapter(getActivity());
+		
 		lvAdapter = new ArrayListAdapter<TabNoteBean>(context) {
 
 			@Override
@@ -704,10 +685,8 @@ public class PersonalFragment extends BaseFrament {
 
 			psrson_tv_name.setText(userBean.getUser().getNickname());
 			psrson_tv_sign.setText(userBean.getUser().getBio());
-
-			imageLoader.displayImage(userBean.getUser().get240(),
-					psrson_iv_pic, optionsRound,
-					new ImgUtils.AnimateFirstDisplayListener());
+			
+			psrson_iv_pic.setImageURI(Uri.parse(userBean.getUser().get240()));
 
 			if (userBean.getUser().getGender().equals("男")) {
 				psrson_iv_sex.setTextColor(Color.rgb(19, 143, 215));

@@ -111,7 +111,7 @@ public abstract class BasePageFragment extends BaseFrament {
 			tView.setOnClickListener(new MyOnClickListener(i, tView));
 			tView.setGravity(Gravity.CENTER);
 			LayoutParams lParams = new LinearLayout.LayoutParams(
-					LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1.0f);
+					LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f);
 			tView.setLayoutParams(lParams);
 			layoutText.addView(tView);
 		}

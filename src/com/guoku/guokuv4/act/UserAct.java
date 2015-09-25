@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,9 @@ import com.ekwing.students.customview.ScrollViewWithListView;
 import com.ekwing.students.utils.ArrayListAdapter;
 import com.ekwing.students.utils.DateUtils;
 import com.ekwing.students.utils.ToastUtil;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
+import com.guoku.guokuv4.adapter.GridView3vAdapter;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.TabNoteBean;
@@ -96,7 +99,7 @@ public class UserAct extends NetWorkActivity {
 	private ImageView psrson_iv_tab3;
 
 	@ViewInject(R.id.psrson_iv_pic)
-	private ImageView psrson_iv_pic;
+	private SimpleDraweeView psrson_iv_pic;
 
 	@ViewInject(R.id.psrson_tv_fans)
 	private TextView psrson_tv_fans;
@@ -118,7 +121,7 @@ public class UserAct extends NetWorkActivity {
 	@ViewInject(R.id.psrson_lv_2)
 	private ScrollViewWithListView psrson_lv_2;
 
-	private ArrayListAdapter<EntityBean> gvAdapter;
+	private GridView3vAdapter gvAdapter;
 	private ArrayListAdapter<TabNoteBean> lvAdapter;
 	private ArrayListAdapter<TagBean> tabAdapter;
 
@@ -275,8 +278,7 @@ public class UserAct extends NetWorkActivity {
 			psrson_iv_sex.setTextColor(Color.rgb(253, 189, 217));
 		}
 
-		imageLoader.displayImage(userBean.get240(), psrson_iv_pic,
-				optionsRound1, new ImgUtils.AnimateFirstDisplayListener());
+		psrson_iv_pic.setImageURI(Uri.parse(userBean.get240()));
 
 		psrson_tv_tab2.setText("点评 " + userBean.getEntity_note_count());
 		psrson_tv_tab1.setText("喜爱 " + userBean.getLike_count());
@@ -286,13 +288,13 @@ public class UserAct extends NetWorkActivity {
 			setGCenter(true, "我");
 			// psrson_tv_btn.setText("修改个人资料");
 			// psrson_ll_btn.setBackgroundColor(color.g_224);
-		}else{
+		} else {
 			psrson_ll_btn.setBackgroundResource(R.drawable.blue_shap);
 			psrson_tv_btn.setText("关注");
 			psrson_iv_btn.setImageResource(R.drawable.add_to);
 			psrson_tv_btn.setTextColor(Color.WHITE);
-		} 
-		
+		}
+
 		if (!StringUtils.isEmpty(userBean.getRelation())) {
 			if (userBean.getRelation().equals("1")) {
 				setGCenter(true, userBean.getNickname());
@@ -313,8 +315,8 @@ public class UserAct extends NetWorkActivity {
 				psrson_tv_btn.setTextColor(Color.argb(255, 19, 143, 215));
 			}
 		}
-		
-		 else {
+
+		else {
 			setGCenter(true, userBean.getNickname());
 			// psrson_iv_btn.setBackgroundResource(R.drawable.add);
 			psrson_ll_btn.setBackgroundResource(R.drawable.blue_shap);
@@ -332,27 +334,8 @@ public class UserAct extends NetWorkActivity {
 		psrson_gv.setOnScrollListener(new PauseOnScrollListener(imageLoader,
 				true, true));
 
-		gvAdapter = new ArrayListAdapter<EntityBean>(context) {
+		gvAdapter = new GridView3vAdapter(mContext);
 
-			@Override
-			public View getView(int position, View convertView, ViewGroup parent) {
-				if (convertView == null) {
-					convertView = new ImageView(mContext);
-					LayoutParams params = new LayoutParams(
-							EkwingApplication.screenW / 3 - 10,
-							EkwingApplication.screenW / 3 - 10);
-					convertView.setLayoutParams(params);
-					((ImageView) convertView)
-							.setScaleType(ScaleType.FIT_CENTER);
-					convertView.setBackgroundColor(Color.WHITE);
-				}
-				imageLoader.displayImage(mList.get(position).get240(),
-						(ImageView) convertView, options,
-						new ImgUtils.AnimateFirstDisplayListener());
-
-				return convertView;
-			}
-		};
 		lvAdapter = new ArrayListAdapter<TabNoteBean>(context) {
 
 			@Override
@@ -368,9 +351,10 @@ public class UserAct extends NetWorkActivity {
 					holder = (LVViewHold) convertView.getTag();
 				}
 				TabNoteBean bean = mList.get(position);
-				imageLoader.displayImage(bean.getEntity().get240(),
-						holder.person_item_iv_pic, options,
-						new ImgUtils.AnimateFirstDisplayListener());
+
+				holder.person_item_iv_pic.setImageURI(Uri.parse(bean
+						.getEntity().get240()));
+
 				holder.person_item_tv_context.setText(bean.getNote()
 						.getContent());
 				holder.person_item_tv_time.setText(DateUtils
@@ -622,7 +606,7 @@ public class UserAct extends NetWorkActivity {
 
 	private class LVViewHold {
 		@ViewInject(R.id.person_item_iv_pic)
-		ImageView person_item_iv_pic;
+		SimpleDraweeView person_item_iv_pic;
 
 		@ViewInject(R.id.person_item_tv_context)
 		TextView person_item_tv_context;
@@ -634,7 +618,7 @@ public class UserAct extends NetWorkActivity {
 
 	private class TBViewHold {
 		@ViewInject(R.id.person_item3_iv_pic)
-		ImageView person_item_iv_pic;
+		SimpleDraweeView person_item_iv_pic;
 
 		@ViewInject(R.id.person_item3_tv_context)
 		TextView person_item_tv_context;

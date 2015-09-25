@@ -188,11 +188,17 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	private Animation animationOut;
 	
 	TagTwo tagTwo;//二级品类
+	
+	View lineView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.product_act);
+		
+		lineView = View.inflate(mContext,
+				R.layout.line_gray, null);
+		
 		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 
 		init();
@@ -406,7 +412,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 		try {
 			android.widget.RelativeLayout.LayoutParams param = new android.widget.RelativeLayout.LayoutParams(
-					EkwingApplication.screenW, EkwingApplication.screenW);
+					EkwingApplication.screenW - 10, EkwingApplication.screenW - 10);
 			param.addRule(RelativeLayout.CENTER_IN_PARENT);
 			vp.setLayoutParams(param);
 			sv.smoothScrollTo(0, 0);
@@ -1081,8 +1087,10 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 			/**** 购买按钮 ****/
 			if (product_tv_price.getParent() != view3) {
+				view3.setVisibility(View.VISIBLE);
 				view2.removeView(product_tv_price);
 				view3.addView(product_tv_price);
+				view3.getBackground().setAlpha(230);
 
 				/**** 喜欢 分享 更多 ****/
 				if (getTitleLayout().getVisibility() == View.GONE) {
@@ -1105,7 +1113,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 								R.anim.alpha_out);
 					}
 					getTitleLayout().startAnimation(animationOut);
-
+					view3.setVisibility(View.GONE);
 					animationOut.setAnimationListener(new AnimationListener() {
 
 						@Override

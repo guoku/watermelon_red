@@ -4,7 +4,10 @@
     android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="8dp" >
+    android:padding="8dp" 
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    >
 
     <TextView
         android:id="@+id/person_item3_tv_context"
@@ -38,12 +41,16 @@
         android:scaleType="centerInside"
         android:src="@drawable/right"
         android:visibility="visible" />
-
-    <ImageView
+    
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/person_item3_iv_pic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="8dp" 
+        android:layout_gravity="center"
+        fresco:placeholderImage="@drawable/item240" 
+        fresco:roundAsCircle="true"
+        />
 
 </LinearLayout>
