@@ -58,9 +58,13 @@ import com.ekwing.students.customview.ScrollViewWithGridView;
 import com.ekwing.students.customview.ScrollViewWithListView;
 import com.ekwing.students.utils.ArrayListAdapter;
 import com.ekwing.students.utils.DateUtils;
+import com.ekwing.students.utils.SharePrenceUtil;
 import com.ekwing.students.utils.StringUtil;
 import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
+import com.guoku.guokuv4.adapter.SeachCommodityTypeAdapter;
+import com.guoku.guokuv4.bean.TagBean;
+import com.guoku.guokuv4.bean.TagTwo;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.NoteBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
@@ -149,6 +153,9 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 	@ViewInject(R.id.layout_more)
 	LinearLayout viewMore;
+	
+	@ViewInject(R.id.product_ll_like_2)
+	LinearLayout layout_like;//多少人喜爱layout
 
 	int priceBtTop;// 记录价格按钮顶部的位置
 
@@ -156,7 +163,6 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	private ArrayListAdapter<EntityBean> gv2Adapter;
 	private ArrayListAdapter<NoteBean> comAdapter;
 	private ArrayList<Tab2Bean> tabList;
-	private Tab2Bean curTab2Bean;
 
 	private int isLike;
 
@@ -180,6 +186,8 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 	private Animation animationIn;
 	private Animation animationOut;
+	
+	TagTwo tagTwo;//二级品类
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -354,13 +362,28 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		productBean = JSON.parseObject(getIntent().getStringExtra("data"),
 				PInfoBean.class);
 		tabList = ParseUtil.getTab2ALL(mContext);
-		for (Tab2Bean bean : tabList) {
-			if (bean.getCategory_id().equals(
-					productBean.getEntity().getCategory_id())) {
-				curTab2Bean = bean;
-				product_tv_from.setText("来自「" + bean.getCategory_title() + "」");
-				break;
+		
+		productBean = JSON.parseObject(getIntent().getStringExtra("data"),
+				PInfoBean.class);
+		tabList = ParseUtil.getTab2ALL(mContext);
+		
+		try {
+			String result = SharePrenceUtil.getTab(mContext);
+			if(!StringUtils.isEmpty(result)){
+				ArrayList<TagBean> tBean = (ArrayList<TagBean>) JSON
+						.parseArray(result, TagBean.class);
+				for(TagBean tBeant : tBean){
+					for(TagTwo tagTwos : tBeant.getContent()){
+						if(String.valueOf(tagTwos.getCategory_id()).equals(productBean.getEntity().getCategory_id())){
+							product_tv_from.setText("来自「" + tagTwos.getCategory_title() + "」");
+							tagTwo = tagTwos;
+						}
+					}
+				}
 			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		if (productBean.getEntity().getBrand() != null
 				&& !"".equals(productBean.getEntity().getBrand())) {
@@ -373,6 +396,8 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		if (!productBean.getEntity().getLike_count().equals("")) {
 			product_tv_like_size.setText(productBean.getEntity()
 					.getLike_count() + " 人喜爱");
+		}else{
+			layout_like.setVisibility(View.GONE);
 		}
 		product_tv_price.setText(getResources().getString(
 				R.string.tv_commodity_go_buy,
@@ -875,10 +900,10 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 	@OnClick(R.id.product_ll_tab)
 	public void Tab(View v) {
-		Intent intent = new Intent(mContext, TabAct.class);
-		intent.putExtra("data", curTab2Bean.getCategory_id());
-		intent.putExtra("name", curTab2Bean.getCategory_title());
-		mContext.startActivity(intent);
+		
+		Bundle bundle = new Bundle();
+		bundle.putSerializable(TabAct.SECOND_ACT_ONTENT, tagTwo);
+		openActivity(TabListSecondAct.class, bundle);
 	}
 
 	private class ViewHolder {

@@ -31,6 +31,9 @@ public abstract class BaseActivity extends FragmentActivity {
 	protected Context mContext;
 	protected Handler mHandler;
 	protected boolean isLive;
+	
+	public static final String LIKE = "like";
+	public static final String TIME = "time";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

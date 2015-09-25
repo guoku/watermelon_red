@@ -11,9 +11,8 @@
         android:id="@+id/jingxuan_item_iv_img"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        fresco:placeholderImage="@drawable/item800" 
         android:layout_gravity="center"
-        />
+        fresco:placeholderImage="@drawable/item800" />
 
     <TextView
         android:id="@+id/jingxuan_item_tv_context"
@@ -84,5 +83,9 @@
                 android:textColor="@color/g_other" />
         </LinearLayout>
     </LinearLayout>
+
+    <include
+        layout="@layout/line_gray"
+        android:background="@color/text_bg_box" />
 
 </LinearLayout>

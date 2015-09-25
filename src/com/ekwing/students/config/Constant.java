@@ -340,6 +340,14 @@ public class Constant {
 	public static final String HOME = URL + "/mobile/v4/home/";
 	/** 首页图文流 */
 	public static final String ARTICLES = URL + "/mobile/v4/articles/";
+	/** 二级品类商品 */
+	public static final String CATEGORY = URL + "/mobile/v4/category/";
+	/** 品类搜索 */
+	public static final String CATEGORY_SEARCH = URL + "/mobile/v4/category/search/";
+	
+	
+	
+	
 
 	public static final String DESCRIPTOR = "1";
 	public static final String WX_APPID = "wx59118ccde8270caa";

@@ -244,7 +244,7 @@ public class SharePrenceUtil {
 
 	public static String getTab(Context context) {
 		return context.getSharedPreferences(Constant.SP_STUDENT_TAB, 0)
-				.getString(Constant.STUDENT_TAB, "homework");
+				.getString(Constant.STUDENT_TAB, "");
 	}
 
 	public static void setTab(Context context, String tab) {

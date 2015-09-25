@@ -101,6 +101,7 @@
 			android:textColor="@color/title_bar_blue"
 			android:drawableRight="@drawable/more_right" 
 			android:gravity="center"
+			android:layout_marginLeft="5dp"
             />
     </RelativeLayout>
     

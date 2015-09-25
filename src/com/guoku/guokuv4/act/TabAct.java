@@ -2,16 +2,12 @@ package com.guoku.guokuv4.act;
 
 import java.util.ArrayList;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -26,19 +22,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.base.NetWorkActivity;
 import com.ekwing.students.config.Constant;
 import com.ekwing.students.utils.SharePrenceUtil;
 import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.adapter.EntityAdapter;
-import com.guoku.guokuv4.adapter.GVAdapter;
+import com.guoku.guokuv4.adapter.GridView3vAdapter;
 import com.guoku.guokuv4.bean.TagBean;
 import com.guoku.guokuv4.bean.TagTwo;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.view.HeaderGridView;
 import com.guoku.guokuv4.view.HeaderListview;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -52,9 +48,9 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 	private static final int PROINFO = 12;
 	private static final int LIST = 1;
 	private static final int GRID = 2;
-	private static final int TAG_CATEGORY = 3;// 分类
-	public static final int requestCode = 1001;
+	// private static final int TAG_CATEGORY = 3;// 分类
 	public static final String CID = "CID";// 二级分类ui返回的选择分类
+	public static final String SECOND_ACT_ONTENT = "SECOND_ACT_ONTENT";// 二级分类ACT
 
 	// @ViewInject(R.id.scroll_view)
 	// private ScrollView scrollView;
@@ -92,7 +88,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 	@ViewInject(R.id.view_back_black)
 	private View backblack;
 
-	private GVAdapter gvAdapter;
+	private GridView3vAdapter gvAdapter;
 	private EntityAdapter lvAdapter;
 
 	private String cid;
@@ -145,17 +141,6 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 			intent.putExtra("data", JSON.toJSONString(bean));
 			startActivity(intent);
 			break;
-		case TAG_CATEGORY:
-			try {
-				ArrayList<TagBean> tBean = (ArrayList<TagBean>) JSON
-						.parseArray(result, TagBean.class);
-
-				initTag(tBean);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			break;
 		default:
 			break;
 		}
@@ -174,7 +159,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		setGLeft(true, R.drawable.back_selector);
 		list = new ArrayList<EntityBean>();
 
-		gvAdapter = new GVAdapter(context);
+		gvAdapter = new GridView3vAdapter(context);
 		lvAdapter = new EntityAdapter(context);
 
 		// tab_gv.addHeaderView(v)
@@ -207,8 +192,18 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		});
 
 		sendData("time");// 默认按时间排序
-		sendConnection(Constant.CATAB, new String[] {}, new String[] {},
-				TAG_CATEGORY, false);
+
+		try {
+			String result = SharePrenceUtil.getTab(mContext);
+			if (!StringUtils.isEmpty(result)) {
+				ArrayList<TagBean> tBean = (ArrayList<TagBean>) JSON
+						.parseArray(result, TagBean.class);
+				initTag(tBean);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@SuppressLint("NewApi")
@@ -224,7 +219,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 					LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
 							LinearLayout.LayoutParams.WRAP_CONTENT,
 							LinearLayout.LayoutParams.WRAP_CONTENT, 1.0f);
-					lParams.setMargins(3, 5, 3, 5);
+					lParams.setMargins(5, 5, 5, 5);
 					textView.setLayoutParams(lParams);
 					textView.setText(tagtwo.getCategory_title());
 					textView.setBackgroundResource(R.drawable.text_bg_box_gray);
@@ -234,7 +229,9 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 						@Override
 						public void onClick(View arg0) {
 							// TODO Auto-generated method stub
-							sendData(textView.getText().toString());
+							Bundle bundle = new Bundle();
+							bundle.putSerializable(SECOND_ACT_ONTENT, tagtwo);
+							openActivity(TabListSecondAct.class, bundle);
 						}
 					});
 					layoutAddTag.addView(textView);
@@ -415,16 +412,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		if (tagBean != null) {
 			Bundle bundle = new Bundle();
 			bundle.putSerializable(TabAct.class.getName(), tagBean);
-			openActivityForResult(CategoryListAct.class, bundle, requestCode);
-		}
-	}
-
-	@Override
-	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
-		// TODO Auto-generated method stub
-		if (arg1 == requestCode) {
-			cid = arg2.getStringExtra(CID);
-			sendData(cid);
+			openActivity(CategoryListAct.class, bundle);
 		}
 	}
 

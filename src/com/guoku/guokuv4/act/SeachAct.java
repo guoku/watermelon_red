@@ -37,6 +37,7 @@ import com.guoku.R;
 import com.guoku.guokuv4.adapter.EntityAdapter;
 import com.guoku.guokuv4.adapter.FansAdapter;
 import com.guoku.guokuv4.adapter.SeachCommodityTypeAdapter;
+import com.guoku.guokuv4.bean.TagBean;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.Tab2Bean;
@@ -379,6 +380,10 @@ public class SeachAct extends NetWorkActivity implements OnClickListener,
 		Logger.i(TAG, "listtab" + listTab.toString());
 
 		sGridView.setAdapter(seachCommodityTypeAdapter);
+
+		// ArrayList<TagBean> tBean = (ArrayList<TagBean>) JSON
+		// .parseArray(result, TagBean.class);
+
 		curList.clear();
 		if (listTab.size() > 0) {
 			if (!StringUtils.isEmpty(seachConten)) {
@@ -398,6 +403,10 @@ public class SeachAct extends NetWorkActivity implements OnClickListener,
 		}
 		sendConnection(Constant.TAB, new String[] {}, new String[] {}, TAB,
 				false);
+
+		// sendConnection(Constant.CATEGORY_SEARCH, new String[] {"q",
+		// "page", "size"}, new String[] {seachConten, "0", "30"}, TAB,
+		// false);
 
 		sou_tv_tab2.setTextColor(Color.rgb(65, 66, 67));
 		sou_tv_tab1.setTextColor(Color.rgb(157, 158, 159));

@@ -2,6 +2,7 @@ package com.guoku.guokuv4.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap.Config;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.utils.ArrayListAdapter;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.utils.ImgUtils;
@@ -20,18 +22,11 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 public class EntityAdapter extends ArrayListAdapter<EntityBean> {
-	private ImageLoader loader = ImageLoader.getInstance();
 	private DisplayImageOptions options;
 	private int w = EkwingApplication.screenW / 4;
 
 	public EntityAdapter(Context context) {
 		super(context);
-		options = new DisplayImageOptions.Builder()
-				.imageScaleType(ImageScaleType.EXACTLY)
-				.considerExifParams(true).bitmapConfig(Config.RGB_565)
-				.showImageOnLoading(R.color.g_w)
-				.showImageForEmptyUri(R.color.g_w).showImageOnFail(R.color.g_w)
-				.cacheInMemory(true).build();
 	}
 
 	@Override
@@ -46,10 +41,10 @@ public class EntityAdapter extends ArrayListAdapter<EntityBean> {
 			holder = (ViewHold) convertView.getTag();
 		}
 		EntityBean bean = (EntityBean) mList.get(position);
-		loader.displayImage(bean.get240(), holder.entity_item_iv_pic, options,
-				new ImgUtils.AnimateFirstDisplayListener());
+		holder.entity_item_iv_pic.setImageURI(Uri.parse(bean.get240()));
 		LayoutParams params = new LayoutParams(w, w);
 		holder.entity_item_iv_pic.setLayoutParams(params);
+		
 		if (bean.getLike_already().equals("0")) {
 			holder.entity_item_iv_islike.setImageResource(R.drawable.icon_like);
 		} else {
@@ -67,7 +62,7 @@ public class EntityAdapter extends ArrayListAdapter<EntityBean> {
 		@ViewInject(R.id.entity_item_iv_islike)
 		ImageView entity_item_iv_islike;
 		@ViewInject(R.id.entity_item_iv_pic)
-		ImageView entity_item_iv_pic;
+		SimpleDraweeView entity_item_iv_pic;
 
 		@ViewInject(R.id.entity_item_tv_com)
 		TextView entity_item_tv_com;

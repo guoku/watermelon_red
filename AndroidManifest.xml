@@ -57,7 +57,7 @@
         <!--
              <meta-data
             android:name="UMENG_APPKEY"
-            android:value="55d5453567e58ed077000332" />
+            android:value="55d5453567e58ed077000332" />
         -->
 
         <meta-data
@@ -115,6 +115,11 @@
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
+            android:name="com.guoku.guokuv4.act.TabListSecondAct"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.guoku.guokuv4.act.CategoryListAct"
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
@@ -147,15 +152,14 @@
         <activity
             android:name="com.guoku.guokuv4.act.WebShareAct"
             android:configChanges="orientation"
-            android:screenOrientation="portrait" 
             android:hardwareAccelerated="true"
-            ></activity>
+            android:screenOrientation="portrait" >
+        </activity>
         <activity
             android:name="com.guoku.guokuv4.act.WebAct"
             android:configChanges="orientation"
-            android:screenOrientation="portrait" 
             android:hardwareAccelerated="true"
-            >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.guoku.guokuv4.act.EntityAct"

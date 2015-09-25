@@ -58,5 +58,9 @@
         />
         
     </RelativeLayout>
+    
+    <include layout="@layout/line_gray"
+        android:background="@color/text_bg_box"
+        />
 
 </LinearLayout>

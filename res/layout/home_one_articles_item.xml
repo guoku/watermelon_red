@@ -29,15 +29,16 @@
             android:id="@+id/article_below"
             style="@style/home_page_item_article_below"
             android:layout_alignParentBottom="true"
+            android:visibility="invisible"
             />
         
     </RelativeLayout>
     
         <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/img_article"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="100dp"
-        fresco:placeholderImage="@drawable/item240" 
+        fresco:placeholderImage="@color/gray_bg" 
         android:layout_gravity="center"
         android:layout_alignParentRight="true"
         android:background="@color/gray"

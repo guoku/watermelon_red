@@ -20,6 +20,8 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.umeng.analytics.MobclickAgent;
 
 public class WelAct extends NetWorkActivity {
+	
+	private static final int TAG_CATEGORY = 1001;// 分类
 
 	@ViewInject(R.id.wecome)
 	private RelativeLayout wecome;
@@ -97,7 +99,14 @@ public class WelAct extends NetWorkActivity {
 	@Override
 	protected void onSuccess(String result, int where) {
 		// TODO Auto-generated method stub
+		switch (where) {
+		case TAG_CATEGORY:
+			SharePrenceUtil.setTab(context, result);//储存品类数据
+			break;
 
+		default:
+			break;
+}
 	}
 
 	@Override
@@ -109,7 +118,8 @@ public class WelAct extends NetWorkActivity {
 	@Override
 	protected void setupData() {
 		// TODO Auto-generated method stub
-
+		sendConnection(Constant.CATAB, new String[] {}, new String[] {},
+				TAG_CATEGORY, false);
 	}
 
 }

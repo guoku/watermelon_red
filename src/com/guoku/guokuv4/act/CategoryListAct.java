@@ -52,10 +52,9 @@ public class CategoryListAct extends BaseActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-		Intent intent = new Intent();
-		intent.putExtra(TabAct.CID, cAdapter.getItem(arg2).getCategory_title());
-		setResult(TabAct.requestCode, intent);
-		finish();
+		Bundle bundle = new Bundle();
+		bundle.putSerializable(TabAct.SECOND_ACT_ONTENT, cAdapter.getItem(arg2));
+		openActivity(TabListSecondAct.class, bundle);
 	}
 
 }

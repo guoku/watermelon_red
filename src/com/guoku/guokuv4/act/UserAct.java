@@ -286,6 +286,11 @@ public class UserAct extends NetWorkActivity {
 			setGCenter(true, "我");
 			// psrson_tv_btn.setText("修改个人资料");
 			// psrson_ll_btn.setBackgroundColor(color.g_224);
+		}else{
+			psrson_ll_btn.setBackgroundResource(R.drawable.blue_shap);
+			psrson_tv_btn.setText("关注");
+			psrson_iv_btn.setImageResource(R.drawable.add_to);
+			psrson_tv_btn.setTextColor(Color.WHITE);
 		} 
 		
 		if (!StringUtils.isEmpty(userBean.getRelation())) {

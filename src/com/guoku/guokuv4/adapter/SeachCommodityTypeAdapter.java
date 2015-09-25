@@ -6,6 +6,7 @@ package com.guoku.guokuv4.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap.Config;
+import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.ekwing.students.utils.ArrayListAdapter;
 import com.guoku.R;
 import com.guoku.guokuv4.act.TabAct;
+import com.guoku.guokuv4.act.TabListSecondAct;
 import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.utils.ImgUtils;
 import com.lidroid.xutils.ViewUtils;
@@ -29,6 +31,8 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
  * @date 2015-8-11 下午9:30:13
  */
 public class SeachCommodityTypeAdapter extends ArrayListAdapter<Tab2Bean> {
+	
+	public final static String SEACH_TAG = "SEACH_TAG";
 
 	private ImageLoader loader = ImageLoader.getInstance();
 	private DisplayImageOptions options;
@@ -68,9 +72,10 @@ public class SeachCommodityTypeAdapter extends ArrayListAdapter<Tab2Bean> {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(mContext, TabAct.class);
-				intent.putExtra("data", bean.getCategory_id());
-				intent.putExtra("name", bean.getCategory_title());
+				Intent intent = new Intent(mContext, TabListSecondAct.class);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable(SEACH_TAG, bean);
+				intent.putExtras(bundle);
 				mContext.startActivity(intent);
 			}
 		});

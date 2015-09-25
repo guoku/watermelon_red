@@ -10,7 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,18 +38,16 @@ import com.avos.avoscloud.AVAnalytics;
 import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.config.Constant;
 import com.ekwing.students.customview.ScrollViewWithListView;
-import com.ekwing.students.utils.ArrayListAdapter;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.ekwing.students.utils.SharePrenceUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.act.SeachAct;
 import com.guoku.guokuv4.act.TabAct;
 import com.guoku.guokuv4.act.UserAct;
-import com.guoku.guokuv4.act.WebAct;
 import com.guoku.guokuv4.act.WebShareAct;
+import com.guoku.guokuv4.adapter.GridView3vAdapter;
 import com.guoku.guokuv4.adapter.HomeOneArticlesAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
-import com.guoku.guokuv4.bean.Articles;
 import com.guoku.guokuv4.bean.HomePageOneBean;
 import com.guoku.guokuv4.bean.Sharebean;
 import com.guoku.guokuv4.entity.test.BannerBean;
@@ -63,7 +60,6 @@ import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.ImgUtils;
 import com.guoku.guokuv4.view.ImageAddTextLayout;
-import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.umeng.analytics.MobclickAgent;
@@ -100,7 +96,7 @@ public class GuangFragment extends BaseFrament {
 	@ViewInject(R.id.faxian_gv)
 	private GridView faxian_gv;
 
-	private GridViewAdapter gvAdapter;
+	private GridView3vAdapter gvAdapter;
 
 	private ArrayList<EntityBean> hotList;
 	private ArrayList<BannerBean> list;
@@ -332,7 +328,7 @@ public class GuangFragment extends BaseFrament {
 	@Override
 	protected void init() {
 
-		gvAdapter = new GridViewAdapter(getActivity());
+		gvAdapter = new GridView3vAdapter(getActivity());
 
 		hotList = new ArrayList<EntityBean>();
 
@@ -483,43 +479,4 @@ public class GuangFragment extends BaseFrament {
 		}
 	}
 
-	class GridViewAdapter extends ArrayListAdapter<EntityBean> {
-
-		public GridViewAdapter(Context context) {
-			super(context);
-			// TODO Auto-generated constructor stub
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
-
-			ViewHold holder = null;
-			if (convertView == null) {
-				convertView = View.inflate(mContext,
-						R.layout.grid_view_img_item, null);
-				holder = new ViewHold();
-				ViewUtils.inject(holder, convertView);
-				convertView.setTag(holder);
-			} else {
-				holder = (ViewHold) convertView.getTag();
-			}
-
-			EntityBean eBean = mList.get(position);
-
-			holder.imgIcon.setImageURI(Uri.parse(eBean.get240()));
-
-			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-					EkwingApplication.screenW / 3 - 10,
-					EkwingApplication.screenW / 3 - 10);
-			holder.imgIcon.setLayoutParams(params);
-
-			return convertView;
-		}
-
-		class ViewHold {
-			@ViewInject(R.id.img)
-			SimpleDraweeView imgIcon;
-		}
-	}
 }

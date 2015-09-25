@@ -187,6 +187,8 @@
     <color name="gray_bg">#F8F8F8</color>
     <!--  文本背景框-->
     <color name="text_bg_box">#E6E6E6</color>
+    <!--  4.1图文流分割线-->
+    <color name="line_gray_view">#1b1b1b</color>
      
 
 </resources>

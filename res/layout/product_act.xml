@@ -49,31 +49,32 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="name"
+                android:textSize="17sp"
                 android:textColor="@color/g_main" />
 
             <LinearLayout
                 android:id="@+id/layout_more"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal" >
+                android:orientation="horizontal" 
+                android:gravity="center"
+                >
 
                 <ImageView
                     android:id="@+id/product_iv_like"
                     style="@style/layout_width_more"
-                    android:layout_weight="1"
+                    android:layout_marginRight="35dp"
                     android:src="@drawable/like_gary" />
 
                 <ImageView
                     android:id="@+id/product_tv_comment"
                     style="@style/layout_width_more"
-                    android:layout_weight="1"
                     android:src="@drawable/comment_2" />
 
                 <ImageView
                     android:id="@+id/product_tv_more"
                     style="@style/layout_width_more"
-                    android:layout_weight="1"
+                    android:layout_marginLeft="35dp"
                     android:src="@drawable/more" />
             </LinearLayout>
 
@@ -81,9 +82,7 @@
                 android:id="@+id/layout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_margin="10dp"
                 android:orientation="vertical" >
 
                 <TextView
@@ -98,60 +97,9 @@
                     android:textColor="#ffffffff" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:orientation="horizontal"
-                android:padding="12dp" >
+            <include layout="@layout/line_gray"/>
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|right"
-                    android:orientation="horizontal" >
-                </LinearLayout>
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="2px"
-                android:layout_marginTop="4dp"
-                android:background="@color/g_line" />
-
-            <LinearLayout
-                android:id="@+id/product_ll_tab"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="#fff8f8f8"
-                android:orientation="horizontal"
-                android:padding="12dp" >
-
-                <TextView
-                    android:id="@+id/product_tv_from"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text=""
-                    android:textColor="@color/g_main" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:text=""
-                    android:textColor="@color/g_other" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="right"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/right"
-                    android:visibility="visible" />
-            </LinearLayout>
+            
 
             <LinearLayout
                 android:id="@+id/product_ll_like_2"
@@ -192,7 +140,9 @@
                 android:id="@+id/product_gv_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="#ffffffff"
                 android:cacheColorHint="#00000000"
                 android:gravity="center"
@@ -220,16 +170,40 @@
                 android:visibility="visible" >
             </com.ekwing.students.customview.ScrollViewWithListView>
 
-            <TextView
+            
+            <LinearLayout
+                android:id="@+id/product_ll_tab"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="#f8f8f8"
-                android:paddingBottom="8dp"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                android:paddingTop="16dp"
-                android:text="相似推荐"
-                android:textColor="@color/g_main" />
+                android:background="#fff8f8f8"
+                android:orientation="horizontal"
+                android:padding="12dp" 
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:id="@+id/product_tv_from"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/g_main" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text=""
+                    android:textColor="@color/g_other" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/right"
+                    android:visibility="visible" />
+            </LinearLayout>
 
             <com.ekwing.students.customview.ScrollViewWithGridView
                 android:id="@+id/product_gv_product"
@@ -241,7 +215,9 @@
                 android:horizontalSpacing="8dp"
                 android:listSelector="#00000000"
                 android:numColumns="3"
-                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
                 android:scrollbars="none"
                 android:verticalSpacing="8dp" />
         </LinearLayout>
