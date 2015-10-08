@@ -43,7 +43,7 @@
 
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="guoku_bata" />
+            android:value="channel" />
         <meta-data
             android:name="leancloud"
             android:value="main" />
