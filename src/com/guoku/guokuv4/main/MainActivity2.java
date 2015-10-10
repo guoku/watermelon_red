@@ -70,6 +70,8 @@ public class MainActivity2 extends NetWorkActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_activity);
 		UmengUpdateAgent.update(this);
+		
+		setGuideResId(R.drawable.ic_logo);//添加引导页
 	}
 
 	@Override

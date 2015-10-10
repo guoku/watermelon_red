@@ -14,6 +14,7 @@ import com.avos.avoscloud.AVOSCloud;
 import com.ekwing.students.config.Constant;
 import com.ekwing.students.config.Logger;
 import com.ekwing.students.utils.SharePrenceUtil;
+import com.ekwing.students.utils.ToastUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.guoku.guokuv4.entity.test.AccountBean;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -101,25 +102,35 @@ public class EkwingApplication extends Application {
 			Constant.logClose();
 		}
 		initImageLoader(getApplicationContext());
-		AVOSCloud.initialize(this,
-				"laier6ulcszfjkn08448ng37nwc71ux4uv6yc6vi529v29a0",
-				"6ad7o8urhbw4q5kx8hfoiaxjjtme205ohodgoy6ltwts8b1i");
-		this.bean = SharePrenceUtil.getUserBean(getApplicationContext());
+		
+		initTaoBao();
+	}
+	
+	private void initTaoBao(){
+		
+		try {
+			AVOSCloud.initialize(this,
+					"laier6ulcszfjkn08448ng37nwc71ux4uv6yc6vi529v29a0",
+					"6ad7o8urhbw4q5kx8hfoiaxjjtme205ohodgoy6ltwts8b1i");
+			this.bean = SharePrenceUtil.getUserBean(getApplicationContext());
 
-		AlibabaSDK.asyncInit(this, new InitResultCallback() {
+			AlibabaSDK.asyncInit(this, new InitResultCallback() {
 
-			@Override
-			public void onSuccess() {
-				Logger.i("taobao", "onSuccess---->");
-			}
+				@Override
+				public void onSuccess() {
+					Logger.i("taobao", "onSuccess---->");
+				}
 
-			@Override
-			public void onFailure(int code, String message) {
-				Logger.e("taobao", "fail---->" + message);
-			}
+				@Override
+				public void onFailure(int code, String message) {
+					Logger.e("taobao", "fail---->" + message);
+				}
 
-		});
-
+			});
+		} catch (Exception e) {
+			// TODO: handle exception
+			Logger.e("taobao", "***********error***********");
+		}
 	}
 
 	public void addActivity(Activity activity) {

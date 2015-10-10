@@ -7,17 +7,20 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVAnalytics;
 import com.ekwing.students.EkwingApplication;
 import com.guoku.R;
+import com.guoku.guokuv4.utils.MyPreferences;
 import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnChildClick;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -34,6 +37,8 @@ public abstract class BaseActivity extends FragmentActivity {
 	
 	public static final String LIKE = "like";
 	public static final String TIME = "time";
+	
+	private int guideResourceId=0;//引导页图片资源id
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -195,4 +200,51 @@ public abstract class BaseActivity extends FragmentActivity {
 		LinearLayout linearLayout = (LinearLayout) findViewById(R.id.layout_title_seach);
 		return linearLayout;
 	}
+	
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		addGuideImage();//添加引导页
+	}
+	
+    /**
+     * 添加引导图片
+     */
+    public void addGuideImage() {
+        View view = findViewById(R.id.content);//查找通过setContentView上的根布局
+        if(view==null)return;
+        if(MyPreferences.activityIsGuided(this, this.getClass().getName())){
+            //引导过了
+            return;
+        }
+        ViewParent viewParent = view.getParent();
+        if(viewParent instanceof FrameLayout){
+            final FrameLayout frameLayout = (FrameLayout)viewParent;
+            if(guideResourceId!=0){//设置了引导图片
+                final ImageView guideImage = new ImageView(this);
+                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
+                guideImage.setLayoutParams(params);
+                guideImage.setScaleType(ScaleType.FIT_XY);
+                guideImage.setImageResource(guideResourceId);
+                guideImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        frameLayout.removeView(guideImage);
+                        MyPreferences.setIsGuided(getApplicationContext(), BaseActivity.this.getClass().getName());//设为已引导
+                    }
+                });
+                frameLayout.addView(guideImage);//添加引导图片
+                
+            }
+        }
+    }
+    
+    /**子类在onCreate中调用，设置引导图片的资源id
+     *并在布局xml的根元素上设置android:id="@id/my_content_view"
+     * @param resId
+     */
+    protected void setGuideResId(int resId){
+        this.guideResourceId=resId;
+    }
 }

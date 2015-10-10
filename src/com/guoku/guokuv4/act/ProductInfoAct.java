@@ -62,7 +62,6 @@ import com.ekwing.students.utils.SharePrenceUtil;
 import com.ekwing.students.utils.StringUtil;
 import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
-import com.guoku.guokuv4.adapter.SeachCommodityTypeAdapter;
 import com.guoku.guokuv4.bean.TagBean;
 import com.guoku.guokuv4.bean.TagTwo;
 import com.guoku.guokuv4.entity.test.EntityBean;
@@ -153,9 +152,9 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 	@ViewInject(R.id.layout_more)
 	LinearLayout viewMore;
-	
+
 	@ViewInject(R.id.product_ll_like_2)
-	LinearLayout layout_like;//多少人喜爱layout
+	LinearLayout layout_like;// 多少人喜爱layout
 
 	int priceBtTop;// 记录价格按钮顶部的位置
 
@@ -186,19 +185,18 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 	private Animation animationIn;
 	private Animation animationOut;
-	
-	TagTwo tagTwo;//二级品类
-	
+
+	TagTwo tagTwo;// 二级品类
+
 	View lineView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.product_act);
-		
-		lineView = View.inflate(mContext,
-				R.layout.line_gray, null);
-		
+
+		lineView = View.inflate(mContext, R.layout.line_gray, null);
+
 		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 
 		init();
@@ -368,20 +366,22 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		productBean = JSON.parseObject(getIntent().getStringExtra("data"),
 				PInfoBean.class);
 		tabList = ParseUtil.getTab2ALL(mContext);
-		
+
 		productBean = JSON.parseObject(getIntent().getStringExtra("data"),
 				PInfoBean.class);
 		tabList = ParseUtil.getTab2ALL(mContext);
-		
+
 		try {
 			String result = SharePrenceUtil.getTab(mContext);
-			if(!StringUtils.isEmpty(result)){
+			if (!StringUtils.isEmpty(result)) {
 				ArrayList<TagBean> tBean = (ArrayList<TagBean>) JSON
 						.parseArray(result, TagBean.class);
-				for(TagBean tBeant : tBean){
-					for(TagTwo tagTwos : tBeant.getContent()){
-						if(String.valueOf(tagTwos.getCategory_id()).equals(productBean.getEntity().getCategory_id())){
-							product_tv_from.setText("来自「" + tagTwos.getCategory_title() + "」");
+				for (TagBean tBeant : tBean) {
+					for (TagTwo tagTwos : tBeant.getContent()) {
+						if (String.valueOf(tagTwos.getCategory_id()).equals(
+								productBean.getEntity().getCategory_id())) {
+							product_tv_from.setText("来自「"
+									+ tagTwos.getCategory_title() + "」");
 							tagTwo = tagTwos;
 						}
 					}
@@ -402,7 +402,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		if (!productBean.getEntity().getLike_count().equals("")) {
 			product_tv_like_size.setText(productBean.getEntity()
 					.getLike_count() + " 人喜爱");
-		}else{
+		} else {
 			layout_like.setVisibility(View.GONE);
 		}
 		product_tv_price.setText(getResources().getString(
@@ -412,7 +412,8 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 		try {
 			android.widget.RelativeLayout.LayoutParams param = new android.widget.RelativeLayout.LayoutParams(
-					EkwingApplication.screenW - 10, EkwingApplication.screenW - 10);
+					EkwingApplication.screenW - 10,
+					EkwingApplication.screenW - 10);
 			param.addRule(RelativeLayout.CENTER_IN_PARENT);
 			vp.setLayoutParams(param);
 			sv.smoothScrollTo(0, 0);
@@ -800,41 +801,36 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			TaokeParams taokeParams = new TaokeParams();
 			taokeParams.pid = "mm_28514026_4132785_24810648";
 			taokeParams.unionId = "null";
-			ItemService itemService = AlibabaSDK.getService(ItemService.class);
-			if (itemService == null) {
-				ToastUtil.show(mContext, "淘宝链接失败");
+			
+			if (AlibabaSDK.isInitSucceed()) {
+				ItemService itemService = AlibabaSDK.getService(ItemService.class);
+				itemService.showTaokeItemDetailByItemId(this,
+						new TradeProcessCallback() {
+
+							@Override
+							public void onPaySuccess(TradeResult tradeResult) {
+								// Toast.makeText(MainActivity.this, "支付成功",
+								// Toast.LENGTH_SHORT).show();
+								ToastUtil.show(mContext, "支付成功");
+
+							}
+
+							@Override
+							public void onFailure(int code, String msg) {
+								if (code == ResultCode.QUERY_ORDER_RESULT_EXCEPTION.code) {
+									// ToastUtil.show(mContext, "确认交易订单失败");
+								} else {
+									// ToastUtil.show(mContext, "交易取消");
+								}
+							}
+
+						}, taeWebViewUiSettings, array.getJSONObject(0)
+								.getLong("origin_id"), 1, null, taokeParams);
+			} else {
+				ToastUtil.show(mContext, "淘宝小二开小差喽，请稍后再试");
 				return;
 			}
-			itemService.showTaokeItemDetailByItemId(
-					this,
-					new TradeProcessCallback() {
 
-						@Override
-						public void onPaySuccess(TradeResult tradeResult) {
-							// Toast.makeText(MainActivity.this, "支付成功",
-							// Toast.LENGTH_SHORT).show();
-							ToastUtil.show(mContext, "支付成功");
-
-						}
-
-						@Override
-						public void onFailure(int code, String msg) {
-							if (code == ResultCode.QUERY_ORDER_RESULT_EXCEPTION.code) {
-								// Toast.makeText(MainActivity.this, "确认交易订单失败",
-								// Toast.LENGTH_SHORT).show();
-								ToastUtil.show(mContext, "确认交易订单失败");
-
-							} else {
-								ToastUtil.show(mContext, "交易取消");
-
-								// Toast.makeText(MainActivity.this, "交易取消",
-								// Toast.LENGTH_SHORT).show();
-							}
-						}
-
-					}, taeWebViewUiSettings,
-					array.getJSONObject(0).getLong("origin_id"), 1, null,
-					taokeParams);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -906,7 +902,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 	@OnClick(R.id.product_ll_tab)
 	public void Tab(View v) {
-		
+
 		Bundle bundle = new Bundle();
 		bundle.putSerializable(TabAct.SECOND_ACT_ONTENT, tagTwo);
 		openActivity(TabListSecondAct.class, bundle);
