@@ -47,6 +47,8 @@ public abstract class BasePageFragment extends BaseFrament {
 	private int bmpW;// 动画图片宽度
 	private int selectedColor, unSelectedColor;
 
+	public int currentItems = 0;
+	
 	ArrayList<TextView> lTextViews;
 
 	@Override
@@ -90,6 +92,14 @@ public abstract class BasePageFragment extends BaseFrament {
 	 * @return
 	 */
 	public abstract ArrayList<Fragment> initFragmentList();
+	
+	public void setCurrentItems(int onItem) {
+		viewPager.setCurrentItem(onItem);
+	}
+	
+	public int getviewPagerCurrent(){
+		return viewPager.getCurrentItem();
+	}
 
 	/**
 	 * 初始化头标

@@ -189,6 +189,9 @@
     <color name="text_bg_box">#E6E6E6</color>
     <!--  4.1图文流分割线-->
     <color name="line_gray_view">#1b1b1b</color>
-     
+    <!--  灰色线框-->
+    <color name="line_box_gray">#e6e6e6</color>
+    <!--  类似购买按钮的蓝色-->
+    <color name="like_buy_blue">#6EAAF0</color>
 
 </resources>

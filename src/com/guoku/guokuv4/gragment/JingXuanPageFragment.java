@@ -18,7 +18,7 @@ import com.guoku.guokuv4.homepage.GoodTwoFragmnet;
  * @Description: TODO
  * @date 2015-9-9 下午4:03:08 4.1精选首页图文流
  */
-public class JingXuanPageFragment extends BasePageFragment {
+public class JingXuanPageFragment extends BasePageFragment{
 
 	int count = 2;
 

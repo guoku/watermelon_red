@@ -38,16 +38,16 @@ public class WelAct extends NetWorkActivity {
 		ViewUtils.inject(this);
 		MobclickAgent.updateOnlineConfig(this);
 
-		if (SharePrenceUtil.getFirstUsed(WelAct.this, Constant.SP_FIRST_URED)) {
+//		if (SharePrenceUtil.getFirstUsed(WelAct.this, Constant.SP_FIRST_URED)) {
 			anim = new AlphaAnimation(0.5f, 1.0f);
 			anim.setDuration(2000);
 			wecome.startAnimation(anim);
 			anim.setAnimationListener(am);
-		} else {
-			startActivity(new Intent(WelAct.this, NavigationActivity.class));
-			finish();
-		}
-		init();
+//		} else {
+//			startActivity(new Intent(WelAct.this, NavigationActivity.class));
+//			finish();
+//		}
+//		init();
 	}
 
 	private void init() {

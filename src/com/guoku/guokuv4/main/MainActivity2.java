@@ -70,15 +70,12 @@ public class MainActivity2 extends NetWorkActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_activity);
 		UmengUpdateAgent.update(this);
-		
-		setGuideResId(R.drawable.ic_logo);//添加引导页
 	}
 
 	@Override
 	protected void setupData() {
 
 		jingXuanPageFragment = new JingXuanPageFragment();
-
 		// destinationFragment = new JingXuanFragment();
 		qunaerFragment = new GuangFragment();
 		personalFragment = new PersonalFragment();
@@ -201,6 +198,8 @@ public class MainActivity2 extends NetWorkActivity {
 		} else {
 			main_bar_4.setImageResource(R.drawable.tabbar_icon_me);
 		}
+		
+		removeFrameLayout();//删除引导页
 	}
 
 	@OnClick(R.id.ll_personal)
@@ -255,6 +254,12 @@ public class MainActivity2 extends NetWorkActivity {
 	protected void onFailure(String result, int where) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	@Override
+	public void setCurrentItems() {
+		// TODO Auto-generated method stub
+		jingXuanPageFragment.setCurrentItems(1);
 	}
 
 }

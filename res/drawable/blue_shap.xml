@@ -4,6 +4,6 @@
     <corners android:radius="4dp" />
  <!-- 设置圆角半径 -->
 
-    <solid android:color="#80B6F2" />
+    <solid android:color="@color/like_buy_blue" />
 
 </shape>

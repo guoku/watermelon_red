@@ -5,14 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewParent;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -34,11 +35,15 @@ public abstract class BaseActivity extends FragmentActivity {
 	protected Context mContext;
 	protected Handler mHandler;
 	protected boolean isLive;
-	
+
 	public static final String LIKE = "like";
 	public static final String TIME = "time";
-	
-	private int guideResourceId=0;//引导页图片资源id
+
+	FrameLayout frameLayout;// 引导图
+	View viewsOne, viewsTwo;
+
+	TextView tvTwo;
+	ImageView imgTrage;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -200,51 +205,102 @@ public abstract class BaseActivity extends FragmentActivity {
 		LinearLayout linearLayout = (LinearLayout) findViewById(R.id.layout_title_seach);
 		return linearLayout;
 	}
-	
+
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		addGuideImage();//添加引导页
+		addGuideImage();// 添加引导页
 	}
-	
-    /**
-     * 添加引导图片
-     */
-    public void addGuideImage() {
-        View view = findViewById(R.id.content);//查找通过setContentView上的根布局
-        if(view==null)return;
-        if(MyPreferences.activityIsGuided(this, this.getClass().getName())){
-            //引导过了
-            return;
-        }
-        ViewParent viewParent = view.getParent();
-        if(viewParent instanceof FrameLayout){
-            final FrameLayout frameLayout = (FrameLayout)viewParent;
-            if(guideResourceId!=0){//设置了引导图片
-                final ImageView guideImage = new ImageView(this);
-                FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
-                guideImage.setLayoutParams(params);
-                guideImage.setScaleType(ScaleType.FIT_XY);
-                guideImage.setImageResource(guideResourceId);
-                guideImage.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        frameLayout.removeView(guideImage);
-                        MyPreferences.setIsGuided(getApplicationContext(), BaseActivity.this.getClass().getName());//设为已引导
-                    }
-                });
-                frameLayout.addView(guideImage);//添加引导图片
-                
-            }
-        }
-    }
-    
-    /**子类在onCreate中调用，设置引导图片的资源id
-     *并在布局xml的根元素上设置android:id="@id/my_content_view"
-     * @param resId
-     */
-    protected void setGuideResId(int resId){
-        this.guideResourceId=resId;
-    }
+
+	/**
+	 * 添加引导图片
+	 */
+	public void addGuideImage() {
+		View view = findViewById(R.id.content);// 查找通过setContentView上的根布局
+		if (view == null)
+			return;
+		if (!MyPreferences.activityIsGuided(this, BaseActivity.this.getClass().getName())) {
+			// 引导过了
+
+			ViewParent viewParent = view.getParent();
+			if (viewParent instanceof FrameLayout) {
+				frameLayout = (FrameLayout) viewParent;
+
+				FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+						LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+				params.gravity = Gravity.CENTER;
+				LayoutInflater lInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				;
+				viewsOne = lInflater.inflate(R.layout.view_walkthrough_one,
+						null);
+				viewsTwo = lInflater.inflate(R.layout.view_walkthrough_two,
+						null);
+
+				final TextView textView = (TextView) viewsOne
+						.findViewById(R.id.textView1);
+				final ImageView imageView = (ImageView) viewsOne
+						.findViewById(R.id.colse_img);
+
+				tvTwo = (TextView) viewsTwo.findViewById(R.id.textView3);// 下面一层textview
+				imgTrage = (ImageView) viewsTwo
+						.findViewById(R.id.img_walkthrough_trgl);
+
+				imageView.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View arg0) {
+						// TODO Auto-generated method stub
+						// removeFrameLayout();
+						frameLayout.removeViewAt(2);
+						showFrameLayoutTwo();
+						MyPreferences.setIsGuided(getApplicationContext(), BaseActivity.this
+								.getClass().getName());// 设为已引导
+					}
+				});
+
+				textView.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View arg0) {
+						// TODO Auto-generated method stub
+						// frameLayout.removeViewAt(2);
+						removeFrameLayout();
+						setCurrentItems();
+						MyPreferences.setIsGuided(getApplicationContext(), BaseActivity.this
+								.getClass().getName());// 设为已引导
+					}
+				});
+				frameLayout.addView(viewsTwo);// 添加引导图片
+				frameLayout.addView(viewsOne);// 添加引导图片
+			}
+		}
+	}
+
+	public void setCurrentItems() {
+	}
+
+	// 显示第二层引导页
+	public void showFrameLayoutTwo() {
+		if (tvTwo != null) {
+			tvTwo.setVisibility(View.VISIBLE);
+		}
+		if (imgTrage != null) {
+			imgTrage.setVisibility(View.VISIBLE);
+		}
+	}
+
+	// 删除引导页
+	public void removeFrameLayout() {
+		if (frameLayout != null) {
+			if (viewsOne != null) {
+				frameLayout.removeView(viewsOne);
+			}
+			if (viewsTwo != null) {
+				frameLayout.removeView(viewsTwo);
+			}
+		}
+	}
+
+	public interface OnViewPageCurrentItem {
+		void onCurrentItem();
+	}
 }

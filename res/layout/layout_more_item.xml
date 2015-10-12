@@ -27,7 +27,7 @@
         android:id="@+id/product_tv_mores"
         style="@style/layout_width_more"
         android:layout_weight="1"
-        android:src="@drawable/more" 
+        android:src="@drawable/more_shop" 
         android:layout_marginRight="24dp"
         />
 
