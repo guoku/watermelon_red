@@ -220,7 +220,7 @@ public abstract class BaseActivity extends FragmentActivity {
 		View view = findViewById(R.id.content);// 查找通过setContentView上的根布局
 		if (view == null)
 			return;
-		if (!MyPreferences.activityIsGuided(this, BaseActivity.this.getClass().getName())) {
+//		if (!MyPreferences.activityIsGuided(this, BaseActivity.this.getClass().getName())) {
 			// 引导过了
 
 			ViewParent viewParent = view.getParent();
@@ -239,31 +239,18 @@ public abstract class BaseActivity extends FragmentActivity {
 
 				final TextView textView = (TextView) viewsOne
 						.findViewById(R.id.textView1);
-				final ImageView imageView = (ImageView) viewsOne
-						.findViewById(R.id.colse_img);
 
 				tvTwo = (TextView) viewsTwo.findViewById(R.id.textView3);// 下面一层textview
 				imgTrage = (ImageView) viewsTwo
 						.findViewById(R.id.img_walkthrough_trgl);
-
-				imageView.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View arg0) {
-						// TODO Auto-generated method stub
-						// removeFrameLayout();
-						frameLayout.removeViewAt(2);
-						showFrameLayoutTwo();
-						MyPreferences.setIsGuided(getApplicationContext(), BaseActivity.this
-								.getClass().getName());// 设为已引导
-					}
-				});
 
 				textView.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View arg0) {
 						// TODO Auto-generated method stub
 						// frameLayout.removeViewAt(2);
-						removeFrameLayout();
+						frameLayout.removeViewAt(2);
+						showFrameLayoutTwo();
 						setCurrentItems();
 						MyPreferences.setIsGuided(getApplicationContext(), BaseActivity.this
 								.getClass().getName());// 设为已引导
@@ -273,7 +260,7 @@ public abstract class BaseActivity extends FragmentActivity {
 				frameLayout.addView(viewsOne);// 添加引导图片
 			}
 		}
-	}
+//	}
 
 	public void setCurrentItems() {
 	}

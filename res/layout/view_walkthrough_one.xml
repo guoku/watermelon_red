@@ -61,12 +61,4 @@
         android:textSize="17sp"
         />
 
-    <ImageView
-        android:id="@+id/colse_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="18dp"
-        android:src="@drawable/close_walkthrough" />
-
 </RelativeLayout>
