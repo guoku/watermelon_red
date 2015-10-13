@@ -220,8 +220,8 @@ public abstract class BaseActivity extends FragmentActivity {
 		View view = findViewById(R.id.content);// 查找通过setContentView上的根布局
 		if (view == null)
 			return;
-//		if (!MyPreferences.activityIsGuided(this, BaseActivity.this.getClass().getName())) {
-			// 引导过了
+		if (!MyPreferences.activityIsGuided(this, BaseActivity.this.getClass().getName())) {
+			 引导过了
 
 			ViewParent viewParent = view.getParent();
 			if (viewParent instanceof FrameLayout) {
@@ -260,7 +260,7 @@ public abstract class BaseActivity extends FragmentActivity {
 				frameLayout.addView(viewsOne);// 添加引导图片
 			}
 		}
-//	}
+	}
 
 	public void setCurrentItems() {
 	}
