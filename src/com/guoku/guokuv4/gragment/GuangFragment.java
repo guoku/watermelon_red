@@ -6,7 +6,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,7 +37,6 @@ import com.avos.avoscloud.AVAnalytics;
 import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.config.Constant;
 import com.ekwing.students.customview.ScrollViewWithListView;
-import com.ekwing.students.utils.SharePrenceUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.act.SeachAct;
@@ -46,9 +44,10 @@ import com.guoku.guokuv4.act.TabAct;
 import com.guoku.guokuv4.act.UserAct;
 import com.guoku.guokuv4.act.WebShareAct;
 import com.guoku.guokuv4.adapter.GridView3vAdapter;
-import com.guoku.guokuv4.adapter.HomeOneArticlesAdapter;
+import com.guoku.guokuv4.adapter.GuangArticlesAdapter;
+import com.guoku.guokuv4.adapter.GuangShopAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
-import com.guoku.guokuv4.bean.HomePageOneBean;
+import com.guoku.guokuv4.bean.Discover;
 import com.guoku.guokuv4.bean.Sharebean;
 import com.guoku.guokuv4.entity.test.BannerBean;
 import com.guoku.guokuv4.entity.test.Categories;
@@ -65,12 +64,10 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.umeng.analytics.MobclickAgent;
 
 public class GuangFragment extends BaseFrament {
-	private static final int HOT = 10;
 	private static final int PROINFO = 12;
 	private static final int FAXIANHOME = 13;
 	private static final int USERINFO = 14;
-	private static final int DISCOVER = 15;// 推荐品类
-	private static final int HOME_ARTICLES = 16;// 热门图文
+	private static final int DISCOVER = 15;// banner, 推荐文章， 推荐商品等
 
 	@ViewInject(R.id.user_et_name)
 	private TextView user_et_name;
@@ -87,7 +84,7 @@ public class GuangFragment extends BaseFrament {
 	@ViewInject(R.id.listView_article)
 	private ScrollViewWithListView lvArticle;// 热门图文
 
-	HomeOneArticlesAdapter articlesAdapter;// 热门图文
+	GuangArticlesAdapter articlesAdapter;// 热门图文
 
 	private ScheduledExecutorService scheduledExecutorService;
 	private boolean onTouchTrue;
@@ -96,9 +93,8 @@ public class GuangFragment extends BaseFrament {
 	@ViewInject(R.id.faxian_gv)
 	private GridView faxian_gv;
 
-	private GridView3vAdapter gvAdapter;
+	private GuangShopAdapter gvAdapter;
 
-	private ArrayList<EntityBean> hotList;
 	private ArrayList<BannerBean> list;
 	private ArrayList<Tab2Bean> list_cid;
 
@@ -158,20 +154,6 @@ public class GuangFragment extends BaseFrament {
 			return;
 		}
 		switch (where) {
-		case HOT:
-			try {
-				JSONObject root = new JSONObject(result);
-				JSONArray array = root.getJSONArray("content");
-				hotList = new ArrayList<EntityBean>();
-				for (int i = 0; i < array.length(); i++) {
-					hotList.add(JSON.parseObject(array.getJSONObject(i)
-							.getString("entity"), EntityBean.class));
-				}
-				gvAdapter.setList(hotList);
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-			break;
 		case PROINFO:
 			PInfoBean bean = ParseUtil.getPI(result);
 			Intent intent = new Intent(context, ProductInfoAct.class);
@@ -297,19 +279,25 @@ public class GuangFragment extends BaseFrament {
 						}
 					});
 				}
+				
+				/********热门图文*********/
+				Discover discover = JSON.parseObject(result, Discover.class);
+				articlesAdapter.setList(discover.getArticles());
+				
+				/********热门商品*********/
+				try {
+					gvAdapter.setList(discover.getEntities());
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				
+				sv.scrollTo(0, 0);
+				sv.smoothScrollTo(0, 0);
 
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			break;
-		case HOME_ARTICLES:
-			HomePageOneBean beans = JSON.parseObject(result,
-					HomePageOneBean.class);
-			articlesAdapter.setList(beans.getArticles());
-
-			sv.scrollTo(0, 0);
-			sv.smoothScrollTo(0, 0);
 			break;
 		default:
 			sv.scrollTo(0, 0);
@@ -328,9 +316,8 @@ public class GuangFragment extends BaseFrament {
 	@Override
 	protected void init() {
 
-		gvAdapter = new GridView3vAdapter(getActivity());
+		gvAdapter = new GuangShopAdapter(getActivity());
 
-		hotList = new ArrayList<EntityBean>();
 
 		faxian_gv.setAdapter(gvAdapter);
 
@@ -339,10 +326,10 @@ public class GuangFragment extends BaseFrament {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
+				String id = String.valueOf(gvAdapter.getList().get(arg2).getEntity().getEntity_id());
 				sendConnection(Constant.PROINFO
-						+ hotList.get(arg2).getEntity_id() + "/",
-						new String[] { "entity_id" }, new String[] { hotList
-								.get(arg2).getEntity_id() }, PROINFO, true);
+						+ gvAdapter.getList().get(arg2).getEntity().getEntity_id() + "/",
+						new String[] { "entity_id" }, new String[] {id}, PROINFO, true);
 
 			}
 		});
@@ -393,7 +380,7 @@ public class GuangFragment extends BaseFrament {
 	}
 
 	private void initArticle() {
-		articlesAdapter = new HomeOneArticlesAdapter(getActivity());
+		articlesAdapter = new GuangArticlesAdapter(getActivity());
 		lvArticle.setAdapter(articlesAdapter);
 		lvArticle.setOnItemClickListener(new OnItemClickListener() {
 
@@ -405,13 +392,13 @@ public class GuangFragment extends BaseFrament {
 				Bundle bundle = new Bundle();
 				Sharebean sharebean = new Sharebean();
 				sharebean.setTitle(articlesAdapter.getList().get(arg2)
-						.getTitle());
+						.getArticle().getTitle());
 				sharebean.setContext(articlesAdapter.getList().get(arg2)
-						.getContent().substring(0, 50));
+						.getArticle().getContent().substring(0, 50));
 				sharebean.setAricleUrl(articlesAdapter.getList().get(arg2)
-						.getUrl());
+						.getArticle().getUrl());
 				sharebean.setImgUrl(articlesAdapter.getList().get(arg2)
-						.getCover());
+						.getArticle().getCover());
 				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
 
 				openActivity(WebShareAct.class, bundle);
@@ -422,15 +409,10 @@ public class GuangFragment extends BaseFrament {
 	@Override
 	protected void setData() {
 		list_cid = ParseUtil.getTab2List(context);
-		sendConnection(Constant.HOT, new String[] {}, new String[] {}, HOT,
-				false);
 		sendConnection(Constant.FAXIANHOME, new String[] {}, new String[] {},
 				FAXIANHOME, false);
 		sendConnection(Constant.DISCOVER, new String[] {}, new String[] {},
 				DISCOVER, false);
-		sendConnection(Constant.HOME, new String[] {}, new String[] {},
-				HOME_ARTICLES, false);
-
 	}
 
 	@OnClick(R.id.user_et_name)

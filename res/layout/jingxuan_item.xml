@@ -53,11 +53,13 @@
 
             <TextView
                 android:id="@+id/jingxuan_item_tv_likes"
-                style="@style/layout_width_more"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
                 android:layout_marginLeft="8dp"
                 android:background="@drawable/likecounter_bg"
                 android:gravity="center"
                 android:textColor="@color/g_other" />
+            
         </LinearLayout>
 
         <LinearLayout

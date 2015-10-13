@@ -21,6 +21,7 @@ import com.guoku.R;
 import com.guoku.guokuv4.entity.test.PBean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.utils.ImgUtils;
+import com.guoku.guokuv4.utils.LogGK;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -68,11 +69,11 @@ public class JingXuanAdapter extends ArrayListAdapter<PBean> {
 		holder.tv_context.setText(bean.getContent().getNote().getContent());
 		if (!bean.getContent().getEntity().getLike_count().equals("")) {
 			holder.tv_likes.setVisibility(View.VISIBLE);
-			holder.tv_likes.setText(""
-					+ bean.getContent().getEntity().getLike_count());
+			holder.tv_likes.setText(bean.getContent().getEntity().getLike_count());
 		} else {
 			holder.tv_likes.setVisibility(View.GONE);
 		}
+//		LogGK.d("2喜欢数量＝" + bean.getContent().getEntity().getLike_count());
 		holder.tv_time.setText(DateUtils.getStandardDate(bean.getPost_time()));
 		return convertView;
 	}
@@ -91,7 +92,7 @@ public class JingXuanAdapter extends ArrayListAdapter<PBean> {
 		} else {
 			iv_isLike.setImageResource(R.drawable.like_gary);
 		}
-		tv_like_count.setText(bean.getContent().getNote().getContent());
+		tv_like_count.setText(bean.getContent().getEntity().getLike_count());
 		if (!bean.getContent().getEntity().getLike_count().equals("")) {
 			tv_like_count.setVisibility(View.VISIBLE);
 			tv_like_count.setText(""
@@ -99,6 +100,7 @@ public class JingXuanAdapter extends ArrayListAdapter<PBean> {
 		} else {
 			tv_like_count.setVisibility(View.GONE);
 		}
+		LogGK.d("3喜欢数量＝" + bean.getContent().getEntity().getLike_count());
 	}
 
 	private class ViewHolder {

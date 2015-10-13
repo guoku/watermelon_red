@@ -28,7 +28,10 @@
 
 
     <!-- 允许程序弹出系统级对话框的权限 -->
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_SETTINGS"/>
 
     <!-- taobao end -->
 
@@ -43,6 +46,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:uiOptions="splitActionBarWhenNarrow" 
+        android:largeHeap="true"
         >
         <activity
             android:name="com.umeng.fb.ConversationActivity"
@@ -733,9 +737,9 @@
         <action android:name="com.alibaba.ctaobao3.action.NOTIFICATION" />
  
         <!-- 通道被打开的事件，应用可以用来缓存当前收到的通知（可选） -->
-        <action android:name="com.alibaba.cchannel.action.NOTIFICATION_OPENED" />
+        <action android:name="com.alibaba.cxiaomi.action.NOTIFICATION_OPENED" />
         <!-- 通道状态切换事件（应用端可以根据此状态来显示当前的通道健康状态，需要继承CPushMessageReceiver并重载onChannelStatusChanged方法，可选。）-->
-        <action android:name="com.alibaba.cchannel.action.CHANNEL_STATUS" />
+        <action android:name="com.alibaba.cxiaomi.action.CHANNEL_STATUS" />
  
         <!-- 开屏事件（用来尝试唤起已经不可用的服务，可选。建议打开） -->
         <action android:name="android.intent.action.USER_PRESENT" />

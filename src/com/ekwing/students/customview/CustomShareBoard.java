@@ -75,7 +75,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		configPlatforms();
 
 		WeiXinShareContent weixinContent = new WeiXinShareContent();
-		weixinContent.setShareContent(context + bean.getTop_note()
+		weixinContent.setShareContent(context + "：" + bean.getTop_note()
 				+ "http://www.guoku.com/detail/"
 				+ bean.getEntity().getEntity_hash() + "/");
 		weixinContent.setTargetUrl("http://www.guoku.com/detail/"
@@ -112,7 +112,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 
 		WeiXinShareContent weixinContent = new WeiXinShareContent();
 		weixinContent.setTargetUrl(url);
-		weixinContent.setShareContent(context);
+		weixinContent.setShareContent(title + context);
 		weixinContent.setShareImage(new UMImage(mContext, imgUrl));
 		mController.setShareMedia(weixinContent);
 
@@ -123,7 +123,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		mController.setShareMedia(circleMedia);
 
 		SinaShareContent sinaShareContent = new SinaShareContent();
-		sinaShareContent.setShareContent(title + context + "（分享自 @果库）" + url);
+		sinaShareContent.setShareContent(title + "：" + context + "（分享自 @果库）" + url);
 		sinaShareContent.setTargetUrl(url);
 		sinaShareContent.setShareImage(new UMImage(mContext, imgUrl));
 		mController.setShareMedia(sinaShareContent);

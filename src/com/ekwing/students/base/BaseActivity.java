@@ -221,7 +221,7 @@ public abstract class BaseActivity extends FragmentActivity {
 		if (view == null)
 			return;
 		if (!MyPreferences.activityIsGuided(this, BaseActivity.this.getClass().getName())) {
-			 引导过了
+//			 引导过了
 
 			ViewParent viewParent = view.getParent();
 			if (viewParent instanceof FrameLayout) {

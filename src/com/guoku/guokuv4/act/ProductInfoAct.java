@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -91,6 +92,8 @@ import com.umeng.socialize.sso.UMSsoHandler;
 public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		DialogInterface.OnClickListener, OnScrollListener,
 		OnCheckedChangeListener {
+	public static final String KEY_INTENT = "ProductInfoAct";
+	
 	private static final int GUESS = 10;
 	private static final int PROINFO = 11;
 	private static final int PY1 = 12;
@@ -100,6 +103,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	private static final int COMMENTLIST = 14;
 	private static final int PROINFOFULL = 17;
 	private static final int NOTE_TAG = 18;// 标签
+	private static final int USERINFO = 1001;//用户信息
 
 	private PInfoBean productBean;
 
@@ -317,6 +321,18 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			comAdapter.notifyDataSetChanged();
 			break;
 		case NOTE_TAG:
+			break;
+		case USERINFO:
+			try {
+				JSONObject root = new JSONObject(result);
+				UserBean userBean =  JSON.parseObject(
+						root.getString("user"), UserBean.class);
+				intent = new Intent(context, UserAct.class);
+				intent.putExtra("data", userBean);
+				startActivity(intent);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			break;
 		default:
 			break;
@@ -652,10 +668,14 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				Intent intent = new Intent(mContext, UserAct.class);
-				intent.putExtra("data",
-						productBean.getLike_user_list().get(arg2));
-				startActivity(intent);
+//				Intent intent = new Intent(mContext, UserAct.class);
+//				intent.putExtra("data",
+//						productBean.getLike_user_list().get(arg2));
+//				startActivity(intent);
+				
+				sendConnection(Constant.USERINFO + gv1Adapter.getItem(arg2).getUser_id() + "/",
+						new String[] {}, new String[] {},
+						USERINFO, true);
 			}
 		});
 
@@ -992,9 +1012,13 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			break;
 		case R.id.comment_item_iv_pic:
 			NoteBean noteBean = (NoteBean) arg0.getTag();
-			Intent intent = new Intent(mContext, UserAct.class);
-			intent.putExtra("data", noteBean.getCreator());
-			startActivity(intent);
+//			Intent intent = new Intent(mContext, UserAct.class);
+//			intent.putExtra("data", noteBean.getCreator());
+//			startActivity(intent);
+			
+			sendConnection(Constant.USERINFO + noteBean.getUser_id() + "/",
+					new String[] {}, new String[] {},
+					USERINFO, true);
 			break;
 		default:
 			break;

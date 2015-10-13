@@ -35,8 +35,7 @@ public class StringUtils {
 	static OnNoteTag onNoteTag;
 
 	public static boolean isEmpty(String str) {
-		return (str == null || str.trim().length() == 0 || "null".equals(str
-				.toLowerCase()));
+		return (str == null || str.trim().length() == 0 || "null".equals(str));
 	}
 
 	/**
