@@ -197,14 +197,14 @@ public class SeachAct extends NetWorkActivity implements OnClickListener,
 					root = new JSONObject(result);
 					listEntity.addAll((ArrayList<EntityBean>) JSON.parseArray(
 							root.getString("entity_list"), EntityBean.class));
-					entityAdapter.setList(listEntity);
+					entityAdapter.addListsLast(listEntity);
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
 			} else {
 				listUser.addAll((ArrayList<UserBean>) JSON.parseArray(result,
 						UserBean.class));
-				fansAdapter.setList(listUser);
+				fansAdapter.addListsLast(listUser);
 			}
 			break;
 		case TAB:

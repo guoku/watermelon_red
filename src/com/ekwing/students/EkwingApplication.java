@@ -8,13 +8,13 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.alibaba.mobileim.YWChannel;
 import com.alibaba.sdk.android.AlibabaSDK;
 import com.alibaba.sdk.android.callback.InitResultCallback;
 import com.avos.avoscloud.AVOSCloud;
 import com.ekwing.students.config.Constant;
 import com.ekwing.students.config.Logger;
 import com.ekwing.students.utils.SharePrenceUtil;
-import com.ekwing.students.utils.ToastUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.guoku.guokuv4.entity.test.AccountBean;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -103,6 +103,7 @@ public class EkwingApplication extends Application {
 		}
 		initImageLoader(getApplicationContext());
 		
+		initOpenIM();
 		initTaoBao();
 	}
 	
@@ -113,7 +114,7 @@ public class EkwingApplication extends Application {
 					"laier6ulcszfjkn08448ng37nwc71ux4uv6yc6vi529v29a0",
 					"6ad7o8urhbw4q5kx8hfoiaxjjtme205ohodgoy6ltwts8b1i");
 			this.bean = SharePrenceUtil.getUserBean(getApplicationContext());
-
+			
 			AlibabaSDK.asyncInit(this, new InitResultCallback() {
 
 				@Override
@@ -131,6 +132,26 @@ public class EkwingApplication extends Application {
 			// TODO: handle exception
 			Logger.e("taobao", "***********error***********");
 		}
+	}
+	
+    private void initOpenIM(){
+		String str = "mm_28514026_0_0";
+		List<String> targetAppkeys = splitToList(str);
+		// 初始化接收消息的对象appkeys
+		YWChannel.prepare(this, str);
+		YWChannel.prepareTargetAppKeys(targetAppkeys);
+    }
+    
+    public List<String> splitToList(String param) {
+		if(param != null) {
+			String[] keys = param.split(" ");
+			List<String> list = new ArrayList<String>();
+			for (int i = 0; i < keys.length; i++) {
+				list.add(keys[i]);
+			}
+			return list;
+		}
+		return null;
 	}
 
 	public void addActivity(Activity activity) {

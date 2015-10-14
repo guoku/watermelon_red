@@ -123,7 +123,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		mController.setShareMedia(circleMedia);
 
 		SinaShareContent sinaShareContent = new SinaShareContent();
-		sinaShareContent.setShareContent(title + "：" + context + "（分享自 @果库）" + url);
+		sinaShareContent.setShareContent(title + context + "（分享自 @果库）" + url);
 		sinaShareContent.setTargetUrl(url);
 		sinaShareContent.setShareImage(new UMImage(mContext, imgUrl));
 		mController.setShareMedia(sinaShareContent);

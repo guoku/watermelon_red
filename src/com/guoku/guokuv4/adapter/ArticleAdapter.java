@@ -53,7 +53,7 @@ public class ArticleAdapter extends ArrayListAdapter<ArticlesList> {
 		holder.tvName.setText(articles.getTitle());
 		holder.tvContext.setText(articles.getContent());
 		holder.imgIcon.setImageURI(Uri.parse(Constant.URL_IMG
-				+ articles.getCover()));
+				+ articles.getCover().replace("images", "images/750")));
 
 		LayoutParams params = (LayoutParams) holder.imgIcon.getLayoutParams();
 		params.height = w / 2;

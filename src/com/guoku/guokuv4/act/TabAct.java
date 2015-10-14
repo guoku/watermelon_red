@@ -19,11 +19,14 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.ekwing.students.base.NetWorkActivity;
 import com.ekwing.students.config.Constant;
+import com.ekwing.students.customview.ScrollViewWithGridView;
 import com.ekwing.students.utils.SharePrenceUtil;
 import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
@@ -35,8 +38,12 @@ import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.StringUtils;
-import com.guoku.guokuv4.view.HeaderGridView;
-import com.guoku.guokuv4.view.HeaderListview;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
@@ -45,6 +52,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		OnCheckedChangeListener {
 
 	private static final int CATABLIST = 10;
+	private static final int CATABLIST_UP = 11;
 	private static final int PROINFO = 12;
 	private static final int LIST = 1;
 	private static final int GRID = 2;
@@ -54,6 +62,9 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 
 	// @ViewInject(R.id.scroll_view)
 	// private ScrollView scrollView;
+	
+	@ViewInject(R.id.sv)
+	private PullToRefreshScrollView sv;//gridview上拉刷新
 
 	@ViewInject(R.id.layout_add_tag)
 	LinearLayout layoutAddTag;// 标签layout
@@ -65,10 +76,10 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 	CheckBox cbShow;// tab上的显示方式按钮
 
 	@ViewInject(R.id.tab_lv)
-	private HeaderListview tab_lv;
+	private PullToRefreshListView tab_lv;
 
 	@ViewInject(R.id.tab_gv)
-	private HeaderGridView tab_gv;
+	private ScrollViewWithGridView tab_gv;
 
 	@ViewInject(R.id.tab_tv_count)
 	private TextView tab_tv_count;
@@ -105,6 +116,10 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 	private boolean isWhat = false;// 用来纪录排序方式 false：默认按时间 true：喜欢
 
 	TagBean tagBean;// 一级全部
+	
+	private String defWgat = TIME;//默认按时间排序
+	
+	private int page = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -128,12 +143,20 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 
 	@Override
 	protected void onSuccess(String result, int where) {
+		tab_lv.onRefreshComplete();
+		sv.onRefreshComplete();
 		switch (where) {
 		case CATABLIST:
 			list = (ArrayList<EntityBean>) JSON.parseArray(result,
 					EntityBean.class);
 			gvAdapter.setList(list);
 			lvAdapter.setList(list);
+			break;
+		case CATABLIST_UP:
+			list = (ArrayList<EntityBean>) JSON.parseArray(result,
+					EntityBean.class);
+			gvAdapter.addListsLast(list);
+			lvAdapter.addListsLast(list);
 			break;
 		case PROINFO:
 			PInfoBean bean = ParseUtil.getPI(result);
@@ -148,6 +171,8 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 
 	@Override
 	protected void onFailure(String result, int where) {
+		tab_lv.onRefreshComplete();
+		sv.onRefreshComplete();
 		ToastUtil.show(mContext, "没有此结果");
 	}
 
@@ -166,6 +191,29 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 
 		tab_lv.setAdapter(lvAdapter);
 		tab_gv.setAdapter(gvAdapter);
+		
+		tab_lv.setPullToRefreshOverScrollEnabled(false);
+		tab_lv.setScrollingWhileRefreshingEnabled(false);
+		tab_lv.setMode(Mode.BOTH);
+		tab_lv.setOnRefreshListener(new OnRefreshListener2<ListView>() {
+			@Override
+			public void onPullDownToRefresh(
+					PullToRefreshBase<ListView> refreshView) {
+				page = 1;
+				sendData(CATABLIST, false);
+			}
+
+			@Override
+			public void onPullUpToRefresh(
+					PullToRefreshBase<ListView> refreshView) {
+				if (list.size() > 0) {
+					page ++;
+					sendData(CATABLIST_UP, false);
+				} else {
+					// Toast
+				}
+			}
+		});
 
 		tab_lv.setOnItemClickListener(new OnItemClickListener() {
 
@@ -191,7 +239,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 			}
 		});
 
-		sendData("time");// 默认按时间排序
+		sendData(CATABLIST, true);// 默认按时间排序
 
 		try {
 			String result = SharePrenceUtil.getTab(mContext);
@@ -204,6 +252,25 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+		sv.setMode(Mode.BOTH);
+		sv.setOnRefreshListener(new OnRefreshListener2<ScrollView>() {
+
+			@Override
+			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+				// TODO Auto-generated method stub
+				page = 1;
+				sendData(CATABLIST, false);
+			}
+
+			@Override
+			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+				// TODO Auto-generated method stub
+				page ++;
+				sendData(CATABLIST_UP, false);
+			}
+		});
 	}
 
 	@SuppressLint("NewApi")
@@ -289,10 +356,13 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		}
 
 		if (arg0 == cbLikeTime) {
+			page = 1;
 			if (arg1) {
-				sendData("like");
+				defWgat = LIKE;
+				sendData(CATABLIST, true);
 			} else {
-				sendData("time");
+				defWgat = TIME;
+				sendData(CATABLIST, true);
 			}
 		}
 		if (arg0 == cbShow) {
@@ -308,11 +378,11 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		}
 	}
 
-	private void sendData(String value) {
-
+	private void sendData(int tag, boolean isLoding) {
+		
 		sendConnection(Constant.CATAB + cid + "/selection/", new String[] {
-				"count", "offset", "sort", "reverse" }, new String[] { "30",
-				"0", value, "0" }, CATABLIST, true);
+				"page","size","sort"}, new String[] { String.valueOf(page),
+				"30", defWgat}, tag, isLoding);
 
 	}
 
@@ -321,12 +391,14 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 			isWhat = false;
 			tvWhatDef.setText(R.string.tv_seach_time);
 			tvWhatlike.setText(R.string.tv_seach_like);
-			sendData("time");
+			defWgat = TIME;
+			sendData(CATABLIST, true);
 		} else {
 			isWhat = true;
 			tvWhatDef.setText(R.string.tv_seach_like);
 			tvWhatlike.setText(R.string.tv_seach_time);
-			sendData("like");
+			defWgat = LIKE;
+			sendData(CATABLIST, true);
 		}
 	}
 

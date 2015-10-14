@@ -63,7 +63,6 @@ public class EntityAdapter extends ArrayListAdapter<EntityBean> {
 		ImageView entity_item_iv_islike;
 		@ViewInject(R.id.entity_item_iv_pic)
 		SimpleDraweeView entity_item_iv_pic;
-
 		@ViewInject(R.id.entity_item_tv_com)
 		TextView entity_item_tv_com;
 		@ViewInject(R.id.entity_item_tv_like)

@@ -10,6 +10,242 @@
 
     <include layout="@layout/title" />
 
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/psrson_iv_pic"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        fresco:placeholderImage="@drawable/item240"
+        fresco:roundAsCircle="true" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/psrson_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="name"
+            android:textColor="@color/g_main"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/psrson_iv_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/psrson_tv_sign"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:gravity="center_horizontal"
+        android:singleLine="true"
+        android:text="个性"
+        android:textColor="@color/g_other" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/psrson_ll_follow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="关注"
+                android:textColor="@color/g_main" />
+
+            <TextView
+                android:id="@+id/psrson_tv_guanzhu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="4dp"
+                android:text="个性"
+                android:textColor="@color/g_red" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="1px"
+            android:layout_height="14dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/g_line" />
+
+        <LinearLayout
+            android:id="@+id/psrson_ll_fans"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="粉丝"
+                android:textColor="@color/g_main" />
+
+            <TextView
+                android:id="@+id/psrson_tv_fans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="4dp"
+                android:text="个性"
+                android:textColor="@color/g_red" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/psrson_ll_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/tfz_shap"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="4dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="4dp" >
+
+        <ImageView
+            android:id="@+id/psrson_iv_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ed"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/psrson_tv_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="编辑个人资料"
+            android:textColor="@color/g_blue" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/g_line"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="12dp"
+        android:background="#ffffffff"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/psrson_ll_tab1"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/psrson_tv_tab1"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="喜爱"
+                android:textColor="@color/g_main" />
+
+            <ImageView
+                android:id="@+id/psrson_iv_tab1"
+                android:layout_width="56dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:background="#ff1f77" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/psrson_ll_tab2"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/psrson_tv_tab2"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="点评"
+                android:textColor="@color/g_other" />
+
+            <ImageView
+                android:id="@+id/psrson_iv_tab2"
+                android:layout_width="56dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:background="#ff1f77"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/psrson_ll_tab3"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/psrson_tv_tab3"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="标签"
+                android:textColor="@color/g_other" />
+
+            <ImageView
+                android:id="@+id/psrson_iv_tab3"
+                android:layout_width="56dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:background="#ff1f77"
+                android:visibility="invisible" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1px"
+        android:background="@color/g_line" />
+
     <com.handmark.pulltorefresh.library.PullToRefreshScrollView
         android:id="@+id/sv"
         android:layout_width="fill_parent"
@@ -20,245 +256,7 @@
             android:layout_height="fill_parent"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:orientation="vertical" 
-            >
-
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/psrson_iv_pic"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
-                android:layout_gravity="center"
-                fresco:placeholderImage="@drawable/item240"
-                fresco:roundAsCircle="true" 
-                android:layout_marginTop="10dp"
-                />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:id="@+id/psrson_tv_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="name"
-                    android:textColor="@color/g_main"
-                    android:textSize="17sp" />
-
-                <TextView
-                    android:id="@+id/psrson_iv_sex"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/psrson_tv_sign"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
-                android:gravity="center_horizontal"
-                android:singleLine="true"
-                android:text="个性"
-                android:textColor="@color/g_other" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
-
-                <LinearLayout
-                    android:id="@+id/psrson_ll_follow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="关注"
-                        android:textColor="@color/g_main" />
-
-                    <TextView
-                        android:id="@+id/psrson_tv_guanzhu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="4dp"
-                        android:text="个性"
-                        android:textColor="@color/g_red" />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="1px"
-                    android:layout_height="14dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
-                    android:background="@color/g_line" />
-
-                <LinearLayout
-                    android:id="@+id/psrson_ll_fans"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="粉丝"
-                        android:textColor="@color/g_main" />
-
-                    <TextView
-                        android:id="@+id/psrson_tv_fans"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="4dp"
-                        android:text="个性"
-                        android:textColor="@color/g_red" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/psrson_ll_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/tfz_shap"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingBottom="4dp"
-                android:paddingLeft="12dp"
-                android:paddingRight="12dp"
-                android:paddingTop="4dp" >
-
-                <ImageView
-                    android:id="@+id/psrson_iv_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ed"
-                    android:visibility="visible" />
-
-                <TextView
-                    android:id="@+id/psrson_tv_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="编辑个人资料"
-                    android:textColor="@color/g_blue" />
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="@color/g_line"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="44dp"
-                android:layout_marginTop="12dp"
-                android:background="#ffffffff"
-                android:orientation="horizontal" >
-
-                <LinearLayout
-                    android:id="@+id/psrson_ll_tab1"
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:id="@+id/psrson_tv_tab1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="喜爱"
-                        android:textColor="@color/g_main" />
-
-                    <ImageView
-                        android:id="@+id/psrson_iv_tab1"
-                        android:layout_width="56dp"
-                        android:layout_height="2dp"
-                        android:layout_gravity="center"
-                        android:background="#ff1f77" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/psrson_ll_tab2"
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:id="@+id/psrson_tv_tab2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="点评"
-                        android:textColor="@color/g_other" />
-
-                    <ImageView
-                        android:id="@+id/psrson_iv_tab2"
-                        android:layout_width="56dp"
-                        android:layout_height="2dp"
-                        android:layout_gravity="center"
-                        android:background="#ff1f77"
-                        android:visibility="invisible" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/psrson_ll_tab3"
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        android:id="@+id/psrson_tv_tab3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="标签"
-                        android:textColor="@color/g_other" />
-
-                    <ImageView
-                        android:id="@+id/psrson_iv_tab3"
-                        android:layout_width="56dp"
-                        android:layout_height="2dp"
-                        android:layout_gravity="center"
-                        android:background="#ff1f77"
-                        android:visibility="invisible" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="@color/g_line" />
+            android:orientation="vertical" >
 
             <com.ekwing.students.customview.ScrollViewWithGridView
                 android:id="@+id/psrson_gv"

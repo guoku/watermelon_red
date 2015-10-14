@@ -2,10 +2,11 @@ package com.guoku.guokuv4.act;
 
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.View.OnClickListener;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.PopupWindow.OnDismissListener;
@@ -32,6 +33,7 @@ public class WebAct extends BaseActivity {
 			public void onReceivedTitle(WebView view, String title) {
 				super.onReceivedTitle(view, title);
 				name = title;
+				webViewTitle.add(title);
 				setGCenter(true, title);
 
 			}
@@ -57,7 +59,36 @@ public class WebAct extends BaseActivity {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				view.loadUrl(url);
+				setGCenter(true, view.getTitle());
 				return true;
+			}
+			
+			public void onPageFinished(WebView view, String url) {
+				// TODO Auto-generated method stub
+				webViewTitle.add(view.getTitle());
+			}
+		});
+
+		// 点击后退按钮,让WebView后退一页(也可以覆写Activity的onKeyDown方法)
+		view.setOnKeyListener(new View.OnKeyListener() {
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if (event.getAction() == KeyEvent.ACTION_DOWN) {
+					if (keyCode == KeyEvent.KEYCODE_BACK && view.canGoBack()) {
+						setGCenter(true, goBack(view));
+						return true; // 已处理
+					}
+				}
+				return false;
+			}
+		});
+
+		getGLeft().setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				setGCenter(true, goBack(view));
 			}
 		});
 
@@ -87,7 +118,12 @@ public class WebAct extends BaseActivity {
 
 			}
 		});
-
 	}
-
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		webViewTitle.clear();
+	}
 }

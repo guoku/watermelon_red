@@ -1,5 +1,7 @@
 package com.ekwing.students.base;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewParent;
 import android.view.Window;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,6 +47,8 @@ public abstract class BaseActivity extends FragmentActivity {
 
 	TextView tvTwo;
 	ImageView imgTrage;
+	
+	public static ArrayList<String> webViewTitle = new ArrayList<String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +111,11 @@ public abstract class BaseActivity extends FragmentActivity {
 			view.setVisibility(View.GONE);
 			line.setVisibility(View.GONE);
 		}
+	}
+	
+	protected ImageView getGLeft() {
+		ImageView view = (ImageView) findViewById(R.id.title_bar_left_iv);
+		return view;
 	}
 
 	protected void setGRigth(boolean show, int resid) {
@@ -289,5 +299,19 @@ public abstract class BaseActivity extends FragmentActivity {
 
 	public interface OnViewPageCurrentItem {
 		void onCurrentItem();
+	}
+	
+	
+	public String goBack(WebView view){
+		if (view.canGoBack()) {
+			view.goBack(); // 后退
+			if(webViewTitle.size() > 0){
+				webViewTitle.remove(webViewTitle.size() - 1);
+			}
+		} else {
+			finish();
+		}
+		
+		return webViewTitle.get(webViewTitle.size() - 1);
 	}
 }

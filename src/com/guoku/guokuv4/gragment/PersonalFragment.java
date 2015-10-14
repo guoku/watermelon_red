@@ -17,11 +17,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -55,6 +53,7 @@ import com.guoku.guokuv4.utils.ImgUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -70,7 +69,9 @@ public class PersonalFragment extends BaseFrament {
 	private static final int TABNOTE = 11;
 	private static final int TABTAG = 12;
 	private static final int TABLIKEADD = 15;
+	private static final int TABLIKEADD_DOWN = 151;//下拉
 	private static final int TABNOTEADD = 16;
+	private static final int TABNOTEADD_DOWN = 161;
 	private static final int TABTAGADD = 17;
 	private static final int COMMENTLIST = 14;
 	private static final int PROINFO = 13;
@@ -390,11 +391,42 @@ public class PersonalFragment extends BaseFrament {
 		// new String[] { "30", System.currentTimeMillis() / 1000 + "" },
 		// TABLIKE, false);
 		Tab1(null);
-		sv.setMode(Mode.PULL_FROM_END);
-		sv.setOnRefreshListener(new OnRefreshListener<ScrollView>() {
+		sv.setMode(Mode.BOTH);
+		
+		sv.setOnRefreshListener(new OnRefreshListener2<ScrollView>() {
 
 			@Override
-			public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+				// TODO Auto-generated method stub
+				time = System.currentTimeMillis() / 1000 + "";
+				if (psrson_gv.getVisibility() == View.VISIBLE
+						&& likeList != null && likeList.size() > 0) {
+					sendConnection(Constant.TABLIKE
+							+ userBean.getUser().getUser_id() + "/like/",
+							new String[] { "count", "timestamp" },
+							new String[] { "30", time }, TABLIKEADD, false);
+
+				} else if (psrson_lv_1.getVisibility() == View.VISIBLE
+						&& noteList != null && noteList.size() > 0) {
+
+					sendConnection(
+							Constant.TABLIKE + userBean.getUser().getUser_id()
+									+ "/entity/note/", new String[] { "count",
+									"timestamp" }, new String[] {
+									"30",
+									noteList.get(noteList.size() - 1).getNote()
+											.getCreated_time() }, TABNOTEADD,
+							false);
+
+				} else if (psrson_lv_2.getVisibility() == View.VISIBLE) {
+					sv.onRefreshComplete();
+				} else
+					sv.onRefreshComplete();
+			}
+
+			@Override
+			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+				// TODO Auto-generated method stub
 				if (psrson_gv.getVisibility() == View.VISIBLE
 						&& likeList != null && likeList.size() > 0) {
 					sendConnection(Constant.TABLIKE
