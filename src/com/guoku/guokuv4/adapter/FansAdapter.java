@@ -3,7 +3,7 @@ package com.guoku.guokuv4.adapter;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.net.Uri;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -11,32 +11,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ekwing.students.utils.ArrayListAdapter;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.utils.ImgUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class FansAdapter extends ArrayListAdapter<UserBean> {
-	private ImageLoader loader = ImageLoader.getInstance();
-	private DisplayImageOptions options;
 	private OnClickListener listener;
 
 	public FansAdapter(Context context, OnClickListener listener) {
 		super(context);
-		options = new DisplayImageOptions.Builder()
-				.bitmapConfig(Bitmap.Config.RGB_565)
-				.imageScaleType(ImageScaleType.EXACTLY)
-				.displayer(new RoundedBitmapDisplayer(90))
-				.showImageOnLoading(R.drawable.user100)
-				.showImageForEmptyUri(R.drawable.user100)
-				.showImageOnFail(R.drawable.user100).cacheInMemory(true)
-				.build();
 		this.listener = listener;
 	}
 
@@ -52,8 +39,7 @@ public class FansAdapter extends ArrayListAdapter<UserBean> {
 			holder = (ViewHold) convertView.getTag();
 		}
 		UserBean bean = (UserBean) mList.get(position);
-		loader.displayImage(bean.get50(), holder.fans_item_iv_pic, options,
-				new ImgUtils.AnimateFirstDisplayListener());
+		holder.fans_item_iv_pic.setImageURI(Uri.parse(bean.get50()));
 		holder.fans_item_tv_fans.setText("关注  " + bean.getFollowing_count()
 				+ "    粉丝 " + bean.getFan_count());
 		holder.fans_item_tv_name.setText(bean.getNickname());
@@ -93,8 +79,7 @@ public class FansAdapter extends ArrayListAdapter<UserBean> {
 			ViewHold holder = (ViewHold) view.getTag();
 
 			UserBean bean = (UserBean) mList.get(itemIndex);
-			loader.displayImage(bean.get50(), holder.fans_item_iv_pic, options,
-					new ImgUtils.AnimateFirstDisplayListener());
+			holder.fans_item_iv_pic.setImageURI(Uri.parse(bean.get50()));
 			// BitmapUtil.setRoundImage(loader, bean.getAvatar_small(), options,
 			// holder.fans_item_iv_pic);
 			holder.fans_item_tv_fans.setText("关注  " + bean.getFollowing_count()
@@ -141,7 +126,7 @@ public class FansAdapter extends ArrayListAdapter<UserBean> {
 
 	class ViewHold {
 		@ViewInject(R.id.fans_item_iv_pic)
-		ImageView fans_item_iv_pic;
+		SimpleDraweeView fans_item_iv_pic;
 		@ViewInject(R.id.fans_item_iv_status)
 		ImageView fans_item_iv_status;
 		@ViewInject(R.id.fans_item_tv_fans)

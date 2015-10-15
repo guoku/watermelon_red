@@ -73,7 +73,6 @@ public class JingXuanAdapter extends ArrayListAdapter<PBean> {
 		} else {
 			holder.tv_likes.setVisibility(View.GONE);
 		}
-//		LogGK.d("2喜欢数量＝" + bean.getContent().getEntity().getLike_count());
 		holder.tv_time.setText(DateUtils.getStandardDate(bean.getPost_time()));
 		return convertView;
 	}
@@ -100,7 +99,6 @@ public class JingXuanAdapter extends ArrayListAdapter<PBean> {
 		} else {
 			tv_like_count.setVisibility(View.GONE);
 		}
-		LogGK.d("3喜欢数量＝" + bean.getContent().getEntity().getLike_count());
 	}
 
 	private class ViewHolder {
