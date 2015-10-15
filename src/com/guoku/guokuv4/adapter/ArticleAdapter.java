@@ -14,6 +14,7 @@ import com.ekwing.students.EkwingApplication;
 import com.ekwing.students.config.Constant;
 import com.ekwing.students.utils.ArrayListAdapter;
 import com.ekwing.students.utils.BitmapUtil;
+import com.ekwing.students.utils.DateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
 import com.guoku.guokuv4.bean.ArticlesList;
@@ -29,10 +30,14 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 public class ArticleAdapter extends ArrayListAdapter<ArticlesList> {
 
 	private int w = EkwingApplication.screenW;
-
+	private int w_width;
+	private int w_hight;
+	
 	public ArticleAdapter(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
+		w_width = BitmapUtil.dip2pix(mContext, 20);
+		w_hight = w / 2;
 	}
 
 	@Override
@@ -56,11 +61,10 @@ public class ArticleAdapter extends ArrayListAdapter<ArticlesList> {
 				+ articles.getCover().replace("images", "images/750")));
 
 		LayoutParams params = (LayoutParams) holder.imgIcon.getLayoutParams();
-		params.height = w / 2;
-		params.width = w - BitmapUtil.dip2pix(mContext, 20);
+		params.height = w_hight;
+		params.width = w - w_width;
 		holder.imgIcon.setLayoutParams(params);
-		holder.tvTime.setText(StringUtils.getStandardDate(String
-				.valueOf(articles.getPub_time())));
+		holder.tvTime.setText(DateUtils.getStandardDate(String.valueOf(articles.getPub_time())));
 
 		return convertView;
 	}
