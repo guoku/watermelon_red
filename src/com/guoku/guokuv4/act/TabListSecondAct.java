@@ -42,7 +42,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
  * @date 2015-9-24 下午3:02:42 二级分类商品结果
  */
 public class TabListSecondAct extends NetWorkActivity implements
-		OnCheckedChangeListener, OnItemClickListener {
+		OnCheckedChangeListener{
 
 	private final int TAG_CATABLIST = 1001;// 二级品类商品
 	private final int TAG_CATABLIST_UP = 10011;// 二级品类商品上拉
@@ -93,11 +93,30 @@ public class TabListSecondAct extends NetWorkActivity implements
 
 		gvAdapter = new GridView3vAdapter(mContext);
 		tab_gv.setAdapter(gvAdapter);
-		tab_gv.setOnItemClickListener(this);
+		tab_gv.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				sendConnection(Constant.PROINFO + listTag.get(arg2).getEntity_id()
+						+ "/", new String[] { "entity_id" }, new String[] { listTag
+						.get(arg2).getEntity_id() }, TAG_PROINFO, true);
+			}
+		});
 
 		lvAdapter = new EntityAdapter(mContext);
 		tab_lv.setAdapter(lvAdapter);
-		tab_lv.setOnItemClickListener(this);
+		tab_lv.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				arg2 -=1;
+				sendConnection(Constant.PROINFO + listTag.get(arg2).getEntity_id()
+						+ "/", new String[] { "entity_id" }, new String[] { listTag
+						.get(arg2).getEntity_id() }, TAG_PROINFO, true);
+			}
+		});
 		tab_lv.setPullToRefreshOverScrollEnabled(false);
 		tab_lv.setScrollingWhileRefreshingEnabled(false);
 		tab_lv.setMode(Mode.BOTH);
@@ -160,10 +179,11 @@ public class TabListSecondAct extends NetWorkActivity implements
 			lvAdapter.setList(listTag);
 			break;
 		case TAG_CATABLIST_UP:
-			listTag = (ArrayList<EntityBean>) JSON.parseArray(result,
+			ArrayList<EntityBean> lists = (ArrayList<EntityBean>) JSON.parseArray(result,
 					EntityBean.class);
-			gvAdapter.addListsLast(listTag);
-			lvAdapter.addListsLast(listTag);
+			listTag.addAll(lists);
+			gvAdapter.addListsLast(lists);
+			lvAdapter.addListsLast(lists);
 			break;
 		case TAG_PROINFO:
 			PInfoBean bean = ParseUtil.getPI(result);
@@ -237,14 +257,6 @@ public class TabListSecondAct extends NetWorkActivity implements
 				tab_lv.setVisibility(View.VISIBLE);
 			}
 		}
-	}
-
-	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO Auto-generated method stub
-		sendConnection(Constant.PROINFO + listTag.get(arg2).getEntity_id()
-				+ "/", new String[] { "entity_id" }, new String[] { listTag
-				.get(arg2).getEntity_id() }, TAG_PROINFO, true);
 	}
 
 }

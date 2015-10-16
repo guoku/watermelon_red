@@ -69,7 +69,7 @@ public class ArticleAdapter extends ArrayListAdapter<ArticlesList> {
 		return convertView;
 	}
 
-	class ViewHold {
+	static class ViewHold {
 		@ViewInject(R.id.article_title)
 		TextView tvName;// 文章名称
 		@ViewInject(R.id.article_context)

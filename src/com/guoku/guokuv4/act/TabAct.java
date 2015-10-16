@@ -153,10 +153,11 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 			lvAdapter.setList(list);
 			break;
 		case CATABLIST_UP:
-			list = (ArrayList<EntityBean>) JSON.parseArray(result,
+			ArrayList<EntityBean> lists = (ArrayList<EntityBean>) JSON.parseArray(result,
 					EntityBean.class);
-			gvAdapter.addListsLast(list);
-			lvAdapter.addListsLast(list);
+			list.addAll(lists);
+			gvAdapter.addListsLast(lists);
+			lvAdapter.addListsLast(lists);
 			break;
 		case PROINFO:
 			PInfoBean bean = ParseUtil.getPI(result);
@@ -220,6 +221,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
+				arg2 -= 1;
 				sendConnection(Constant.PROINFO + list.get(arg2).getEntity_id()
 						+ "/", new String[] { "entity_id" },
 						new String[] { list.get(arg2).getEntity_id() },
