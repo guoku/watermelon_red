@@ -183,7 +183,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	private ScheduledExecutorService scheduledExecutorService;
 	private boolean onTouchTrue;
 	private NoteBean noteBean;
-	private UMSocialService mController;
+	
 	private NoteBean myNoteBean;
 	String checkId;
 
@@ -200,8 +200,6 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		setContentView(R.layout.product_act);
 
 		lineView = View.inflate(mContext, R.layout.line_gray, null);
-
-		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 
 		init();
 	}
@@ -885,10 +883,6 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(arg0, arg1, arg2);
-		UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(arg0);
-		if (ssoHandler != null) {
-			ssoHandler.authorizeCallBack(arg0, arg1, arg2);
-		}
 		if (arg2 != null) {
 			switch (arg0) {
 			case 10086:

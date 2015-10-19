@@ -26,6 +26,9 @@ import com.guoku.R;
 import com.guoku.guokuv4.utils.MyPreferences;
 import com.lidroid.xutils.ViewUtils;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.sso.UMSsoHandler;
 
 /**
  * 基类activity 每一个acitivty都要继承该类
@@ -48,6 +51,8 @@ public abstract class BaseActivity extends FragmentActivity {
 	TextView tvTwo;
 	ImageView imgTrage;
 	
+	public UMSocialService mController;//初始化友盟分享
+	
 	public static ArrayList<String> webViewTitle = new ArrayList<String>();
 
 	@Override
@@ -59,6 +64,8 @@ public abstract class BaseActivity extends FragmentActivity {
 		mContext = this;
 		isLive = true;
 		getWindow().setWindowAnimations(R.style.ActivityAnimation);
+		
+		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 	}
 
 	@Override
@@ -313,5 +320,18 @@ public abstract class BaseActivity extends FragmentActivity {
 		}
 		
 		return webViewTitle.get(webViewTitle.size() - 1);
+	}
+	
+	/**
+	 * 分享的sso回调
+	 */
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(arg0, arg1, arg2);
+		UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(arg0);
+		if (ssoHandler != null) {
+			ssoHandler.authorizeCallBack(arg0, arg1, arg2);
+		}
 	}
 }
