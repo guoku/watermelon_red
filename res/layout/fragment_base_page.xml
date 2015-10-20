@@ -18,36 +18,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="fill_parent"
         android:layout_height="3dp"
         android:orientation="horizontal" 
         android:background="@color/g_g"
         >
-
-        <ImageView
-            android:id="@+id/cursor"
-            style="@style/home_page_tab_img"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/tab_focus" 
-            />
-
-        <ImageView
-            style="@style/home_page_tab_img"
-            android:visibility="invisible" 
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/tab_focus"
-            
-            />
-
-        <!-- <ImageView
-            style="@style/home_page_tab_img"
-            android:background="@drawable/tab_focus"
-            android:visibility="invisible" 
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            /> -->
     </LinearLayout>
 
     <include layout="@layout/line_gray"/>

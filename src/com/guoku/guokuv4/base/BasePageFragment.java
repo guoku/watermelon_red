@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.guoku.R;
 import com.guoku.guokuv4.homepage.HomeOneFragment;
 import com.guoku.guokuv4.homepage.GoodTwoFragmnet;
+import com.guoku.guokuv4.utils.ImgUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 /**
@@ -39,7 +40,9 @@ public abstract class BasePageFragment extends BaseFrament {
 	private ViewPager viewPager;// 页卡内容
 
 	LinearLayout layoutText;
-
+	
+	LinearLayout layoutImg;
+	
 	ImageView imageView;// 动画图片
 
 	private int offset = 0;// 动画图片偏移量
@@ -132,14 +135,33 @@ public abstract class BasePageFragment extends BaseFrament {
 	 */
 
 	private void InitImageView() {
-
-		imageView = (ImageView) contentView.findViewById(R.id.cursor);
+		
+		layoutImg = (LinearLayout) contentView
+				.findViewById(R.id.linearLayout2);
+		
+		LayoutParams lParams = new LinearLayout.LayoutParams(
+				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f);
+		for(int i = 0; i < getTabCount(); i ++){
+			if(i == 0){
+				imageView = new ImageView(context);
+				imageView.setLayoutParams(lParams);
+				imageView.setImageResource(R.drawable.tab_focus);
+				layoutImg.addView(imageView);
+			}else{
+				ImageView tempView = new ImageView(context);
+				tempView.setLayoutParams(lParams);
+				tempView.setImageResource(R.drawable.tab_focus);
+				tempView.setVisibility(View.INVISIBLE);
+				layoutImg.addView(tempView);
+			}
+		}
+		
 		bmpW = BitmapFactory.decodeResource(getResources(),
 				R.drawable.tab_focus).getWidth();// 获取图片宽度
 		DisplayMetrics dm = new DisplayMetrics();
 		context.getWindowManager().getDefaultDisplay().getMetrics(dm);
 		int screenW = dm.widthPixels;// 获取分辨率宽度
-		offset = (screenW / tabCount()) / 2 - bmpW * 2;// 计算偏移量--(屏幕宽度/页卡总数)/2-图片实际宽度*2
+		offset = (screenW / getTabCount()) / getTabCount() - bmpW/2;// 计算偏移量--(屏幕宽度/页卡总数)/2-图片实际宽度/2
 														// = 偏移量
 		Matrix matrix = new Matrix();
 		matrix.postTranslate(offset, 0);
