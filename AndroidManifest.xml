@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.guoku"
     android:installLocation="auto"
-    android:versionCode="411"
-    android:versionName="4.1" >
+    android:versionCode="412"
+    android:versionName="4.1.1" >
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -611,6 +611,11 @@
         </activity>
         <activity
             android:name="com.guoku.guokuv4.my.ChangeEmailAct"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".guokuv4.base.UserBaseFrament"
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
         </activity>

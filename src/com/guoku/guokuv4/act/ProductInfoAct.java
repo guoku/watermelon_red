@@ -63,6 +63,7 @@ import com.ekwing.students.utils.SharePrenceUtil;
 import com.ekwing.students.utils.StringUtil;
 import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
+import com.guoku.guokuv4.base.UserBaseFrament;
 import com.guoku.guokuv4.bean.TagBean;
 import com.guoku.guokuv4.bean.TagTwo;
 import com.guoku.guokuv4.entity.test.EntityBean;
@@ -70,6 +71,7 @@ import com.guoku.guokuv4.entity.test.NoteBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.UserBean;
+import com.guoku.guokuv4.gragment.PersonalFragment;
 import com.guoku.guokuv4.homepage.GoodTwoFragmnet;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.BroadUtil;
@@ -84,10 +86,7 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.taobao.tae.sdk.model.TaokeParams;
 import com.taobao.tae.sdk.webview.TaeWebViewUiSettings;
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.socialize.controller.UMServiceFactory;
-import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.media.UMImage;
-import com.umeng.socialize.sso.UMSsoHandler;
 
 public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		DialogInterface.OnClickListener, OnScrollListener,
@@ -325,7 +324,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				JSONObject root = new JSONObject(result);
 				UserBean userBean =  JSON.parseObject(
 						root.getString("user"), UserBean.class);
-				intent = new Intent(context, UserAct.class);
+				intent = new Intent(context, UserBaseFrament.class);
 				intent.putExtra("data", userBean);
 				startActivity(intent);
 			} catch (Exception e) {

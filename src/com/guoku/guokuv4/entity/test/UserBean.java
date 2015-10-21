@@ -72,6 +72,9 @@ public class UserBean implements Serializable {
 	}
 
 	public String getFan_count() {
+		if(StringUtils.isEmpty(fan_count)){
+			return "0";
+		}
 		return fan_count;
 	}
 
