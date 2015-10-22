@@ -41,12 +41,11 @@ import com.guoku.R;
 import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.act.SeachAct;
 import com.guoku.guokuv4.act.TabAct;
-import com.guoku.guokuv4.act.UserAct;
 import com.guoku.guokuv4.act.WebShareAct;
-import com.guoku.guokuv4.adapter.GridView3vAdapter;
 import com.guoku.guokuv4.adapter.GuangArticlesAdapter;
 import com.guoku.guokuv4.adapter.GuangShopAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
+import com.guoku.guokuv4.base.UserBaseFrament;
 import com.guoku.guokuv4.bean.Discover;
 import com.guoku.guokuv4.bean.Sharebean;
 import com.guoku.guokuv4.entity.test.BannerBean;
@@ -236,7 +235,7 @@ public class GuangFragment extends BaseFrament {
 				JSONObject root = new JSONObject(result);
 				UserBean userBean = (UserBean) JSON.parseArray(
 						root.getString("user"), UserBean.class);
-				intent = new Intent(context, UserAct.class);
+				intent = new Intent(context, UserBaseFrament.class);
 				intent.putExtra("data", userBean);
 				startActivity(intent);
 

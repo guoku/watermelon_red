@@ -21,6 +21,7 @@ import com.ekwing.students.config.Logger;
 import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.adapter.FansAdapter;
+import com.guoku.guokuv4.base.UserBaseFrament;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -149,7 +150,7 @@ public class LikesAct extends NetWorkActivity implements OnClickListener {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				if (adapter.getCount() > 0) {
-					Intent intent = new Intent(mContext, UserAct.class);
+					Intent intent = new Intent(mContext, UserBaseFrament.class);
 					intent.putExtra("data", adapter.getItem(arg2 - 1));
 					startActivity(intent);
 				}

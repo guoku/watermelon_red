@@ -25,5 +25,11 @@
         <attr name="border_inside_color" format="color" />
         <attr name="border_outside_color" format="color"></attr>
     </declare-styleable>
+    
+    
+    <declare-styleable name="LayoutItemView">
+        <attr name="textLeft" format="string" />
+        <attr name="textColorLeft" format="color" />
+    </declare-styleable>
 
 </resources>

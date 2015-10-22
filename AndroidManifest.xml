@@ -215,11 +215,6 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.guoku.guokuv4.act.UserAct"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.guoku.guokuv4.act.LikesAct"
             android:configChanges="orientation"
             android:screenOrientation="portrait" >

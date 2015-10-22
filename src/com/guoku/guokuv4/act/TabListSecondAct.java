@@ -22,7 +22,7 @@ import com.ekwing.students.config.Constant;
 import com.ekwing.students.customview.ScrollViewWithGridView;
 import com.guoku.R;
 import com.guoku.guokuv4.adapter.EntityAdapter;
-import com.guoku.guokuv4.adapter.GridView3vAdapter;
+import com.guoku.guokuv4.adapter.GridViewAdapter;
 import com.guoku.guokuv4.adapter.SeachCommodityTypeAdapter;
 import com.guoku.guokuv4.bean.TagTwo;
 import com.guoku.guokuv4.entity.test.EntityBean;
@@ -64,7 +64,7 @@ public class TabListSecondAct extends NetWorkActivity implements
 	@ViewInject(R.id.check_box_show)
 	CheckBox cbShow;// tab上的显示方式按钮
 
-	private GridView3vAdapter gvAdapter;
+	private GridViewAdapter gvAdapter;
 	private EntityAdapter lvAdapter;
 
 	TagTwo tagTwo;// 从品类分类过来的
@@ -91,7 +91,7 @@ public class TabListSecondAct extends NetWorkActivity implements
 
 	private void init() {
 
-		gvAdapter = new GridView3vAdapter(mContext);
+		gvAdapter = new GridViewAdapter(mContext, 3);
 		tab_gv.setAdapter(gvAdapter);
 		tab_gv.setOnItemClickListener(new OnItemClickListener() {
 			@Override

@@ -27,6 +27,7 @@ import com.ekwing.students.utils.ArrayListAdapter;
 import com.ekwing.students.utils.DateUtils;
 import com.ekwing.students.utils.Utils;
 import com.guoku.R;
+import com.guoku.guokuv4.base.UserBaseFrament;
 import com.guoku.guokuv4.entity.test.CommentBean;
 import com.guoku.guokuv4.entity.test.CommentListBean;
 import com.guoku.guokuv4.entity.test.EntityBean;
@@ -231,7 +232,7 @@ public class CommentTalkAct extends NetWorkActivity implements OnClickListener {
 							@Override
 							public void onClick(View arg0) {
 								Intent intent = new Intent(mContext,
-										UserAct.class);
+										UserBaseFrament.class);
 								intent.putExtra("data", bean.getCreator());
 								startActivity(intent);
 							}
@@ -319,7 +320,7 @@ public class CommentTalkAct extends NetWorkActivity implements OnClickListener {
 			break;
 		case R.id.comment_item_iv_pic:
 			NoteBean noteBean = (NoteBean) arg0.getTag();
-			Intent intent = new Intent(mContext, UserAct.class);
+			Intent intent = new Intent(mContext, UserBaseFrament.class);
 			intent.putExtra("data", noteBean.getCreator());
 			startActivity(intent);
 			break;

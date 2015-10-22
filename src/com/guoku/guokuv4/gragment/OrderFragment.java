@@ -21,8 +21,8 @@ import com.ekwing.students.utils.StringUtil;
 import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.act.ProductInfoAct;
-import com.guoku.guokuv4.act.UserAct;
 import com.guoku.guokuv4.base.BaseFrament;
+import com.guoku.guokuv4.base.UserBaseFrament;
 import com.guoku.guokuv4.entity.test.MessageBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.PointBean;
@@ -564,7 +564,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 		case R.id.tongzhi_item_iv_userpic:
 			if (curTab == 1) {
 				PointBean bean = (PointBean) arg0.getTag();
-				Intent intent = new Intent(context, UserAct.class);
+				Intent intent = new Intent(context, UserBaseFrament.class);
 				if (bean.getType().equals("user_like")) {
 					intent.putExtra("data", bean.getContent().getLiker());
 				} else if (bean.getType().equals("entity")) {
@@ -577,28 +577,28 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 			} else {
 				MessageBean bean = (MessageBean) arg0.getTag();
 				if (bean.getType().equals("note_comment_message")) {
-					Intent intent = new Intent(context, UserAct.class);
+					Intent intent = new Intent(context, UserBaseFrament.class);
 					intent.putExtra("data", bean.getContent().getComment_user());
 					startActivity(intent);
 				} else if (bean.getType().equals("note_poke_message")) {
-					Intent intent = new Intent(context, UserAct.class);
+					Intent intent = new Intent(context, UserBaseFrament.class);
 					intent.putExtra("data", bean.getContent().getPoker());
 					startActivity(intent);
 				} else if (bean.getType().equals("entity_note_message")) {
-					Intent intent = new Intent(context, UserAct.class);
+					Intent intent = new Intent(context, UserBaseFrament.class);
 					intent.putExtra("data", bean.getContent().getNote()
 							.getCreator());
 					startActivity(intent);
 				} else if (bean.getType().equals("user_follow")) {
-					Intent intent = new Intent(context, UserAct.class);
+					Intent intent = new Intent(context, UserBaseFrament.class);
 					intent.putExtra("data", bean.getContent().getFollower());
 					startActivity(intent);
 				} else if (bean.getType().equals("note_comment_reply_message")) {
-					Intent intent = new Intent(context, UserAct.class);
+					Intent intent = new Intent(context, UserBaseFrament.class);
 					intent.putExtra("data", bean.getContent().getFollower());
 					startActivity(intent);
 				} else if (bean.getType().equals("entity_like_message")) {
-					Intent intent = new Intent(context, UserAct.class);
+					Intent intent = new Intent(context, UserBaseFrament.class);
 					intent.putExtra("data", bean.getContent().getLiker());
 					startActivity(intent);
 				}

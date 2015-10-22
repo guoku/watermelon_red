@@ -312,7 +312,7 @@ public class Constant {
 	public static final String HOT = URL + "/mobile/v4/popular/";
 	public static final String TAB = URL + "/mobile/v4/category/";
 
-	public static final String TABLIKE = URL + "/mobile/v4/user/";
+	public static final String TAB_USER = URL + "/mobile/v4/user/";
 	public static final String POINTLIST = URL + "/mobile/v4/feed/";
 	public static final String MESSAGELIST = URL + "/mobile/v4/message/";
 	public static final String FAXIANHOME = URL + "/mobile/v4/homepage/";

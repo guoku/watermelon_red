@@ -37,7 +37,7 @@ import com.guoku.R;
 import com.guoku.guokuv4.adapter.EntityAdapter;
 import com.guoku.guokuv4.adapter.FansAdapter;
 import com.guoku.guokuv4.adapter.SeachCommodityTypeAdapter;
-import com.guoku.guokuv4.bean.TagBean;
+import com.guoku.guokuv4.base.UserBaseFrament;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.Tab2Bean;
@@ -282,7 +282,7 @@ public class SeachAct extends NetWorkActivity implements OnClickListener,
 							.getCategory_title());
 					mContext.startActivity(intent);
 				} else if (curTab.equals("user/search/")) {
-					Intent intent = new Intent(mContext, UserAct.class);
+					Intent intent = new Intent(mContext, UserBaseFrament.class);
 					intent.putExtra("data", fansAdapter.getItem(arg2 - 1));
 					startActivity(intent);
 				}

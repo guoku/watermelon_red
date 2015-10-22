@@ -23,6 +23,7 @@ import com.ekwing.students.base.NetWorkActivity;
 import com.ekwing.students.config.Constant;
 import com.ekwing.students.customview.CustomShareBoard;
 import com.guoku.R;
+import com.guoku.guokuv4.base.UserBaseFrament;
 import com.guoku.guokuv4.bean.Sharebean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.UserBean;
@@ -189,7 +190,7 @@ public class WebShareAct extends NetWorkActivity {
 				root = new JSONObject(result);
 				UserBean userBean = (UserBean) JSON.parseObject(
 						root.getString("user"), UserBean.class);
-				intent = new Intent(mContext, UserAct.class);
+				intent = new Intent(mContext, UserBaseFrament.class);
 				intent.putExtra("data", userBean);
 				startActivity(intent);
 			} catch (JSONException e) {

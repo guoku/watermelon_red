@@ -22,11 +22,14 @@ import com.lidroid.xutils.view.annotation.ViewInject;
  * @Description: TODO
  * @date 2015-9-24 下午2:48:28 3 列的瀑布流
  */
-public class GridView3vAdapter extends ArrayListAdapter<EntityBean> {
+public class GridViewAdapter extends ArrayListAdapter<EntityBean> {
 
-	public GridView3vAdapter(Context context) {
+	int count;
+	
+	public GridViewAdapter(Context context, int counts) {
 		super(context);
 		// TODO Auto-generated constructor stub
+		this.count = counts;
 	}
 
 	@Override
@@ -47,8 +50,8 @@ public class GridView3vAdapter extends ArrayListAdapter<EntityBean> {
 		holder.imgIcon.setImageURI(Uri.parse(mList.get(position).get240()));
 
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-				EkwingApplication.screenW / 3 - 10,
-				EkwingApplication.screenW / 3 - 10);
+				EkwingApplication.screenW / count - 10,
+				EkwingApplication.screenW / count - 10);
 		holder.imgIcon.setLayoutParams(params);
 
 		return convertView;

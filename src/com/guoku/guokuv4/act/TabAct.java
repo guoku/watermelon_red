@@ -31,7 +31,7 @@ import com.ekwing.students.utils.SharePrenceUtil;
 import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.adapter.EntityAdapter;
-import com.guoku.guokuv4.adapter.GridView3vAdapter;
+import com.guoku.guokuv4.adapter.GridViewAdapter;
 import com.guoku.guokuv4.bean.TagBean;
 import com.guoku.guokuv4.bean.TagTwo;
 import com.guoku.guokuv4.entity.test.EntityBean;
@@ -99,7 +99,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 	@ViewInject(R.id.view_back_black)
 	private View backblack;
 
-	private GridView3vAdapter gvAdapter;
+	private GridViewAdapter gvAdapter;
 	private EntityAdapter lvAdapter;
 
 	private String cid;
@@ -185,7 +185,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		setGLeft(true, R.drawable.back_selector);
 		list = new ArrayList<EntityBean>();
 
-		gvAdapter = new GridView3vAdapter(context);
+		gvAdapter = new GridViewAdapter(context, 3);
 		lvAdapter = new EntityAdapter(context);
 
 		// tab_gv.addHeaderView(v)
