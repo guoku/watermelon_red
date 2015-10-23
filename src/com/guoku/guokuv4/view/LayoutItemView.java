@@ -20,7 +20,7 @@ import com.guoku.R;
  */
 public class LayoutItemView extends RelativeLayout {
 
-	public TextView tv1;
+	public TextView tv1, tv2;
 	ImageView imageVie;
 
 	public LayoutItemView(Context context, AttributeSet attrs) {
@@ -42,6 +42,7 @@ public class LayoutItemView extends RelativeLayout {
 		inflater.inflate(R.layout.layout_item_view, this);
 
 		tv1 = (TextView) findViewById(R.id.textView1);
+		tv2 = (TextView) findViewById(R.id.textView2);
 		imageVie = (ImageView) findViewById(R.id.imageView1);
 
 		TypedArray a = context.obtainStyledAttributes(attrs,
@@ -49,6 +50,6 @@ public class LayoutItemView extends RelativeLayout {
 
 		tv1.setText(a.getString(R.styleable.LayoutItemView_textLeft));
 		tv1.setTextColor(a.getInt(R.styleable.LayoutItemView_textColorLeft,
-				R.color.g_other));
+				R.color.black_body));
 	}
 }

@@ -5,18 +5,40 @@ import java.io.Serializable;
 import com.guoku.guokuv4.utils.StringUtils;
 
 public class UserBean implements Serializable {
-	private String is_censor, bio, avatar_large, user_id, following_count,
-			fan_count, city, gender, avatar_small, is_active,
-			entity_note_count, tag_count, website, like_count, relation,
-			location, nickname, email;
+//	private String is_censor, bio, avatar_large, user_id, following_count,
+//			fan_count, city, gender, avatar_small, is_active,
+//			entity_note_count, tag_count, website, like_count, relation,
+//			location, nickname, email;
+//	
+    private String website;
+    private String bio;
+    private String avatar_large;
+    private String user_id;
+    private String following_count;
+    private String fan_count;
+    private String city;
+    private String gender;
+    private String avatar_small;
+    private String is_active;
+    private String entity_note_count;
+    private String tag_count;
+    private String like_count;
+    private String relation;
+    private String location;
+    private String article_count;
+    private String nickname;
+    private String email;
 
 
-	public String getIs_censor() {
-		return is_censor;
+	public String getArticle_count() {
+		if(StringUtils.isEmpty(article_count)){
+			return "0";
+		}
+		return article_count;
 	}
 
-	public void setIs_censor(String is_censor) {
-		this.is_censor = is_censor;
+	public void setArticle_count(String article_count) {
+		this.article_count = article_count;
 	}
 
 	public String getBio() {
@@ -123,6 +145,9 @@ public class UserBean implements Serializable {
 	}
 
 	public String getEntity_note_count() {
+		if(StringUtils.isEmpty(entity_note_count)){
+			return "0";
+		}
 		return entity_note_count;
 	}
 

@@ -434,7 +434,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">15sp</item>
-        <item name="android:textColor">@color/g_other</item>
+        <item name="android:textColor">@color/black_body</item>
         <item name="android:padding">12dp</item>
     </style>
 

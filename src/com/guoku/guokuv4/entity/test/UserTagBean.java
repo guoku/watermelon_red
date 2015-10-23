@@ -1,6 +1,6 @@
 package com.guoku.guokuv4.entity.test;
 
-public class TagBean {
+public class UserTagBean {
 	private String tag_hash, tag, entity_count, tag_id;
 
 	public String getTag_hash() {

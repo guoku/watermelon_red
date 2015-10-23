@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class TabTagBean {
 	private UserBean user;
-	private ArrayList<TagBean> tags;
+	private ArrayList<UserTagBean> tags;
 
 	public UserBean getUser() {
 		return user;
@@ -14,11 +14,11 @@ public class TabTagBean {
 		this.user = user;
 	}
 
-	public ArrayList<TagBean> getTags() {
+	public ArrayList<UserTagBean> getTags() {
 		return tags;
 	}
 
-	public void setTags(ArrayList<TagBean> tags) {
+	public void setTags(ArrayList<UserTagBean> tags) {
 		this.tags = tags;
 	}
 

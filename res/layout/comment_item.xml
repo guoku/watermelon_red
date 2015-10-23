@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="24dp"
-                    android:textColor="@color/g_other" />
+                    android:textColor="@color/black_body" />
             </LinearLayout>
 
             <ImageView
@@ -94,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"
-                android:textColor="@color/g_other" />
+                android:textColor="@color/black_body" />
 
             <ImageView
                 android:id="@+id/comment_item_iv_select"
@@ -108,7 +108,7 @@
                 android:id="@+id/comment_item_tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/g_other" />
+                android:textColor="@color/black_body" />
         </LinearLayout>
     </LinearLayout>
 

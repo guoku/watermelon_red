@@ -20,6 +20,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp"
         android:singleLine="true"
-        android:textColor="@color/g_other" />
+        android:textColor="@color/black_body" />
 
 </LinearLayout>

@@ -22,7 +22,7 @@ import com.guoku.guokuv4.entity.test.TAB1Bean;
 import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.TabNoteBean;
 import com.guoku.guokuv4.entity.test.TabTagBean;
-import com.guoku.guokuv4.entity.test.TagBean;
+import com.guoku.guokuv4.entity.test.UserTagBean;
 import com.guoku.guokuv4.entity.test.UserBean;
 
 public class ParseUtil {
@@ -86,8 +86,8 @@ public class ParseUtil {
 		return productBeans;
 	}
 
-	public static ArrayList<TagBean> getTabTagList(String result) {
-		ArrayList<TagBean> productBeans = new ArrayList<TagBean>();
+	public static ArrayList<UserTagBean> getTabTagList(String result) {
+		ArrayList<UserTagBean> productBeans = new ArrayList<UserTagBean>();
 		TabTagBean bean = JSON.parseObject(result, TabTagBean.class);
 		productBeans = bean.getTags();
 		return productBeans;

@@ -49,10 +49,10 @@
 	<!-- user页  包括账号本人和其它用户 -->
 	<string name="tv_user_my">我</string>
 	<string name="tv_user_he">TA&#160;</string>
-	<string name="tv_user_like" formatted="false">的喜爱&#160;&#160;%s</string>
-	<string name="tv_user_comment" formatted="false">的点评&#160;&#160;%s</string>
-	<string name="tv_user_article" formatted="false">的图文&#160;&#160;%s</string>
-	<string name="tv_user_tag" formatted="false">参与的标签&#160;&#160;%s</string>
-	<string name="tv_user_article_zan" formatted="false">赞过的图文&#160;&#160;%s</string>
+	<string name="tv_user_like" >的喜爱</string>
+	<string name="tv_user_comment">的点评</string>
+	<string name="tv_user_article">的图文</string>
+	<string name="tv_user_tag">参与的标签</string>
+	<string name="tv_user_article_zan">赞过的图文</string>
 
 </resources>

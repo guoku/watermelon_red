@@ -20,7 +20,7 @@
             android:padding="20dp"
             android:singleLine="true"
             android:text="所有"
-            android:textColor="@color/g_other" />
+            android:textColor="@color/black_body" />
 
         <TextView
             android:id="@+id/jingxuan_title_item_2"
@@ -32,7 +32,7 @@
             android:padding="20dp"
             android:singleLine="true"
             android:text="女装"
-            android:textColor="@color/g_other" />
+            android:textColor="@color/black_body" />
 
         <TextView
             android:id="@+id/jingxuan_title_item_3"
@@ -44,7 +44,7 @@
             android:padding="20dp"
             android:singleLine="true"
             android:text="男装"
-            android:textColor="@color/g_other" />
+            android:textColor="@color/black_body" />
 
         <TextView
             android:id="@+id/jingxuan_title_item_4"
@@ -55,7 +55,7 @@
             android:padding="20dp"
             android:singleLine="true"
             android:text="厨具"
-            android:textColor="@color/g_other" />
+            android:textColor="@color/black_body" />
     </LinearLayout>
 
     <LinearLayout
@@ -74,7 +74,7 @@
             android:padding="20dp"
             android:singleLine="true"
             android:text="佩饰"
-            android:textColor="@color/g_other" />
+            android:textColor="@color/black_body" />
 
         <TextView
             android:id="@+id/jingxuan_title_item_2"
@@ -86,7 +86,7 @@
             android:padding="20dp"
             android:singleLine="true"
             android:text="科技"
-            android:textColor="@color/g_other" />
+            android:textColor="@color/black_body" />
 
         <TextView
             android:id="@+id/jingxuan_title_item_3"
@@ -98,7 +98,7 @@
             android:padding="20dp"
             android:singleLine="true"
             android:text="户外"
-            android:textColor="@color/g_other" />
+            android:textColor="@color/black_body" />
 
         <TextView
             android:id="@+id/jingxuan_title_item_4"
@@ -109,7 +109,7 @@
             android:padding="20dp"
             android:singleLine="true"
             android:text="文化"
-            android:textColor="@color/g_other" />
+            android:textColor="@color/black_body" />
     </LinearLayout>
 
     <LinearLayout
@@ -128,7 +128,7 @@
             android:padding="20dp"
             android:singleLine="true"
             android:text="Kids"
-            android:textColor="@color/g_other" />
+            android:textColor="@color/black_body" />
 
         <TextView
             android:id="@+id/jingxuan_title_item_2"
@@ -140,7 +140,7 @@
             android:padding="20dp"
             android:singleLine="true"
             android:text="Food"
-            android:textColor="@color/g_other" />
+            android:textColor="@color/black_body" />
 
         <TextView
             android:id="@+id/jingxuan_title_item_3"
@@ -152,7 +152,7 @@
             android:padding="20dp"
             android:singleLine="true"
             android:text="Toy"
-            android:textColor="@color/g_other" />
+            android:textColor="@color/black_body" />
 
         <TextView
             android:id="@+id/jingxuan_title_item_4"
@@ -163,7 +163,7 @@
             android:padding="20dp"
             android:singleLine="true"
             android:text="文化"
-            android:textColor="@color/g_other" />
+            android:textColor="@color/black_body" />
     </LinearLayout>
 
 </LinearLayout>

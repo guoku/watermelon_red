@@ -112,7 +112,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/tv_commodity_type"
-                    android:textColor="@color/g_other" />
+                    android:textColor="@color/black_body" />
 
                 <ImageView
                     android:id="@+id/sou_iv_tab2"
@@ -138,7 +138,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/tv_user"
-                    android:textColor="@color/g_other" />
+                    android:textColor="@color/black_body" />
 
                 <ImageView
                     android:id="@+id/sou_iv_tab3"

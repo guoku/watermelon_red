@@ -22,7 +22,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 public class EntityAdapter extends ArrayListAdapter<EntityBean> {
-	private DisplayImageOptions options;
 	private int w = EkwingApplication.screenW / 4;
 
 	public EntityAdapter(Context context) {

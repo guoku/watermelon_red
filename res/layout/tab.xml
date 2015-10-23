@@ -50,7 +50,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
             android:layout_toLeftOf="@+id/line"
-            android:textColor="@color/g_other" />
+            android:textColor="@color/black_body" />
 
         <View
             android:id="@+id/line"

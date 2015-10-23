@@ -70,7 +70,7 @@
         <!--
              <meta-data
             android:name="UMENG_APPKEY"
-            android:value="55d5453567e58ed077000332" />
+            android:value="55d5453567e58ed077000332" />
         -->
 
         <meta-data
@@ -323,7 +323,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity>
         -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
@@ -614,6 +614,26 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".guokuv4.act.UserLikeListAct"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".guokuv4.act.UserCommentListAct"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".guokuv4.act.UserArticleListAct"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".guokuv4.act.UserTagListAct"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <!-- taobao start -->
         <activity android:name="com.alibaba.sdk.android.trade.ui.TradeWebViewActivity" >
@@ -637,7 +657,8 @@
                     android:scheme="alisdk" />
             </intent-filter>
         </activity>
-        <!-- <activity
+        <!--
+        <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
@@ -649,7 +670,8 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" >
-        </activity> -->
+        </activity>
+        -->
         <!-- android:icon="@drawable/aliwx_head_default" -->
         <!-- android:label="@string/aliwx_app_name" > -->
 
@@ -735,7 +757,6 @@
                 <action android:name="com.alibaba.ctaobao3.action.SERVICE_CONTAINER" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>

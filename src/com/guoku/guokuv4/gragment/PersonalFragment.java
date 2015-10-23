@@ -34,7 +34,11 @@ import com.guoku.guokuv4.act.LoginAct;
 import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.act.RegisterAct;
 import com.guoku.guokuv4.act.SettingAct;
+import com.guoku.guokuv4.act.UserArticleListAct;
+import com.guoku.guokuv4.act.UserCommentListAct;
 import com.guoku.guokuv4.act.UserInfoAct;
+import com.guoku.guokuv4.act.UserLikeListAct;
+import com.guoku.guokuv4.act.UserTagListAct;
 import com.guoku.guokuv4.adapter.GridViewAdapter;
 import com.guoku.guokuv4.adapter.ListImgLeftAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
@@ -48,7 +52,9 @@ import com.guoku.guokuv4.view.LayoutItemView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
-public class PersonalFragment extends BaseFrament{
+public class PersonalFragment extends BaseFrament {
+
+	public static final String INTENT_CODE = "INTENT_CODE";
 
 	private static final int FOLLOW1 = 10;// 关注
 	private static final int FOLLOW0 = 11;// 取消关注
@@ -289,7 +295,8 @@ public class PersonalFragment extends BaseFrament{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				getShopInfo(listImgLeftAdapter.getItem(arg2).getEntity().getEntity_id());
+				getShopInfo(listImgLeftAdapter.getItem(arg2).getEntity()
+						.getEntity_id());
 			}
 		});
 
@@ -385,10 +392,50 @@ public class PersonalFragment extends BaseFrament{
 		startActivity(intent);
 	}
 
+	@OnClick(R.id.tv_user_like)
+	private void userLikeClick(View v) {
+		if (!uBean.getLike_count().equals("0")) {
+			onStartAct(UserLikeListAct.class, userLike.tv1
+					.getText().toString());
+		}
+	}
+	
+	@OnClick(R.id.tv_user_comment)
+	private void userCommentClick(View v) {
+		if (!uBean.getEntity_note_count().equals("0")) {
+			onStartAct(UserCommentListAct.class, userComment.tv1
+					.getText().toString());
+		}
+	}
+	
+	@OnClick(R.id.tv_user_article)
+	private void userArticleClick(View v) {
+		if (!uBean.getArticle_count().equals("0")) {
+			onStartAct(UserArticleListAct.class, userArticle.tv1
+					.getText().toString());
+		}
+	}
+	
+	@OnClick(R.id.tv_user_tag)
+	private void userTagClick(View v) {
+		if (!uBean.getTag_count().equals("0")) {
+			onStartAct(UserTagListAct.class, userTag.tv1
+					.getText().toString());
+		}
+	}
+
 	private void getUserInfo() {
 
 		sendConnection(Constant.USERINFO + uBean.getUser_id() + "/",
 				new String[] {}, new String[] {}, USERINFO, false);
+	}
+	
+	private void onStartAct(Class<?> activity, String title){
+		
+		Bundle bundle = new Bundle();
+		bundle.putString(this.getClass().getName(), title);
+		bundle.putSerializable(INTENT_CODE, uBean);
+		openActivity(activity, bundle);
 	}
 
 	@Override
@@ -516,20 +563,27 @@ public class PersonalFragment extends BaseFrament{
 		}
 
 		userLike.tv1.setText(tempStr
-				+ getActivity().getResources().getString(R.string.tv_user_like,
-						uBean.getLike_count()));
+				+ getActivity().getResources().getString(R.string.tv_user_like));
+		userLike.tv2.setText(uBean.getLike_count());
+		
 		userComment.tv1.setText(tempStr
 				+ getActivity().getResources().getString(
-						R.string.tv_user_comment, uBean.getEntity_note_count()));
+						R.string.tv_user_comment));
+		userComment.tv2.setText(uBean.getEntity_note_count());
+		
 		userArticle.tv1.setText(tempStr
 				+ getActivity().getResources().getString(
-						R.string.tv_user_article, "4"));
+						R.string.tv_user_article));
+		userArticle.tv2.setText(uBean.getArticle_count());
+		
 		userTag.tv1.setText(tempStr
-				+ getActivity().getResources().getString(R.string.tv_user_tag,
-						uBean.getTag_count()));
+				+ getActivity().getResources().getString(R.string.tv_user_tag));
+		userTag.tv2.setText(uBean.getTag_count());
+		
 		userArticleZan.tv1.setText(tempStr
 				+ getActivity().getResources().getString(
-						R.string.tv_user_article_zan, "5"));
+						R.string.tv_user_article_zan));
+		userArticleZan.tv2.setText("555");
 	}
 
 	private void getShopInfo(String id) {

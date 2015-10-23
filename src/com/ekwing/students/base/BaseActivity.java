@@ -20,9 +20,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVAnalytics;
 import com.ekwing.students.EkwingApplication;
 import com.guoku.R;
+import com.guoku.guokuv4.act.ProductInfoAct;
+import com.guoku.guokuv4.entity.test.PInfoBean;
+import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.MyPreferences;
 import com.lidroid.xutils.ViewUtils;
 import com.umeng.analytics.MobclickAgent;
@@ -201,6 +205,13 @@ public abstract class BaseActivity extends FragmentActivity {
 			intent.putExtras(pBundle);
 		}
 		startActivityForResult(intent, requestCode);
+	}
+	
+	protected void openShopInfo(String result){
+		PInfoBean bean = ParseUtil.getPI(result);
+		Intent intent = new Intent(mContext, ProductInfoAct.class);
+		intent.putExtra("data", JSON.toJSONString(bean));
+		startActivity(intent);
 	}
 
 	public void leftOnClick() {
