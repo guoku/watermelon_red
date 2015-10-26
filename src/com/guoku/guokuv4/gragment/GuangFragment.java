@@ -9,6 +9,36 @@ import java.util.concurrent.TimeUnit;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.alibaba.fastjson.JSON;
+import com.avos.avoscloud.AVAnalytics;
+import com.guoku.R;
+import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.act.ProductInfoAct;
+import com.guoku.guokuv4.act.SeachAct;
+import com.guoku.guokuv4.act.TabAct;
+import com.guoku.guokuv4.act.WebShareAct;
+import com.guoku.guokuv4.adapter.GuangArticlesAdapter;
+import com.guoku.guokuv4.adapter.GuangShopAdapter;
+import com.guoku.guokuv4.base.BaseFrament;
+import com.guoku.guokuv4.base.UserBaseFrament;
+import com.guoku.guokuv4.bean.Discover;
+import com.guoku.guokuv4.bean.Sharebean;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.entity.test.BannerBean;
+import com.guoku.guokuv4.entity.test.Categories;
+import com.guoku.guokuv4.entity.test.Categories.Category;
+import com.guoku.guokuv4.entity.test.EntityBean;
+import com.guoku.guokuv4.entity.test.PInfoBean;
+import com.guoku.guokuv4.entity.test.Tab2Bean;
+import com.guoku.guokuv4.entity.test.UserBean;
+import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.ImgUtils;
+import com.guoku.guokuv4.view.ImageAddTextLayout;
+import com.guoku.guokuv4.view.ScrollViewWithListView;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.umeng.analytics.MobclickAgent;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,36 +61,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
-import com.alibaba.fastjson.JSON;
-import com.avos.avoscloud.AVAnalytics;
-import com.ekwing.students.EkwingApplication;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.customview.ScrollViewWithListView;
-import com.guoku.R;
-import com.guoku.guokuv4.act.ProductInfoAct;
-import com.guoku.guokuv4.act.SeachAct;
-import com.guoku.guokuv4.act.TabAct;
-import com.guoku.guokuv4.act.WebShareAct;
-import com.guoku.guokuv4.adapter.GuangArticlesAdapter;
-import com.guoku.guokuv4.adapter.GuangShopAdapter;
-import com.guoku.guokuv4.base.BaseFrament;
-import com.guoku.guokuv4.base.UserBaseFrament;
-import com.guoku.guokuv4.bean.Discover;
-import com.guoku.guokuv4.bean.Sharebean;
-import com.guoku.guokuv4.entity.test.BannerBean;
-import com.guoku.guokuv4.entity.test.Categories;
-import com.guoku.guokuv4.entity.test.Categories.Category;
-import com.guoku.guokuv4.entity.test.EntityBean;
-import com.guoku.guokuv4.entity.test.PInfoBean;
-import com.guoku.guokuv4.entity.test.Tab2Bean;
-import com.guoku.guokuv4.entity.test.UserBean;
-import com.guoku.guokuv4.parse.ParseUtil;
-import com.guoku.guokuv4.utils.ImgUtils;
-import com.guoku.guokuv4.view.ImageAddTextLayout;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnClick;
-import com.umeng.analytics.MobclickAgent;
 
 public class GuangFragment extends BaseFrament {
 	private static final int PROINFO = 12;
@@ -336,7 +336,7 @@ public class GuangFragment extends BaseFrament {
 		try {
 			android.widget.RelativeLayout.LayoutParams param = new android.widget.RelativeLayout.LayoutParams(
 					RelativeLayout.LayoutParams.MATCH_PARENT,
-					(EkwingApplication.screenW) * 472 / 1028);
+					(GuokuApplication.screenW) * 472 / 1028);
 			vp.setLayoutParams(param);
 
 			vp.setOnTouchListener(new OnTouchListener() {

@@ -173,7 +173,7 @@
                 layoutview:textLeft="我的喜爱" >
             </com.guoku.guokuv4.view.LayoutItemView>
 
-            <com.ekwing.students.customview.ScrollViewWithGridView
+            <com.guoku.guokuv4.view.ScrollViewWithGridView
                 android:id="@+id/gridview_like"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -200,7 +200,7 @@
                 layoutview:textLeft="我的点评" >
             </com.guoku.guokuv4.view.LayoutItemView>
 
-            <com.ekwing.students.customview.ScrollViewWithListView
+            <com.guoku.guokuv4.view.ScrollViewWithListView
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/listview_commit"
                 android:layout_width="match_parent"
@@ -209,7 +209,7 @@
                 android:divider="@color/g_line"
                 android:dividerHeight="1px"
                 android:listSelector="@android:color/transparent" >
-            </com.ekwing.students.customview.ScrollViewWithListView>
+            </com.guoku.guokuv4.view.ScrollViewWithListView>
 
             <include
                 layout="@layout/line_gray"

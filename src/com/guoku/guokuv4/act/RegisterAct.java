@@ -3,26 +3,25 @@ package com.guoku.guokuv4.act;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.alibaba.fastjson.JSON;
+import com.guoku.R;
+import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.entity.test.AccountBean;
+import com.guoku.guokuv4.entity.test.UserBean;
+import com.guoku.guokuv4.main.MainActivity2;
+import com.guoku.guokuv4.utils.StringUtils;
+import com.guoku.guokuv4.utils.ToastUtil;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
+
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import com.alibaba.fastjson.JSON;
-import com.ekwing.students.EkwingApplication;
-import com.ekwing.students.base.NetWorkActivity;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.utils.StringUtil;
-import com.ekwing.students.utils.ToastUtil;
-import com.guoku.R;
-import com.guoku.guokuv4.entity.test.AccountBean;
-import com.guoku.guokuv4.entity.test.UserBean;
-import com.guoku.guokuv4.main.MainActivity2;
-import com.guoku.guokuv4.utils.StringUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnClick;
 
 public class RegisterAct extends NetWorkActivity {
 
@@ -68,7 +67,7 @@ public class RegisterAct extends NetWorkActivity {
 		String email = ed_email.getText().toString();
 		String name = ed_name.getText().toString();
 		if (email != null && pass != null && name != null) {
-			if (StringUtil.checkEmail(email)) {
+			if (StringUtils.checkEmail(email)) {
 				if (16 >= ed_pass.length() && ed_pass.length() >= 6) {
 					if (name.length() >= 3 && name.length() <= 30) {
 						if (StringUtils.isNickName(name)) {
@@ -123,7 +122,7 @@ public class RegisterAct extends NetWorkActivity {
 					bean.setSession(root.getString("session"));
 					bean.setUser(JSON.parseObject(root.getString("user"),
 							UserBean.class));
-					EkwingApplication.getInstance().login(bean);
+					GuokuApplication.getInstance().login(bean);
 					startActivity(new Intent(this, MainActivity2.class));
 					finish();
 					ToastUtil.show(context, "注册成功");

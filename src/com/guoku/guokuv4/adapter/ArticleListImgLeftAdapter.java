@@ -3,19 +3,18 @@
  */
 package com.guoku.guokuv4.adapter;
 
+import com.guoku.R;
+import com.guoku.guokuv4.entity.test.TabNoteBean;
+import com.guoku.guokuv4.utils.DateUtils;
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+
 import android.content.Context;
 import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.ekwing.students.utils.ArrayListAdapter;
-import com.ekwing.students.utils.DateUtils;
-import com.guoku.R;
-import com.guoku.guokuv4.entity.test.TabNoteBean;
-import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
 
 /**
  * @zhangyao

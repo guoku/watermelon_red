@@ -2,32 +2,22 @@ package com.guoku.guokuv4.gragment;
 
 import java.util.ArrayList;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-
 import com.alibaba.fastjson.JSON;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.config.Logger;
-import com.ekwing.students.utils.ArrayListAdapter;
-import com.ekwing.students.utils.DateUtils;
-import com.ekwing.students.utils.StringUtil;
-import com.ekwing.students.utils.ToastUtil;
 import com.guoku.R;
 import com.guoku.guokuv4.act.ProductInfoAct;
+import com.guoku.guokuv4.adapter.ArrayListAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
 import com.guoku.guokuv4.base.UserBaseFrament;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.config.Logger;
 import com.guoku.guokuv4.entity.test.MessageBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.PointBean;
 import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.DateUtils;
 import com.guoku.guokuv4.utils.ImgUtils;
+import com.guoku.guokuv4.utils.StringUtils;
+import com.guoku.guokuv4.utils.ToastUtil;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
@@ -39,6 +29,16 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class OrderFragment extends BaseFrament implements OnClickListener {
 
@@ -184,7 +184,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 							.get50(), holder.tongzhi_item_iv_userpic,
 							optionsRound,
 							new ImgUtils.AnimateFirstDisplayListener());
-					StringUtil.setTextColor(
+					StringUtils.setTextColor(
 							holder.tv_context,
 							bean.getContent().getLiker().getNickname()
 									+ " 喜爱了 1 件商品  "
@@ -200,7 +200,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 							.getCreator().get50(),
 							holder.tongzhi_item_iv_userpic, optionsRound,
 							new ImgUtils.AnimateFirstDisplayListener());
-					StringUtil.setTextColor(
+					StringUtils.setTextColor(
 							holder.tv_context,
 							bean.getContent().getNote().getCreator()
 									.getNickname()
@@ -220,7 +220,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 							.get50(), holder.tongzhi_item_iv_userpic,
 							optionsRound,
 							new ImgUtils.AnimateFirstDisplayListener());
-					StringUtil.setTextColor(
+					StringUtils.setTextColor(
 							holder.tv_context,
 							bean.getContent().getUser().getNickname()
 									+ " 开始关注 "
@@ -269,7 +269,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 							.getComment_user().get50(),
 							holder.tongzhi_item_iv_userpic, optionsRound,
 							new ImgUtils.AnimateFirstDisplayListener());
-					StringUtil.setTextColor(
+					StringUtils.setTextColor(
 							holder.tv_context,
 							bean.getContent().getComment_user().getNickname()
 									+ " 评论了你撰写"
@@ -294,7 +294,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 							optionsRound,
 							new ImgUtils.AnimateFirstDisplayListener());
 
-					StringUtil.setTextColor(
+					StringUtils.setTextColor(
 							holder.tv_context,
 							bean.getContent().getPoker().getNickname()
 									+ " 赞了你的点评"
@@ -319,7 +319,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 							.get50(), holder.tongzhi_item_iv_pimg, options,
 							new ImgUtils.AnimateFirstDisplayListener());
 
-					StringUtil.setTextColor(
+					StringUtils.setTextColor(
 							holder.tv_context,
 							bean.getContent().getNote().getCreator()
 									.getNickname()
@@ -339,7 +339,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 							optionsRound,
 							new ImgUtils.AnimateFirstDisplayListener());
 
-					StringUtil.setTextColor(
+					StringUtils.setTextColor(
 							holder.tv_context,
 							bean.getContent().getFollower().getNickname()
 									+ " 开始关注你 "
@@ -357,7 +357,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 							.get50(), holder.tongzhi_item_iv_userpic,
 							optionsRound,
 							new ImgUtils.AnimateFirstDisplayListener());
-					StringUtil.setTextColor(
+					StringUtils.setTextColor(
 							holder.tv_context,
 							bean.getContent().getNote().getCreator()
 									.getNickname()
@@ -392,7 +392,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 							.get50(), holder.tongzhi_item_iv_userpic,
 							optionsRound,
 							new ImgUtils.AnimateFirstDisplayListener());
-					StringUtil.setTextColor(
+					StringUtils.setTextColor(
 							holder.tv_context,
 							bean.getContent().getLiker().getNickname()
 									+ "  喜爱了你添加的商品  "

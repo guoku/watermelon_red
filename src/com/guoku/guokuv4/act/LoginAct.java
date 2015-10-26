@@ -6,31 +6,24 @@ import java.util.Set;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.sdk.android.AlibabaSDK;
 import com.alibaba.sdk.android.callback.CallbackContext;
 import com.alibaba.sdk.android.login.LoginService;
 import com.alibaba.sdk.android.login.callback.LoginCallback;
 import com.alibaba.sdk.android.session.model.Session;
-import com.ekwing.students.EkwingApplication;
-import com.ekwing.students.base.NetWorkActivity;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.config.Logger;
-import com.ekwing.students.utils.DialogUtils;
-import com.ekwing.students.utils.ToastUtil;
-import com.ekwing.students.utils.Utils;
 import com.guoku.R;
+import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.config.Logger;
 import com.guoku.guokuv4.entity.test.AccountBean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.main.MainActivity2;
+import com.guoku.guokuv4.utils.DialogUtils;
+import com.guoku.guokuv4.utils.GuokuUtil;
+import com.guoku.guokuv4.utils.ToastUtil;
+import com.handmark.pulltorefresh.library.internal.Utils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -41,6 +34,14 @@ import com.umeng.socialize.controller.listener.SocializeListeners.UMDataListener
 import com.umeng.socialize.exception.SocializeException;
 import com.umeng.socialize.sso.UMSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
+
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class LoginAct extends NetWorkActivity {
 
@@ -309,7 +310,7 @@ public class LoginAct extends NetWorkActivity {
 					bean.setSession(root.getString("session"));
 					bean.setUser(JSON.parseObject(root.getString("user"),
 							UserBean.class));
-					EkwingApplication.getInstance().login(bean);
+					GuokuApplication.getInstance().login(bean);
 					startActivity(new Intent(this, MainActivity2.class));
 					finish();
 				} else {
@@ -329,7 +330,7 @@ public class LoginAct extends NetWorkActivity {
 					bean.setSession(root.getString("session"));
 					bean.setUser(JSON.parseObject(root.getString("user"),
 							UserBean.class));
-					EkwingApplication.getInstance().login(bean);
+					GuokuApplication.getInstance().login(bean);
 					startActivity(new Intent(this, MainActivity2.class));
 					finish();
 				} else {
@@ -349,7 +350,7 @@ public class LoginAct extends NetWorkActivity {
 					bean.setSession(root.getString("session"));
 					bean.setUser(JSON.parseObject(root.getString("user"),
 							UserBean.class));
-					EkwingApplication.getInstance().login(bean);
+					GuokuApplication.getInstance().login(bean);
 					startActivity(new Intent(this, MainActivity2.class));
 					finish();
 				} else {
@@ -367,7 +368,7 @@ public class LoginAct extends NetWorkActivity {
 					bean.setSession(root.getString("session"));
 					bean.setUser(JSON.parseObject(root.getString("user"),
 							UserBean.class));
-					EkwingApplication.getInstance().login(bean);
+					GuokuApplication.getInstance().login(bean);
 					startActivity(new Intent(this, MainActivity2.class));
 					finish();
 				} else {
@@ -425,7 +426,7 @@ public class LoginAct extends NetWorkActivity {
 			}
 			break;
 		}
-		Utils.hideKeyboard(context, ed_pass);
+		GuokuUtil.hideKeyboard(context, ed_pass);
 	}
 
 	@Override

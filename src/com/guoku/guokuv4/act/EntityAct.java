@@ -13,10 +13,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
-import com.ekwing.students.base.NetWorkActivity;
-import com.ekwing.students.config.Constant;
 import com.guoku.R;
 import com.guoku.guokuv4.adapter.EntityAdapter;
+import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;

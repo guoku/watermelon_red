@@ -3,19 +3,18 @@
  */
 package com.guoku.guokuv4.adapter;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.guoku.R;
+import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.entity.test.EntityBean;
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+
 import android.content.Context;
 import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
-import com.ekwing.students.EkwingApplication;
-import com.ekwing.students.utils.ArrayListAdapter;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.guoku.R;
-import com.guoku.guokuv4.entity.test.EntityBean;
-import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
 
 /**
  * @zhangyao
@@ -50,8 +49,8 @@ public class GridViewAdapter extends ArrayListAdapter<EntityBean> {
 		holder.imgIcon.setImageURI(Uri.parse(mList.get(position).get240()));
 
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-				EkwingApplication.screenW / count - 10,
-				EkwingApplication.screenW / count - 10);
+				GuokuApplication.screenW / count - 10,
+				GuokuApplication.screenW / count - 10);
 		holder.imgIcon.setLayoutParams(params);
 
 		return convertView;

@@ -20,7 +20,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" >
 
-            <com.ekwing.students.customview.ScrollViewWithGridView
+            <com.guoku.guokuv4.view.ScrollViewWithGridView
                 android:id="@+id/tab_gv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -35,7 +35,7 @@
                 android:scrollbars="none"
                 android:verticalSpacing="2px"
                 android:visibility="gone" >
-            </com.ekwing.students.customview.ScrollViewWithGridView>
+            </com.guoku.guokuv4.view.ScrollViewWithGridView>
         </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
         <com.handmark.pulltorefresh.library.PullToRefreshListView

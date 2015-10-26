@@ -3,7 +3,7 @@
  */
 package com.guoku.guokuv4.utils;
 
-import com.ekwing.students.config.Constant;
+import com.guoku.guokuv4.config.Constant;
 
 import android.content.Context;
 import android.content.Intent;

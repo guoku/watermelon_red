@@ -6,7 +6,6 @@ package com.guoku.guokuv4.base;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
-import com.ekwing.students.base.BaseActivity;
 import com.guoku.R;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.gragment.PersonalFragment;

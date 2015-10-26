@@ -2,28 +2,28 @@ package com.guoku.guokuv4.act;
 
 import java.util.ArrayList;
 
+import com.alibaba.fastjson.JSON;
+import com.avos.avoscloud.AVAnalytics;
+import com.guoku.R;
+import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.entity.test.NoteBean;
+import com.guoku.guokuv4.entity.test.PInfoBean;
+import com.guoku.guokuv4.utils.GuokuUtil;
+import com.guoku.guokuv4.utils.StringUtils;
+import com.guoku.guokuv4.utils.ToastUtil;
+import com.handmark.pulltorefresh.library.internal.Utils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.umeng.analytics.MobclickAgent;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
-
-import com.alibaba.fastjson.JSON;
-import com.avos.avoscloud.AVAnalytics;
-import com.avos.avoscloud.LogUtil.log;
-import com.ekwing.students.EkwingApplication;
-import com.ekwing.students.base.NetWorkActivity;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.utils.ToastUtil;
-import com.ekwing.students.utils.Utils;
-import com.guoku.R;
-import com.guoku.guokuv4.entity.test.NoteBean;
-import com.guoku.guokuv4.entity.test.PInfoBean;
-import com.guoku.guokuv4.utils.StringUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnClick;
-import com.umeng.analytics.MobclickAgent;
 
 public class CommentAct extends NetWorkActivity {
 
@@ -116,7 +116,7 @@ public class CommentAct extends NetWorkActivity {
 
 	@Override
 	protected void onSuccess(String result, int where) {
-		Utils.hideKeyboard(context, text);
+		GuokuUtil.hideKeyboard(context, text);
 		switch (where) {
 		case COMMENTNOTE:
 			AVAnalytics.onEvent(this, "poke");
@@ -139,7 +139,7 @@ public class CommentAct extends NetWorkActivity {
 
 	@Override
 	protected void onFailure(String result, int where) {
-		Utils.hideKeyboard(context, text);
+		GuokuUtil.hideKeyboard(context, text);
 	}
 
 	@Override
@@ -147,12 +147,12 @@ public class CommentAct extends NetWorkActivity {
 		productBean = JSON.parseObject(getIntent().getStringExtra("data"),
 				PInfoBean.class);
 		noteid = getIntent().getStringExtra("noteid");
-		if (EkwingApplication.getInstance().getBean() != null) {
+		if (GuokuApplication.getInstance().getBean() != null) {
 			ArrayList<NoteBean> list = productBean.getNote_list();
 			for (NoteBean bean : list) {
 				if (bean.getCreator()
 						.getUser_id()
-						.equals(EkwingApplication.getInstance().getBean()
+						.equals(GuokuApplication.getInstance().getBean()
 								.getUser().getUser_id())) {
 					strContent = bean.getContent();
 					text.setText(strContent);

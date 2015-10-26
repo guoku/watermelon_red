@@ -3,23 +3,22 @@
  */
 package com.guoku.guokuv4.my;
 
+import com.guoku.R;
+import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.act.UserInfoAct;
+import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.utils.StringUtils;
+import com.guoku.guokuv4.utils.ToastUtil;
+import com.guoku.guokuv4.view.LayoutItemEdit;
+import com.lidroid.xutils.view.annotation.ViewInject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.widget.TextView;
-
-import com.ekwing.students.EkwingApplication;
-import com.ekwing.students.base.NetWorkActivity;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.utils.ToastUtil;
-import com.guoku.R;
-import com.guoku.guokuv4.act.UserInfoAct;
-import com.guoku.guokuv4.utils.StringUtils;
-import com.guoku.guokuv4.view.LayoutItemEdit;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.umeng.fb.model.UserInfo;
 
 /**
  * @zhangyao
@@ -53,7 +52,7 @@ public class ChangeEmailAct extends NetWorkActivity {
 
 	private void initView() {
 
-		tvEmailNow.setText(EkwingApplication.getInstance().getBean().getUser()
+		tvEmailNow.setText(GuokuApplication.getInstance().getBean().getUser()
 				.getEmail());
 		tvEmailNew.tv1.setText(R.string.tv_email_new);
 		tvEmailPsd.tv1.setText(R.string.tv_email_psd);
@@ -89,7 +88,7 @@ public class ChangeEmailAct extends NetWorkActivity {
 		switch (where) {
 		case EMAIL:
 			ToastUtil.show(mContext, R.string.tv_email_update_ok);
-			EkwingApplication.getInstance().getBean().getUser()
+			GuokuApplication.getInstance().getBean().getUser()
 					.setEmail(tvEmailNew.edDel.getText().toString());
 			Intent intent = new Intent();
 			setResult(UserInfoAct.INTENT_REQUEST_CODE, intent);

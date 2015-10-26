@@ -10,9 +10,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
-import com.ekwing.students.base.BaseActivity;
 import com.guoku.R;
 import com.guoku.guokuv4.adapter.CategoryListAdapter;
+import com.guoku.guokuv4.base.BaseActivity;
 import com.guoku.guokuv4.bean.TagBean;
 import com.lidroid.xutils.view.annotation.ViewInject;
 

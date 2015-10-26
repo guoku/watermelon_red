@@ -2,8 +2,15 @@ package com.guoku.guokuv4.adapter;
 
 import java.util.ArrayList;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.guoku.R;
+import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.entity.test.PBean;
+import com.guoku.guokuv4.utils.DateUtils;
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+
 import android.content.Context;
-import android.graphics.Bitmap.Config;
 import android.net.Uri;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,23 +20,8 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.ekwing.students.EkwingApplication;
-import com.ekwing.students.utils.ArrayListAdapter;
-import com.ekwing.students.utils.DateUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.guoku.R;
-import com.guoku.guokuv4.entity.test.PBean;
-import com.guoku.guokuv4.entity.test.UserBean;
-import com.guoku.guokuv4.utils.ImgUtils;
-import com.guoku.guokuv4.utils.LogGK;
-import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-
 public class JingXuanAdapter extends ArrayListAdapter<PBean> {
-	private int w = EkwingApplication.screenW * 9 / 10;
+	private int w = GuokuApplication.screenW * 9 / 10;
 	private OnClickListener listener;
 
 	public JingXuanAdapter(Context context, OnClickListener listener) {

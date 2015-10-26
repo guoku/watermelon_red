@@ -9,8 +9,7 @@ import org.json.JSONObject;
 import android.content.Context;
 
 import com.alibaba.fastjson.JSON;
-import com.ekwing.students.config.Logger;
-import com.ekwing.students.utils.SharePrenceUtil;
+import com.guoku.guokuv4.config.Logger;
 import com.guoku.guokuv4.entity.test.ContentBean;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.MessageBean;
@@ -23,6 +22,7 @@ import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.TabNoteBean;
 import com.guoku.guokuv4.entity.test.TabTagBean;
 import com.guoku.guokuv4.entity.test.UserTagBean;
+import com.guoku.guokuv4.utils.SharePrenceUtil;
 import com.guoku.guokuv4.entity.test.UserBean;
 
 public class ParseUtil {

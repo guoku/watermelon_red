@@ -5,6 +5,21 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.alibaba.fastjson.JSON;
+import com.guoku.R;
+import com.guoku.guokuv4.adapter.FansAdapter;
+import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.base.UserBaseFrament;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.config.Logger;
+import com.guoku.guokuv4.entity.test.UserBean;
+import com.guoku.guokuv4.utils.ToastUtil;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.lidroid.xutils.view.annotation.ViewInject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,21 +28,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
-
-import com.alibaba.fastjson.JSON;
-import com.ekwing.students.base.NetWorkActivity;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.config.Logger;
-import com.ekwing.students.utils.ToastUtil;
-import com.guoku.R;
-import com.guoku.guokuv4.adapter.FansAdapter;
-import com.guoku.guokuv4.base.UserBaseFrament;
-import com.guoku.guokuv4.entity.test.UserBean;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.lidroid.xutils.view.annotation.ViewInject;
 
 public class LikesAct extends NetWorkActivity implements OnClickListener {
 

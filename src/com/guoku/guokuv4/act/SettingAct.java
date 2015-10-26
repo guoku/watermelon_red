@@ -1,23 +1,15 @@
 package com.guoku.guokuv4.act;
 
-import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.alibaba.sdk.android.AlibabaSDK;
 import com.alibaba.sdk.android.login.LoginService;
 import com.alibaba.sdk.android.login.callback.LogoutCallback;
-import com.ekwing.students.EkwingApplication;
-import com.ekwing.students.base.NetWorkActivity;
-import com.ekwing.students.customview.CustomShareBoard;
-import com.ekwing.students.utils.ToastUtil;
-import com.ekwing.students.utils.Utils;
 import com.guoku.R;
+import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.base.NetWorkActivity;
 import com.guoku.guokuv4.main.MainActivity2;
+import com.guoku.guokuv4.share.CustomShareBoard;
+import com.guoku.guokuv4.utils.GuokuUtil;
+import com.guoku.guokuv4.utils.ToastUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -29,6 +21,13 @@ import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners.SocializeClientListener;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.UMSsoHandler;
+
+import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class SettingAct extends NetWorkActivity {
 	@ViewInject(R.id.set_logout)
@@ -56,11 +55,11 @@ public class SettingAct extends NetWorkActivity {
 		setContentView(R.layout.settingact);
 		setGCenter(true, "设置");
 		setGLeft(true, R.drawable.back_selector);
-		if (EkwingApplication.getInstance().getBean() == null) {
+		if (GuokuApplication.getInstance().getBean() == null) {
 			button.setBackgroundResource(R.color.g_blue);
 			button.setText("登录");
 		}
-		tv.setText(Utils.getVersionName(mContext));
+		tv.setText(GuokuUtil.getVersionName(mContext));
 		shareBoard = new CustomShareBoard(this);
 		shareBoard
 				.setShareContext(
@@ -118,10 +117,10 @@ public class SettingAct extends NetWorkActivity {
 
 	@OnClick(R.id.set_logout)
 	public void LogOut(View v) {
-		if (EkwingApplication.getInstance().getBean() == null) {
+		if (GuokuApplication.getInstance().getBean() == null) {
 			startActivity(new Intent(mContext, LoginAct.class));
 		} else {
-			EkwingApplication.getInstance().logout();
+			GuokuApplication.getInstance().logout();
 			mController.deleteOauth(mContext, SHARE_MEDIA.SINA,
 					new SocializeClientListener() {
 						@Override

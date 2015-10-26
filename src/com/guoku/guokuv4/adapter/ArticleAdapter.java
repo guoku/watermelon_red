@@ -3,24 +3,22 @@
  */
 package com.guoku.guokuv4.adapter;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.guoku.R;
+import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.bean.ArticlesList;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.utils.BitmapUtil;
+import com.guoku.guokuv4.utils.DateUtils;
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+
 import android.content.Context;
 import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.TextView;
-
-import com.ekwing.students.EkwingApplication;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.utils.ArrayListAdapter;
-import com.ekwing.students.utils.BitmapUtil;
-import com.ekwing.students.utils.DateUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.guoku.R;
-import com.guoku.guokuv4.bean.ArticlesList;
-import com.guoku.guokuv4.utils.StringUtils;
-import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
 
 /**
  * @zhangyao
@@ -29,7 +27,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
  */
 public class ArticleAdapter extends ArrayListAdapter<ArticlesList> {
 
-	private int w = EkwingApplication.screenW;
+	private int w = GuokuApplication.screenW;
 	private int w_width;
 	private int w_hight;
 	

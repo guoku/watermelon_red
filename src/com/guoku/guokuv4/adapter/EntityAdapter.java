@@ -1,7 +1,13 @@
 package com.guoku.guokuv4.adapter;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.guoku.R;
+import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.entity.test.EntityBean;
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+
 import android.content.Context;
-import android.graphics.Bitmap.Config;
 import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,20 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.ekwing.students.EkwingApplication;
-import com.ekwing.students.utils.ArrayListAdapter;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.guoku.R;
-import com.guoku.guokuv4.entity.test.EntityBean;
-import com.guoku.guokuv4.utils.ImgUtils;
-import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-
 public class EntityAdapter extends ArrayListAdapter<EntityBean> {
-	private int w = EkwingApplication.screenW / 4;
+	private int w = GuokuApplication.screenW / 4;
 
 	public EntityAdapter(Context context) {
 		super(context);

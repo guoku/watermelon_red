@@ -1,21 +1,21 @@
 package com.guoku.guokuv4.act;
 
+import com.guoku.R;
+import com.guoku.guokuv4.base.BaseActivity;
+import com.guoku.guokuv4.share.CustomShareBoard;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
+
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.PopupWindow.OnDismissListener;
-
-import com.ekwing.students.base.BaseActivity;
-import com.ekwing.students.customview.CustomShareBoard;
-import com.guoku.R;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnClick;
 
 public class WebAct extends BaseActivity {
 	@ViewInject(R.id.webview)

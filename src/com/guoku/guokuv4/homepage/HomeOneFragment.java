@@ -6,6 +6,21 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.alibaba.fastjson.JSON;
+import com.avos.avoscloud.AVAnalytics;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.guoku.R;
+import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.act.WebAct;
+import com.guoku.guokuv4.adapter.HomeOneArticlesAdapter;
+import com.guoku.guokuv4.base.BaseFrament;
+import com.guoku.guokuv4.bean.HomePageOneBean;
+import com.guoku.guokuv4.config.Constant;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
@@ -21,21 +36,6 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-
-import com.alibaba.fastjson.JSON;
-import com.avos.avoscloud.AVAnalytics;
-import com.ekwing.students.EkwingApplication;
-import com.ekwing.students.config.Constant;
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
-import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.guoku.R;
-import com.guoku.guokuv4.act.WebAct;
-import com.guoku.guokuv4.adapter.HomeOneArticlesAdapter;
-import com.guoku.guokuv4.base.BaseFrament;
-import com.guoku.guokuv4.bean.HomePageOneBean;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.umeng.analytics.MobclickAgent;
 
 public class HomeOneFragment extends BaseFrament {
 
@@ -110,7 +110,7 @@ public class HomeOneFragment extends BaseFrament {
 		try {
 			android.widget.RelativeLayout.LayoutParams param = new android.widget.RelativeLayout.LayoutParams(
 					RelativeLayout.LayoutParams.MATCH_PARENT,
-					(EkwingApplication.screenW) * 472 / 1028);
+					(GuokuApplication.screenW) * 472 / 1028);
 			vPagerBaner.setLayoutParams(param);
 
 			vPagerBaner.setOnTouchListener(new OnTouchListener() {

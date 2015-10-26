@@ -19,7 +19,7 @@ import android.annotation.TargetApi;
 import android.util.Log;
 import android.view.View;
 
-import com.ekwing.students.config.Logger;
+import com.guoku.guokuv4.config.Logger;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
 

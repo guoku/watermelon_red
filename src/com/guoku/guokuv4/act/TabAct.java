@@ -2,6 +2,29 @@ package com.guoku.guokuv4.act;
 
 import java.util.ArrayList;
 
+import com.alibaba.fastjson.JSON;
+import com.guoku.R;
+import com.guoku.guokuv4.adapter.EntityAdapter;
+import com.guoku.guokuv4.adapter.GridViewAdapter;
+import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.bean.TagBean;
+import com.guoku.guokuv4.bean.TagTwo;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.entity.test.EntityBean;
+import com.guoku.guokuv4.entity.test.PInfoBean;
+import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.SharePrenceUtil;
+import com.guoku.guokuv4.utils.StringUtils;
+import com.guoku.guokuv4.utils.ToastUtil;
+import com.guoku.guokuv4.view.ScrollViewWithGridView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,30 +45,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
-import com.alibaba.fastjson.JSON;
-import com.ekwing.students.base.NetWorkActivity;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.customview.ScrollViewWithGridView;
-import com.ekwing.students.utils.SharePrenceUtil;
-import com.ekwing.students.utils.ToastUtil;
-import com.guoku.R;
-import com.guoku.guokuv4.adapter.EntityAdapter;
-import com.guoku.guokuv4.adapter.GridViewAdapter;
-import com.guoku.guokuv4.bean.TagBean;
-import com.guoku.guokuv4.bean.TagTwo;
-import com.guoku.guokuv4.entity.test.EntityBean;
-import com.guoku.guokuv4.entity.test.PInfoBean;
-import com.guoku.guokuv4.parse.ParseUtil;
-import com.guoku.guokuv4.utils.StringUtils;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnClick;
 
 @SuppressLint("ResourceAsColor")
 public class TabAct extends NetWorkActivity implements OnClickListener,

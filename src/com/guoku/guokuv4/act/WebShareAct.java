@@ -6,6 +6,20 @@ package com.guoku.guokuv4.act;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.alibaba.fastjson.JSON;
+import com.guoku.R;
+import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.base.UserBaseFrament;
+import com.guoku.guokuv4.bean.Sharebean;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.entity.test.PInfoBean;
+import com.guoku.guokuv4.entity.test.UserBean;
+import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.share.CustomShareBoard;
+import com.guoku.guokuv4.utils.StringUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -17,20 +31,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.PopupWindow.OnDismissListener;
-
-import com.alibaba.fastjson.JSON;
-import com.ekwing.students.base.NetWorkActivity;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.customview.CustomShareBoard;
-import com.guoku.R;
-import com.guoku.guokuv4.base.UserBaseFrament;
-import com.guoku.guokuv4.bean.Sharebean;
-import com.guoku.guokuv4.entity.test.PInfoBean;
-import com.guoku.guokuv4.entity.test.UserBean;
-import com.guoku.guokuv4.parse.ParseUtil;
-import com.guoku.guokuv4.utils.StringUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnClick;
 
 /**
  * @zhangyao

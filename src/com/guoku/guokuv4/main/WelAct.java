@@ -9,11 +9,11 @@ import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.ekwing.students.base.NetWorkActivity;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.utils.SharePrenceUtil;
 import com.guoku.R;
+import com.guoku.guokuv4.base.NetWorkActivity;
 import com.guoku.guokuv4.config.ConfigGK;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.utils.SharePrenceUtil;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;

@@ -3,20 +3,19 @@
  */
 package com.guoku.guokuv4.my;
 
+import com.guoku.R;
+import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.utils.StringUtils;
+import com.guoku.guokuv4.utils.ToastUtil;
+import com.guoku.guokuv4.view.LayoutItemEdit;
+import com.lidroid.xutils.view.annotation.ViewInject;
+
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.widget.TextView;
-
-import com.ekwing.students.base.NetWorkActivity;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.utils.ToastUtil;
-import com.guoku.R;
-import com.guoku.guokuv4.utils.StringUtils;
-import com.guoku.guokuv4.view.LayoutItemEdit;
-import com.lidroid.xutils.view.annotation.ViewInject;
 
 /**
  * @zhangyao

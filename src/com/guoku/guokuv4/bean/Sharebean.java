@@ -5,7 +5,7 @@ package com.guoku.guokuv4.bean;
 
 import java.io.Serializable;
 
-import com.ekwing.students.config.Constant;
+import com.guoku.guokuv4.config.Constant;
 
 /**
  * @zhangyao

@@ -13,7 +13,6 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.alibaba.fastjson.JSON;
-import com.ekwing.students.config.Constant;
 import com.guoku.R;
 import com.guoku.guokuv4.act.WebAct;
 import com.guoku.guokuv4.act.WebShareAct;
@@ -21,6 +20,7 @@ import com.guoku.guokuv4.adapter.ArticleAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
 import com.guoku.guokuv4.bean.ArticlesList;
 import com.guoku.guokuv4.bean.Sharebean;
+import com.guoku.guokuv4.config.Constant;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;

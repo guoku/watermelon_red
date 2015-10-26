@@ -2,6 +2,27 @@ package com.guoku.guokuv4.homepage;
 
 import java.util.ArrayList;
 
+import com.alibaba.fastjson.JSON;
+import com.avos.avoscloud.AVAnalytics;
+import com.guoku.R;
+import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.act.ProductInfoAct;
+import com.guoku.guokuv4.adapter.JingXuanAdapter;
+import com.guoku.guokuv4.base.BaseFrament;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.entity.test.PBean;
+import com.guoku.guokuv4.entity.test.PInfoBean;
+import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.BroadUtil;
+import com.guoku.guokuv4.utils.StringUtils;
+import com.guoku.guokuv4.utils.ToastUtil;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
+
 import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -9,29 +30,6 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.PopupWindow.OnDismissListener;
-
-import com.alibaba.fastjson.JSON;
-import com.avos.avoscloud.AVAnalytics;
-import com.ekwing.students.EkwingApplication;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.utils.ToastUtil;
-import com.guoku.R;
-import com.guoku.guokuv4.act.ProductInfoAct;
-import com.guoku.guokuv4.adapter.JingXuanAdapter;
-import com.guoku.guokuv4.base.BaseFrament;
-import com.guoku.guokuv4.entity.test.PBean;
-import com.guoku.guokuv4.entity.test.PInfoBean;
-import com.guoku.guokuv4.parse.ParseUtil;
-import com.guoku.guokuv4.utils.BroadUtil;
-import com.guoku.guokuv4.utils.StringUtils;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
-import com.umeng.analytics.MobclickAgent;
 
 public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
@@ -58,8 +56,8 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 	protected void init() {
 		DisplayMetrics metrics = new DisplayMetrics();
 		context.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		EkwingApplication.screenW = metrics.widthPixels;
-		EkwingApplication.screenH = metrics.heightPixels;
+		GuokuApplication.screenW = metrics.widthPixels;
+		GuokuApplication.screenH = metrics.heightPixels;
 
 		// list = new ArrayList<ProductBean>();
 		adapter = new JingXuanAdapter(context, this);

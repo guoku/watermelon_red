@@ -10,6 +10,49 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.sdk.android.AlibabaSDK;
+import com.alibaba.sdk.android.ResultCode;
+import com.alibaba.sdk.android.trade.ItemService;
+import com.alibaba.sdk.android.trade.callback.TradeProcessCallback;
+import com.alibaba.sdk.android.trade.model.TradeResult;
+import com.avos.avoscloud.AVAnalytics;
+import com.guoku.R;
+import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.adapter.ArrayListAdapter;
+import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.base.UserBaseFrament;
+import com.guoku.guokuv4.bean.TagBean;
+import com.guoku.guokuv4.bean.TagTwo;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.config.Logger;
+import com.guoku.guokuv4.entity.test.EntityBean;
+import com.guoku.guokuv4.entity.test.NoteBean;
+import com.guoku.guokuv4.entity.test.PInfoBean;
+import com.guoku.guokuv4.entity.test.Tab2Bean;
+import com.guoku.guokuv4.entity.test.UserBean;
+import com.guoku.guokuv4.homepage.GoodTwoFragmnet;
+import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.share.CustomShareBoard;
+import com.guoku.guokuv4.utils.BroadUtil;
+import com.guoku.guokuv4.utils.DateUtils;
+import com.guoku.guokuv4.utils.ImgUtils;
+import com.guoku.guokuv4.utils.SharePrenceUtil;
+import com.guoku.guokuv4.utils.StringUtils;
+import com.guoku.guokuv4.utils.StringUtils.OnNoteTag;
+import com.guoku.guokuv4.utils.ToastUtil;
+import com.guoku.guokuv4.view.MyScrollView;
+import com.guoku.guokuv4.view.MyScrollView.OnScrollListener;
+import com.guoku.guokuv4.view.ScrollViewWithGridView;
+import com.guoku.guokuv4.view.ScrollViewWithListView;
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.taobao.tae.sdk.model.TaokeParams;
+import com.taobao.tae.sdk.webview.TaeWebViewUiSettings;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.socialize.media.UMImage;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -42,51 +85,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.sdk.android.AlibabaSDK;
-import com.alibaba.sdk.android.ResultCode;
-import com.alibaba.sdk.android.trade.ItemService;
-import com.alibaba.sdk.android.trade.callback.TradeProcessCallback;
-import com.alibaba.sdk.android.trade.model.TradeResult;
-import com.avos.avoscloud.AVAnalytics;
-import com.ekwing.students.EkwingApplication;
-import com.ekwing.students.base.NetWorkActivity;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.config.Logger;
-import com.ekwing.students.customview.CustomShareBoard;
-import com.ekwing.students.customview.ScrollViewWithGridView;
-import com.ekwing.students.customview.ScrollViewWithListView;
-import com.ekwing.students.utils.ArrayListAdapter;
-import com.ekwing.students.utils.DateUtils;
-import com.ekwing.students.utils.SharePrenceUtil;
-import com.ekwing.students.utils.StringUtil;
-import com.ekwing.students.utils.ToastUtil;
-import com.guoku.R;
-import com.guoku.guokuv4.base.UserBaseFrament;
-import com.guoku.guokuv4.bean.TagBean;
-import com.guoku.guokuv4.bean.TagTwo;
-import com.guoku.guokuv4.entity.test.EntityBean;
-import com.guoku.guokuv4.entity.test.NoteBean;
-import com.guoku.guokuv4.entity.test.PInfoBean;
-import com.guoku.guokuv4.entity.test.Tab2Bean;
-import com.guoku.guokuv4.entity.test.UserBean;
-import com.guoku.guokuv4.gragment.PersonalFragment;
-import com.guoku.guokuv4.homepage.GoodTwoFragmnet;
-import com.guoku.guokuv4.parse.ParseUtil;
-import com.guoku.guokuv4.utils.BroadUtil;
-import com.guoku.guokuv4.utils.ImgUtils;
-import com.guoku.guokuv4.utils.StringUtils;
-import com.guoku.guokuv4.utils.StringUtils.OnNoteTag;
-import com.guoku.guokuv4.view.MyScrollView;
-import com.guoku.guokuv4.view.MyScrollView.OnScrollListener;
-import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnClick;
-import com.taobao.tae.sdk.model.TaokeParams;
-import com.taobao.tae.sdk.webview.TaeWebViewUiSettings;
-import com.umeng.analytics.MobclickAgent;
-import com.umeng.socialize.media.UMImage;
 
 public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		DialogInterface.OnClickListener, OnScrollListener,
@@ -175,7 +173,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 		public void handleMessage(android.os.Message msg) {
 			vp.setCurrentItem(currentItem);// 切换当前显示的图片
-			StringUtil.setTextColoPoint(tv_point, root, currentItem);
+			StringUtils.setTextColoPoint(tv_point, root, currentItem);
 			// Log.e(TAG, "handler切换-->" + currentItem);
 		}
 	};
@@ -425,8 +423,8 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 		try {
 			android.widget.RelativeLayout.LayoutParams param = new android.widget.RelativeLayout.LayoutParams(
-					EkwingApplication.screenW - 10,
-					EkwingApplication.screenW - 10);
+					GuokuApplication.screenW - 10,
+					GuokuApplication.screenW - 10);
 			param.addRule(RelativeLayout.CENTER_IN_PARENT);
 			vp.setLayoutParams(param);
 			sv.smoothScrollTo(0, 0);
@@ -490,7 +488,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				@Override
 				public void onPageSelected(int arg0) {
 					currentItem = arg0;
-					StringUtil.setTextColoPoint(tv_point, root, currentItem);
+					StringUtils.setTextColoPoint(tv_point, root, currentItem);
 
 				}
 
@@ -508,7 +506,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				}
 				tv_point.setText(root);
 			}
-			StringUtil.setTextColoPoint(tv_point, root, currentItem);
+			StringUtils.setTextColoPoint(tv_point, root, currentItem);
 			adapter = new MyViewPagerAdapter(imgs);
 			vp.setAdapter(adapter);
 		} catch (Exception e) {
@@ -523,8 +521,8 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				if (convertView == null) {
 					convertView = new ImageView(mContext);
 					LayoutParams params = new LayoutParams(
-							EkwingApplication.screenW / 7 - 25,
-							EkwingApplication.screenW / 7 - 25);
+							GuokuApplication.screenW / 7 - 25,
+							GuokuApplication.screenW / 7 - 25);
 					convertView.setLayoutParams(params);
 					((ImageView) convertView).setScaleType(ScaleType.FIT_XY);
 				}
@@ -547,8 +545,8 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				if (convertView == null) {
 					convertView = new ImageView(mContext);
 					LayoutParams params = new LayoutParams(
-							EkwingApplication.screenW / 3 - 30,
-							EkwingApplication.screenW / 3 - 30);
+							GuokuApplication.screenW / 3 - 30,
+							GuokuApplication.screenW / 3 - 30);
 					convertView.setLayoutParams(params);
 					((ImageView) convertView)
 							.setScaleType(ScaleType.FIT_CENTER);
@@ -619,7 +617,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 							public void setTagClick(String tagName) {
 								// TODO Auto-generated method stub
 
-								if (EkwingApplication.getInstance().getBean() == null) {
+								if (GuokuApplication.getInstance().getBean() == null) {
 									startActivity(new Intent(
 											ProductInfoAct.this, LoginAct.class));
 								} else {
@@ -627,7 +625,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 									Intent intent = new Intent(
 											ProductInfoAct.this,
 											EntityAct.class);
-									intent.putExtra("data", EkwingApplication
+									intent.putExtra("data", GuokuApplication
 											.getInstance().getBean().getUser()
 											.getUser_id());
 									intent.putExtra("name", tagName);
@@ -646,13 +644,13 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		// ````````````````````````````````````````````````````````````````````````
 		gv1Adapter.setList(productBean.getLike_user_list());
 		comAdapter.setList(productBean.getNote_list());
-		if (EkwingApplication.getInstance().getBean() != null) {
+		if (GuokuApplication.getInstance().getBean() != null) {
 
 			ArrayList<NoteBean> list = productBean.getNote_list();
 			for (NoteBean bean : list) {
 				if (bean.getCreator()
 						.getUser_id()
-						.equals(EkwingApplication.getInstance().getBean()
+						.equals(GuokuApplication.getInstance().getBean()
 								.getUser().getUser_id())) {
 					myNoteBean = bean;
 					// product_tv_comment.setText("修改点评");
@@ -694,7 +692,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-				if (EkwingApplication.getInstance().getBean() != null) {
+				if (GuokuApplication.getInstance().getBean() != null) {
 					sendConnection(Constant.COMMENTLIST
 							+ productBean.getNote_list().get(arg2).getNote_id()
 							+ "/", new String[] {}, new String[] {},
@@ -866,7 +864,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	}
 
 	private void setComments() {
-		if (EkwingApplication.getInstance().getBean() != null) {
+		if (GuokuApplication.getInstance().getBean() != null) {
 			Intent intent = new Intent(mContext, CommentAct.class);
 			intent.putExtra("data", JSON.toJSONString(productBean));
 			if (myNoteBean != null) {

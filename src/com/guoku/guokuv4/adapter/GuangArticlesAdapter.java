@@ -9,13 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.utils.ArrayListAdapter;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
 import com.guoku.guokuv4.bean.Articles;
 import com.guoku.guokuv4.bean.Discover;
 import com.guoku.guokuv4.bean.GuangArticles;
+import com.guoku.guokuv4.config.Constant;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 

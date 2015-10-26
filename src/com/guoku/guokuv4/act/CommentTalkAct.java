@@ -5,6 +5,26 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.alibaba.fastjson.JSON;
+import com.avos.avoscloud.AVAnalytics;
+import com.guoku.R;
+import com.guoku.guokuv4.adapter.ArrayListAdapter;
+import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.base.UserBaseFrament;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.config.Logger;
+import com.guoku.guokuv4.entity.test.CommentBean;
+import com.guoku.guokuv4.entity.test.CommentListBean;
+import com.guoku.guokuv4.entity.test.EntityBean;
+import com.guoku.guokuv4.entity.test.NoteBean;
+import com.guoku.guokuv4.utils.DateUtils;
+import com.guoku.guokuv4.utils.GuokuUtil;
+import com.handmark.pulltorefresh.library.internal.Utils;
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.umeng.analytics.MobclickAgent;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -17,25 +37,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.alibaba.fastjson.JSON;
-import com.avos.avoscloud.AVAnalytics;
-import com.ekwing.students.base.NetWorkActivity;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.config.Logger;
-import com.ekwing.students.utils.ArrayListAdapter;
-import com.ekwing.students.utils.DateUtils;
-import com.ekwing.students.utils.Utils;
-import com.guoku.R;
-import com.guoku.guokuv4.base.UserBaseFrament;
-import com.guoku.guokuv4.entity.test.CommentBean;
-import com.guoku.guokuv4.entity.test.CommentListBean;
-import com.guoku.guokuv4.entity.test.EntityBean;
-import com.guoku.guokuv4.entity.test.NoteBean;
-import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnClick;
-import com.umeng.analytics.MobclickAgent;
 
 public class CommentTalkAct extends NetWorkActivity implements OnClickListener {
 
@@ -67,7 +68,7 @@ public class CommentTalkAct extends NetWorkActivity implements OnClickListener {
 
 	@Override
 	protected void onSuccess(String result, int where) {
-		Utils.hideKeyboard(context, ed_text);
+		GuokuUtil.hideKeyboard(context, ed_text);
 		reply_to_comment = null;
 		reply_to_user = null;
 		switch (where) {
@@ -106,7 +107,7 @@ public class CommentTalkAct extends NetWorkActivity implements OnClickListener {
 
 	@Override
 	protected void onFailure(String result, int where) {
-		Utils.hideKeyboard(context, ed_text);
+		GuokuUtil.hideKeyboard(context, ed_text);
 		reply_to_comment = null;
 		reply_to_user = null;
 	}

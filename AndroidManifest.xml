@@ -40,7 +40,7 @@
         android:targetSdkVersion="19" />
 
     <application
-        android:name="com.ekwing.students.EkwingApplication"
+        android:name="com.guoku.app.GuokuApplication"
         android:allowBackup="true"
         android:icon="@drawable/ico_logo"
         android:label="@string/app_name"
@@ -70,7 +70,7 @@
         <!--
              <meta-data
             android:name="UMENG_APPKEY"
-            android:value="55d5453567e58ed077000332" />
+            android:value="55d5453567e58ed077000332" />
         -->
 
         <meta-data
@@ -120,14 +120,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.ekwing.students.activity.MainActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.DeviceDefault.Light"
-            android:uiOptions="splitActionBarWhenNarrow"
-            android:windowSoftInputMode="adjustPan" >
-        </activity>
-        <activity
             android:name="com.guoku.guokuv4.act.TabListSecondAct"
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
@@ -149,11 +141,6 @@
         </activity>
         <activity
             android:name="com.guoku.guokuv4.main.MainActivity2"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.exercise.ConnectionResultActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
         </activity>
@@ -230,87 +217,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.ekwing.students.activity.exercise.PartWordsActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.exercise.PartThemeActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name="com.guoku.guokuv4.act.TabAct"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.SelectSameNameActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.exercise.ReadingCompleteQuery"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.homework.ReadUnderResultActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.homework.ListenWriteResultActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.homework.ListenWriteQuery"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.exercise.ReadingResultActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.exercise.SelectPartActivity3"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.exercise.SmartSpokenActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.exercise.SelectPartActivity4"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.exercise.RUResultActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.homework.ListenUnderstandResultActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.homework.ReadUnderQuery"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.exercise.SelectPartActivity2"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.LearningFiles"
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
         </activity>
@@ -323,7 +230,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity>
         -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
@@ -341,241 +248,6 @@
         <activity
             android:name="com.alibaba.sdk.android.login.ui.QrLoginActivity"
             android:theme="@style/tae_sdk_login_qr_activity_style" />
-        <activity
-            android:name="com.ekwing.students.activity.user.WecomeAcitivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.UserOfficialActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.UserUseHelpActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.AgainSettingPasswordAct"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.FindPasswordSettingPswActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.FindPasswordValidationActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.FindPasswordPhoneActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.LoginPagerActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.UserInputValidationActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.UserModifyPasswordActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.UserEmailValidationActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.UserAboutEkwingActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.UserSuggestionActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.UserCommentActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.UserInputPhoneActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.UserAcountSafeActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.SelectCityAct"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.SelectProvinceAct"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.SelectSchoolAct"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.SelectXAct"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.UserInformation"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.homework.ReadUnderStandActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.homework.ListenWriteWordsActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.homework.HWCommitResultActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.homework.ListenUnderStandActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.homework.WordsListenActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.homework.ArticleListenActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.homework.HWCompleteQuery"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.homework.IsCompleteHWActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <!-- 作业详情界面 -->
-        <activity
-            android:name="com.ekwing.students.activity.homework.HomeWorkDetailsActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.exercise.RankingActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.exercise.WordsConfirmResultActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.exercise.WordsConfirmModeActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.exercise.ConfirmDiffActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.exercise.AddNewElementActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.exercise.SelectWordsBookActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.exercise.SelectArticleThemeActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.SettingPageActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.user.UserCenterMainActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.exercise.SelectPartActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.exercise.GoExerciseMainActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.homework.HomeWorkMainActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name="com.ekwing.students.activity.homework.HWMainActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name="com.ekwing.students.activity.user.UserGrid"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.ekwing.students.activity.circle.CircleMainActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.NoTitleBar" />
-        <activity
-            android:name="com.ekwing.students.activity.NavigationActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <service
             android:name="com.umeng.update.net.DownloadingService"
@@ -670,7 +342,7 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" >
-        </activity>
+        </activity>
         -->
         <!-- android:icon="@drawable/aliwx_head_default" -->
         <!-- android:label="@string/aliwx_app_name" > -->

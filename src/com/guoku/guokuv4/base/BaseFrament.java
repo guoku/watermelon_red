@@ -10,29 +10,16 @@ import java.util.Vector;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.ekwing.students.EkwingApplication;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.customview.CustomProgressDialog;
-import com.ekwing.students.utils.HttputilHelp;
-import com.ekwing.students.utils.NetUtil;
-import com.ekwing.students.utils.SharePrenceUtil;
-import com.ekwing.students.utils.StringUtil;
-import com.ekwing.students.utils.ToastUtil;
-import com.ekwing.students.utils.Utils;
 import com.guoku.R;
+import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.LoginAct;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.net.HttputilHelp;
+import com.guoku.guokuv4.net.NetUtil;
 import com.guoku.guokuv4.utils.LogGK;
+import com.guoku.guokuv4.utils.StringUtils;
+import com.guoku.guokuv4.utils.ToastUtil;
+import com.guoku.guokuv4.view.CustomProgressDialog;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.exception.HttpException;
@@ -46,6 +33,17 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.umeng.analytics.MobclickAgent;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 public abstract class BaseFrament extends Fragment {
 
 	protected final String TAG = getClass().getSimpleName();
@@ -57,7 +55,7 @@ public abstract class BaseFrament extends Fragment {
 	private List<NameValuePair> bodyParams;
 	protected Handler mHandler;
 	protected View contentView;
-	protected int w = EkwingApplication.screenW;
+	protected int w = GuokuApplication.screenW;
 	protected DisplayImageOptions options;
 	protected DisplayImageOptions optionsRound;
 
@@ -68,7 +66,7 @@ public abstract class BaseFrament extends Fragment {
 		progressDialog = new CustomProgressDialog(context);
 		progressDialog.setMessage("载入中...");
 		httpUtils = HttputilHelp.getHttpUtils();
-		httpUtils.configUserAgent(EkwingApplication.userAgent);
+		httpUtils.configUserAgent(GuokuApplication.userAgent);
 		vector = new Vector<Integer>();
 	}
 
@@ -91,7 +89,7 @@ public abstract class BaseFrament extends Fragment {
 		}
 		sb.append("47b41864d64bd46");
 		String strParam = sb.toString();
-		String sign = StringUtil.md5(strParam);
+		String sign = StringUtils.md5(strParam);
 		LogGK.e(sign);
 		return sign;
 	}
@@ -169,10 +167,10 @@ public abstract class BaseFrament extends Fragment {
 			LogGK.e(argsKeys[i] + ":" + argsValues[i]);
 			paramsMap.put(argsKeys[i], argsValues[i]);
 		}
-		if (EkwingApplication.getInstance().getBean() != null) {
-			params.addQueryStringParameter("session", EkwingApplication
+		if (GuokuApplication.getInstance().getBean() != null) {
+			params.addQueryStringParameter("session", GuokuApplication
 					.getInstance().getBean().getSession());
-			paramsMap.put("session", EkwingApplication.getInstance().getBean()
+			paramsMap.put("session", GuokuApplication.getInstance().getBean()
 					.getSession());
 		}
 
@@ -213,10 +211,10 @@ public abstract class BaseFrament extends Fragment {
 			LogGK.e("params----->" + argsKeys[i] + ":" + argsValues[i]);
 			paramsMap.put(argsKeys[i], argsValues[i]);
 		}
-		if (EkwingApplication.getInstance().getBean() != null) {
-			params.addBodyParameter("session", EkwingApplication.getInstance()
+		if (GuokuApplication.getInstance().getBean() != null) {
+			params.addBodyParameter("session", GuokuApplication.getInstance()
 					.getBean().getSession());
-			paramsMap.put("session", EkwingApplication.getInstance().getBean()
+			paramsMap.put("session", GuokuApplication.getInstance().getBean()
 					.getSession());
 		} else if (Constant.LOGIN.equals(url) || Constant.REGISTER.equals(url)) {
 
@@ -229,44 +227,6 @@ public abstract class BaseFrament extends Fragment {
 		params.addBodyParameter("api_key", "0b19c2b93687347e95c6b6f5cc91bb87");
 
 		LogGK.e("params----->" + ":" + params.toString());
-		if (showDialog && !getActivity().isFinishing()) {
-			showDialog();
-		}
-		httpUtils.send(method, url, params, httpCallback);
-	}
-
-	private void sendConnectionNoLoginOrPsw(HttpMethod method, String url,
-			String[] argsKeys, String[] argsValues, int where,
-			boolean showDialog, int umengId) {
-		if (argsKeys.length != argsValues.length) {
-			throw new IllegalArgumentException(
-					"check your Params key or value length!");
-		}
-		if (showDialog) {
-			vector.add(where);
-		}
-		HttpCallBack httpCallback = new HttpCallBack(where, showDialog, umengId);
-		RequestParams params = new RequestParams();
-		for (int i = 0; i < argsKeys.length; i++) {
-			params.addBodyParameter(argsKeys[i], argsValues[i]);
-			LogGK.e("=========length==============>" + argsKeys.length);
-			LogGK.e("params----->" + argsKeys[i] + ":" + argsValues[i]);
-		}
-		LogGK.e("params----->v" + ":" + Utils.getVersionName(getActivity()));
-		LogGK.e("params----->token" + ":"
-				+ SharePrenceUtil.getLoginInfo(getActivity()).getToken());
-		LogGK.e("params----->author_id" + ":"
-				+ SharePrenceUtil.getLoginInfo(getActivity()).getUid());
-		LogGK.e("params----->uid" + ":"
-				+ SharePrenceUtil.getLoginInfo(getActivity()).getUid());
-		params.addBodyParameter("v", Utils.getVersionName(getActivity()));
-		params.addBodyParameter("token",
-				SharePrenceUtil.getLoginInfo(getActivity()).getToken());
-		params.addBodyParameter("author_id",
-				SharePrenceUtil.getLoginInfo(getActivity()).getUid());
-		params.addBodyParameter("uid",
-				SharePrenceUtil.getLoginInfo(getActivity()).getUid());
-
 		if (showDialog && !getActivity().isFinishing()) {
 			showDialog();
 		}
@@ -343,37 +303,6 @@ public abstract class BaseFrament extends Fragment {
 		}
 	}
 
-	/**
-	 * 除登录忘记密码界面外都要调用的方法（不传递任务参数） 连网时不转圈
-	 * 
-	 * @param url
-	 * @param where
-	 */
-	public void sendConnection(String url, int where, int umengId) {
-		sendConnectionNoLoginOrPsw(HttpMethod.POST, url, new String[] {},
-				new String[] {}, where, false, umengId);
-	}
-
-	/**
-	 * 除登录忘记密码界面外都要调用的方法、 连网时可选择是否转圈
-	 * showDialog=true--->会转。showDialog=false----->不会
-	 * 
-	 * @param url
-	 *            地址
-	 * @param argsKeys
-	 *            传递的参数名
-	 * @param argsValues
-	 *            参数对应的值
-	 * @param where
-	 *            连网结果的状态值
-	 * @param showDialog
-	 *            是否显示dialog
-	 */
-	public void sendConnectionNoLoginOrPsw(String url, String[] argsKeys,
-			String[] argsValues, int where, boolean showDialog, int umengId) {
-		sendConnectionNoLoginOrPsw(HttpMethod.POST, url, argsKeys, argsValues,
-				where, showDialog, umengId);
-	}
 
 	// -------------------------需要重写或实现的方法---------------------
 	/**

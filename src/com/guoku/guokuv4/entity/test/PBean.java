@@ -1,7 +1,5 @@
 package com.guoku.guokuv4.entity.test;
 
-import com.ekwing.students.utils.DateUtils;
-
 public class PBean {
 	private ContentBean content;
 	private String post_time, type;

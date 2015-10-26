@@ -3,6 +3,39 @@ package com.guoku.guokuv4.gragment;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.alibaba.fastjson.JSON;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.guoku.R;
+import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.act.CommentTalkAct;
+import com.guoku.guokuv4.act.FansAct;
+import com.guoku.guokuv4.act.LoginAct;
+import com.guoku.guokuv4.act.ProductInfoAct;
+import com.guoku.guokuv4.act.RegisterAct;
+import com.guoku.guokuv4.act.SettingAct;
+import com.guoku.guokuv4.act.UserArticleListAct;
+import com.guoku.guokuv4.act.UserCommentListAct;
+import com.guoku.guokuv4.act.UserInfoAct;
+import com.guoku.guokuv4.act.UserLikeListAct;
+import com.guoku.guokuv4.act.UserTagListAct;
+import com.guoku.guokuv4.adapter.GridViewAdapter;
+import com.guoku.guokuv4.adapter.ListImgLeftAdapter;
+import com.guoku.guokuv4.base.BaseFrament;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.entity.test.AccountBean;
+import com.guoku.guokuv4.entity.test.PInfoBean;
+import com.guoku.guokuv4.entity.test.UserBean;
+import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.BroadUtil;
+import com.guoku.guokuv4.utils.SharePrenceUtil;
+import com.guoku.guokuv4.utils.StringUtils;
+import com.guoku.guokuv4.utils.ToastUtil;
+import com.guoku.guokuv4.view.LayoutItemView;
+import com.guoku.guokuv4.view.ScrollViewWithGridView;
+import com.guoku.guokuv4.view.ScrollViewWithListView;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -18,39 +51,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.alibaba.fastjson.JSON;
-import com.ekwing.students.EkwingApplication;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.customview.ScrollViewWithGridView;
-import com.ekwing.students.customview.ScrollViewWithListView;
-import com.ekwing.students.utils.SharePrenceUtil;
-import com.ekwing.students.utils.ToastUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.guoku.R;
-import com.guoku.guokuv4.act.CommentTalkAct;
-import com.guoku.guokuv4.act.FansAct;
-import com.guoku.guokuv4.act.LoginAct;
-import com.guoku.guokuv4.act.ProductInfoAct;
-import com.guoku.guokuv4.act.RegisterAct;
-import com.guoku.guokuv4.act.SettingAct;
-import com.guoku.guokuv4.act.UserArticleListAct;
-import com.guoku.guokuv4.act.UserCommentListAct;
-import com.guoku.guokuv4.act.UserInfoAct;
-import com.guoku.guokuv4.act.UserLikeListAct;
-import com.guoku.guokuv4.act.UserTagListAct;
-import com.guoku.guokuv4.adapter.GridViewAdapter;
-import com.guoku.guokuv4.adapter.ListImgLeftAdapter;
-import com.guoku.guokuv4.base.BaseFrament;
-import com.guoku.guokuv4.entity.test.AccountBean;
-import com.guoku.guokuv4.entity.test.PInfoBean;
-import com.guoku.guokuv4.entity.test.UserBean;
-import com.guoku.guokuv4.parse.ParseUtil;
-import com.guoku.guokuv4.utils.BroadUtil;
-import com.guoku.guokuv4.utils.StringUtils;
-import com.guoku.guokuv4.view.LayoutItemView;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnClick;
 
 public class PersonalFragment extends BaseFrament {
 
@@ -151,7 +151,7 @@ public class PersonalFragment extends BaseFrament {
 		if (isUser) {
 			return R.layout.fragment_personal;
 		} else {
-			if (EkwingApplication.getInstance().getBean() == null) {
+			if (GuokuApplication.getInstance().getBean() == null) {
 
 				return R.layout.pserson_no_log;
 			} else
@@ -227,7 +227,7 @@ public class PersonalFragment extends BaseFrament {
 	protected void init() {
 
 		if (!isUser) {
-			uBean = EkwingApplication.getInstance().getBean().getUser();
+			uBean = GuokuApplication.getInstance().getBean().getUser();
 			iv_set.setVisibility(View.VISIBLE);
 			tv_title.setText("我");
 			iv_set.setImageResource(R.drawable.setting);
@@ -528,7 +528,7 @@ public class PersonalFragment extends BaseFrament {
 		// TODO Auto-generated method stub
 		if (resultCode == RESULT_CODE) {
 
-			uBean = EkwingApplication.getInstance().getBean().getUser();
+			uBean = GuokuApplication.getInstance().getBean().getUser();
 
 			psrson_tv_name.setText(uBean.getNickname());
 			psrson_tv_sign.setText(uBean.getBio());

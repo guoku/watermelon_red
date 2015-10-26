@@ -1,5 +1,25 @@
 package com.guoku.guokuv4.act;
 
+import com.alibaba.fastjson.JSON;
+import com.guoku.R;
+import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.config.Logger;
+import com.guoku.guokuv4.entity.test.AccountBean;
+import com.guoku.guokuv4.entity.test.UserBean;
+import com.guoku.guokuv4.gragment.PersonalFragment;
+import com.guoku.guokuv4.my.ChangeEmailAct;
+import com.guoku.guokuv4.my.ChangePasswordAct;
+import com.guoku.guokuv4.utils.BitmapUtil;
+import com.guoku.guokuv4.utils.DialogUtils;
+import com.guoku.guokuv4.utils.ToastUtil;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -15,26 +35,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
-
-import com.alibaba.fastjson.JSON;
-import com.ekwing.students.EkwingApplication;
-import com.ekwing.students.base.NetWorkActivity;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.config.Logger;
-import com.ekwing.students.utils.BitmapUtil;
-import com.ekwing.students.utils.DialogUtils;
-import com.ekwing.students.utils.ToastUtil;
-import com.guoku.R;
-import com.guoku.guokuv4.entity.test.AccountBean;
-import com.guoku.guokuv4.entity.test.UserBean;
-import com.guoku.guokuv4.gragment.PersonalFragment;
-import com.guoku.guokuv4.my.ChangeEmailAct;
-import com.guoku.guokuv4.my.ChangePasswordAct;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.lidroid.xutils.view.annotation.event.OnClick;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class UserInfoAct extends NetWorkActivity {
 
@@ -203,7 +203,7 @@ public class UserInfoAct extends NetWorkActivity {
 		isUpdata = true;
 		bean.setUser(JSON.parseObject(result, UserBean.class));
 		Logger.e("USER", bean.toString());
-		EkwingApplication.getInstance().login(bean);
+		GuokuApplication.getInstance().login(bean);
 		if (where == PIC) {
 			refreshTv(false);
 		} else {
@@ -262,7 +262,7 @@ public class UserInfoAct extends NetWorkActivity {
 
 	private void refreshTv(Boolean isHead) {
 
-		bean = EkwingApplication.getInstance().getBean();
+		bean = GuokuApplication.getInstance().getBean();
 		tv_add.setText(bean.getUser().getLocation());
 		tv_email.setText(bean.getUser().getEmail());
 		tv_name.setText(bean.getUser().getNickname());
@@ -295,7 +295,7 @@ public class UserInfoAct extends NetWorkActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (data != null) {
 			if (resultCode == INTENT_REQUEST_CODE) {
-				bean = EkwingApplication.getInstance().getBean();
+				bean = GuokuApplication.getInstance().getBean();
 				tv_email.setText(bean.getUser().getEmail());
 			} else {
 				Bitmap ed_Bitmap = null;

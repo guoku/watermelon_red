@@ -5,6 +5,26 @@ package com.guoku.guokuv4.act;
 
 import java.util.ArrayList;
 
+import com.alibaba.fastjson.JSON;
+import com.guoku.R;
+import com.guoku.guokuv4.adapter.EntityAdapter;
+import com.guoku.guokuv4.adapter.GridViewAdapter;
+import com.guoku.guokuv4.adapter.SeachCommodityTypeAdapter;
+import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.bean.TagTwo;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.entity.test.EntityBean;
+import com.guoku.guokuv4.entity.test.PInfoBean;
+import com.guoku.guokuv4.entity.test.Tab2Bean;
+import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.view.ScrollViewWithGridView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.lidroid.xutils.view.annotation.ViewInject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,29 +32,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ScrollView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
-
-import com.alibaba.fastjson.JSON;
-import com.ekwing.students.base.NetWorkActivity;
-import com.ekwing.students.config.Constant;
-import com.ekwing.students.customview.ScrollViewWithGridView;
-import com.guoku.R;
-import com.guoku.guokuv4.adapter.EntityAdapter;
-import com.guoku.guokuv4.adapter.GridViewAdapter;
-import com.guoku.guokuv4.adapter.SeachCommodityTypeAdapter;
-import com.guoku.guokuv4.bean.TagTwo;
-import com.guoku.guokuv4.entity.test.EntityBean;
-import com.guoku.guokuv4.entity.test.PInfoBean;
-import com.guoku.guokuv4.entity.test.Tab2Bean;
-import com.guoku.guokuv4.parse.ParseUtil;
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.lidroid.xutils.view.annotation.ViewInject;
+import android.widget.ScrollView;
 
 /**
  * @zhangyao

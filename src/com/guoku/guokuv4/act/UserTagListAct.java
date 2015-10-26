@@ -10,11 +10,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.ekwing.students.base.NetWorkActivity;
-import com.ekwing.students.config.Constant;
 import com.guoku.R;
 import com.guoku.guokuv4.adapter.ListImgLeftAdapter;
 import com.guoku.guokuv4.adapter.UserTagListAdapter;
+import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.gragment.PersonalFragment;
 import com.guoku.guokuv4.parse.ParseUtil;

@@ -13,7 +13,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.ekwing.students.base.BaseActivity;
 import com.guoku.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

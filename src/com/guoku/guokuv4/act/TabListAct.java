@@ -8,10 +8,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import com.ekwing.students.base.NetWorkActivity;
-import com.ekwing.students.config.Logger;
 import com.guoku.R;
 import com.guoku.guokuv4.adapter.TABListAdapter;
+import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.config.Logger;
 import com.guoku.guokuv4.entity.test.TAB1Bean;
 import com.lidroid.xutils.view.annotation.ViewInject;
 

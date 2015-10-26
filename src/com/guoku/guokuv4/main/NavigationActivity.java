@@ -17,8 +17,8 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
-import com.ekwing.students.base.BaseActivity;
 import com.guoku.R;
+import com.guoku.guokuv4.base.BaseActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 public class NavigationActivity extends BaseActivity {

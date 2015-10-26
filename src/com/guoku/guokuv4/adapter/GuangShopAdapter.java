@@ -3,21 +3,20 @@
  */
 package com.guoku.guokuv4.adapter;
 
-import android.content.Context;
-import android.net.Uri;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-
-import com.ekwing.students.EkwingApplication;
-import com.ekwing.students.utils.ArrayListAdapter;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
+import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.bean.Discover;
 import com.guoku.guokuv4.utils.LogGK;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+
+import android.content.Context;
+import android.net.Uri;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 /**
  * @zhangyao
@@ -58,8 +57,8 @@ public class GuangShopAdapter extends ArrayListAdapter<Discover.EntitiesEntity> 
 		}
 
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-				EkwingApplication.screenW / 3 - 10,
-				EkwingApplication.screenW / 3 - 10);
+				GuokuApplication.screenW / 3 - 10,
+				GuokuApplication.screenW / 3 - 10);
 		holder.imgIcon.setLayoutParams(params);
 
 		return convertView;
