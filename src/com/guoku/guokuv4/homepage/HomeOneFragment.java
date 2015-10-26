@@ -45,7 +45,7 @@ public class HomeOneFragment extends BaseFrament {
 	private ViewPager vPagerBaner;
 
 	@ViewInject(R.id.listView_article)
-	private ListView lvArticle;// 文章
+	private ListView lvArticle;// 文章list
 
 	HomePageOneBean bean;
 
