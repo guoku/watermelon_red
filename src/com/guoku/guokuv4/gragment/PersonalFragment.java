@@ -142,6 +142,8 @@ public class PersonalFragment extends BaseFrament {
 	public UserBean uBean;
 
 	private BroadcastReceiver receiveBroadCast; // 用来处理其它ui操作的关注、喜欢等，保证数据急时同步
+	
+	private int temp;
 
 	@Override
 	protected int getContentId() {
