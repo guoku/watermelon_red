@@ -132,58 +132,6 @@ public class BitmapUtil {
 		});
 	}
 
-	// public static <T extends View> void SetBitMapAndTheme(
-	// final Context context, T v, String url, final int defortIc) {
-	// BitmapUtils utils = new BitmapUtils(context);
-	// utils.configDefaultLoadingImage(defortIc);
-	// utils.configDefaultLoadFailedImage(defortIc);
-	// utils.configDefaultBitmapConfig(Bitmap.Config.RGB_565);
-	// utils.display(v, url, new BitmapLoadCallBack<View>() {
-	//
-	// @Override
-	// public void onLoadCompleted(View arg0, String arg1, Bitmap arg2,
-	// BitmapDisplayConfig arg3, BitmapLoadFrom arg4) {
-	// Logger.e("onLoadCompleted", "onLoadCompleted");
-	// ((ImageView) arg0).setImageBitmap(toRoundBitmap(arg2));
-	// }
-	//
-	// @Override
-	// public void onLoadFailed(View arg0, String arg1, Drawable arg2) {
-	// Bitmap decodeResource = BitmapFactory.decodeResource(
-	// context.getResources(), defortIc);
-	// ((ImageView) arg0)
-	// .setImageBitmap(toRoundBitmap(decodeResource));
-	// Logger.e("onLoadFailed", "onLoadFailed");
-	// }
-	// });
-	// }
-
-	// public static int getImgByName(String imageName) {
-	// int reld = R.drawable.weather_icon11;
-	// if (imageName.endsWith("png")) {
-	// imageName = imageName.substring(0, imageName.indexOf("png") - 1);
-	// }
-	// try {
-	// Class<?> c = R.drawable.class;
-	// Field field = c.getField(imageName);
-	// reld = (Integer) field.get(null);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// return reld;
-	// }
-	//
-	// public static int getMarkerImg(String typeStr) {
-	// int reld = R.drawable.weather_icon11;
-	// try {
-	// Class<?> c = R.drawable.class;
-	// Field field = c.getField(typeStr);
-	// reld = (Integer) field.get(null);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// return reld;
-	// }
 
 	public static int dip2pix(Context context, int dips) {
 		int densityDpi = context.getResources().getDisplayMetrics().densityDpi;

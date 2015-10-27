@@ -194,5 +194,9 @@
     <color name="like_buy_blue">#6EAAF0</color>
     <!--  半透明-->
     <color name="btm">#ff6495ED</color>
+    <!--  灰色lavout 背景-->
+    <color name="view_gray_bg">#fafafa</color>
+    <!--  dialog透明-->
+    <color name="gray_btm">#55000000</color>
 
 </resources>

@@ -3,25 +3,45 @@
  */
 package com.guoku.guokuv4.act;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+import com.alibaba.fastjson.JSON;
 import com.guoku.R;
+import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.adapter.ArrayListAdapter;
 import com.guoku.guokuv4.adapter.GridViewAdapter;
 import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.bean.TagBean;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.gragment.PersonalFragment;
 import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.BitmapUtil;
+import com.guoku.guokuv4.utils.SharePrenceUtil;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.view.ScrollViewWithGridView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.TranslateAnimation;
+import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 /**
  * @zhangyao
@@ -34,17 +54,40 @@ public class UserLikeListAct extends NetWorkActivity{
 	private final int TABLIKE = 1001;// 喜欢
 	private final int PROINFO = 1002;
 	
+	@ViewInject(R.id.layout_comment_title)
+	View viewTitle;
+	
+//	@ViewInject(R.id.layout_add)
+//	LinearLayout lavoutAdd;
+	
+	@ViewInject(R.id.list_tag)
+	ListView listTag;
+	
 	@ViewInject(R.id.sv)
 	private PullToRefreshScrollView sv;//gridview上拉刷新
 	
 	@ViewInject(R.id.tab_gv)
 	private ScrollViewWithGridView tab_gv;
 	
+	@ViewInject(R.id.view_back_black)
+	View backblack;
+	
+	private ArrayListAdapter<TagBean> tagAdapter;
+	
 	private GridViewAdapter gvAdapter;
 	
 	int countValue = 30;
 	
 	UserBean uBean;
+	
+	private Animation animationBackShow;
+	private Animation animationBackHide;
+	private Animation animationllShow;
+	private Animation animationllHide;
+	
+	private final int animTime = 300;
+	
+	private boolean animIsRunning = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +97,7 @@ public class UserLikeListAct extends NetWorkActivity{
 		setContentView(R.layout.activity_user_like_list);
 		
 		init();
+		initComment();
 	}
 	
 	private void init(){
@@ -133,4 +177,141 @@ public class UserLikeListAct extends NetWorkActivity{
 				new String[] { "entity_id" }, new String[] { id }, PROINFO,
 				true);
 	}
+	
+	/**
+	 * 初始化分类
+	 */
+	@SuppressLint("ResourceAsColor")
+	private void initComment(){
+		
+		final int pading = BitmapUtil.dip2pix(this, 10);
+		
+		try {
+			String result = SharePrenceUtil.getTab(mContext);
+			if (!StringUtils.isEmpty(result)) {
+				ArrayList<TagBean> tBean = (ArrayList<TagBean>) JSON
+						.parseArray(result, TagBean.class);
+				
+				tagAdapter  = new ArrayListAdapter<TagBean>(this) {
+					
+					@Override
+					public View getView(int position, View convertView, ViewGroup parent) {
+						// TODO Auto-generated method stub
+						if(convertView == null){
+							convertView = new TextView(mContext);
+							LayoutParams lParams = new LayoutParams(
+									LayoutParams.MATCH_PARENT,
+									LayoutParams.WRAP_CONTENT);
+							convertView.setLayoutParams(lParams);
+							if(mList.get(position).getStatus() == 1){
+								((TextView)convertView).setText(mList.get(position).getTitle());
+								((TextView)convertView).setTextColor(R.color.gray_fzxx);
+								convertView.setPadding(pading, pading, pading, pading);
+							}
+						}
+						return convertView;
+					}
+				};
+				
+				ArrayList<TagBean> tagBeans = new ArrayList<TagBean>();
+				for(int i = 0; i < 12; i ++){
+					tagBeans.add(tBean.get(i));
+				}
+				tagAdapter.setList(tagBeans);
+				listTag.setAdapter(tagAdapter);
+				
+				
+				ViewGroup.LayoutParams params = listTag.getLayoutParams(); 
+				params.height = GuokuApplication.screenH / 3;
+				listTag.setLayoutParams(params);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@OnClick(R.id.layout_comment_title)
+	private void inClickComment(View view){
+		listTag.getBackground().setAlpha(230);
+		if(listTag.getVisibility() == View.INVISIBLE){
+			showSearchWhat();
+		}else{
+			hideSearchWhat();
+		}
+		
+	}
+	
+	private void showSearchWhat() {
+		showBackBlack();
+		if (animationllShow == null) {
+			animationllShow = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+		}
+		animationllShow.setDuration(animTime);
+		listTag.startAnimation(animationllShow);
+	}
+	
+	private void hideSearchWhat() {
+		hideBackBlack();
+		if (animationllHide == null) {
+			animationllHide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f);
+		}
+		animationllHide.setDuration(animTime);
+		listTag.startAnimation(animationllHide);
+	}
+	
+	private void showBackBlack() {
+		if (animationBackShow == null) {
+			backblack.setVisibility(View.VISIBLE);
+			animationBackShow = new AlphaAnimation(0.0f, 1.0f);
+			animationBackShow.setAnimationListener(animationShowListener);
+		}
+		animationBackShow.setDuration(animTime);
+		backblack.startAnimation(animationBackShow);
+	}
+	
+	private void hideBackBlack() {
+		if (animationBackHide == null) {
+			animationBackHide = new AlphaAnimation(1.0f, 0.0f);
+			animationBackHide.setAnimationListener(animationHideListener);
+		}
+		animationBackHide.setDuration(animTime);
+		backblack.startAnimation(animationBackHide);
+	}
+	
+	AnimationListener animationShowListener = new AnimationListener() {
+		@Override
+		public void onAnimationStart(Animation animation) {
+			animIsRunning = true;
+			backblack.setVisibility(View.VISIBLE);
+			listTag.setVisibility(View.VISIBLE);
+		}
+		
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+		}
+		
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			animIsRunning = false;
+		}
+	};
+	
+	AnimationListener animationHideListener = new AnimationListener() {
+		@Override
+		public void onAnimationStart(Animation animation) {
+			animIsRunning = true;
+		}
+		
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+		}
+		
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			backblack.setVisibility(View.INVISIBLE);
+			listTag.setVisibility(View.INVISIBLE);
+			animIsRunning = false;
+		}
+	};
 }

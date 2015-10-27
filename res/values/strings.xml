@@ -54,5 +54,6 @@
 	<string name="tv_user_article">的图文</string>
 	<string name="tv_user_tag">参与的标签</string>
 	<string name="tv_user_article_zan">赞过的图文</string>
+	<string name="tv_all">所有</string>
 
 </resources>

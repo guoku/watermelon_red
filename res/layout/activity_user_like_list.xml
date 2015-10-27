@@ -9,27 +9,74 @@
         android:layout_height="wrap_content"
         layout="@layout/title" />
 
-    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
-        android:id="@+id/sv"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+    <include layout="@layout/line_gray" />
 
-        <com.guoku.guokuv4.view.ScrollViewWithGridView
-            android:id="@+id/tab_gv"
+    <RelativeLayout
+        android:id="@+id/layout_comment_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@color/white"
+        >
+
+        <TextView
+            style="@style/home_page_item_article_title"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/tv_all"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/img_arrws"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/arrws_open" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+            android:id="@+id/sv"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <com.guoku.guokuv4.view.ScrollViewWithGridView
+                android:id="@+id/tab_gv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#fff8f8f8"
+                android:cacheColorHint="#00000000"
+                android:gravity="center"
+                android:horizontalSpacing="2px"
+                android:listSelector="#00000000"
+                android:numColumns="3"
+                android:padding="4px"
+                android:paddingTop="12dp"
+                android:scrollbars="none"
+                android:verticalSpacing="2px" >
+            </com.guoku.guokuv4.view.ScrollViewWithGridView>
+        </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+
+        <View
+            android:id="@+id/view_back_black"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#fff8f8f8"
-            android:cacheColorHint="#00000000"
-            android:gravity="center"
-            android:horizontalSpacing="2px"
-            android:listSelector="#00000000"
-            android:numColumns="3"
-            android:padding="4px"
-            android:paddingTop="12dp"
-            android:scrollbars="none"
-            android:verticalSpacing="2px"
-            >
-        </com.guoku.guokuv4.view.ScrollViewWithGridView>
-    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+            android:background="@color/gray_btm"
+            android:clickable="true"
+            android:visibility="invisible" />
+        
+        <ListView 
+            android:id="@+id/list_tag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:background="@color/gray_bg"
+            ></ListView>
+
+    </FrameLayout>
 
 </LinearLayout>
