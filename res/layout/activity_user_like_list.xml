@@ -20,6 +20,7 @@
         >
 
         <TextView
+            android:id="@+id/tv_tag_select"
             style="@style/home_page_item_article_title"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"

@@ -3,7 +3,6 @@
  */
 package com.guoku.guokuv4.act;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import com.alibaba.fastjson.JSON;
@@ -11,6 +10,7 @@ import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.adapter.ArrayListAdapter;
 import com.guoku.guokuv4.adapter.GridViewAdapter;
+import com.guoku.guokuv4.adapter.TagTextAdapter;
 import com.guoku.guokuv4.base.NetWorkActivity;
 import com.guoku.guokuv4.bean.TagBean;
 import com.guoku.guokuv4.config.Constant;
@@ -18,6 +18,7 @@ import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.gragment.PersonalFragment;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.BitmapUtil;
+import com.guoku.guokuv4.utils.LogGK;
 import com.guoku.guokuv4.utils.SharePrenceUtil;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.view.ScrollViewWithGridView;
@@ -31,6 +32,7 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -57,6 +59,9 @@ public class UserLikeListAct extends NetWorkActivity{
 	@ViewInject(R.id.layout_comment_title)
 	View viewTitle;
 	
+	@ViewInject(R.id.tv_tag_select)
+	TextView tvSelect;
+	
 //	@ViewInject(R.id.layout_add)
 //	LinearLayout lavoutAdd;
 	
@@ -72,7 +77,7 @@ public class UserLikeListAct extends NetWorkActivity{
 	@ViewInject(R.id.view_back_black)
 	View backblack;
 	
-	private ArrayListAdapter<TagBean> tagAdapter;
+	private TagTextAdapter tagAdapter;
 	
 	private GridViewAdapter gvAdapter;
 	
@@ -88,6 +93,8 @@ public class UserLikeListAct extends NetWorkActivity{
 	private final int animTime = 300;
 	
 	private boolean animIsRunning = false;
+	
+	private String cidTag = "0";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -167,8 +174,8 @@ public class UserLikeListAct extends NetWorkActivity{
 	
 	private void getLikeData(int netTag, boolean isDialog) {
 		sendConnection(Constant.TAB_USER + uBean.getUser_id() + "/" + LIKE
-				+ "/", new String[] { "count", "timestamp" }, new String[] {
-				String.valueOf(countValue), System.currentTimeMillis() / 1000 + "" }, netTag,
+				+ "/", new String[] { "count", "timestamp", "cid"}, new String[] {
+				String.valueOf(countValue), System.currentTimeMillis() / 1000 + "", cidTag}, netTag,
 				isDialog);
 	}
 	
@@ -184,7 +191,8 @@ public class UserLikeListAct extends NetWorkActivity{
 	@SuppressLint("ResourceAsColor")
 	private void initComment(){
 		
-		final int pading = BitmapUtil.dip2pix(this, 10);
+		tagAdapter  = new TagTextAdapter(this);
+		listTag.setAdapter(tagAdapter);
 		
 		try {
 			String result = SharePrenceUtil.getTab(mContext);
@@ -192,45 +200,45 @@ public class UserLikeListAct extends NetWorkActivity{
 				ArrayList<TagBean> tBean = (ArrayList<TagBean>) JSON
 						.parseArray(result, TagBean.class);
 				
-				tagAdapter  = new ArrayListAdapter<TagBean>(this) {
-					
-					@Override
-					public View getView(int position, View convertView, ViewGroup parent) {
-						// TODO Auto-generated method stub
-						if(convertView == null){
-							convertView = new TextView(mContext);
-							LayoutParams lParams = new LayoutParams(
-									LayoutParams.MATCH_PARENT,
-									LayoutParams.WRAP_CONTENT);
-							convertView.setLayoutParams(lParams);
-							if(mList.get(position).getStatus() == 1){
-								((TextView)convertView).setText(mList.get(position).getTitle());
-								((TextView)convertView).setTextColor(R.color.gray_fzxx);
-								convertView.setPadding(pading, pading, pading, pading);
-							}
-						}
-						return convertView;
-					}
-				};
-				
 				ArrayList<TagBean> tagBeans = new ArrayList<TagBean>();
 				for(int i = 0; i < 12; i ++){
 					tagBeans.add(tBean.get(i));
 				}
-				tagAdapter.setList(tagBeans);
-				listTag.setAdapter(tagAdapter);
 				
+				tagAdapter.setList(tagBeans);
+				
+				//手动再第一个添加所有分类
+				ArrayList<TagBean> tempBeanList = new ArrayList<TagBean>();
+				TagBean tempBean = new TagBean();
+				tempBean.setTitle(getResources().getString(R.string.tv_all));
+				tempBeanList.add(tempBean);
+				tagAdapter.addFirst(tempBeanList);
 				
 				ViewGroup.LayoutParams params = listTag.getLayoutParams(); 
 				params.height = GuokuApplication.screenH / 3;
 				listTag.setLayoutParams(params);
+				
+				listTag.setOnItemClickListener(new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+						// TODO Auto-generated method stub
+						tvSelect.setText(tagAdapter.getItem(position).getTitle());
+						hideSearchWhat();
+						if(position == 0){
+							cidTag = "0";
+						}else{
+							cidTag = String.valueOf(tagAdapter.getItem(position).getGroup_id());
+						}
+						getLikeData(TABLIKE, true);
+					}
+				});
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	@OnClick(R.id.layout_comment_title)
 	private void inClickComment(View view){
 		listTag.getBackground().setAlpha(230);
@@ -240,6 +248,13 @@ public class UserLikeListAct extends NetWorkActivity{
 			hideSearchWhat();
 		}
 		
+	}
+	
+	@OnClick(R.id.view_back_black)
+	private void inClickBlack(View view){
+		if(listTag.getVisibility() == View.VISIBLE){
+			hideSearchWhat();
+		}
 	}
 	
 	private void showSearchWhat() {

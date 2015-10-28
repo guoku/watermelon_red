@@ -280,6 +280,7 @@ public abstract class BaseFrament extends Fragment {
 					showDialog, umengId);
 		} else {
 			ToastUtil.show(context, "网络连接失败");
+			onFailure("网络连接失败", where);
 		}
 	}
 
@@ -290,6 +291,7 @@ public abstract class BaseFrament extends Fragment {
 					showDialog, 0);
 		} else {
 			ToastUtil.show(context, "网络连接失败");
+			onFailure("网络连接失败", where);
 		}
 	}
 
@@ -300,6 +302,7 @@ public abstract class BaseFrament extends Fragment {
 					where, showDialog, 0);
 		} else {
 			ToastUtil.show(context, "网络连接失败");
+			onFailure("网络连接失败", where);
 		}
 	}
 

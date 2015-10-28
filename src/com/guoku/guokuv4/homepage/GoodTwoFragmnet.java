@@ -21,6 +21,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.umeng.analytics.MobclickAgent;
 
 import android.content.Intent;
@@ -30,6 +31,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
@@ -43,6 +45,10 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 	// private static final int UPDATA_LIKE_UN = 17;
 	@ViewInject(R.id.jingxuan_lv_1)
 	private PullToRefreshListView jingxuan_lv_1;
+	
+	@ViewInject(R.id.tv_check_net)
+	TextView tvCheckNet;
+	
 	private JingXuanAdapter adapter;
 	private ArrayList<PBean> list;
 	private PBean pBean;
@@ -62,8 +68,6 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 		// list = new ArrayList<ProductBean>();
 		adapter = new JingXuanAdapter(context, this);
 
-		jingxuan_lv_1.setPullToRefreshOverScrollEnabled(false);
-		jingxuan_lv_1.setScrollingWhileRefreshingEnabled(false);
 		jingxuan_lv_1.setMode(Mode.BOTH);
 		jingxuan_lv_1.setAdapter(adapter);
 
@@ -72,16 +76,21 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 			@Override
 			public void onPullDownToRefresh(
 					PullToRefreshBase<ListView> refreshView) {
-				getJingXuan(System.currentTimeMillis() / 1000 + "");
+				if(list != null){
+					if (list.size() > 0) {
+						getJingXuan(System.currentTimeMillis() / 1000 + "", false);
+					}
+				}
 			}
 
 			@Override
 			public void onPullUpToRefresh(
 					PullToRefreshBase<ListView> refreshView) {
-				if (list.size() > 0) {
-					getJingXuanDown(list.get(list.size() - 1).getPost_time());
-				} else {
-					// Toast
+				
+				if(list != null){
+					if (list.size() > 0) {
+						getJingXuanDown(list.get(list.size() - 1).getPost_time());
+					}
 				}
 			}
 		});
@@ -107,12 +116,12 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 		if (adapter.getCount() > 0) {
 			return;
 		}
-		getJingXuan(System.currentTimeMillis() / 1000 + "");
+		getJingXuan(System.currentTimeMillis() / 1000 + "", true);
 	}
 
-	private void getJingXuan(String time) {
+	private void getJingXuan(String time, boolean isShowDialog) {
 		sendConnection(Constant.JINGXUAN, new String[] { "count", "timestamp",
-				"rcat" }, new String[] { "30", time, cur + "" }, TYPE, false);
+				"rcat" }, new String[] { "30", time, cur + "" }, TYPE, isShowDialog);
 	}
 
 	private void getJingXuanShow(String time) {
@@ -133,6 +142,10 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
 	@Override
 	protected void onSuccess(String result, int where) {
+		if(jingxuan_lv_1.getVisibility() == View.GONE){
+			tvCheckNet.setVisibility(View.GONE);
+			jingxuan_lv_1.setVisibility(View.VISIBLE);
+		}
 		jingxuan_lv_1.onRefreshComplete();
 		switch (where) {
 		case TYPE:
@@ -191,13 +204,25 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 	@Override
 	protected void onFailure(String result, int where) {
 		// TODO Auto-generated method stub
-		jingxuan_lv_1.onRefreshComplete();
+		jingxuan_lv_1.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+            	jingxuan_lv_1.onRefreshComplete();
+            }
+        }, 1000);
+
 		switch (where) {
 		case LIKE0:
 			ToastUtil.show(context, "取消失敗");
 			break;
 		case LIKE1:
 			ToastUtil.show(context, "喜爱失败");
+			break;
+		case TYPE:
+			if(list == null){
+				tvCheckNet.setVisibility(View.VISIBLE);
+				jingxuan_lv_1.setVisibility(View.GONE);
+			}
 			break;
 
 		default:
@@ -282,5 +307,10 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 				}
 			}
 		}
+	}
+	
+	@OnClick(R.id.tv_check_net)
+	private void onCheckNetClick(View view){
+		getJingXuan(System.currentTimeMillis() / 1000 + "", true);
 	}
 }

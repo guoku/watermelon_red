@@ -51,8 +51,6 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 
 		listViewArtivle.setMode(Mode.BOTH);
 		listViewArtivle.setOnItemClickListener(this);
-		listViewArtivle.setPullToRefreshOverScrollEnabled(false);
-		listViewArtivle.setScrollingWhileRefreshingEnabled(false);
 		listViewArtivle.setAdapter(articleAdapter);
 		listViewArtivle
 				.setOnRefreshListener(new OnRefreshListener2<ListView>() {

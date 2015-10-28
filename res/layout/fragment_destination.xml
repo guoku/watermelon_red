@@ -22,5 +22,14 @@
         ptr:ptrAnimationStyle="flip"
         ptr:ptrListViewExtrasEnabled="true" 
         />
+    
+    <TextView 
+        android:id="@+id/tv_check_net"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/check_net"
+        android:gravity="center"
+        android:visibility="gone"
+        />
 
 </LinearLayout>
