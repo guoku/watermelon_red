@@ -69,18 +69,13 @@ public abstract class NetWorkActivity extends BaseActivity {
 		httpUtils = HttputilHelp.getHttpUtils();
 		// httpUtils.configUserAgent(GuokuApplication.userAgent);
 		vector = new Vector<Integer>();
-		options = new DisplayImageOptions.Builder()
-				.imageScaleType(ImageScaleType.EXACTLY)
-				.considerExifParams(true).bitmapConfig(Config.RGB_565)
-				.showImageOnLoading(R.drawable.item240)
-				.showImageForEmptyUri(R.drawable.item240).cacheInMemory(true)
-				.cacheOnDisk(true).showImageOnFail(R.drawable.item240).build();
-		optionsRound = new DisplayImageOptions.Builder()
-				.bitmapConfig(Bitmap.Config.RGB_565)
-				.imageScaleType(ImageScaleType.EXACTLY)
-				.displayer(new RoundedBitmapDisplayer(90)).cacheInMemory(true)
-				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.user100)
-				.showImageOnFail(R.drawable.user100)
+		options = new DisplayImageOptions.Builder().imageScaleType(ImageScaleType.EXACTLY).considerExifParams(true)
+				.bitmapConfig(Config.RGB_565).showImageOnLoading(R.drawable.item240)
+				.showImageForEmptyUri(R.drawable.item240).cacheInMemory(true).cacheOnDisk(true)
+				.showImageOnFail(R.drawable.item240).build();
+		optionsRound = new DisplayImageOptions.Builder().bitmapConfig(Bitmap.Config.RGB_565)
+				.imageScaleType(ImageScaleType.EXACTLY).displayer(new RoundedBitmapDisplayer(90)).cacheInMemory(true)
+				.cacheOnDisk(true).showImageForEmptyUri(R.drawable.user100).showImageOnFail(R.drawable.user100)
 				.showImageOnLoading(R.drawable.user100).build();
 
 	}
@@ -110,8 +105,7 @@ public abstract class NetWorkActivity extends BaseActivity {
 	}
 
 	public void commitFragment(int layoutId, Fragment fragment) {
-		FragmentTransaction transaction = getSupportFragmentManager()
-				.beginTransaction();
+		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.replace(layoutId, fragment);
 		transaction.commit();
 	}
@@ -126,12 +120,10 @@ public abstract class NetWorkActivity extends BaseActivity {
 	 * @param showDialog
 	 *            是否显示进度条
 	 */
-	private void sendConnection(HttpMethod method, String url,
-			String[] argsKeys, String[] argsValues, int where,
+	private void sendConnection(HttpMethod method, String url, String[] argsKeys, String[] argsValues, int where,
 			boolean showDialog) {
 		if (argsKeys.length != argsValues.length) {
-			throw new IllegalArgumentException(
-					"check your Params key or value length!");
+			throw new IllegalArgumentException("check your Params key or value length!");
 		}
 		if (showDialog) {
 			vector.add(where);
@@ -141,20 +133,16 @@ public abstract class NetWorkActivity extends BaseActivity {
 		Map<String, String> paramsMap = new TreeMap<String, String>();
 		for (int i = 0; i < argsKeys.length; i++) {
 			params.addQueryStringParameter(argsKeys[i], argsValues[i]);
-			Logger.e("params", "params----->" + argsKeys[i] + ":"
-					+ argsValues[i]);
+			Logger.e("params", "params----->" + argsKeys[i] + ":" + argsValues[i]);
 			paramsMap.put(argsKeys[i], argsValues[i]);
 		}
 		if (GuokuApplication.getInstance().getBean() != null) {
-			params.addQueryStringParameter("session", GuokuApplication
-					.getInstance().getBean().getSession());
-			paramsMap.put("session", GuokuApplication.getInstance().getBean()
-					.getSession());
+			params.addQueryStringParameter("session", GuokuApplication.getInstance().getBean().getSession());
+			paramsMap.put("session", GuokuApplication.getInstance().getBean().getSession());
 		}
 
 		params.addQueryStringParameter("sign", genSign(paramsMap));
-		params.addQueryStringParameter("api_key",
-				"0b19c2b93687347e95c6b6f5cc91bb87");
+		params.addQueryStringParameter("api_key", "0b19c2b93687347e95c6b6f5cc91bb87");
 
 		Logger.e("params", "params----->" + ":" + params.toString());
 		if (showDialog && !isFinishing()) {
@@ -163,12 +151,10 @@ public abstract class NetWorkActivity extends BaseActivity {
 		httpUtils.send(method, url, params, httpCallback);
 	}
 
-	private void sendConnectionPost(HttpMethod method, String url,
-			String[] argsKeys, String[] argsValues, int where,
+	private void sendConnectionPost(HttpMethod method, String url, String[] argsKeys, String[] argsValues, int where,
 			boolean showDialog) {
 		if (argsKeys.length != argsValues.length) {
-			throw new IllegalArgumentException(
-					"check your Params key or value length!");
+			throw new IllegalArgumentException("check your Params key or value length!");
 		}
 		if (showDialog) {
 			vector.add(where);
@@ -179,16 +165,13 @@ public abstract class NetWorkActivity extends BaseActivity {
 		for (int i = 0; i < argsKeys.length; i++) {
 			if (argsValues[i] != null) {
 				params.addBodyParameter(argsKeys[i], argsValues[i]);
-				Logger.e("params", "params----->" + argsKeys[i] + ":"
-						+ argsValues[i]);
+				Logger.e("params", "params----->" + argsKeys[i] + ":" + argsValues[i]);
 				paramsMap.put(argsKeys[i], argsValues[i]);
 			}
 		}
 		if (GuokuApplication.getInstance().getBean() != null) {
-			params.addBodyParameter("session", GuokuApplication.getInstance()
-					.getBean().getSession());
-			paramsMap.put("session", GuokuApplication.getInstance().getBean()
-					.getSession());
+			params.addBodyParameter("session", GuokuApplication.getInstance().getBean().getSession());
+			paramsMap.put("session", GuokuApplication.getInstance().getBean().getSession());
 		} else if (Constant.NeedLogin(url)) {
 
 		} else {
@@ -200,8 +183,7 @@ public abstract class NetWorkActivity extends BaseActivity {
 		params.addBodyParameter("api_key", "0b19c2b93687347e95c6b6f5cc91bb87");
 
 		Logger.e("params", "sign----->" + ":" + genSign(paramsMap));
-		Logger.e("params", "api_key----->"
-				+ ":0b19c2b93687347e95c6b6f5cc91bb87");
+		Logger.e("params", "api_key----->" + ":0b19c2b93687347e95c6b6f5cc91bb87");
 		Logger.e("params", "params----->" + ":" + params.toString());
 		// Logger.e("params", "session----->" + ":" +
 		// GuokuApplication.getInstance()
@@ -217,13 +199,10 @@ public abstract class NetWorkActivity extends BaseActivity {
 		RequestParams params = new RequestParams();
 		Map<String, String> paramsMap = new TreeMap<String, String>();
 		if (GuokuApplication.getInstance().getBean() != null) {
-			params.addBodyParameter("session", GuokuApplication.getInstance()
-					.getBean().getSession());
-			paramsMap.put("session", GuokuApplication.getInstance().getBean()
-					.getSession());
+			params.addBodyParameter("session", GuokuApplication.getInstance().getBean().getSession());
+			paramsMap.put("session", GuokuApplication.getInstance().getBean().getSession());
 		}
-		params.addBodyParameter("image", new File(Constant.IMAGES_PATH
-				+ "temp.png"));
+		params.addBodyParameter("image", new File(Constant.IMAGES_PATH + "temp.png"));
 		params.addBodyParameter("sign", genSign(paramsMap));
 		params.addBodyParameter("api_key", "0b19c2b93687347e95c6b6f5cc91bb87");
 		httpUtils.send(HttpMethod.POST, url, params, httpCallback);
@@ -237,14 +216,12 @@ public abstract class NetWorkActivity extends BaseActivity {
 	 */
 	public void setBodyParams(String[] bodyKey, String[] bodyValue) {
 		if (bodyKey.length != bodyValue.length) {
-			throw new IllegalArgumentException(
-					"check your BodyParams key or value length!");
+			throw new IllegalArgumentException("check your BodyParams key or value length!");
 		}
 		bodyParams = new ArrayList<NameValuePair>();
 		String bodyParam = "body参数：";
 		for (int i = 0; i < bodyKey.length; i++) {
-			NameValuePair param = new BasicNameValuePair(bodyKey[i],
-					bodyValue[i]);
+			NameValuePair param = new BasicNameValuePair(bodyKey[i], bodyValue[i]);
 			bodyParam += bodyKey[i] + "=" + bodyValue[i] + "&";
 			bodyParams.add(param);
 		}
@@ -269,22 +246,20 @@ public abstract class NetWorkActivity extends BaseActivity {
 	 * @param showDialog
 	 *            是否显示dialog
 	 */
-	public void sendConnection(String url, String[] argsKeys,
-			String[] argsValues, int where, boolean showDialog) {
+	public void sendConnection(String url, String[] argsKeys, String[] argsValues, int where, boolean showDialog) {
 		if (NetUtil.checkNetWork(context)) {
-			sendConnection(HttpMethod.GET, url, argsKeys, argsValues, where,
-					showDialog);
+			sendConnection(HttpMethod.GET, url, argsKeys, argsValues, where, showDialog);
 		} else
 			ToastUtil.show(getApplicationContext(), "网络连接失败");
+		onFailure("网络连接失败", where);
 	}
 
-	public void sendConnectionPOST(String url, String[] argsKeys,
-			String[] argsValues, int where, boolean showDialog) {
+	public void sendConnectionPOST(String url, String[] argsKeys, String[] argsValues, int where, boolean showDialog) {
 		if (NetUtil.checkNetWork(context)) {
-			sendConnectionPost(HttpMethod.POST, url, argsKeys, argsValues,
-					where, showDialog);
+			sendConnectionPost(HttpMethod.POST, url, argsKeys, argsValues, where, showDialog);
 		} else
 			ToastUtil.show(getApplicationContext(), "网络连接失败");
+		onFailure("网络连接失败", where);
 	}
 
 	/**
@@ -311,8 +286,7 @@ public abstract class NetWorkActivity extends BaseActivity {
 	 * @param isUploading
 	 * @param where
 	 */
-	protected void onLoading(long total, long current, boolean isUploading,
-			int where) {
+	protected void onLoading(long total, long current, boolean isUploading, int where) {
 	}
 
 	/**

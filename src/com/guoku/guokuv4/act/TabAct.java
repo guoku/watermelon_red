@@ -173,7 +173,6 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 	protected void onFailure(String result, int where) {
 		tab_lv.onRefreshComplete();
 		sv.onRefreshComplete();
-		ToastUtil.show(mContext, "没有此结果");
 	}
 
 	@Override

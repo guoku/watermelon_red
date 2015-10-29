@@ -77,6 +77,9 @@ public class UserLikeListAct extends NetWorkActivity{
 	@ViewInject(R.id.view_back_black)
 	View backblack;
 	
+	@ViewInject(R.id.tv_check_net)
+	TextView tvCheckNet;
+	
 	private TagTextAdapter tagAdapter;
 	
 	private GridViewAdapter gvAdapter;
@@ -142,6 +145,9 @@ public class UserLikeListAct extends NetWorkActivity{
 	@Override
 	protected void onSuccess(String result, int where) {
 		// TODO Auto-generated method stub
+		if(tvCheckNet.getVisibility() == View.VISIBLE){
+			tvCheckNet.setVisibility(View.GONE);
+		}
 		sv.onRefreshComplete();
 		switch (where) {
 		case TABLIKE:
@@ -159,6 +165,18 @@ public class UserLikeListAct extends NetWorkActivity{
 	protected void onFailure(String result, int where) {
 		// TODO Auto-generated method stub
 		sv.onRefreshComplete();
+		switch (where) {
+		case TABLIKE:
+			if(gvAdapter == null){
+				if(tvCheckNet.getVisibility() == View.GONE){
+					tvCheckNet.setVisibility(View.VISIBLE);
+				}
+			}
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -241,13 +259,15 @@ public class UserLikeListAct extends NetWorkActivity{
 
 	@OnClick(R.id.layout_comment_title)
 	private void inClickComment(View view){
-		listTag.getBackground().setAlpha(230);
-		if(listTag.getVisibility() == View.INVISIBLE){
-			showSearchWhat();
-		}else{
-			hideSearchWhat();
-		}
 		
+		if(gvAdapter != null){
+			listTag.getBackground().setAlpha(230);
+			if(listTag.getVisibility() == View.INVISIBLE){
+				showSearchWhat();
+			}else{
+				hideSearchWhat();
+			}
+		}
 	}
 	
 	@OnClick(R.id.view_back_black)
@@ -255,6 +275,11 @@ public class UserLikeListAct extends NetWorkActivity{
 		if(listTag.getVisibility() == View.VISIBLE){
 			hideSearchWhat();
 		}
+	}
+	
+	@OnClick(R.id.tv_check_net)
+	private void onCheckNetClick(View view){
+		getLikeData(TABLIKE, true);
 	}
 	
 	private void showSearchWhat() {

@@ -14,6 +14,7 @@ import com.guoku.guokuv4.entity.test.PBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.BroadUtil;
+import com.guoku.guokuv4.utils.GuokuUtil;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -124,11 +125,6 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 				"rcat" }, new String[] { "30", time, cur + "" }, TYPE, isShowDialog);
 	}
 
-	private void getJingXuanShow(String time) {
-		sendConnection(Constant.JINGXUAN, new String[] { "count", "timestamp",
-				"rcat" }, new String[] { "30", time, cur + "" }, TYPE, true);
-	}
-
 	private void getJingXuanDown(String time) {
 		sendConnection(Constant.JINGXUAN, new String[] { "count", "timestamp",
 				"rcat" }, new String[] { "30", time, cur + "" }, JINGXUANUP,
@@ -204,13 +200,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 	@Override
 	protected void onFailure(String result, int where) {
 		// TODO Auto-generated method stub
-		jingxuan_lv_1.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-            	jingxuan_lv_1.onRefreshComplete();
-            }
-        }, 1000);
-
+		GuokuUtil.closeListViewHeader(jingxuan_lv_1);
 		switch (where) {
 		case LIKE0:
 			ToastUtil.show(context, "取消失敗");

@@ -397,8 +397,7 @@ public abstract class BaseFrament extends Fragment {
 			LogGK.e("请求---------------->onFailure" + ex);
 			LogGK.e("请求---------------->onFailure" + msg);
 			dismissDialog();
-			String result = context.getResources().getString(
-					R.string.result_failure);
+			String result = "加载数据失败，请检查您的网络连接并重试";
 			BaseFrament.this.onFailure(result, where);
 		}
 

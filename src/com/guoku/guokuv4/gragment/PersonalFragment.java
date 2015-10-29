@@ -396,34 +396,26 @@ public class PersonalFragment extends BaseFrament {
 
 	@OnClick(R.id.tv_user_like)
 	private void userLikeClick(View v) {
-		if (!uBean.getLike_count().equals("0")) {
-			onStartAct(UserLikeListAct.class, userLike.tv1
-					.getText().toString());
-		}
+		onStartAct(UserLikeListAct.class, userLike.tv1
+				.getText().toString());
 	}
 	
 	@OnClick(R.id.tv_user_comment)
 	private void userCommentClick(View v) {
-		if (!uBean.getEntity_note_count().equals("0")) {
-			onStartAct(UserCommentListAct.class, userComment.tv1
-					.getText().toString());
-		}
+		onStartAct(UserCommentListAct.class, userComment.tv1
+				.getText().toString());
 	}
 	
 	@OnClick(R.id.tv_user_article)
 	private void userArticleClick(View v) {
-		if (!uBean.getArticle_count().equals("0")) {
-			onStartAct(UserArticleListAct.class, userArticle.tv1
-					.getText().toString());
-		}
+		onStartAct(UserArticleListAct.class, userArticle.tv1
+				.getText().toString());
 	}
 	
 	@OnClick(R.id.tv_user_tag)
 	private void userTagClick(View v) {
-		if (!uBean.getTag_count().equals("0")) {
-			onStartAct(UserTagListAct.class, userTag.tv1
-					.getText().toString());
-		}
+		onStartAct(UserTagListAct.class, userTag.tv1
+				.getText().toString());
 	}
 
 	private void getUserInfo() {
@@ -566,21 +558,30 @@ public class PersonalFragment extends BaseFrament {
 
 		userLike.tv1.setText(tempStr
 				+ getActivity().getResources().getString(R.string.tv_user_like));
-		userLike.tv2.setText(uBean.getLike_count());
+		if(!StringUtils.isEmpty(uBean.getLike_count())){
+			userLike.tv2.setText(uBean.getLike_count());
+		}
 		
 		userComment.tv1.setText(tempStr
 				+ getActivity().getResources().getString(
 						R.string.tv_user_comment));
-		userComment.tv2.setText(uBean.getEntity_note_count());
+		if(!StringUtils.isEmpty(uBean.getEntity_note_count())){
+			userComment.tv2.setText(uBean.getEntity_note_count());
+		}
 		
 		userArticle.tv1.setText(tempStr
 				+ getActivity().getResources().getString(
 						R.string.tv_user_article));
-		userArticle.tv2.setText(uBean.getArticle_count());
+		if(!StringUtils.isEmpty(uBean.getArticle_count())){
+			userArticle.tv2.setText(uBean.getArticle_count());
+		}
 		
 		userTag.tv1.setText(tempStr
 				+ getActivity().getResources().getString(R.string.tv_user_tag));
-		userTag.tv2.setText(uBean.getTag_count());
+		
+		if(!StringUtils.isEmpty(uBean.getTag_count())){
+			userTag.tv2.setText(uBean.getTag_count());
+		}
 		
 		userArticleZan.tv1.setText(tempStr
 				+ getActivity().getResources().getString(
