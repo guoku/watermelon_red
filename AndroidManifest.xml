@@ -176,7 +176,9 @@
         <activity
             android:name="com.guoku.guokuv4.act.LoginAct"
             android:configChanges="orientation"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait" 
+            android:theme="@android:style/Theme.Translucent"
+            >
         </activity>
         <activity
             android:name="com.guoku.guokuv4.act.TabListAct"
@@ -186,7 +188,9 @@
         <activity
             android:name="com.guoku.guokuv4.act.RegisterAct"
             android:configChanges="orientation"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait" 
+            android:theme="@android:style/Theme.Translucent"
+            >
         </activity>
         <activity
             android:name="com.guoku.guokuv4.act.UserInfoAct"

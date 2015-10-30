@@ -31,8 +31,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
@@ -48,7 +48,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 	private PullToRefreshListView jingxuan_lv_1;
 	
 	@ViewInject(R.id.tv_check_net)
-	TextView tvCheckNet;
+	ImageView tvCheckNet;
 	
 	private JingXuanAdapter adapter;
 	private ArrayList<PBean> list;

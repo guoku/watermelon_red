@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_bg"
+    android:background="@color/act_transparent"
     android:orientation="vertical" 
     android:layout_gravity="center_horizontal"
     >
@@ -24,7 +24,7 @@
 
         <TextView
             android:id="@+id/reg_tv_r"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
@@ -164,6 +164,8 @@
                 android:background="@drawable/login_shap"
                 android:paddingLeft="24dp"
                 android:paddingRight="24dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:text="登录"
                 android:textColor="@color/g_w" 
                 />

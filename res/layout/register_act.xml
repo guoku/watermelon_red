@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_bg"
+    android:background="@color/act_transparent"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -69,9 +69,8 @@
             android:hint="example@guoku.com"
             android:singleLine="true"
             android:textColor="#ffffffff"
-            android:textSize="14sp" 
             android:textCursorDrawable="@null"
-            />
+            android:textSize="14sp" />
     </LinearLayout>
 
     <ImageView
@@ -105,9 +104,8 @@
             android:password="true"
             android:singleLine="true"
             android:textColor="#ffffffff"
-            android:textSize="14sp" 
             android:textCursorDrawable="@null"
-            />
+            android:textSize="14sp" />
     </LinearLayout>
 
     <ImageView
@@ -140,9 +138,8 @@
             android:hint="3位以上文字/字母"
             android:singleLine="true"
             android:textColor="#ffffffff"
-            android:textSize="14sp" 
             android:textCursorDrawable="@null"
-            />
+            android:textSize="14sp" />
     </LinearLayout>
 
     <ImageView
@@ -157,10 +154,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="16dp"
-        android:background="#40ffffff"
+        android:background="@drawable/login_shap"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="5dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
+        android:paddingTop="5dp"
         android:text="注册"
         android:textColor="@color/g_w" />
 

@@ -178,6 +178,8 @@ public class MainActivity2 extends NetWorkActivity {
 		} else {
 			ToastUtil.show(mContext, "请登录");
 			startActivity(new Intent(this, LoginAct.class));
+			overridePendingTransition(R.anim.push_up_in,
+					R.anim.push_up_out);
 		}
 	}
 

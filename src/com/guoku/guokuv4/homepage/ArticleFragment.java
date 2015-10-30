@@ -5,18 +5,8 @@ package com.guoku.guokuv4.homepage;
 
 import java.util.ArrayList;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-
 import com.alibaba.fastjson.JSON;
 import com.guoku.R;
-import com.guoku.guokuv4.act.WebAct;
 import com.guoku.guokuv4.act.WebShareAct;
 import com.guoku.guokuv4.adapter.ArticleAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
@@ -26,11 +16,18 @@ import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.utils.GuokuUtil;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
+import android.widget.ListView;
 
 /**
  * @zhangyao
@@ -46,7 +43,7 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 	PullToRefreshListView listViewArtivle;
 	
 	@ViewInject(R.id.tv_check_net)
-	TextView tvCheckNet;
+	ImageView tvCheckNet;
 
 	ArticleAdapter articleAdapter;
 

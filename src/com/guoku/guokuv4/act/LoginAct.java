@@ -67,6 +67,8 @@ public class LoginAct extends NetWorkActivity {
 	@OnClick(R.id.reg_tv_l)
 	public void tv_l(View v) {
 		finish();
+		overridePendingTransition(R.anim.slide_top_to_bottom,
+				R.anim.my_alpha_action);
 	}
 
 	@Override

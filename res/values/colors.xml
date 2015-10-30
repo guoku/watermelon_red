@@ -198,5 +198,7 @@
     <color name="view_gray_bg">#fafafa</color>
     <!--  dialog透明-->
     <color name="gray_btm">#55000000</color>
+    <!-- 类似登录 注册act的透明therm -->
+    <color name="act_transparent">#E6000000</color>
 
 </resources>
