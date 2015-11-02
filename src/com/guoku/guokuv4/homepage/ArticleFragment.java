@@ -128,14 +128,14 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 
 	private void sentRequest(boolean isShow) {
 
-		sendConnection(Constant.ARTICLES, new String[] { "page" },
-				new String[] { String.valueOf(page) }, TAG_ARTICLE, isShow);
+		sendConnection(Constant.ARTICLES, new String[] { "page", "size" },
+				new String[] { String.valueOf(page), "20"}, TAG_ARTICLE, isShow);
 	}
 
 	private void sentRequestAdd() {
 
-		sendConnection(Constant.ARTICLES, new String[] { "page" },
-				new String[] { String.valueOf(page) }, TAG_ARTICLE_ADD, false);
+		sendConnection(Constant.ARTICLES, new String[] { "page", "size" },
+				new String[] { String.valueOf(page), "20"}, TAG_ARTICLE_ADD, false);
 	}
 
 	private void setResult(String result, int type) {

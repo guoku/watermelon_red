@@ -65,6 +65,7 @@ public class PersonalFragment extends BaseFrament {
 
 	private final int TABLIKE = 1002;// 喜欢
 	private final int TABNOTE = 1003;// 点评
+	public static final String IS_EMPTY = "IS_EMPTY";// //判断喜爱、点评、图文、标签等个数，来传给下一个act
 
 	private final String LIKE = "like";
 	private final String NOTE = "entity/note";
@@ -397,24 +398,28 @@ public class PersonalFragment extends BaseFrament {
 	@OnClick(R.id.tv_user_like)
 	private void userLikeClick(View v) {
 		onStartAct(UserLikeListAct.class, userLike.tv1
+				.getText().toString(), userLike.tv2
 				.getText().toString());
 	}
 	
 	@OnClick(R.id.tv_user_comment)
 	private void userCommentClick(View v) {
 		onStartAct(UserCommentListAct.class, userComment.tv1
+				.getText().toString(), userComment.tv2
 				.getText().toString());
 	}
 	
 	@OnClick(R.id.tv_user_article)
 	private void userArticleClick(View v) {
 		onStartAct(UserArticleListAct.class, userArticle.tv1
+				.getText().toString(), userArticle.tv2
 				.getText().toString());
 	}
 	
 	@OnClick(R.id.tv_user_tag)
 	private void userTagClick(View v) {
 		onStartAct(UserTagListAct.class, userTag.tv1
+				.getText().toString(), userTag.tv2
 				.getText().toString());
 	}
 
@@ -424,9 +429,14 @@ public class PersonalFragment extends BaseFrament {
 				new String[] {}, new String[] {}, USERINFO, false);
 	}
 	
-	private void onStartAct(Class<?> activity, String title){
+	private void onStartAct(Class<?> activity, String title, String count){
 		
 		Bundle bundle = new Bundle();
+		if(count.equals("0")){
+			bundle.putBoolean(IS_EMPTY, true);
+		}else{
+			bundle.putBoolean(IS_EMPTY, false);
+		}
 		bundle.putString(this.getClass().getName(), title);
 		bundle.putSerializable(INTENT_CODE, uBean);
 		openActivity(activity, bundle);
@@ -503,7 +513,11 @@ public class PersonalFragment extends BaseFrament {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		if (receiveBroadCast != null) {
-			context.unregisterReceiver(receiveBroadCast);
+			try {
+				context.unregisterReceiver(receiveBroadCast);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 		}
 	}
 

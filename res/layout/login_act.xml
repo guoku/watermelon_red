@@ -7,11 +7,10 @@
     android:layout_gravity="center_horizontal"
     >
     
-        <LinearLayout
+        <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="48dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        >
 
         <ImageView
             android:id="@+id/reg_tv_l"
@@ -20,6 +19,8 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
             android:src="@drawable/login_cancle" 
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
             />
 
         <TextView
@@ -27,20 +28,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:gravity="right"
             android:text="注册"
             android:textColor="@color/g_w"
-            android:textSize="16sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:textSize="16sp" 
+            android:drawableRight="@drawable/foward"
             android:layout_marginRight="8dp"
-            android:src="@drawable/foward" />
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            />
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <ImageView
         android:layout_width="wrap_content"

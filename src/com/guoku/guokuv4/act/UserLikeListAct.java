@@ -178,7 +178,12 @@ public class UserLikeListAct extends NetWorkActivity {
 		// TODO Auto-generated method stub
 		String title = getIntent().getExtras().getString(PersonalFragment.class.getName());
 		uBean = (UserBean) getIntent().getExtras().getSerializable(PersonalFragment.INTENT_CODE);
-		getLikeData(TABLIKE, true);
+		
+		if(getIntent().getExtras().getBoolean(PersonalFragment.IS_EMPTY)){
+			//喜欢数为0
+		}else{
+			getLikeData(TABLIKE, true);
+		}
 
 		setGCenter(true, title);
 		setGLeft(true, R.drawable.back_selector);

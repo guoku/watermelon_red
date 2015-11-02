@@ -39,6 +39,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -67,8 +68,8 @@ public class LoginAct extends NetWorkActivity {
 	@OnClick(R.id.reg_tv_l)
 	public void tv_l(View v) {
 		finish();
-		overridePendingTransition(R.anim.slide_top_to_bottom,
-				R.anim.my_alpha_action);
+		overridePendingTransition(R.anim.push_down_in,
+				R.anim.push_down_out);
 	}
 
 	@Override
@@ -441,6 +442,16 @@ public class LoginAct extends NetWorkActivity {
 	@Override
 	protected void setupData() {
 
+	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			finish();
+			overridePendingTransition(R.anim.push_down_in,
+					R.anim.push_down_out);
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 }

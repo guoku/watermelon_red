@@ -17,6 +17,7 @@ import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.ToastUtil;
 import com.guoku.guokuv4.view.ScrollViewWithGridView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -179,11 +180,16 @@ public class TabListSecondAct extends NetWorkActivity implements
 			lvAdapter.setList(listTag);
 			break;
 		case TAG_CATABLIST_UP:
-			ArrayList<EntityBean> lists = (ArrayList<EntityBean>) JSON.parseArray(result,
-					EntityBean.class);
-			listTag.addAll(lists);
-			gvAdapter.addListsLast(lists);
-			lvAdapter.addListsLast(lists);
+			try {
+				ArrayList<EntityBean> lists = (ArrayList<EntityBean>) JSON.parseArray(result,
+						EntityBean.class);
+				listTag.addAll(lists);
+				gvAdapter.addListsLast(lists);
+				lvAdapter.addListsLast(lists);
+			} catch (Exception e) {
+				// TODO: handle exception
+				ToastUtil.show(this, R.string.error_data_json);
+			}
 			break;
 		case TAG_PROINFO:
 			PInfoBean bean = ParseUtil.getPI(result);
