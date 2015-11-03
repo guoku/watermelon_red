@@ -45,6 +45,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 	private PInfoBean pib;
 	private View rootView;
 	private String url;
+	public boolean isRefrech;//是否刷新
 
 	public CustomShareBoard(Activity activity) {
 		super(activity);
@@ -76,9 +77,9 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 
 		WeiXinShareContent weixinContent = new WeiXinShareContent();
 		weixinContent.setShareContent(context + "：" + bean.getTop_note()
-				+ "http://www.guoku.com/detail/"
+				+ Constant.DETAIL
 				+ bean.getEntity().getEntity_hash() + "/");
-		weixinContent.setTargetUrl("http://www.guoku.com/detail/"
+		weixinContent.setTargetUrl(Constant.DETAIL
 				+ bean.getEntity().getEntity_hash() + "/");
 		weixinContent.setShareImage(url);
 		weixinContent.setTitle(context);
@@ -86,21 +87,21 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 
 		CircleShareContent circleMedia = new CircleShareContent();
 		circleMedia.setShareContent(context + bean.getTop_note()
-				+ "http://www.guoku.com/detail/"
+				+ Constant.DETAIL
 				+ bean.getEntity().getEntity_hash() + "/");
 		circleMedia.setShareImage(url);
 		circleMedia.setTitle(context);
-		circleMedia.setTargetUrl("http://www.guoku.com/detail/"
+		circleMedia.setTargetUrl(Constant.DETAIL
 				+ bean.getEntity().getEntity_hash() + "/");
 		mController.setShareMedia(circleMedia);
 
 		SinaShareContent sinaShareContent = new SinaShareContent();
 		sinaShareContent.setShareContent(context + bean.getTop_note()
-				+ "http://www.guoku.com/detail/"
+				+ Constant.DETAIL
 				+ bean.getEntity().getEntity_hash() + "/");
 		sinaShareContent.setShareImage(url);
 		sinaShareContent.setTitle(context);
-		sinaShareContent.setTargetUrl("http://www.guoku.com/detail/"
+		sinaShareContent.setTargetUrl(Constant.DETAIL
 				+ bean.getEntity().getEntity_hash() + "/");
 		mController.setShareMedia(sinaShareContent);
 	}
@@ -128,7 +129,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		sinaShareContent.setShareImage(new UMImage(mContext, imgUrl));
 		mController.setShareMedia(sinaShareContent);
 
-		rootView.findViewById(R.id.share_jubao).setVisibility(View.GONE);
+		rootView.findViewById(R.id.layout_report).setVisibility(View.GONE);
 		rootView.findViewById(R.id.share_llq).setVisibility(View.VISIBLE);
 	}
 
@@ -151,7 +152,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		sinaShareContent.setTargetUrl(url);
 		mController.setShareMedia(sinaShareContent);
 
-		rootView.findViewById(R.id.share_jubao).setVisibility(View.GONE);
+		rootView.findViewById(R.id.layout_report).setVisibility(View.GONE);
 		rootView.findViewById(R.id.share_llq).setVisibility(View.VISIBLE);
 	}
 
@@ -218,11 +219,15 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 	private void initView(Context context) {
 		rootView = LayoutInflater.from(context).inflate(R.layout.custom_board,
 				null);
-		rootView.findViewById(R.id.share_jubao).setOnClickListener(this);
 		rootView.findViewById(R.id.share_llq).setOnClickListener(this);
 		rootView.findViewById(R.id.share_sina).setOnClickListener(this);
 		rootView.findViewById(R.id.share_wx_1).setOnClickListener(this);
 		rootView.findViewById(R.id.share_wx_2).setOnClickListener(this);
+		rootView.findViewById(R.id.share_mail).setOnClickListener(this);
+		rootView.findViewById(R.id.layout_refresh).setOnClickListener(this);
+		rootView.findViewById(R.id.layout_copy).setOnClickListener(this);
+		rootView.findViewById(R.id.layout_report).setOnClickListener(this);
+		rootView.findViewById(R.id.cancel).setOnClickListener(this);
 		setContentView(rootView);
 		setWidth(LayoutParams.MATCH_PARENT);
 		setHeight(LayoutParams.WRAP_CONTENT);
@@ -237,15 +242,6 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		dismiss();
 		int id = v.getId();
 		switch (id) {
-		case R.id.share_jubao:
-			if (GuokuApplication.getInstance().getBean() != null) {
-				Intent intent = new Intent(mActivity, HexieAct.class);
-				intent.putExtra("data", entityID);
-				mActivity.startActivity(intent);
-			} else {
-				mActivity.startActivity(new Intent(mActivity, LoginAct.class));
-			}
-			break;
 		case R.id.share_sina:
 			if (pib != null) {
 
@@ -277,13 +273,48 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 			break;
 		case R.id.share_llq:
 			Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setData(Uri.parse(url));
+			intent.setData(Uri.parse(Constant.DETAIL + pib.getEntity().getEntity_hash()));
 			mActivity.startActivity(intent);
+			break;
+		case R.id.share_mail:
+			sendMail();
+			break;
+		case R.id.layout_refresh:
+			isRefrech = true;
+			break;
+		case R.id.layout_copy:
+			sendMail();
+			break;
+		case R.id.layout_report:
+			if (GuokuApplication.getInstance().getBean() != null) {
+				Intent intent2 = new Intent(mActivity, HexieAct.class);
+				intent2.putExtra("data", entityID);
+				mActivity.startActivity(intent2);
+			} else {
+				mActivity.startActivity(new Intent(mActivity, LoginAct.class));
+				mActivity.overridePendingTransition(R.anim.push_up_in,
+						R.anim.push_up_out);
+			}
 			break;
 		default:
 			break;
 		}
 	}
+	
+	   /**
+	    * 发送邮件
+	    * @param emailBody
+	    */
+	   private void sendMail(){
+	        Intent email = new Intent(android.content.Intent.ACTION_SEND);
+	        email.setType("plain/text");
+	        //邮件主题
+	        email.putExtra(android.content.Intent.EXTRA_SUBJECT, pib.getEntity().getTitle());
+	        //邮件内容
+	        email.putExtra(android.content.Intent.EXTRA_TEXT, Constant.DETAIL + pib.getEntity().getEntity_hash());  
+	        mActivity.startActivity(email); 
+	    }
+	    
 
 	private void performShare(final SHARE_MEDIA platform) {
 		mController.postShare(mActivity, platform, new SnsPostListener() {

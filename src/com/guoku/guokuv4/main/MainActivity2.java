@@ -2,7 +2,6 @@ package com.guoku.guokuv4.main;
 
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
-import com.guoku.guokuv4.act.LoginAct;
 import com.guoku.guokuv4.act.SettingAct;
 import com.guoku.guokuv4.base.NetWorkActivity;
 import com.guoku.guokuv4.gragment.GuangFragment;
@@ -177,9 +176,7 @@ public class MainActivity2 extends NetWorkActivity {
 			}
 		} else {
 			ToastUtil.show(mContext, "请登录");
-			startActivity(new Intent(this, LoginAct.class));
-			overridePendingTransition(R.anim.push_up_in,
-					R.anim.push_up_out);
+			openLogin();
 		}
 	}
 

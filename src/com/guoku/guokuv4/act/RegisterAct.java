@@ -19,6 +19,7 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -51,7 +52,6 @@ public class RegisterAct extends NetWorkActivity {
 
 	@OnClick(R.id.reg_tv_r)
 	public void tv_R(View v) {
-		startActivity(new Intent(mContext, LoginAct.class));
 		finish();
 	}
 
@@ -123,8 +123,10 @@ public class RegisterAct extends NetWorkActivity {
 					bean.setUser(JSON.parseObject(root.getString("user"),
 							UserBean.class));
 					GuokuApplication.getInstance().login(bean);
-					startActivity(new Intent(this, MainActivity2.class));
-					finish();
+					Intent intent = new Intent(this, MainActivity2.class);
+					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(new Intent(intent));
+					overridePendingTransition(R.anim.push_down_in, R.anim.push_down_out);
 					ToastUtil.show(context, "注册成功");
 				} else {
 					ToastUtil.show(context, root.getString("message"));

@@ -177,6 +177,8 @@ public abstract class NetWorkActivity extends BaseActivity {
 		} else {
 			Intent intent = new Intent(this, LoginAct.class);
 			startActivity(intent);
+			overridePendingTransition(R.anim.push_up_in,
+					R.anim.push_up_out);
 			return;
 		}
 		params.addBodyParameter("sign", genSign(paramsMap));
@@ -249,17 +251,20 @@ public abstract class NetWorkActivity extends BaseActivity {
 	public void sendConnection(String url, String[] argsKeys, String[] argsValues, int where, boolean showDialog) {
 		if (NetUtil.checkNetWork(context)) {
 			sendConnection(HttpMethod.GET, url, argsKeys, argsValues, where, showDialog);
-		} else
+		} else {
 			ToastUtil.show(getApplicationContext(), "网络连接失败");
-		onFailure("网络连接失败", where);
+			onFailure("网络连接失败", where);
+		}
+
 	}
 
 	public void sendConnectionPOST(String url, String[] argsKeys, String[] argsValues, int where, boolean showDialog) {
 		if (NetUtil.checkNetWork(context)) {
 			sendConnectionPost(HttpMethod.POST, url, argsKeys, argsValues, where, showDialog);
-		} else
+		} else {
 			ToastUtil.show(getApplicationContext(), "网络连接失败");
-		onFailure("网络连接失败", where);
+			onFailure("网络连接失败", where);
+		}
 	}
 
 	/**

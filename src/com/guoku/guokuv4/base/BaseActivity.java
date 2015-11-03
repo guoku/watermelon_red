@@ -6,7 +6,9 @@ import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVAnalytics;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.act.LoginAct;
 import com.guoku.guokuv4.act.ProductInfoAct;
+import com.guoku.guokuv4.act.RegisterAct;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.MyPreferences;
@@ -212,6 +214,12 @@ public abstract class BaseActivity extends FragmentActivity {
 		Intent intent = new Intent(mContext, ProductInfoAct.class);
 		intent.putExtra("data", JSON.toJSONString(bean));
 		startActivity(intent);
+	}
+	
+	protected void openLogin(){
+		startActivity(new Intent(this, LoginAct.class));
+		overridePendingTransition(R.anim.push_up_in,
+				R.anim.push_up_out);
 	}
 
 	public void leftOnClick() {

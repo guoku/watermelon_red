@@ -119,6 +119,8 @@ public class SettingAct extends NetWorkActivity {
 	public void LogOut(View v) {
 		if (GuokuApplication.getInstance().getBean() == null) {
 			startActivity(new Intent(mContext, LoginAct.class));
+			overridePendingTransition(R.anim.push_up_in,
+					R.anim.push_up_out);
 		} else {
 			GuokuApplication.getInstance().logout();
 			mController.deleteOauth(mContext, SHARE_MEDIA.SINA,

@@ -443,5 +443,16 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+    
+    <!-- 分享下popwindos -->
+    <!-- 首页图文流tab字体 -->
+    <style name="share_popwindos">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/g_main</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">5dp</item>
+    </style>
 
 </resources>

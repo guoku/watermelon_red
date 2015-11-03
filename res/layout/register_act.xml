@@ -5,38 +5,33 @@
     android:background="@color/act_transparent"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="48dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
+        android:layout_height="48dp" >
 
         <ImageView
             android:id="@+id/reg_tv_l"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
             android:src="@drawable/login_cancle" />
 
         <TextView
             android:id="@+id/reg_tv_r"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:gravity="right"
+            android:layout_marginRight="8dp"
+            android:drawableRight="@drawable/foward"
             android:text="去登录"
             android:textColor="@color/g_w"
             android:textSize="16sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="8dp"
-            android:src="@drawable/foward" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -154,8 +149,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/login_shap"
         android:layout_marginTop="10dp"
+        android:background="@drawable/login_shap"
         android:paddingBottom="5dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"

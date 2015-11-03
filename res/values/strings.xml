@@ -12,6 +12,7 @@
     
     <!-- 公共 -->
     <string name="tv_save">保存</string>
+    <string name="tv_cancel">取消</string>
     
     <!-- 搜索界面相关 -->
     <string name="tv_seach">搜索</string>
@@ -57,5 +58,16 @@
 	<string name="tv_user_tag">参与的标签</string>
 	<string name="tv_user_article_zan">赞过的图文</string>
 	<string name="tv_all">所有</string>
+	
+	<!-- 分享popwindos -->
+	<string name="tv_share">分享</string>
+	<string name="tv_share_wxpyq">微信朋友圈</string>
+	<string name="tv_share_wxhy">微信好友</string>
+	<string name="tv_share_sina">新浪微博</string>
+	<string name="tv_share_ie">在浏览器中打开</string>
+	<string name="tv_share_mail">Mail</string>
+	<string name="tv_share_refresh">刷新</string>
+	<string name="tv_share_copy">复制链接</string>
+	<string name="tv_share_report">举报</string>
 
 </resources>

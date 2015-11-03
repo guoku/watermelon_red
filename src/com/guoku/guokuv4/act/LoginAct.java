@@ -62,22 +62,18 @@ public class LoginAct extends NetWorkActivity {
 	private Map<String, Object> sinainfo;
 	private Session taobaoSession;
 
-	UMSocialService mController = UMServiceFactory
-			.getUMSocialService("com.umeng.login");
+	UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.login");
 
 	@OnClick(R.id.reg_tv_l)
 	public void tv_l(View v) {
-		finish();
-		overridePendingTransition(R.anim.push_down_in,
-				R.anim.push_down_out);
+		finishAct();
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		CallbackContext.onActivityResult(requestCode, resultCode, data);
-		UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(
-				requestCode);
+		UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(requestCode);
 		if (ssoHandler != null) {
 			ssoHandler.authorizeCallBack(requestCode, resultCode, data);
 		}
@@ -92,8 +88,7 @@ public class LoginAct extends NetWorkActivity {
 			@Override
 			public void onClick(DialogInterface arg0, int arg1) {
 				sendConnectionPOST(Constant.FORGET, new String[] { "email" },
-						new String[] { editText.getText().toString() }, FORGET,
-						true);
+						new String[] { editText.getText().toString() }, FORGET, true);
 
 			}
 		}, "忘记密码", "输入注册时的邮箱", editText).show();
@@ -101,71 +96,54 @@ public class LoginAct extends NetWorkActivity {
 
 	@OnClick(R.id.login_no_wx)
 	public void wx(View v) {
-		UMWXHandler wxHandler = new UMWXHandler(this, Constant.WX_APPID,
-				Constant.WX_SECRET);
+		UMWXHandler wxHandler = new UMWXHandler(this, Constant.WX_APPID, Constant.WX_SECRET);
 		wxHandler.addToSocialSDK();
 
-		mController.doOauthVerify(mContext, SHARE_MEDIA.WEIXIN,
-				new UMAuthListener() {
+		mController.doOauthVerify(mContext, SHARE_MEDIA.WEIXIN, new UMAuthListener() {
+			@Override
+			public void onStart(SHARE_MEDIA platform) {
+				// Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT)
+				// .show();
+			}
+
+			@Override
+			public void onError(SocializeException e, SHARE_MEDIA platform) {
+				Toast.makeText(mContext, "授权错误", Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onComplete(Bundle value, SHARE_MEDIA platform) {
+				// Toast.makeText(mContext, "授权完成", Toast.LENGTH_SHORT)
+				// .show();
+				// 获取相关授权信息
+				mController.getPlatformInfo(LoginAct.this, SHARE_MEDIA.WEIXIN, new UMDataListener() {
 					@Override
-					public void onStart(SHARE_MEDIA platform) {
-						// Toast.makeText(mContext, "授权开始", Toast.LENGTH_SHORT)
-						// .show();
+					public void onStart() {
+						// Toast.makeText(LoginAct.this,
+						// "获取平台数据开始...",
+						// Toast.LENGTH_SHORT).show();
 					}
 
 					@Override
-					public void onError(SocializeException e,
-							SHARE_MEDIA platform) {
-						Toast.makeText(mContext, "授权错误", Toast.LENGTH_SHORT)
-								.show();
-					}
+					public void onComplete(int status, Map<String, Object> info) {
+						if (status == 200 && info != null) {
+							sendConnectionPOST(Constant.WXLOGIN, new String[] { "unionid", "nickname", "headimgurl" },
+									new String[] { info.get("unionid").toString(), info.get("nickname").toString(),
+											info.get("headimgurl").toString() },
+									WXLOGIN, true);
+							//
+						} else {
+						}
 
-					@Override
-					public void onComplete(Bundle value, SHARE_MEDIA platform) {
-						// Toast.makeText(mContext, "授权完成", Toast.LENGTH_SHORT)
-						// .show();
-						// 获取相关授权信息
-						mController.getPlatformInfo(LoginAct.this,
-								SHARE_MEDIA.WEIXIN, new UMDataListener() {
-									@Override
-									public void onStart() {
-										// Toast.makeText(LoginAct.this,
-										// "获取平台数据开始...",
-										// Toast.LENGTH_SHORT).show();
-									}
-
-									@Override
-									public void onComplete(int status,
-											Map<String, Object> info) {
-										if (status == 200 && info != null) {
-											sendConnectionPOST(
-													Constant.WXLOGIN,
-													new String[] { "unionid",
-															"nickname",
-															"headimgurl" },
-													new String[] {
-															info.get("unionid")
-																	.toString(),
-															info.get("nickname")
-																	.toString(),
-															info.get(
-																	"headimgurl")
-																	.toString() },
-													WXLOGIN, true);
-											//
-										} else {
-										}
-
-									}
-								});
-					}
-
-					@Override
-					public void onCancel(SHARE_MEDIA platform) {
-						Toast.makeText(mContext, "授权取消", Toast.LENGTH_SHORT)
-								.show();
 					}
 				});
+			}
+
+			@Override
+			public void onCancel(SHARE_MEDIA platform) {
+				Toast.makeText(mContext, "授权取消", Toast.LENGTH_SHORT).show();
+			}
+		});
 
 	}
 
@@ -182,48 +160,34 @@ public class LoginAct extends NetWorkActivity {
 					LoginAct.this.value = value;
 					Logger.i(TAG, value.toString());
 
-					mController.getPlatformInfo(mContext, SHARE_MEDIA.SINA,
-							new UMDataListener() {
-								@Override
-								public void onStart() {
+					mController.getPlatformInfo(mContext, SHARE_MEDIA.SINA, new UMDataListener() {
+						@Override
+						public void onStart() {
 
+						}
+
+						@Override
+						public void onComplete(int status, Map<String, Object> info) {
+
+							if (status == 200 && info != null) {
+								sinainfo = info;
+								StringBuilder sb = new StringBuilder();
+								Set<String> keys = info.keySet();
+								for (String key : keys) {
+									sb.append(key + "=" + info.get(key).toString() + "\r\n");
 								}
 
-								@Override
-								public void onComplete(int status,
-										Map<String, Object> info) {
+								sendConnectionPOST(Constant.SINALOGIN,
+										new String[] { "sina_id", "sina_token", "screen_name" },
+										new String[] { LoginAct.this.sinainfo.get("uid").toString(),
+												LoginAct.this.sinainfo.get("access_token").toString(),
+												LoginAct.this.sinainfo.get("screen_name").toString() },
+										SINALOGIN, true);
 
-									if (status == 200 && info != null) {
-										sinainfo = info;
-										StringBuilder sb = new StringBuilder();
-										Set<String> keys = info.keySet();
-										for (String key : keys) {
-											sb.append(key + "="
-													+ info.get(key).toString()
-													+ "\r\n");
-										}
-
-										sendConnectionPOST(
-												Constant.SINALOGIN,
-												new String[] { "sina_id",
-														"sina_token",
-														"screen_name" },
-												new String[] {
-														LoginAct.this.sinainfo
-																.get("uid")
-																.toString(),
-														LoginAct.this.sinainfo
-																.get("access_token")
-																.toString(),
-														LoginAct.this.sinainfo
-																.get("screen_name")
-																.toString() },
-												SINALOGIN, true);
-
-									} else {
-									}
-								}
-							});
+							} else {
+							}
+						}
+					});
 
 				} else {
 				}
@@ -247,17 +211,14 @@ public class LoginAct extends NetWorkActivity {
 			@Override
 			public void onSuccess(Session session) {
 				taobaoSession = session;
-				sendConnectionPOST(Constant.TAOBAOLOGIN, new String[] {
-						"user_id", "nick" }, new String[] {
-						session.getUserId(), session.getUser().nick, },
-						TAOBAOLOGIN, true);
+				sendConnectionPOST(Constant.TAOBAOLOGIN, new String[] { "user_id", "nick" },
+						new String[] { session.getUserId(), session.getUser().nick, }, TAOBAOLOGIN, true);
 
 			}
 
 			@Override
 			public void onFailure(int code, String message) {
-				Toast.makeText(LoginAct.this, "授权取消", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(LoginAct.this, "授权取消", Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -266,7 +227,6 @@ public class LoginAct extends NetWorkActivity {
 	@OnClick(R.id.reg_tv_r)
 	public void tv_R(View v) {
 		startActivity(new Intent(mContext, RegisterAct.class));
-		finish();
 	}
 
 	@Override
@@ -278,27 +238,13 @@ public class LoginAct extends NetWorkActivity {
 	@OnClick(R.id.login_btn_login)
 	public void Push(View v) {
 
-		if (ed_name.getText().toString() != null
-				&& !"".equals(ed_name.getText().toString().trim())
-				&& ed_pass.getText().toString() != null
-				&& !"".equals(ed_pass.getText().toString().trim())) {
-			sendConnectionPOST(Constant.LOGIN, new String[] { "email",
-					"password" }, new String[] { ed_name.getText().toString(),
-					ed_pass.getText().toString() }, LOGIN, true);
+		if (ed_name.getText().toString() != null && !"".equals(ed_name.getText().toString().trim())
+				&& ed_pass.getText().toString() != null && !"".equals(ed_pass.getText().toString().trim())) {
+			sendConnectionPOST(Constant.LOGIN, new String[] { "email", "password" },
+					new String[] { ed_name.getText().toString(), ed_pass.getText().toString() }, LOGIN, true);
 		} else {
 			ToastUtil.show(context, "输入内容不能为空");
 		}
-	}
-
-	@OnClick(R.id.title_bar_left_iv)
-	public void Left(View v) {
-		finish();
-	}
-
-	@OnClick(R.id.title_bar_rigth_iv)
-	public void Rigth(View v) {
-		startActivity(new Intent(mContext, RegisterAct.class));
-		finish();
 	}
 
 	@Override
@@ -311,11 +257,9 @@ public class LoginAct extends NetWorkActivity {
 				if (!root.has("message")) {
 					AccountBean bean = new AccountBean();
 					bean.setSession(root.getString("session"));
-					bean.setUser(JSON.parseObject(root.getString("user"),
-							UserBean.class));
+					bean.setUser(JSON.parseObject(root.getString("user"), UserBean.class));
 					GuokuApplication.getInstance().login(bean);
-					startActivity(new Intent(this, MainActivity2.class));
-					finish();
+					finishAct();
 				} else {
 					ToastUtil.show(context, "邮箱或密码错误");
 				}
@@ -331,11 +275,9 @@ public class LoginAct extends NetWorkActivity {
 				if (!root.has("message")) {
 					AccountBean bean = new AccountBean();
 					bean.setSession(root.getString("session"));
-					bean.setUser(JSON.parseObject(root.getString("user"),
-							UserBean.class));
+					bean.setUser(JSON.parseObject(root.getString("user"), UserBean.class));
 					GuokuApplication.getInstance().login(bean);
-					startActivity(new Intent(this, MainActivity2.class));
-					finish();
+					finishAct();
 				} else {
 					ToastUtil.show(context, "用户名或密码错误");
 				}
@@ -351,11 +293,9 @@ public class LoginAct extends NetWorkActivity {
 				if (!root.has("message")) {
 					AccountBean bean = new AccountBean();
 					bean.setSession(root.getString("session"));
-					bean.setUser(JSON.parseObject(root.getString("user"),
-							UserBean.class));
+					bean.setUser(JSON.parseObject(root.getString("user"), UserBean.class));
 					GuokuApplication.getInstance().login(bean);
-					startActivity(new Intent(this, MainActivity2.class));
-					finish();
+					finishAct();
 				} else {
 					ToastUtil.show(context, "用户名或密码错误");
 				}
@@ -369,11 +309,9 @@ public class LoginAct extends NetWorkActivity {
 				if (!root.has("message")) {
 					AccountBean bean = new AccountBean();
 					bean.setSession(root.getString("session"));
-					bean.setUser(JSON.parseObject(root.getString("user"),
-							UserBean.class));
+					bean.setUser(JSON.parseObject(root.getString("user"), UserBean.class));
 					GuokuApplication.getInstance().login(bean);
-					startActivity(new Intent(this, MainActivity2.class));
-					finish();
+					finishAct();
 				} else {
 					ToastUtil.show(context, "用户名或密码错误");
 				}
@@ -406,13 +344,12 @@ public class LoginAct extends NetWorkActivity {
 				intent.putExtra("type", "sina");
 				intent.putExtra("name", sinainfo.get("screen_name").toString());
 				intent.putExtra("id", sinainfo.get("uid").toString());
-				intent.putExtra("token", sinainfo.get("access_token")
-						.toString());
-				intent.putExtra("avatar", sinainfo.get("profile_image_url")
-						.toString());
-				intent.putExtra("description", sinainfo.get("description")
-						.toString());
+				intent.putExtra("token", sinainfo.get("access_token").toString());
+				intent.putExtra("avatar", sinainfo.get("profile_image_url").toString());
+				intent.putExtra("description", sinainfo.get("description").toString());
 				startActivity(intent);
+				overridePendingTransition(R.anim.push_up_in,
+						R.anim.push_up_out);
 			} else {
 				ToastUtil.show(mContext, "sina微博授权失败");
 			}
@@ -424,6 +361,8 @@ public class LoginAct extends NetWorkActivity {
 				intent.putExtra("type", "taobao");
 				intent.putExtra("name", taobaoSession.getUser().nick);
 				startActivity(intent);
+				overridePendingTransition(R.anim.push_up_in,
+						R.anim.push_up_out);
 			} else {
 				ToastUtil.show(mContext, "淘宝授权失败");
 			}
@@ -443,15 +382,18 @@ public class LoginAct extends NetWorkActivity {
 	protected void setupData() {
 
 	}
-	
+
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			finish();
-			overridePendingTransition(R.anim.push_down_in,
-					R.anim.push_down_out);
+			finishAct();
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	private void finishAct() {
+		finish();
+		overridePendingTransition(R.anim.push_down_in, R.anim.push_down_out);
 	}
 
 }

@@ -378,9 +378,9 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				PInfoBean.class);
 		tabList = ParseUtil.getTab2ALL(mContext);
 
-		productBean = JSON.parseObject(getIntent().getStringExtra("data"),
-				PInfoBean.class);
-		tabList = ParseUtil.getTab2ALL(mContext);
+//		productBean = JSON.parseObject(getIntent().getStringExtra("data"),
+//				PInfoBean.class);
+//		tabList = ParseUtil.getTab2ALL(mContext);
 
 		try {
 			String result = SharePrenceUtil.getTab(mContext);
@@ -618,8 +618,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 								// TODO Auto-generated method stub
 
 								if (GuokuApplication.getInstance().getBean() == null) {
-									startActivity(new Intent(
-											ProductInfoAct.this, LoginAct.class));
+									openLogin();
 								} else {
 									tagName = tagName.trim().replace("#", "");
 									Intent intent = new Intent(
@@ -698,7 +697,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 							+ "/", new String[] {}, new String[] {},
 							COMMENTLIST, false);
 				} else {
-					startActivity(new Intent(mContext, LoginAct.class));
+					openLogin();
 				}
 
 			}
@@ -724,7 +723,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 	private void postShare(String context, UMImage url, String id, String tid,
 			PInfoBean productBean) {
-		CustomShareBoard shareBoard = new CustomShareBoard(this);
+		final CustomShareBoard shareBoard = new CustomShareBoard(this);
 		shareBoard.setShareContext(context, url, id, tid, productBean);
 		shareBoard.showAtLocation(this.getWindow().getDecorView(),
 				Gravity.BOTTOM, 0, 0);
@@ -739,7 +738,9 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				WindowManager.LayoutParams params = getWindow().getAttributes();
 				params.alpha = 1f;
 				getWindow().setAttributes(params);
-
+				if(shareBoard.isRefrech){
+					
+				}
 			}
 		});
 

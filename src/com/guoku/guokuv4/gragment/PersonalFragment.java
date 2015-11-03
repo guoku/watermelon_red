@@ -387,12 +387,16 @@ public class PersonalFragment extends BaseFrament {
 	@OnClick(R.id.psrson_no_btn)
 	public void psrson_no_btn(View v) {
 		startActivity(new Intent(getActivity(), RegisterAct.class));
+		context.overridePendingTransition(R.anim.push_up_in,
+				R.anim.push_up_out);
 	}
 
 	@OnClick(R.id.psrson_no_login)
 	public void psrson_no_login(View v) {
 		Intent intent = new Intent(context, LoginAct.class);
 		startActivity(intent);
+		context.overridePendingTransition(R.anim.push_up_in,
+				R.anim.push_up_out);
 	}
 
 	@OnClick(R.id.tv_user_like)
