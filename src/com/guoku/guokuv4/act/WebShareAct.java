@@ -153,6 +153,7 @@ public class WebShareAct extends NetWorkActivity {
 					sharebean.getTitle() + "：");
 		}
 
+		shareBoard.setAnimationStyle(R.style.popwin_anim_style);
 		shareBoard.showAtLocation(this.getWindow().getDecorView(),
 				Gravity.BOTTOM, 0, 0);
 		WindowManager.LayoutParams params = getWindow().getAttributes();
@@ -166,7 +167,9 @@ public class WebShareAct extends NetWorkActivity {
 				WindowManager.LayoutParams params = getWindow().getAttributes();
 				params.alpha = 1f;
 				getWindow().setAttributes(params);
-
+				if (isRefrech) {
+					view.reload();
+				}
 			}
 		});
 

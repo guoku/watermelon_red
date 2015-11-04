@@ -86,11 +86,10 @@ import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
-		DialogInterface.OnClickListener, OnScrollListener,
-		OnCheckedChangeListener {
+public class ProductInfoAct extends NetWorkActivity
+		implements OnClickListener, DialogInterface.OnClickListener, OnScrollListener, OnCheckedChangeListener {
 	public static final String KEY_INTENT = "ProductInfoAct";
-	
+
 	private static final int GUESS = 10;
 	private static final int PROINFO = 11;
 	private static final int PY1 = 12;
@@ -100,7 +99,8 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	private static final int COMMENTLIST = 14;
 	private static final int PROINFOFULL = 17;
 	private static final int NOTE_TAG = 18;// 标签
-	private static final int USERINFO = 1001;//用户信息
+	private static final int USERINFO = 1001;// 用户信息
+	private static final int PROINFO_REFRESH = 1002;// 刷新商品
 
 	private PInfoBean productBean;
 
@@ -162,7 +162,6 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	private ArrayListAdapter<UserBean> gv1Adapter;
 	private ArrayListAdapter<EntityBean> gv2Adapter;
 	private ArrayListAdapter<NoteBean> comAdapter;
-	private ArrayList<Tab2Bean> tabList;
 
 	private int isLike;
 
@@ -180,7 +179,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	private ScheduledExecutorService scheduledExecutorService;
 	private boolean onTouchTrue;
 	private NoteBean noteBean;
-	
+
 	private NoteBean myNoteBean;
 	String checkId;
 
@@ -227,11 +226,10 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	protected void onStart() {
 		super.onStart();
 		scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-		scheduledExecutorService.scheduleAtFixedRate(new ScrollTask(), 5, 5,
-				TimeUnit.SECONDS);
+		scheduledExecutorService.scheduleAtFixedRate(new ScrollTask(), 5, 5, TimeUnit.SECONDS);
 		sendConnection(Constant.GUESS, new String[] { "count", "cid", "eid" },
-				new String[] { "10", productBean.getEntity().getCategory_id(),
-						productBean.getEntity().getEntity_id() }, GUESS, false);
+				new String[] { "10", productBean.getEntity().getCategory_id(), productBean.getEntity().getEntity_id() },
+				GUESS, false);
 	}
 
 	@Override
@@ -280,8 +278,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			productBean.getEntity().setLike_already("0");
 			isLike = 1;
 			isLikes();
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY,
-					Constant.INTENT_ACTION_VALUE_LIKE);
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE);
 			break;
 		case LIKE1:
 			AVAnalytics.onEvent(this, "like");
@@ -293,8 +290,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			productBean.getEntity().setLike_already("1");
 			isLike = 2;
 			isLikes();
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY,
-					Constant.INTENT_ACTION_VALUE_LIKE);
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE);
 			break;
 		case PY1:
 			AVAnalytics.onEvent(this, "poke");
@@ -320,13 +316,22 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		case USERINFO:
 			try {
 				JSONObject root = new JSONObject(result);
-				UserBean userBean =  JSON.parseObject(
-						root.getString("user"), UserBean.class);
+				UserBean userBean = JSON.parseObject(root.getString("user"), UserBean.class);
 				intent = new Intent(context, UserBaseFrament.class);
 				intent.putExtra("data", userBean);
 				startActivity(intent);
 			} catch (Exception e) {
 				e.printStackTrace();
+			}
+			break;
+		case PROINFO_REFRESH:
+			try {
+				productBean = JSON.parseObject(result, PInfoBean.class);
+				refresh();
+				onScroll(0);
+				gv2Adapter.notifyDataSetChanged();
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
 			break;
 		default:
@@ -373,26 +378,20 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				}
 			}
 		};
+		productBean = JSON.parseObject(getIntent().getStringExtra("data"), PInfoBean.class);
+		refresh();
+	}
 
-		productBean = JSON.parseObject(getIntent().getStringExtra("data"),
-				PInfoBean.class);
-		tabList = ParseUtil.getTab2ALL(mContext);
-
-//		productBean = JSON.parseObject(getIntent().getStringExtra("data"),
-//				PInfoBean.class);
-//		tabList = ParseUtil.getTab2ALL(mContext);
+	private void refresh() {
 
 		try {
 			String result = SharePrenceUtil.getTab(mContext);
 			if (!StringUtils.isEmpty(result)) {
-				ArrayList<TagBean> tBean = (ArrayList<TagBean>) JSON
-						.parseArray(result, TagBean.class);
+				ArrayList<TagBean> tBean = (ArrayList<TagBean>) JSON.parseArray(result, TagBean.class);
 				for (TagBean tBeant : tBean) {
 					for (TagTwo tagTwos : tBeant.getContent()) {
-						if (String.valueOf(tagTwos.getCategory_id()).equals(
-								productBean.getEntity().getCategory_id())) {
-							product_tv_from.setText("来自「"
-									+ tagTwos.getCategory_title() + "」");
+						if (String.valueOf(tagTwos.getCategory_id()).equals(productBean.getEntity().getCategory_id())) {
+							product_tv_from.setText("来自「" + tagTwos.getCategory_title() + "」");
 							tagTwo = tagTwos;
 						}
 					}
@@ -402,35 +401,29 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (productBean.getEntity().getBrand() != null
-				&& !"".equals(productBean.getEntity().getBrand())) {
-			product_tv_name.setText(productBean.getEntity().getBrand() + " - "
-					+ productBean.getEntity().getTitle());
+		if (productBean.getEntity().getBrand() != null && !"".equals(productBean.getEntity().getBrand())) {
+			product_tv_name.setText(productBean.getEntity().getBrand() + " - " + productBean.getEntity().getTitle());
 		} else
 			product_tv_name.setText(productBean.getEntity().getTitle());
 		// product_tv_likes.setText(productBean.getEntity().getLike_count());
 
 		if (!productBean.getEntity().getLike_count().equals("")) {
-			product_tv_like_size.setText(productBean.getEntity()
-					.getLike_count() + " 人喜爱");
+			product_tv_like_size.setText(productBean.getEntity().getLike_count() + " 人喜爱");
 		} else {
 			layout_like.setVisibility(View.GONE);
 		}
-		product_tv_price.setText(getResources().getString(
-				R.string.tv_commodity_go_buy,
-				productBean.getEntity().getPrice()));
+		product_tv_price
+				.setText(getResources().getString(R.string.tv_commodity_go_buy, productBean.getEntity().getPrice()));
 		// imageLoader.displayImage(productBean.getPic(), product_iv_pic);
 
 		try {
 			android.widget.RelativeLayout.LayoutParams param = new android.widget.RelativeLayout.LayoutParams(
-					GuokuApplication.screenW - 10,
-					GuokuApplication.screenW - 10);
+					GuokuApplication.screenW - 10, GuokuApplication.screenW - 10);
 			param.addRule(RelativeLayout.CENTER_IN_PARENT);
 			vp.setLayoutParams(param);
 			sv.smoothScrollTo(0, 0);
 
-			JSONArray thumbs = new JSONArray(productBean.getEntity()
-					.getDetail_images());
+			JSONArray thumbs = new JSONArray(productBean.getEntity().getDetail_images());
 			List<ImageView> imgs = new ArrayList<ImageView>();
 			for (int i = 0; i < thumbs.length(); i++) {
 				String url = thumbs.getString(i);
@@ -441,8 +434,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				final ImageView image = new ImageView(this);
 				image.setTag(i);
 				image.setScaleType(ScaleType.FIT_CENTER);
-				imageLoader.displayImage(url, image, options,
-						new ImgUtils.AnimateFirstDisplayListener());
+				imageLoader.displayImage(url, image, options, new ImgUtils.AnimateFirstDisplayListener());
 				image.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View arg0) {
@@ -501,6 +493,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				}
 			});
 			if (imgs.size() > 1) {
+				root = "";
 				for (int i = 0; i < imgs.size(); i++) {
 					root = root + "●";
 				}
@@ -520,15 +513,13 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			public View getView(int position, View convertView, ViewGroup parent) {
 				if (convertView == null) {
 					convertView = new ImageView(mContext);
-					LayoutParams params = new LayoutParams(
-							GuokuApplication.screenW / 7 - 25,
+					LayoutParams params = new LayoutParams(GuokuApplication.screenW / 7 - 25,
 							GuokuApplication.screenW / 7 - 25);
 					convertView.setLayoutParams(params);
 					((ImageView) convertView).setScaleType(ScaleType.FIT_XY);
 				}
 
-				imageLoader.displayImage(mList.get(position).get50(),
-						(ImageView) convertView, optionsRound,
+				imageLoader.displayImage(mList.get(position).get50(), (ImageView) convertView, optionsRound,
 						new ImgUtils.AnimateFirstDisplayListener());
 
 				// BitmapUtil.setRoundImage(imageLoader, mList.get(position)
@@ -544,16 +535,13 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			public View getView(int position, View convertView, ViewGroup parent) {
 				if (convertView == null) {
 					convertView = new ImageView(mContext);
-					LayoutParams params = new LayoutParams(
-							GuokuApplication.screenW / 3 - 30,
+					LayoutParams params = new LayoutParams(GuokuApplication.screenW / 3 - 30,
 							GuokuApplication.screenW / 3 - 30);
 					convertView.setLayoutParams(params);
-					((ImageView) convertView)
-							.setScaleType(ScaleType.FIT_CENTER);
+					((ImageView) convertView).setScaleType(ScaleType.FIT_CENTER);
 					convertView.setBackgroundColor(Color.WHITE);
 				}
-				imageLoader.displayImage(mList.get(position).get240(),
-						(ImageView) convertView, options,
+				imageLoader.displayImage(mList.get(position).get240(), (ImageView) convertView, options,
 						new ImgUtils.AnimateFirstDisplayListener());
 
 				return convertView;
@@ -565,8 +553,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			public View getView(int position, View convertView, ViewGroup parent) {
 				ViewHolder holder = null;
 				if (convertView == null) {
-					convertView = View.inflate(context, R.layout.comment_item,
-							null);
+					convertView = View.inflate(context, R.layout.comment_item, null);
 					holder = new ViewHolder();
 					ViewUtils.inject(holder, convertView);
 					convertView.setTag(holder);
@@ -575,12 +562,10 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				}
 				NoteBean bean = mList.get(position);
 
-				imageLoader.displayImage(bean.getCreator().get50(),
-						holder.comment_item_iv_pic, optionsRound,
+				imageLoader.displayImage(bean.getCreator().get50(), holder.comment_item_iv_pic, optionsRound,
 						new ImgUtils.AnimateFirstDisplayListener());
 				holder.comment_item_iv_pic.setTag(bean);
-				holder.comment_item_iv_pic
-						.setOnClickListener(ProductInfoAct.this);
+				holder.comment_item_iv_pic.setOnClickListener(ProductInfoAct.this);
 				// BitmapUtil
 				// .setRoundImage(imageLoader, bean.getCreator()
 				// .getAvatar_small(), options,
@@ -589,11 +574,9 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				holder.ll_like.setOnClickListener(ProductInfoAct.this);
 				holder.ll_like.setTag(bean);
 				if ("1".equals(bean.getPoke_already())) {
-					holder.comment_item_iv_islike
-							.setImageResource(R.drawable.good_press);
+					holder.comment_item_iv_islike.setImageResource(R.drawable.good_press);
 				} else {
-					holder.comment_item_iv_islike
-							.setImageResource(R.drawable.good);
+					holder.comment_item_iv_islike.setImageResource(R.drawable.good);
 				}
 
 				if ("0".equals(bean.getIs_selected())) {
@@ -602,36 +585,29 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 					holder.comment_item_iv_status.setVisibility(View.VISIBLE);
 				}
 
-				holder.comment_item_tv_name.setText(bean.getCreator()
-						.getNickname());
+				holder.comment_item_tv_name.setText(bean.getCreator().getNickname());
 				holder.comment_item_tv_context.setText(bean.getContent());
 				holder.comment_item_tv_likes.setText(bean.getPoke_count());
 				holder.comment_item_tv_coms.setText(bean.getComment_count());
-				holder.comment_item_tv_time.setText(DateUtils
-						.getStandardDate(bean.getUpdated_time()));
+				holder.comment_item_tv_time.setText(DateUtils.getStandardDate(bean.getUpdated_time()));
 
-				StringUtils.setNoteTag(mContext, bean.getContent(),
-						holder.comment_item_tv_context, new OnNoteTag() {
+				StringUtils.setNoteTag(mContext, bean.getContent(), holder.comment_item_tv_context, new OnNoteTag() {
 
-							@Override
-							public void setTagClick(String tagName) {
-								// TODO Auto-generated method stub
+					@Override
+					public void setTagClick(String tagName) {
+						// TODO Auto-generated method stub
 
-								if (GuokuApplication.getInstance().getBean() == null) {
-									openLogin();
-								} else {
-									tagName = tagName.trim().replace("#", "");
-									Intent intent = new Intent(
-											ProductInfoAct.this,
-											EntityAct.class);
-									intent.putExtra("data", GuokuApplication
-											.getInstance().getBean().getUser()
-											.getUser_id());
-									intent.putExtra("name", tagName);
-									startActivity(intent);
-								}
-							}
-						});
+						if (GuokuApplication.getInstance().getBean() == null) {
+							openLogin();
+						} else {
+							tagName = tagName.trim().replace("#", "");
+							Intent intent = new Intent(ProductInfoAct.this, EntityAct.class);
+							intent.putExtra("data", GuokuApplication.getInstance().getBean().getUser().getUser_id());
+							intent.putExtra("name", tagName);
+							startActivity(intent);
+						}
+					}
+				});
 				return convertView;
 			}
 		};
@@ -647,10 +623,8 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 			ArrayList<NoteBean> list = productBean.getNote_list();
 			for (NoteBean bean : list) {
-				if (bean.getCreator()
-						.getUser_id()
-						.equals(GuokuApplication.getInstance().getBean()
-								.getUser().getUser_id())) {
+				if (bean.getCreator().getUser_id()
+						.equals(GuokuApplication.getInstance().getBean().getUser().getUser_id())) {
 					myNoteBean = bean;
 					// product_tv_comment.setText("修改点评");
 				}
@@ -660,42 +634,35 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		product_gv_user.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-//				Intent intent = new Intent(mContext, UserAct.class);
-//				intent.putExtra("data",
-//						productBean.getLike_user_list().get(arg2));
-//				startActivity(intent);
-				
-				sendConnection(Constant.USERINFO + gv1Adapter.getItem(arg2).getUser_id() + "/",
-						new String[] {}, new String[] {},
-						USERINFO, true);
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				// Intent intent = new Intent(mContext, UserAct.class);
+				// intent.putExtra("data",
+				// productBean.getLike_user_list().get(arg2));
+				// startActivity(intent);
+
+				sendConnection(Constant.USERINFO + gv1Adapter.getItem(arg2).getUser_id() + "/", new String[] {},
+						new String[] {}, USERINFO, true);
 			}
 		});
 
 		product_gv_product.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				checkId = gv2Adapter.getItem(arg2).getEntity_id();
-				sendConnection(Constant.PROINFO
-						+ gv2Adapter.getItem(arg2).getEntity_id() + "/",
-						new String[] { "entity_id" }, new String[] { gv2Adapter
-								.getItem(arg2).getEntity_id() }, PROINFO, true);
+				sendConnection(Constant.PROINFO + gv2Adapter.getItem(arg2).getEntity_id() + "/",
+						new String[] { "entity_id" }, new String[] { gv2Adapter.getItem(arg2).getEntity_id() }, PROINFO,
+						true);
 			}
 		});
 
 		product_lv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				if (GuokuApplication.getInstance().getBean() != null) {
-					sendConnection(Constant.COMMENTLIST
-							+ productBean.getNote_list().get(arg2).getNote_id()
-							+ "/", new String[] {}, new String[] {},
-							COMMENTLIST, false);
+					sendConnection(Constant.COMMENTLIST + productBean.getNote_list().get(arg2).getNote_id() + "/",
+							new String[] {}, new String[] {}, COMMENTLIST, false);
 				} else {
 					openLogin();
 				}
@@ -716,17 +683,15 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	}
 
 	private void moreClick() {
-		postShare(productBean.getEntity().getTitle(), new UMImage(this,
-				productBean.getEntity().get240()), "", productBean.getEntity()
-				.getEntity_id(), productBean);
+		postShare(productBean.getEntity().getTitle(), new UMImage(this, productBean.getEntity().get240()), "",
+				productBean.getEntity().getEntity_id(), productBean);
 	}
 
-	private void postShare(String context, UMImage url, String id, String tid,
-			PInfoBean productBean) {
+	private void postShare(String context, UMImage url, String id, String tid, final PInfoBean productBean) {
 		final CustomShareBoard shareBoard = new CustomShareBoard(this);
 		shareBoard.setShareContext(context, url, id, tid, productBean);
-		shareBoard.showAtLocation(this.getWindow().getDecorView(),
-				Gravity.BOTTOM, 0, 0);
+		shareBoard.setAnimationStyle(R.style.popwin_anim_style);
+		shareBoard.showAtLocation(this.getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
 		WindowManager.LayoutParams params = getWindow().getAttributes();
 		params.alpha = 0.7f;
 		getWindow().setAttributes(params);
@@ -738,8 +703,14 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				WindowManager.LayoutParams params = getWindow().getAttributes();
 				params.alpha = 1f;
 				getWindow().setAttributes(params);
-				if(shareBoard.isRefrech){
+				if (isRefrech) {
+					sendConnection(Constant.PROINFO + productBean.getEntity().getEntity_id() + "/",
+							new String[] { "entity_id" }, new String[] { productBean.getEntity().getEntity_id() },
+							PROINFO_REFRESH, true);
 					
+					sendConnection(Constant.GUESS, new String[] { "count", "cid", "eid" },
+							new String[] { "10", productBean.getEntity().getCategory_id(), productBean.getEntity().getEntity_id() },
+							GUESS, false);
 				}
 			}
 		});
@@ -754,14 +725,12 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 	private void likeClick() {
 
 		if (productBean.getEntity().getLike_already().equals("0")) {
-			sendConnectionPOST(Constant.TOLIKE
-					+ productBean.getEntity().getEntity_id() + "/like/1/",
-					new String[] {}, new String[] {}, LIKE1, false);
+			sendConnectionPOST(Constant.TOLIKE + productBean.getEntity().getEntity_id() + "/like/1/", new String[] {},
+					new String[] {}, LIKE1, false);
 
 		} else {
-			sendConnectionPOST(Constant.TOLIKE
-					+ productBean.getEntity().getEntity_id() + "/like/0/",
-					new String[] {}, new String[] {}, LIKE0, false);
+			sendConnectionPOST(Constant.TOLIKE + productBean.getEntity().getEntity_id() + "/like/0/", new String[] {},
+					new String[] {}, LIKE0, false);
 		}
 	}
 
@@ -801,12 +770,10 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		try {
 			JSONArray array;
 			array = new JSONArray(productBean.getEntity().getItem_list());
-			if (!(array.getJSONObject(0).getString("origin_source")
-					.contains("taobao") || array.getJSONObject(0)
-					.getString("origin_source").contains("tmall"))) {
+			if (!(array.getJSONObject(0).getString("origin_source").contains("taobao")
+					|| array.getJSONObject(0).getString("origin_source").contains("tmall"))) {
 				Intent intent = new Intent(context, WebAct.class);
-				intent.putExtra("data",
-						array.getJSONObject(0).getString("buy_link"));
+				intent.putExtra("data", array.getJSONObject(0).getString("buy_link"));
 				intent.putExtra("name", "  ");
 				intent.putExtra("UA", "UA");
 				startActivity(intent);
@@ -817,31 +784,29 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			TaokeParams taokeParams = new TaokeParams();
 			taokeParams.pid = "mm_28514026_4132785_24810648";
 			taokeParams.unionId = "null";
-			
+
 			if (AlibabaSDK.isInitSucceed()) {
 				ItemService itemService = AlibabaSDK.getService(ItemService.class);
-				itemService.showTaokeItemDetailByItemId(this,
-						new TradeProcessCallback() {
+				itemService.showTaokeItemDetailByItemId(this, new TradeProcessCallback() {
 
-							@Override
-							public void onPaySuccess(TradeResult tradeResult) {
-								// Toast.makeText(MainActivity.this, "支付成功",
-								// Toast.LENGTH_SHORT).show();
-								ToastUtil.show(mContext, "支付成功");
+					@Override
+					public void onPaySuccess(TradeResult tradeResult) {
+						// Toast.makeText(MainActivity.this, "支付成功",
+						// Toast.LENGTH_SHORT).show();
+						ToastUtil.show(mContext, "支付成功");
 
-							}
+					}
 
-							@Override
-							public void onFailure(int code, String msg) {
-								if (code == ResultCode.QUERY_ORDER_RESULT_EXCEPTION.code) {
-									// ToastUtil.show(mContext, "确认交易订单失败");
-								} else {
-									// ToastUtil.show(mContext, "交易取消");
-								}
-							}
+					@Override
+					public void onFailure(int code, String msg) {
+						if (code == ResultCode.QUERY_ORDER_RESULT_EXCEPTION.code) {
+							// ToastUtil.show(mContext, "确认交易订单失败");
+						} else {
+							// ToastUtil.show(mContext, "交易取消");
+						}
+					}
 
-						}, taeWebViewUiSettings, array.getJSONObject(0)
-								.getLong("origin_id"), 1, null, taokeParams);
+				}, taeWebViewUiSettings, array.getJSONObject(0).getLong("origin_id"), 1, null, taokeParams);
 			} else {
 				ToastUtil.show(mContext, "淘宝小二开小差喽，请稍后再试");
 				return;
@@ -886,15 +851,11 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 			case 10086:
 				if (arg2.getExtras() != null) {
 
-					myNoteBean = JSON.parseObject(
-							arg2.getStringExtra(CommentAct.KEY_DATA),
-							NoteBean.class);
+					myNoteBean = JSON.parseObject(arg2.getStringExtra(CommentAct.KEY_DATA), NoteBean.class);
 
 					if (arg2.getExtras().getBoolean(CommentAct.KEY_UPDATA)) {
 						for (int i = 0; i < productBean.getNote_list().size(); i++) {
-							if (myNoteBean.getNote_id().equals(
-									productBean.getNote_list().get(i)
-											.getNote_id())) {
+							if (myNoteBean.getNote_id().equals(productBean.getNote_list().get(i).getNote_id())) {
 								productBean.getNote_list().set(i, myNoteBean);
 							}
 						}
@@ -992,25 +953,22 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 		case R.id.comment_item_ll_islike:
 			noteBean = (NoteBean) arg0.getTag();
 			if (noteBean.getPoke_already().equals("0")) {
-				sendConnectionPOST(Constant.TOPY + noteBean.getEntity_id()
-						+ "/poke/1/", new String[] {}, new String[] {}, PY1,
-						false);
+				sendConnectionPOST(Constant.TOPY + noteBean.getEntity_id() + "/poke/1/", new String[] {},
+						new String[] {}, PY1, false);
 			} else {
-				sendConnectionPOST(Constant.TOPY + noteBean.getEntity_id()
-						+ "/poke/0/", new String[] {}, new String[] {}, PY2,
-						false);
+				sendConnectionPOST(Constant.TOPY + noteBean.getEntity_id() + "/poke/0/", new String[] {},
+						new String[] {}, PY2, false);
 			}
 			comAdapter.notifyDataSetChanged();
 			break;
 		case R.id.comment_item_iv_pic:
 			NoteBean noteBean = (NoteBean) arg0.getTag();
-//			Intent intent = new Intent(mContext, UserAct.class);
-//			intent.putExtra("data", noteBean.getCreator());
-//			startActivity(intent);
-			
-			sendConnection(Constant.USERINFO + noteBean.getUser_id() + "/",
-					new String[] {}, new String[] {},
-					USERINFO, true);
+			// Intent intent = new Intent(mContext, UserAct.class);
+			// intent.putExtra("data", noteBean.getCreator());
+			// startActivity(intent);
+
+			sendConnection(Constant.USERINFO + noteBean.getUser_id() + "/", new String[] {}, new String[] {}, USERINFO,
+					true);
 			break;
 		default:
 			break;
@@ -1107,8 +1065,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 				/**** 喜欢 分享 更多 ****/
 				if (getTitleLayout().getVisibility() == View.GONE) {
 					if (animationIn == null) {
-						animationIn = AnimationUtils.loadAnimation(this,
-								R.anim.alpha_in);
+						animationIn = AnimationUtils.loadAnimation(this, R.anim.alpha_in);
 					}
 					getTitleLayout().startAnimation(animationIn);
 					getTitleLayout().setVisibility(View.VISIBLE);
@@ -1121,8 +1078,7 @@ public class ProductInfoAct extends NetWorkActivity implements OnClickListener,
 
 				if (getTitleLayout().getVisibility() == View.VISIBLE) {
 					if (animationOut == null) {
-						animationOut = AnimationUtils.loadAnimation(this,
-								R.anim.alpha_out);
+						animationOut = AnimationUtils.loadAnimation(this, R.anim.alpha_out);
 					}
 					getTitleLayout().startAnimation(animationOut);
 					view3.setVisibility(View.GONE);

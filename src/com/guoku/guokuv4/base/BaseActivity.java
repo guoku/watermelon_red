@@ -59,6 +59,8 @@ public abstract class BaseActivity extends FragmentActivity {
 	
 	public UMSocialService mController;//初始化友盟分享
 	
+	public static boolean isRefrech;// 在弹出的popwindos是否刷新
+	
 	public static ArrayList<String> webViewTitle = new ArrayList<String>();
 
 	@Override

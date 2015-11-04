@@ -5,8 +5,10 @@ import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.HexieAct;
 import com.guoku.guokuv4.act.LoginAct;
+import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.PInfoBean;
+import com.guoku.guokuv4.utils.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
@@ -22,6 +24,7 @@ import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
 
 import android.app.Activity;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
@@ -45,12 +48,14 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 	private PInfoBean pib;
 	private View rootView;
 	private String url;
-	public boolean isRefrech;//是否刷新
+	private String title;
+	
 
 	public CustomShareBoard(Activity activity) {
 		super(activity);
 		this.mActivity = activity;
 		initView(activity);
+		ProductInfoAct.isRefrech = false;
 	}
 
 	private void configPlatforms() {
@@ -69,7 +74,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		wxCircleHandler.addToSocialSDK();
 	}
 
-	public void setShareContext(String context, UMImage url, String id,
+	public void setShareContext(String context, UMImage imgUrl, String id,
 			String etid, PInfoBean bean) {
 		pib = bean;
 		entityID = etid;
@@ -81,7 +86,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 				+ bean.getEntity().getEntity_hash() + "/");
 		weixinContent.setTargetUrl(Constant.DETAIL
 				+ bean.getEntity().getEntity_hash() + "/");
-		weixinContent.setShareImage(url);
+		weixinContent.setShareImage(imgUrl);
 		weixinContent.setTitle(context);
 		mController.setShareMedia(weixinContent);
 
@@ -89,7 +94,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		circleMedia.setShareContent(context + bean.getTop_note()
 				+ Constant.DETAIL
 				+ bean.getEntity().getEntity_hash() + "/");
-		circleMedia.setShareImage(url);
+		circleMedia.setShareImage(imgUrl);
 		circleMedia.setTitle(context);
 		circleMedia.setTargetUrl(Constant.DETAIL
 				+ bean.getEntity().getEntity_hash() + "/");
@@ -99,17 +104,21 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		sinaShareContent.setShareContent(context + bean.getTop_note()
 				+ Constant.DETAIL
 				+ bean.getEntity().getEntity_hash() + "/");
-		sinaShareContent.setShareImage(url);
+		sinaShareContent.setShareImage(imgUrl);
 		sinaShareContent.setTitle(context);
 		sinaShareContent.setTargetUrl(Constant.DETAIL
 				+ bean.getEntity().getEntity_hash() + "/");
 		mController.setShareMedia(sinaShareContent);
+		
+		url = Constant.DETAIL + pib.getEntity().getEntity_hash();
+		title = pib.getEntity().getTitle();
 	}
 
 	public void setShareContext(Context mContext, String context, String url,
 			String imgUrl, String title) {
 		configPlatforms();
 		this.url = url;
+		this.title = title;
 
 		WeiXinShareContent weixinContent = new WeiXinShareContent();
 		weixinContent.setTargetUrl(url);
@@ -128,9 +137,6 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		sinaShareContent.setTargetUrl(url);
 		sinaShareContent.setShareImage(new UMImage(mContext, imgUrl));
 		mController.setShareMedia(sinaShareContent);
-
-		rootView.findViewById(R.id.layout_report).setVisibility(View.GONE);
-		rootView.findViewById(R.id.share_llq).setVisibility(View.VISIBLE);
 	}
 
 	public void setShareContext(String title, String url) {
@@ -152,8 +158,6 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		sinaShareContent.setTargetUrl(url);
 		mController.setShareMedia(sinaShareContent);
 
-		rootView.findViewById(R.id.layout_report).setVisibility(View.GONE);
-		rootView.findViewById(R.id.share_llq).setVisibility(View.VISIBLE);
 	}
 
 	public void setShareContext(String context, UMImage url, String tag,
@@ -239,7 +243,6 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		dismiss();
 		int id = v.getId();
 		switch (id) {
 		case R.id.share_sina:
@@ -273,17 +276,20 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 			break;
 		case R.id.share_llq:
 			Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setData(Uri.parse(Constant.DETAIL + pib.getEntity().getEntity_hash()));
+			intent.setData(Uri.parse(url));
 			mActivity.startActivity(intent);
 			break;
 		case R.id.share_mail:
 			sendMail();
 			break;
 		case R.id.layout_refresh:
-			isRefrech = true;
+			ProductInfoAct.isRefrech = true;
 			break;
 		case R.id.layout_copy:
-			sendMail();
+			ClipboardManager cmb = (ClipboardManager)mActivity.getSystemService(Context.CLIPBOARD_SERVICE);  
+			cmb.setText(url);  
+			ToastUtil.show(mActivity, mActivity.getString(R.string.tv_already_copy));
+
 			break;
 		case R.id.layout_report:
 			if (GuokuApplication.getInstance().getBean() != null) {
@@ -299,6 +305,8 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		default:
 			break;
 		}
+		
+		dismiss();
 	}
 	
 	   /**
@@ -309,9 +317,9 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 	        Intent email = new Intent(android.content.Intent.ACTION_SEND);
 	        email.setType("plain/text");
 	        //邮件主题
-	        email.putExtra(android.content.Intent.EXTRA_SUBJECT, pib.getEntity().getTitle());
+	        email.putExtra(android.content.Intent.EXTRA_SUBJECT, mActivity.getResources().getString(R.string.tv_static_title));
 	        //邮件内容
-	        email.putExtra(android.content.Intent.EXTRA_TEXT, Constant.DETAIL + pib.getEntity().getEntity_hash());  
+	        email.putExtra(android.content.Intent.EXTRA_TEXT, title + url);  
 	        mActivity.startActivity(email); 
 	    }
 	    

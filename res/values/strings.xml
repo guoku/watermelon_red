@@ -11,8 +11,10 @@
     <string name="error_data_json">数据加载错误，请稍后重试</string>
     
     <!-- 公共 -->
+    <string name="tv_static_title">果库－精英消费指南</string>
     <string name="tv_save">保存</string>
     <string name="tv_cancel">取消</string>
+    <string name="tv_already_copy">已复制到剪切板</string>
     
     <!-- 搜索界面相关 -->
     <string name="tv_seach">搜索</string>

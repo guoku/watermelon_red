@@ -52,7 +52,6 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme"
         android:uiOptions="splitActionBarWhenNarrow" 
-        android:debuggable="true"
         >
         <activity
             android:name="com.umeng.fb.ConversationActivity"

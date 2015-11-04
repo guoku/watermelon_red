@@ -102,6 +102,7 @@ public class WebAct extends BaseActivity {
 	private void postShare() {
 		CustomShareBoard shareBoard = new CustomShareBoard(this);
 		shareBoard.setShareContext(name, url);
+		shareBoard.setAnimationStyle(R.style.popwin_anim_style);
 		shareBoard.showAtLocation(this.getWindow().getDecorView(),
 				Gravity.BOTTOM, 0, 0);
 		WindowManager.LayoutParams params = getWindow().getAttributes();
@@ -115,7 +116,9 @@ public class WebAct extends BaseActivity {
 				WindowManager.LayoutParams params = getWindow().getAttributes();
 				params.alpha = 1f;
 				getWindow().setAttributes(params);
-
+				if (isRefrech) {
+					view.reload();
+				}
 			}
 		});
 	}

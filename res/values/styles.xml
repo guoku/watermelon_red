@@ -454,5 +454,11 @@
         <item name="android:gravity">center</item>
         <item name="android:paddingTop">5dp</item>
     </style>
+    
+    <!-- popwindos -->
+    <style name="popwin_anim_style">  
+     <item name="android:windowEnterAnimation">@anim/popshow_anim</item>  
+     <item name="android:windowExitAnimation">@anim/pophidden_anim</item>  
+</style> 
 
 </resources>
