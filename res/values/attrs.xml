@@ -31,5 +31,10 @@
         <attr name="textLeft" format="string" />
         <attr name="textColorLeft" format="color" />
     </declare-styleable>
+    
+    <!-- 搜索bar -->
+    <declare-styleable name="LayoutSearch">
+        <attr name="textRight" format="boolean" />
+    </declare-styleable>
 
 </resources>

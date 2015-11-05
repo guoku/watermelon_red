@@ -148,7 +148,9 @@
         <activity
             android:name="com.guoku.guokuv4.main.MainActivity2"
             android:configChanges="orientation"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait" 
+            android:windowSoftInputMode="adjustPan"
+            >
         </activity>
         <activity
             android:name="com.guoku.guokuv4.act.FansAct"
@@ -313,6 +315,11 @@
         </activity>
         <activity
             android:name=".guokuv4.act.UserTagListAct"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.guoku.guokuv4.act.seach.SeachAct"
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
         </activity>

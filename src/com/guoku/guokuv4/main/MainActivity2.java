@@ -8,6 +8,7 @@ import com.guoku.guokuv4.gragment.GuangFragment;
 import com.guoku.guokuv4.gragment.JingXuanPageFragment;
 import com.guoku.guokuv4.gragment.OrderFragment;
 import com.guoku.guokuv4.gragment.PersonalFragment;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -19,11 +20,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnKeyListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class MainActivity2 extends NetWorkActivity {
+public class MainActivity2 extends NetWorkActivity{
 
 	@ViewInject(R.id.ll_destination)
 	private LinearLayout ll_destination;// 目的地
@@ -259,4 +262,21 @@ public class MainActivity2 extends NetWorkActivity {
 		jingXuanPageFragment.setCurrentItems(1);
 	}
 
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		return super.onKeyDown(keyCode, event);
+	}
+	
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		// TODO Auto-generated method stub
+		if (KeyEvent.KEYCODE_ENTER == event.getKeyCode() && event.getAction() == KeyEvent.ACTION_DOWN) {
+			qunaerFragment.onKeyDowns();
+			return true;
+		}
+		return super.dispatchKeyEvent(event);
+	}
+	
 }

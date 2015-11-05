@@ -161,7 +161,7 @@ public abstract class BasePageFragment extends BaseFrament {
 		DisplayMetrics dm = new DisplayMetrics();
 		context.getWindowManager().getDefaultDisplay().getMetrics(dm);
 		int screenW = dm.widthPixels;// 获取分辨率宽度
-		offset = (screenW / getTabCount()) / getTabCount() - bmpW/2;// 计算偏移量--(屏幕宽度/页卡总数)/2-图片实际宽度/2
+		offset = (screenW / getTabCount()) / getTabCount() - bmpW/getTabCount();// 计算偏移量--(屏幕宽度/页卡总数)/2-图片实际宽度/2
 														// = 偏移量
 		Matrix matrix = new Matrix();
 		matrix.postTranslate(offset, 0);
@@ -233,8 +233,8 @@ public abstract class BasePageFragment extends BaseFrament {
 	 */
 	public class MyOnPageChangeListener implements OnPageChangeListener {
 
-		int one = offset * 2 + bmpW;// 页卡1 -> 页卡2 偏移量
-		int two = one * 2;// 页卡1 -> 页卡3 偏移量
+		int one = offset * getTabCount() + bmpW;// 页卡1 -> 页卡2 偏移量
+		int two = one * getTabCount();// 页卡1 -> 页卡3 偏移量
 
 		MyOnPageChangeListener() {
 

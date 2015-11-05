@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:layoutview="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_bg"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    >
 
     <ScrollView
         android:id="@+id/faxian_sv"
@@ -16,25 +18,12 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/user_et_name"
+            
+            <com.guoku.guokuv4.view.LayoutSearchBar
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="4dp"
-                android:background="#fff0f0f0"
-                android:clickable="false"
-                android:drawableLeft="@drawable/search_icon"
-                android:drawablePadding="8dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="8dp"
-                android:text="@string/tv_seach"
-                android:textColor="#8c8c8c"
-                android:textColorHint="#414243"
-                android:textSize="13sp" >
-            </TextView>
+                android:layout_height="wrap_content"
+                layoutview:textRight="true"
+                ></com.guoku.guokuv4.view.LayoutSearchBar>
 
             <RelativeLayout
                 android:layout_width="fill_parent"

@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import com.guoku.R;
@@ -19,7 +20,6 @@ import com.guoku.R;
  * @date 2015-8-12 下午5:38:23
  */
 public class EditTextWithDel extends EditText {
-	private final static String TAG = "EditTextWithDel";
 	private Drawable imgInable;
 	private Context mContext;
 	public boolean isShowDel = true;
@@ -44,7 +44,6 @@ public class EditTextWithDel extends EditText {
 
 	@SuppressLint("NewApi")
 	private void init() {
-		setBackground(mContext.getResources().getDrawable(R.color.white));
 		imgInable = mContext.getResources()
 				.getDrawable(R.drawable.button_clear);
 		addTextChangedListener(new TextWatcher() {
@@ -87,7 +86,6 @@ public class EditTextWithDel extends EditText {
 		if (isShowDel) {
 			int eventX = (int) event.getRawX();
 			int eventY = (int) event.getRawY();
-			Log.e(TAG, "eventX = " + eventX + "; eventY = " + eventY);
 			Rect rect = new Rect();
 			getGlobalVisibleRect(rect);
 			rect.left = rect.right - 50;

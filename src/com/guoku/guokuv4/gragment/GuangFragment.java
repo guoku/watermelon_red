@@ -14,7 +14,7 @@ import com.avos.avoscloud.AVAnalytics;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.ProductInfoAct;
-import com.guoku.guokuv4.act.SeachAct;
+//import com.guoku.guokuv4.act.SeachAct;
 import com.guoku.guokuv4.act.TabAct;
 import com.guoku.guokuv4.act.WebShareAct;
 import com.guoku.guokuv4.adapter.GuangArticlesAdapter;
@@ -33,10 +33,14 @@ import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.ImgUtils;
+import com.guoku.guokuv4.utils.StringUtils;
+import com.guoku.guokuv4.utils.ToastUtil;
+import com.guoku.guokuv4.view.EditTextWithDel;
 import com.guoku.guokuv4.view.ImageAddTextLayout;
 import com.guoku.guokuv4.view.ScrollViewWithListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.lidroid.xutils.view.annotation.event.OnKey;
 import com.umeng.analytics.MobclickAgent;
 
 import android.content.Intent;
@@ -46,11 +50,14 @@ import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -60,7 +67,6 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 public class GuangFragment extends BaseFrament {
 	private static final int PROINFO = 12;
@@ -68,8 +74,8 @@ public class GuangFragment extends BaseFrament {
 	private static final int USERINFO = 14;
 	private static final int DISCOVER = 15;// banner, 推荐文章， 推荐商品等
 
-	@ViewInject(R.id.user_et_name)
-	private TextView user_et_name;
+	@ViewInject(R.id.ed_search)
+	EditTextWithDel edSearch;
 
 	@ViewInject(R.id.product_vp_img)
 	private ViewPager vp;
@@ -117,8 +123,7 @@ public class GuangFragment extends BaseFrament {
 	public void onStart() {
 		super.onStart();
 		scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-		scheduledExecutorService.scheduleAtFixedRate(new ScrollTask(), 5, 5,
-				TimeUnit.SECONDS);
+		scheduledExecutorService.scheduleAtFixedRate(new ScrollTask(), 5, 5, TimeUnit.SECONDS);
 	}
 
 	/**
@@ -162,16 +167,14 @@ public class GuangFragment extends BaseFrament {
 		case FAXIANHOME:
 			try {
 				JSONObject root = new JSONObject(result);
-				list = (ArrayList<BannerBean>) JSON.parseArray(
-						root.getString("banner"), BannerBean.class);
+				list = (ArrayList<BannerBean>) JSON.parseArray(root.getString("banner"), BannerBean.class);
 				List<ImageView> imgs = new ArrayList<ImageView>();
 				for (int i = 0; i < list.size(); i++) {
 					final ImageView image = new ImageView(getActivity());
 					image.setTag(i);
 					image.setScaleType(ScaleType.FIT_XY);
-					imageLoader
-							.displayImage(list.get(i).getImg(), image, options,
-									new ImgUtils.AnimateFirstDisplayListener());
+					imageLoader.displayImage(list.get(i).getImg(), image, options,
+							new ImgUtils.AnimateFirstDisplayListener());
 					image.setOnClickListener(new OnClickListener() {
 
 						@Override
@@ -186,7 +189,7 @@ public class GuangFragment extends BaseFrament {
 								// Intent intent = new Intent(context,
 								// WebAct.class);
 								// intent.putExtra("data", url);
-								// intent.putExtra("name", "  ");
+								// intent.putExtra("name", " ");
 								// intent.putExtra("type", "banner");
 								// startActivity(intent);
 
@@ -196,27 +199,21 @@ public class GuangFragment extends BaseFrament {
 								sharebean.setContext("");
 								sharebean.setAricleUrl(url);
 								sharebean.setImgUrl(list.get(index).getImg());
-								bundle.putSerializable(
-										WebShareAct.class.getName(), sharebean);
+								bundle.putSerializable(WebShareAct.class.getName(), sharebean);
 								openActivity(WebShareAct.class, bundle);
 
 							} else if (url.contains("entity")) {
-								sendConnection(Constant.PROINFO + last + "/",
-										new String[] { "entity_id" },
+								sendConnection(Constant.PROINFO + last + "/", new String[] { "entity_id" },
 										new String[] { last }, PROINFO, true);
 							} else if (url.contains("user_id")) {
-								sendConnection(Constant.USERINFO + last + "/",
-										new String[] {}, new String[] {},
+								sendConnection(Constant.USERINFO + last + "/", new String[] {}, new String[] {},
 										USERINFO, true);
 							} else if (url.contains("category_id")) {
 								for (Tab2Bean bean : list_cid) {
 									if (bean.getCategory_id().equals(last)) {
-										Intent intent = new Intent(context,
-												TabAct.class);
-										intent.putExtra("data",
-												bean.getCategory_id());
-										intent.putExtra("name",
-												bean.getCategory_title());
+										Intent intent = new Intent(context, TabAct.class);
+										intent.putExtra("data", bean.getCategory_id());
+										intent.putExtra("name", bean.getCategory_title());
 										startActivity(intent);
 									}
 								}
@@ -233,8 +230,7 @@ public class GuangFragment extends BaseFrament {
 		case USERINFO:
 			try {
 				JSONObject root = new JSONObject(result);
-				UserBean userBean = (UserBean) JSON.parseArray(
-						root.getString("user"), UserBean.class);
+				UserBean userBean = (UserBean) JSON.parseArray(root.getString("user"), UserBean.class);
 				intent = new Intent(context, UserBaseFrament.class);
 				intent.putExtra("data", userBean);
 				startActivity(intent);
@@ -248,18 +244,14 @@ public class GuangFragment extends BaseFrament {
 			try {
 				JSONObject root = new JSONObject(result);
 				ArrayList<Categories> arrayList = new ArrayList<Categories>();
-				arrayList = (ArrayList<Categories>) JSON.parseArray(
-						root.getString("categories"), Categories.class);
+				arrayList = (ArrayList<Categories>) JSON.parseArray(root.getString("categories"), Categories.class);
 				for (int i = 0; i < arrayList.size(); i++) {
-					final ImageAddTextLayout imagTextLayout = new ImageAddTextLayout(
-							getActivity());
+					final ImageAddTextLayout imagTextLayout = new ImageAddTextLayout(getActivity());
 					LayoutParams params = new LayoutParams(280, 280);
 					imagTextLayout.setLayoutParams(params);
 					imagTextLayout.setPadding(10, 0, 10, 0);
-					imagTextLayout.imView.setImageURI(Uri.parse(arrayList
-							.get(i).getCategory().getCover_url()));
-					imagTextLayout.tView.setText(arrayList.get(i).getCategory()
-							.getTitle().trim().replace(" ", "\n"));
+					imagTextLayout.imView.setImageURI(Uri.parse(arrayList.get(i).getCategory().getCover_url()));
+					imagTextLayout.tView.setText(arrayList.get(i).getCategory().getTitle().trim().replace(" ", "\n"));
 					imagTextLayout.setTag(arrayList.get(i).getCategory());
 					// imagTextLayout.setTag(i);
 					vpRecommendSort.addView(imagTextLayout);
@@ -268,28 +260,26 @@ public class GuangFragment extends BaseFrament {
 						@Override
 						public void onClick(View arg0) {
 							// TODO Auto-generated method stub
-							Categories.Category category = (Category) arg0
-									.getTag();
-							Intent intent = new Intent(getActivity(),
-									TabAct.class);
+							Categories.Category category = (Category) arg0.getTag();
+							Intent intent = new Intent(getActivity(), TabAct.class);
 							intent.putExtra("data", category.getId());
 							intent.putExtra("name", category.getTitle());
 							getActivity().startActivity(intent);
 						}
 					});
 				}
-				
-				/********热门图文*********/
+
+				/******** 热门图文 *********/
 				Discover discover = JSON.parseObject(result, Discover.class);
 				articlesAdapter.setList(discover.getArticles());
-				
-				/********热门商品*********/
+
+				/******** 热门商品 *********/
 				try {
 					gvAdapter.setList(discover.getEntities());
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
-				
+
 				sv.scrollTo(0, 0);
 				sv.smoothScrollTo(0, 0);
 
@@ -317,26 +307,22 @@ public class GuangFragment extends BaseFrament {
 
 		gvAdapter = new GuangShopAdapter(getActivity());
 
-
 		faxian_gv.setAdapter(gvAdapter);
 
 		faxian_gv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				String id = String.valueOf(gvAdapter.getList().get(arg2).getEntity().getEntity_id());
-				sendConnection(Constant.PROINFO
-						+ gvAdapter.getList().get(arg2).getEntity().getEntity_id() + "/",
-						new String[] { "entity_id" }, new String[] {id}, PROINFO, true);
+				sendConnection(Constant.PROINFO + gvAdapter.getList().get(arg2).getEntity().getEntity_id() + "/",
+						new String[] { "entity_id" }, new String[] { id }, PROINFO, true);
 
 			}
 		});
 
 		try {
 			android.widget.RelativeLayout.LayoutParams param = new android.widget.RelativeLayout.LayoutParams(
-					RelativeLayout.LayoutParams.MATCH_PARENT,
-					(GuokuApplication.screenW) * 472 / 1028);
+					RelativeLayout.LayoutParams.MATCH_PARENT, (GuokuApplication.screenW) * 472 / 1028);
 			vp.setLayoutParams(param);
 
 			vp.setOnTouchListener(new OnTouchListener() {
@@ -384,20 +370,15 @@ public class GuangFragment extends BaseFrament {
 		lvArticle.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				// TODO Auto-generated method stub
 
 				Bundle bundle = new Bundle();
 				Sharebean sharebean = new Sharebean();
-				sharebean.setTitle(articlesAdapter.getList().get(arg2)
-						.getArticle().getTitle());
-				sharebean.setContext(articlesAdapter.getList().get(arg2)
-						.getArticle().getContent().substring(0, 50));
-				sharebean.setAricleUrl(articlesAdapter.getList().get(arg2)
-						.getArticle().getUrl());
-				sharebean.setImgUrl(articlesAdapter.getList().get(arg2)
-						.getArticle().getCover());
+				sharebean.setTitle(articlesAdapter.getList().get(arg2).getArticle().getTitle());
+				sharebean.setContext(articlesAdapter.getList().get(arg2).getArticle().getContent().substring(0, 50));
+				sharebean.setAricleUrl(articlesAdapter.getList().get(arg2).getArticle().getUrl());
+				sharebean.setImgUrl(articlesAdapter.getList().get(arg2).getArticle().getCover());
 				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
 
 				openActivity(WebShareAct.class, bundle);
@@ -408,16 +389,14 @@ public class GuangFragment extends BaseFrament {
 	@Override
 	protected void setData() {
 		list_cid = ParseUtil.getTab2List(context);
-		sendConnection(Constant.FAXIANHOME, new String[] {}, new String[] {},
-				FAXIANHOME, false);
-		sendConnection(Constant.DISCOVER, new String[] {}, new String[] {},
-				DISCOVER, false);
+		sendConnection(Constant.FAXIANHOME, new String[] {}, new String[] {}, FAXIANHOME, false);
+		sendConnection(Constant.DISCOVER, new String[] {}, new String[] {}, DISCOVER, false);
 	}
 
-	@OnClick(R.id.user_et_name)
+	@OnClick(R.id.ed_search)
 	public void SQR(View v) {
-		startActivity(new Intent(context, SeachAct.class));
-
+		// startActivity(new Intent(context, SeachAct.class));
+		// startActivity(new Intent(context, SeachAct.class));
 	}
 
 	public class MyViewPagerAdapter extends PagerAdapter {
@@ -460,4 +439,11 @@ public class GuangFragment extends BaseFrament {
 		}
 	}
 
+	public void onKeyDowns() {
+		final String content = edSearch.getText().toString();
+		if (!StringUtils.isEmpty(content)) {
+		} else {
+			ToastUtil.show(getActivity(), getActivity().getResources().getString(R.string.tv_search_please_Enter));
+		}
+	}
 }
