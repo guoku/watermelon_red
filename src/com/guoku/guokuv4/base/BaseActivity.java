@@ -28,6 +28,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.ViewParent;
 import android.view.Window;
 import android.webkit.WebView;
@@ -62,6 +66,17 @@ public abstract class BaseActivity extends FragmentActivity {
 	public static boolean isRefrech;// 在弹出的popwindos是否刷新
 	
 	public static ArrayList<String> webViewTitle = new ArrayList<String>();
+	
+	public Animation animationBackShow;
+	public Animation animationBackHide;
+	public Animation animationllShow;
+	public Animation animationllHide;
+	public final int animTime = 300;
+	public boolean animIsRunning = false;
+	
+	public View listView;
+	public View backView;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -355,4 +370,79 @@ public abstract class BaseActivity extends FragmentActivity {
 			ssoHandler.authorizeCallBack(arg0, arg1, arg2);
 		}
 	}
+	
+	public void showSearchWhat() {
+		showBackBlack();
+		if (animationllShow == null) {
+			animationllShow = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
+					Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+		}
+		animationllShow.setDuration(animTime);
+		listView.startAnimation(animationllShow);
+	}
+
+	public void hideSearchWhat() {
+		hideBackBlack();
+		if (animationllHide == null) {
+			animationllHide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
+					Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f);
+		}
+		animationllHide.setDuration(animTime);
+		listView.startAnimation(animationllHide);
+	}
+
+	public void showBackBlack() {
+		if (animationBackShow == null) {
+			backView.setVisibility(View.VISIBLE);
+			animationBackShow = new AlphaAnimation(0.0f, 1.0f);
+			animationBackShow.setAnimationListener(animationShowListener);
+		}
+		animationBackShow.setDuration(animTime);
+		backView.startAnimation(animationBackShow);
+	}
+
+	public void hideBackBlack() {
+		if (animationBackHide == null) {
+			animationBackHide = new AlphaAnimation(1.0f, 0.0f);
+			animationBackHide.setAnimationListener(animationHideListener);
+		}
+		animationBackHide.setDuration(animTime);
+		backView.startAnimation(animationBackHide);
+	}
+
+	AnimationListener animationShowListener = new AnimationListener() {
+		@Override
+		public void onAnimationStart(Animation animation) {
+			animIsRunning = true;
+			backView.setVisibility(View.VISIBLE);
+			listView.setVisibility(View.VISIBLE);
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+		}
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			animIsRunning = false;
+		}
+	};
+
+	AnimationListener animationHideListener = new AnimationListener() {
+		@Override
+		public void onAnimationStart(Animation animation) {
+			animIsRunning = true;
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+		}
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			backView.setVisibility(View.INVISIBLE);
+			listView.setVisibility(View.INVISIBLE);
+			animIsRunning = false;
+		}
+	};
 }

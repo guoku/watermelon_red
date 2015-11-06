@@ -83,15 +83,6 @@ public class UserLikeListAct extends NetWorkActivity {
 
 	UserBean uBean;
 
-	private Animation animationBackShow;
-	private Animation animationBackHide;
-	private Animation animationllShow;
-	private Animation animationllHide;
-
-	private final int animTime = 300;
-
-	private boolean animIsRunning = false;
-
 	private String cidTag = "0";
 
 	@Override
@@ -256,6 +247,9 @@ public class UserLikeListAct extends NetWorkActivity {
 	@OnClick(R.id.layout_comment_title)
 	private void inClickComment(View view) {
 
+		listView = listTag;
+		backView = backblack;
+		
 		if (gvAdapter != null) {
 			listTag.getBackground().setAlpha(230);
 			if (listTag.getVisibility() == View.INVISIBLE) {
@@ -278,78 +272,5 @@ public class UserLikeListAct extends NetWorkActivity {
 		getLikeData(TABLIKE, true);
 	}
 
-	private void showSearchWhat() {
-		showBackBlack();
-		if (animationllShow == null) {
-			animationllShow = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
-					Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-		}
-		animationllShow.setDuration(animTime);
-		listTag.startAnimation(animationllShow);
-	}
 
-	private void hideSearchWhat() {
-		hideBackBlack();
-		if (animationllHide == null) {
-			animationllHide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
-					Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f);
-		}
-		animationllHide.setDuration(animTime);
-		listTag.startAnimation(animationllHide);
-	}
-
-	private void showBackBlack() {
-		if (animationBackShow == null) {
-			backblack.setVisibility(View.VISIBLE);
-			animationBackShow = new AlphaAnimation(0.0f, 1.0f);
-			animationBackShow.setAnimationListener(animationShowListener);
-		}
-		animationBackShow.setDuration(animTime);
-		backblack.startAnimation(animationBackShow);
-	}
-
-	private void hideBackBlack() {
-		if (animationBackHide == null) {
-			animationBackHide = new AlphaAnimation(1.0f, 0.0f);
-			animationBackHide.setAnimationListener(animationHideListener);
-		}
-		animationBackHide.setDuration(animTime);
-		backblack.startAnimation(animationBackHide);
-	}
-
-	AnimationListener animationShowListener = new AnimationListener() {
-		@Override
-		public void onAnimationStart(Animation animation) {
-			animIsRunning = true;
-			backblack.setVisibility(View.VISIBLE);
-			listTag.setVisibility(View.VISIBLE);
-		}
-
-		@Override
-		public void onAnimationRepeat(Animation animation) {
-		}
-
-		@Override
-		public void onAnimationEnd(Animation animation) {
-			animIsRunning = false;
-		}
-	};
-
-	AnimationListener animationHideListener = new AnimationListener() {
-		@Override
-		public void onAnimationStart(Animation animation) {
-			animIsRunning = true;
-		}
-
-		@Override
-		public void onAnimationRepeat(Animation animation) {
-		}
-
-		@Override
-		public void onAnimationEnd(Animation animation) {
-			backblack.setVisibility(View.INVISIBLE);
-			listTag.setVisibility(View.INVISIBLE);
-			animIsRunning = false;
-		}
-	};
 }

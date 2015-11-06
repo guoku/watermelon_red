@@ -2,6 +2,7 @@ package com.guoku.guokuv4.gragment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -19,9 +20,11 @@ import com.guoku.guokuv4.act.TabAct;
 import com.guoku.guokuv4.act.WebShareAct;
 import com.guoku.guokuv4.adapter.GuangArticlesAdapter;
 import com.guoku.guokuv4.adapter.GuangShopAdapter;
+import com.guoku.guokuv4.adapter.SearchLogAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
 import com.guoku.guokuv4.base.UserBaseFrament;
 import com.guoku.guokuv4.bean.Discover;
+import com.guoku.guokuv4.bean.SearchLogBean;
 import com.guoku.guokuv4.bean.Sharebean;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.BannerBean;
@@ -33,6 +36,7 @@ import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.ImgUtils;
+import com.guoku.guokuv4.utils.SharePrenceUtil;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.guoku.guokuv4.view.EditTextWithDel;
@@ -40,7 +44,6 @@ import com.guoku.guokuv4.view.ImageAddTextLayout;
 import com.guoku.guokuv4.view.ScrollViewWithListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
-import com.lidroid.xutils.view.annotation.event.OnKey;
 import com.umeng.analytics.MobclickAgent;
 
 import android.content.Intent;
@@ -50,14 +53,15 @@ import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -65,6 +69,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
@@ -76,6 +81,12 @@ public class GuangFragment extends BaseFrament {
 
 	@ViewInject(R.id.ed_search)
 	EditTextWithDel edSearch;
+	
+	@ViewInject(R.id.list_search_log)
+	ListView listSearchLog;//搜索记录list
+	
+	@ViewInject(R.id.view_back_black)
+	View backblack;//弹出搜索记录背景
 
 	@ViewInject(R.id.product_vp_img)
 	private ViewPager vp;
@@ -99,11 +110,20 @@ public class GuangFragment extends BaseFrament {
 	private GridView faxian_gv;
 
 	private GuangShopAdapter gvAdapter;
+	
+	private SearchLogAdapter searchLogAdapter;//搜索记录
 
 	private ArrayList<BannerBean> list;
 	private ArrayList<Tab2Bean> list_cid;
 
 	private ArrayList<EntityBean> discover;// 分类
+	
+	public Animation animationBackShow;
+	public Animation animationBackHide;
+	public Animation animationllShow;
+	public Animation animationllHide;
+	public final int animTime = 300;
+	public boolean animIsRunning = false;
 
 	private int currentItem;
 	private Handler handler = new Handler() {
@@ -358,6 +378,8 @@ public class GuangFragment extends BaseFrament {
 			vp.setAdapter(adapter);
 
 			initArticle();
+			
+			initSearchLog();
 
 		} catch (Exception e) {
 		}
@@ -397,6 +419,26 @@ public class GuangFragment extends BaseFrament {
 	public void SQR(View v) {
 		// startActivity(new Intent(context, SeachAct.class));
 		// startActivity(new Intent(context, SeachAct.class));
+		
+		if (searchLogAdapter != null) {
+			listSearchLog.getBackground().setAlpha(230);
+			if (listSearchLog.getVisibility() == View.INVISIBLE) {
+				List<SearchLogBean> sBeans = SharePrenceUtil.getSearchRecord(getActivity());
+				if(sBeans != null){
+					searchLogAdapter.setList((ArrayList<SearchLogBean>) sBeans);
+					showSearchWhat();
+				}
+			} else {
+				hideSearchWhat();
+			}
+		}
+	}
+	
+	@OnClick(R.id.view_back_black)
+	private void inClickBlack(View view) {
+		if (listSearchLog.getVisibility() == View.VISIBLE) {
+			hideSearchWhat();
+		}
 	}
 
 	public class MyViewPagerAdapter extends PagerAdapter {
@@ -439,11 +481,103 @@ public class GuangFragment extends BaseFrament {
 		}
 	}
 
+	/**
+	 * 处理搜索事件
+	 */
 	public void onKeyDowns() {
 		final String content = edSearch.getText().toString();
 		if (!StringUtils.isEmpty(content)) {
+			SharePrenceUtil.saveSearchRecord(getActivity(), edSearch.getText().toString());
 		} else {
 			ToastUtil.show(getActivity(), getActivity().getResources().getString(R.string.tv_search_please_Enter));
 		}
 	}
+	
+	/**
+	 * 初始化搜索记录
+	 */
+	private void initSearchLog(){
+		
+		searchLogAdapter = new SearchLogAdapter(getActivity());
+		listSearchLog.setAdapter(searchLogAdapter);
+		
+		ViewGroup.LayoutParams params = listSearchLog.getLayoutParams();
+		params.height = GuokuApplication.screenH / 3;
+		listSearchLog.setLayoutParams(params);
+	}
+	
+	public void showSearchWhat() {
+		showBackBlack();
+		if (animationllShow == null) {
+			animationllShow = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
+					Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+		}
+		animationllShow.setDuration(animTime);
+		listSearchLog.startAnimation(animationllShow);
+	}
+
+	public void hideSearchWhat() {
+		hideBackBlack();
+		if (animationllHide == null) {
+			animationllHide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
+					Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f);
+		}
+		animationllHide.setDuration(animTime);
+		listSearchLog.startAnimation(animationllHide);
+	}
+
+	public void showBackBlack() {
+		if (animationBackShow == null) {
+			backblack.setVisibility(View.VISIBLE);
+			animationBackShow = new AlphaAnimation(0.0f, 1.0f);
+			animationBackShow.setAnimationListener(animationShowListener);
+		}
+		animationBackShow.setDuration(animTime);
+		backblack.startAnimation(animationBackShow);
+	}
+
+	public void hideBackBlack() {
+		if (animationBackHide == null) {
+			animationBackHide = new AlphaAnimation(1.0f, 0.0f);
+			animationBackHide.setAnimationListener(animationHideListener);
+		}
+		animationBackHide.setDuration(animTime);
+		backblack.startAnimation(animationBackHide);
+	}
+
+	AnimationListener animationShowListener = new AnimationListener() {
+		@Override
+		public void onAnimationStart(Animation animation) {
+			animIsRunning = true;
+			backblack.setVisibility(View.VISIBLE);
+			listSearchLog.setVisibility(View.VISIBLE);
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+		}
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			animIsRunning = false;
+		}
+	};
+
+	AnimationListener animationHideListener = new AnimationListener() {
+		@Override
+		public void onAnimationStart(Animation animation) {
+			animIsRunning = true;
+		}
+
+		@Override
+		public void onAnimationRepeat(Animation animation) {
+		}
+
+		@Override
+		public void onAnimationEnd(Animation animation) {
+			backblack.setVisibility(View.INVISIBLE);
+			listSearchLog.setVisibility(View.INVISIBLE);
+			animIsRunning = false;
+		}
+	};
 }

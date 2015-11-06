@@ -146,23 +146,35 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		sv.onRefreshComplete();
 		switch (where) {
 		case CATABLIST:
-			list = (ArrayList<EntityBean>) JSON.parseArray(result,
-					EntityBean.class);
-			gvAdapter.setList(list);
-			lvAdapter.setList(list);
+			try {
+				list = (ArrayList<EntityBean>) JSON.parseArray(result,
+						EntityBean.class);
+				gvAdapter.setList(list);
+				lvAdapter.setList(list);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 			break;
 		case CATABLIST_UP:
-			ArrayList<EntityBean> lists = (ArrayList<EntityBean>) JSON.parseArray(result,
-					EntityBean.class);
-			list.addAll(lists);
-			gvAdapter.addListsLast(lists);
-			lvAdapter.addListsLast(lists);
+			try {
+				ArrayList<EntityBean> lists = (ArrayList<EntityBean>) JSON.parseArray(result,
+						EntityBean.class);
+				list.addAll(lists);
+				gvAdapter.addListsLast(lists);
+				lvAdapter.addListsLast(lists);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 			break;
 		case PROINFO:
-			PInfoBean bean = ParseUtil.getPI(result);
-			Intent intent = new Intent(context, ProductInfoAct.class);
-			intent.putExtra("data", JSON.toJSONString(bean));
-			startActivity(intent);
+			try {
+				PInfoBean bean = ParseUtil.getPI(result);
+				Intent intent = new Intent(context, ProductInfoAct.class);
+				intent.putExtra("data", JSON.toJSONString(bean));
+				startActivity(intent);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 			break;
 		default:
 			break;
@@ -422,7 +434,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		view.startAnimation(animationll);
 	}
 
-	private void showBackBlack() {
+	public void showBackBlack() {
 		if (animationBackShow == null) {
 			backblack.setVisibility(View.VISIBLE);
 			animationBackShow = new AlphaAnimation(0.0f, 1.0f);
@@ -434,7 +446,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 		arrowsImg.setImageResource(R.drawable.arrws_close);
 	}
 
-	private void hideBackBlack() {
+	public void hideBackBlack() {
 		if (animationBackHide == null) {
 			animationBackHide = new AlphaAnimation(1.0f, 0.0f);
 			animationBackHide.setAnimationListener(animationHideListener);

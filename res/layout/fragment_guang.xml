@@ -4,132 +4,155 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/gray_bg"
-    android:orientation="vertical" 
-    >
+    android:orientation="vertical" >
 
-    <ScrollView
-        android:id="@+id/faxian_sv"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <LinearLayout
+        <ScrollView
+            android:id="@+id/faxian_sv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical" >
-            
-            <com.guoku.guokuv4.view.LayoutSearchBar
+            android:scrollbars="none" >
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layoutview:textRight="true"
-                ></com.guoku.guokuv4.view.LayoutSearchBar>
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical" >
 
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white" 
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="8dp"
-                >
+                <com.guoku.guokuv4.view.LayoutSearchBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layoutview:textRight="true" >
+                </com.guoku.guokuv4.view.LayoutSearchBar>
 
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/product_vp_img"
+                <RelativeLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="40dp"
-                    />
-
-                <TextView
-                    android:id="@+id/tv_point"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/g_w" />
-            </RelativeLayout>
+                    android:background="@color/white"
+                    android:paddingBottom="8dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="4dp" >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:orientation="vertical" >
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/product_vp_img"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp" />
 
-                <TextView
-                    style="@style/gray_bg_text"
-                    android:text="推荐品类" />
+                    <TextView
+                        android:id="@+id/tv_point"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/g_w" />
+                </RelativeLayout>
 
-                <HorizontalScrollView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:scrollbars="none" >
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="vertical" >
 
-                    <LinearLayout
-                        android:id="@+id/gallery_recommend_sort"
+                    <TextView
+                        style="@style/gray_bg_text"
+                        android:text="推荐品类" />
+
+                    <HorizontalScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:gravity="center"
-                        android:orientation="horizontal" />
-                </HorizontalScrollView>
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:scrollbars="none" >
 
-                <include
-                    layout="@layout/line_gray"
-                    android:background="@color/text_bg_box" />
-            </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/gallery_recommend_sort"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:gravity="center"
+                            android:orientation="horizontal" />
+                    </HorizontalScrollView>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:orientation="vertical" >
+                    <include
+                        layout="@layout/line_gray"
+                        android:background="@color/text_bg_box" />
+                </LinearLayout>
 
-                <TextView
-                    style="@style/gray_bg_text"
-                    android:text="热门图文" />
-
-                <com.guoku.guokuv4.view.ScrollViewWithListView
-                    android:id="@+id/listView_article"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/relayout"
-                    android:background="@null"
-                    android:listSelector="@android:color/transparent" />
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="vertical" >
 
-                <include
-                    layout="@layout/line_gray"
-                    android:background="@color/text_bg_box" />
-            </LinearLayout>
+                    <TextView
+                        style="@style/gray_bg_text"
+                        android:text="热门图文" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@color/white"
-                android:orientation="vertical" >
+                    <com.guoku.guokuv4.view.ScrollViewWithListView
+                        android:id="@+id/listView_article"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/relayout"
+                        android:background="@null"
+                        android:listSelector="@android:color/transparent" />
 
-                <TextView
-                    style="@style/gray_bg_text"
-                    android:text="热门商品" />
+                    <include
+                        layout="@layout/line_gray"
+                        android:background="@color/text_bg_box" />
+                </LinearLayout>
 
-                <com.guoku.guokuv4.view.ScrollViewWithGridView
-                    android:id="@+id/faxian_gv"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#f8f8f8"
-                    android:cacheColorHint="#00000000"
-                    android:gravity="center"
-                    android:horizontalSpacing="4dp"
-                    android:listSelector="#00000000"
-                    android:numColumns="3"
-                    android:scrollbars="none"
-                    android:verticalSpacing="4dp" >
-                </com.guoku.guokuv4.view.ScrollViewWithGridView>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        style="@style/gray_bg_text"
+                        android:text="热门商品" />
+
+                    <com.guoku.guokuv4.view.ScrollViewWithGridView
+                        android:id="@+id/faxian_gv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#f8f8f8"
+                        android:cacheColorHint="#00000000"
+                        android:gravity="center"
+                        android:horizontalSpacing="4dp"
+                        android:listSelector="#00000000"
+                        android:numColumns="3"
+                        android:scrollbars="none"
+                        android:verticalSpacing="4dp" >
+                    </com.guoku.guokuv4.view.ScrollViewWithGridView>
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
+
+        <View
+            android:id="@+id/view_back_black"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray_btm"
+            android:clickable="true"
+            android:visibility="invisible" 
+            android:layout_marginTop="48dp"
+            />
+
+        <ListView
+            android:id="@+id/list_search_log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray_bg"
+            android:visibility="invisible" 
+            android:layout_marginTop="48dp"
+            >
+        </ListView>
+    </FrameLayout>
 
 </LinearLayout>
