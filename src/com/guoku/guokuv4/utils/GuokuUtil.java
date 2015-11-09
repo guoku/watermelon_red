@@ -2,6 +2,7 @@ package com.guoku.guokuv4.utils;
 
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -51,5 +52,19 @@ public class GuokuUtil {
 			}, 1000);
 		}
 	}
+	
+	 /**
+	  * 隐藏键盘
+	  */
+    public static void hideKeyBoard(Activity mContext)
+    {
+        InputMethodManager im = (InputMethodManager) mContext.getSystemService(mContext.INPUT_METHOD_SERVICE);
+        if (mContext.getCurrentFocus() != null
+                && mContext.getCurrentFocus().getWindowToken() != null)
+        {
+            im.hideSoftInputFromWindow(mContext.getCurrentFocus().getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
 
 }

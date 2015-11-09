@@ -319,7 +319,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.guoku.guokuv4.act.seach.SeachAct"
+            android:name="com.guoku.guokuv4.act.seach.SearchAct"
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
         </activity>

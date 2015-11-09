@@ -1,5 +1,6 @@
 package com.guoku.guokuv4.gragment;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +19,7 @@ import com.guoku.guokuv4.act.ProductInfoAct;
 //import com.guoku.guokuv4.act.SeachAct;
 import com.guoku.guokuv4.act.TabAct;
 import com.guoku.guokuv4.act.WebShareAct;
+import com.guoku.guokuv4.act.seach.SearchAct;
 import com.guoku.guokuv4.adapter.GuangArticlesAdapter;
 import com.guoku.guokuv4.adapter.GuangShopAdapter;
 import com.guoku.guokuv4.adapter.SearchLogAdapter;
@@ -35,6 +37,7 @@ import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.GuokuUtil;
 import com.guoku.guokuv4.utils.ImgUtils;
 import com.guoku.guokuv4.utils.SharePrenceUtil;
 import com.guoku.guokuv4.utils.StringUtils;
@@ -44,6 +47,7 @@ import com.guoku.guokuv4.view.ImageAddTextLayout;
 import com.guoku.guokuv4.view.ScrollViewWithListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.lidroid.xutils.view.annotation.event.OnItemClick;
 import com.umeng.analytics.MobclickAgent;
 
 import android.content.Intent;
@@ -62,6 +66,7 @@ import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -72,6 +77,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 public class GuangFragment extends BaseFrament {
 	private static final int PROINFO = 12;
@@ -83,7 +89,7 @@ public class GuangFragment extends BaseFrament {
 	EditTextWithDel edSearch;
 	
 	@ViewInject(R.id.list_search_log)
-	ListView listSearchLog;//搜索记录list
+	public ListView listSearchLog;//搜索记录list
 	
 	@ViewInject(R.id.view_back_black)
 	View backblack;//弹出搜索记录背景
@@ -419,19 +425,7 @@ public class GuangFragment extends BaseFrament {
 	public void SQR(View v) {
 		// startActivity(new Intent(context, SeachAct.class));
 		// startActivity(new Intent(context, SeachAct.class));
-		
-		if (searchLogAdapter != null) {
-			listSearchLog.getBackground().setAlpha(230);
-			if (listSearchLog.getVisibility() == View.INVISIBLE) {
-				List<SearchLogBean> sBeans = SharePrenceUtil.getSearchRecord(getActivity());
-				if(sBeans != null){
-					searchLogAdapter.setList((ArrayList<SearchLogBean>) sBeans);
-					showSearchWhat();
-				}
-			} else {
-				hideSearchWhat();
-			}
-		}
+		edOnClick();
 	}
 	
 	@OnClick(R.id.view_back_black)
@@ -480,6 +474,17 @@ public class GuangFragment extends BaseFrament {
 			return super.getPageWidth(position);
 		}
 	}
+	
+	/**
+	 * 
+	 */
+	@OnClick(R.id.sou_tv_btn)
+	private void inClickClean(View view) {
+		if (listSearchLog.getVisibility() == View.VISIBLE) {
+			hideSearchWhat();
+		}
+		edSearch.getText().clear();
+	}
 
 	/**
 	 * 处理搜索事件
@@ -488,6 +493,7 @@ public class GuangFragment extends BaseFrament {
 		final String content = edSearch.getText().toString();
 		if (!StringUtils.isEmpty(content)) {
 			SharePrenceUtil.saveSearchRecord(getActivity(), edSearch.getText().toString());
+			goSearchAct(content);
 		} else {
 			ToastUtil.show(getActivity(), getActivity().getResources().getString(R.string.tv_search_please_Enter));
 		}
@@ -504,13 +510,61 @@ public class GuangFragment extends BaseFrament {
 		ViewGroup.LayoutParams params = listSearchLog.getLayoutParams();
 		params.height = GuokuApplication.screenH / 3;
 		listSearchLog.setLayoutParams(params);
+		
+		listSearchLog.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				// TODO Auto-generated method stub
+				goSearchAct(searchLogAdapter.getItem(position).getSerchStr());
+			}
+		});
+		
+		edSearch.setOnTouchListener(new OnTouchListener() {
+			int touch_flag=0;
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				touch_flag++;
+				if(touch_flag==2){
+					edOnClick();
+				}
+				return false;
+			}
+		});
+	}
+	
+	private void edOnClick(){
+		
+		if (searchLogAdapter != null) {
+			listSearchLog.getBackground().setAlpha(230);
+			if (listSearchLog.getVisibility() == View.INVISIBLE) {
+				List<SearchLogBean> sBeans = SharePrenceUtil.getSearchRecord(getActivity());
+				if (sBeans != null) {
+					searchLogAdapter.setList((ArrayList<SearchLogBean>) sBeans);
+					showSearchWhat();
+				}
+			}
+		}
+	}
+	
+	private void goSearchAct(String value){
+		
+		if(!StringUtils.isEmpty(value)){
+			if (listSearchLog.getVisibility() == View.VISIBLE) {
+				hideSearchWhat();
+			}
+			edSearch.getText().clear();
+			Intent intent = new Intent(context, SearchAct.class);
+			intent.putExtra(GuangFragment.class.getName(), value);
+			startActivity(intent);
+		}
 	}
 	
 	public void showSearchWhat() {
 		showBackBlack();
 		if (animationllShow == null) {
 			animationllShow = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
-					Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+					Animation.RELATIVE_TO_SELF, -ImgUtils.dip2px(context, 48), Animation.RELATIVE_TO_SELF, 0.0f);
 		}
 		animationllShow.setDuration(animTime);
 		listSearchLog.startAnimation(animationllShow);
@@ -520,7 +574,7 @@ public class GuangFragment extends BaseFrament {
 		hideBackBlack();
 		if (animationllHide == null) {
 			animationllHide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
-					Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f);
+					Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -ImgUtils.dip2px(context, 48));
 		}
 		animationllHide.setDuration(animTime);
 		listSearchLog.startAnimation(animationllHide);

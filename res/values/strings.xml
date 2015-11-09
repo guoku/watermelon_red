@@ -19,6 +19,7 @@
     <!-- 搜索界面相关 -->
     <string name="tv_seach">搜索</string>
     <string name="tv_commodity">商品</string>
+    <string name="tv_article">图文</string>
 	<string name="tv_commodity_type">品类</string>
 	<string name="tv_user">用户</string>
 	<string name="tv_seach_time">按时间</string>

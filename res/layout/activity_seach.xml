@@ -4,9 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
+    <include layout="@layout/layout_search_bar"/>
+    
     <fragment  
         android:id="@+id/id_fragment_content"  
-        android:name="com.guoku.guokuv4.act.seach.BaseSeachPageFragment"  
+        android:name="com.guoku.guokuv4.act.seach.BaseSearchPageFragment"  
         android:layout_width="match_parent"  
         android:layout_height="match_parent" />  
     

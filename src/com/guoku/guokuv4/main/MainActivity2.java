@@ -23,10 +23,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class MainActivity2 extends NetWorkActivity{
+public class MainActivity2 extends NetWorkActivity {
 
 	@ViewInject(R.id.ll_destination)
 	private LinearLayout ll_destination;// 目的地
@@ -170,8 +171,7 @@ public class MainActivity2 extends NetWorkActivity{
 			switchContent(orderFragment);
 			main_bar_1.setImageResource(R.drawable.tabbar_icon_selection);
 			main_bar_2.setImageResource(R.drawable.tabbar_icon_discover);
-			main_bar_3
-					.setImageResource(R.drawable.tabbar_icon_notifaction_press);
+			main_bar_3.setImageResource(R.drawable.tabbar_icon_notifaction_press);
 			if (GuokuApplication.getInstance().getBean() == null) {
 				main_bar_4.setImageResource(R.drawable.tabbar_icon_setting);
 			} else {
@@ -198,8 +198,8 @@ public class MainActivity2 extends NetWorkActivity{
 		} else {
 			main_bar_4.setImageResource(R.drawable.tabbar_icon_me);
 		}
-		
-		removeFrameLayout();//删除引导页
+
+		removeFrameLayout();// 删除引导页
 	}
 
 	@OnClick(R.id.ll_personal)
@@ -214,8 +214,7 @@ public class MainActivity2 extends NetWorkActivity{
 			main_bar_2.setImageResource(R.drawable.tabbar_icon_discover);
 			main_bar_3.setImageResource(R.drawable.tabbar_icon_notifaction);
 			if (GuokuApplication.getInstance().getBean() == null) {
-				main_bar_4
-						.setImageResource(R.drawable.tabbar_icon_setting_press);
+				main_bar_4.setImageResource(R.drawable.tabbar_icon_setting_press);
 			} else
 				main_bar_4.setImageResource(R.drawable.tabbar_icon_me_press);
 		} else {
@@ -233,8 +232,7 @@ public class MainActivity2 extends NetWorkActivity{
 	/** 修改显示的内容 不会重新加载 **/
 	public void switchContent(Fragment to) {
 		if (mContent != to) {
-			FragmentTransaction transaction = getSupportFragmentManager()
-					.beginTransaction();
+			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 			if (!to.isAdded()) { // 先判断是否被add过
 				transaction.hide(mContent).add(R.id.fl_content, to).commit(); // 隐藏当前的fragment，add下一个到Activity中
 			} else {
@@ -255,20 +253,19 @@ public class MainActivity2 extends NetWorkActivity{
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	@Override
 	public void setCurrentItems() {
 		// TODO Auto-generated method stub
 		jingXuanPageFragment.setCurrentItems(1);
 	}
 
-	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
 		return super.onKeyDown(keyCode, event);
 	}
-	
+
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		// TODO Auto-generated method stub
@@ -276,7 +273,11 @@ public class MainActivity2 extends NetWorkActivity{
 			qunaerFragment.onKeyDowns();
 			return true;
 		}
+		if (qunaerFragment.listSearchLog.getVisibility() == View.VISIBLE) {
+			qunaerFragment.hideSearchWhat();
+			return true;
+		}
 		return super.dispatchKeyEvent(event);
 	}
-	
+
 }
