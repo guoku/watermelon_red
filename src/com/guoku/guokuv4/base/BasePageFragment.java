@@ -28,6 +28,7 @@ import com.guoku.R;
 import com.guoku.guokuv4.homepage.HomeOneFragment;
 import com.guoku.guokuv4.homepage.GoodTwoFragmnet;
 import com.guoku.guokuv4.utils.ImgUtils;
+import com.guoku.guokuv4.utils.ToastUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 /**
@@ -46,7 +47,7 @@ public abstract class BasePageFragment extends BaseFrament {
 	ImageView imageView;// 动画图片
 
 	private int offset = 0;// 动画图片偏移量
-	private int currIndex = 0;// 当前页卡编号
+	public int currIndex = 0;// 当前页卡编号
 	private int bmpW;// 动画图片宽度
 	private int selectedColor, unSelectedColor;
 
@@ -261,7 +262,6 @@ public abstract class BasePageFragment extends BaseFrament {
 					lTextViews.get(i).setTextColor(unSelectedColor);
 				}
 			}
-
 		}
 	}
 

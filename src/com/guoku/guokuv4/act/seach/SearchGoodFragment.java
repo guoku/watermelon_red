@@ -10,6 +10,8 @@ import org.json.JSONObject;
 
 import com.alibaba.fastjson.JSON;
 import com.guoku.R;
+import com.guoku.guokuv4.act.seach.SearchInterface.OnActivityChangeListener;
+import com.guoku.guokuv4.act.seach.SearchInterface.OnFragmentChangeListener;
 import com.guoku.guokuv4.adapter.EntityAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
 import com.guoku.guokuv4.config.Constant;
@@ -18,12 +20,14 @@ import com.guoku.guokuv4.utils.ToastUtil;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import android.app.Activity;
+
 /**
  * @zhangyao
  * @Description: TODO
  * @date 2015年11月9日 下午4:40:49 搜索中的商品页
  */
-public class SearchGoodFragment extends BaseFrament {
+public class SearchGoodFragment extends BaseFrament{
 
 	private static final int SEARCH = 1001;
 	private static final int SEARCHADD = 1002;
@@ -55,9 +59,8 @@ public class SearchGoodFragment extends BaseFrament {
 				JSONObject root;
 				try {
 					root = new JSONObject(result);
-					entityAdapter.setList((ArrayList<EntityBean>) JSON
-							.parseArray(root.getString("entity_list"),
-									EntityBean.class));
+					entityAdapter.setList(
+							(ArrayList<EntityBean>) JSON.parseArray(root.getString("entity_list"), EntityBean.class));
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -81,8 +84,12 @@ public class SearchGoodFragment extends BaseFrament {
 	@Override
 	protected void setData() {
 		// TODO Auto-generated method stub
+		getData(SearchAct.searchStr);
+	}
+
+	public void getData(String str) {
 		sendConnection(Constant.SEARCH + "entity/search/", new String[] { "count", "offset", "q", "type" },
-				new String[] { "30", 0 + "", "tab", "all" }, 0 == 0 ? SEARCH : SEARCHADD, false);
+				new String[] { "30", 0 + "", str, "all" }, 0 == 0 ? SEARCH : SEARCHADD, false);
 	}
 
 }

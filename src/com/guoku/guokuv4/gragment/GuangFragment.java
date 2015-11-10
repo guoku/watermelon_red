@@ -554,6 +554,7 @@ public class GuangFragment extends BaseFrament {
 				hideSearchWhat();
 			}
 			edSearch.getText().clear();
+			GuokuUtil.hideKeyBoard(context);
 			Intent intent = new Intent(context, SearchAct.class);
 			intent.putExtra(GuangFragment.class.getName(), value);
 			startActivity(intent);
