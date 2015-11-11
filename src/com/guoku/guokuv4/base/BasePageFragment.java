@@ -50,8 +50,6 @@ public abstract class BasePageFragment extends BaseFrament {
 	public int currIndex = 0;// 当前页卡编号
 	private int bmpW;// 动画图片宽度
 	private int selectedColor, unSelectedColor;
-
-	public int currentItems = 0;
 	
 	ArrayList<TextView> lTextViews;
 

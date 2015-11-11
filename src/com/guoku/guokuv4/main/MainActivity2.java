@@ -269,13 +269,17 @@ public class MainActivity2 extends NetWorkActivity {
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		// TODO Auto-generated method stub
-		if (KeyEvent.KEYCODE_ENTER == event.getKeyCode() && event.getAction() == KeyEvent.ACTION_DOWN) {
-			qunaerFragment.onKeyDowns();
-			return true;
-		}
-		if (qunaerFragment.listSearchLog.getVisibility() == View.VISIBLE) {
-			qunaerFragment.hideSearchWhat();
-			return true;
+		if(qunaerFragment != null){
+			if (KeyEvent.KEYCODE_ENTER == event.getKeyCode() && event.getAction() == KeyEvent.ACTION_DOWN) {
+				qunaerFragment.onKeyDowns();
+				return true;
+			}
+			if(qunaerFragment.listSearchLog != null){
+				if (qunaerFragment.listSearchLog.getVisibility() == View.VISIBLE) {
+					qunaerFragment.hideSearchWhat();
+					return true;
+				}
+			}
 		}
 		return super.dispatchKeyEvent(event);
 	}

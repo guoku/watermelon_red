@@ -50,6 +50,7 @@ public class SearchAct extends BaseActivity implements OnActivityChangeListener{
 		
 		edTextWithDel.setText(searchStr);
 		edTextWithDel.addTextChangedListener(watcher);
+		edTextWithDel.clearFocus();
 	}
 	
 	public void onAttachFragment(Fragment fragment) {

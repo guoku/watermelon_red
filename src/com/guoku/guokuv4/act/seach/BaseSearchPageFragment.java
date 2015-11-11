@@ -8,11 +8,7 @@ import java.util.ArrayList;
 import com.guoku.R;
 import com.guoku.guokuv4.act.seach.SearchInterface.OnActivityChangeListener;
 import com.guoku.guokuv4.act.seach.SearchInterface.OnFragmentChangeListener;
-import com.guoku.guokuv4.base.BaseFrament;
 import com.guoku.guokuv4.base.BasePageFragment;
-import com.guoku.guokuv4.homepage.ArticleFragment;
-import com.guoku.guokuv4.homepage.GoodTwoFragmnet;
-import com.guoku.guokuv4.utils.ToastUtil;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
@@ -21,20 +17,22 @@ import android.widget.TextView;
 /**
  * @zhangyao
  * @Description: TODO
- * @date 2015年11月5日 下午1:47:11 
- * 搜索Fragment
+ * @date 2015年11月5日 下午1:47:11 搜索Fragment
  */
 public class BaseSearchPageFragment extends BasePageFragment implements OnFragmentChangeListener {
-	
+
 	public static OnActivityChangeListener onActivityChangeListener;
 
 	public void setOnActivityChangeListener(OnActivityChangeListener onActivityChangeListener) {
 		BaseSearchPageFragment.onActivityChangeListener = onActivityChangeListener;
 	}
-	
+
 	int count = 4;
-	
+
 	SearchGoodFragment searchGoodFragment;
+	SearchTagFragment searchTagFragment;
+	SearchUserFragment searchUserFragment;
+	SearchArticleFragment searchArticleFragment;
 
 	@Override
 	public int tabCount() {
@@ -72,27 +70,42 @@ public class BaseSearchPageFragment extends BasePageFragment implements OnFragme
 	public ArrayList<Fragment> initFragmentList() {
 		// TODO Auto-generated method stub
 		ArrayList<Fragment> list = new ArrayList<Fragment>();
-		// list.add(new HomeOneFragment());
 		searchGoodFragment = new SearchGoodFragment();
+		searchTagFragment = new SearchTagFragment();
+		searchUserFragment = new SearchUserFragment();
+		searchArticleFragment = new SearchArticleFragment();
 		list.add(searchGoodFragment);
-//		list.add(new SearchArticleFragment());
-//		list.add(new SearchTagFragment());
-//		list.add(new SearchUserFragment());
-		list.add(new SearchGoodFragment());
-		list.add(new SearchGoodFragment());
-		list.add(new SearchGoodFragment());
+		list.add(searchArticleFragment);
+		list.add(searchTagFragment);
+		list.add(searchUserFragment);
 		return list;
 	}
-	
+
 	@Override
 	public void onFragmentChange(String str) {
 		// TODO Auto-generated method stub
-		searchGoodFragment.getData(str);
+		switch (currIndex) {
+		case 0:
+			searchGoodFragment.getData(str, false, 0);
+			break;
+		case 1:
+
+			break;
+		case 2:
+			searchTagFragment.getData();
+			break;
+		case 3:
+			searchUserFragment.getData(str, false, 0);
+			break;
+
+		default:
+			break;
+		}
 	}
-	
+
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-		onActivityChangeListener=(OnActivityChangeListener) activity;
+		onActivityChangeListener = (OnActivityChangeListener) activity;
 	}
 
 }
