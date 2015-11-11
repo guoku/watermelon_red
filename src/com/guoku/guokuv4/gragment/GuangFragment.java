@@ -91,6 +91,9 @@ public class GuangFragment extends BaseFrament {
 	@ViewInject(R.id.list_search_log)
 	public ListView listSearchLog;//搜索记录list
 	
+	@ViewInject(R.id.layout_log)
+	public View viewLog;
+	
 	@ViewInject(R.id.view_back_black)
 	View backblack;//弹出搜索记录背景
 
@@ -430,7 +433,7 @@ public class GuangFragment extends BaseFrament {
 	
 	@OnClick(R.id.view_back_black)
 	private void inClickBlack(View view) {
-		if (listSearchLog.getVisibility() == View.VISIBLE) {
+		if (viewLog.getVisibility() == View.VISIBLE) {
 			hideSearchWhat();
 		}
 	}
@@ -480,10 +483,16 @@ public class GuangFragment extends BaseFrament {
 	 */
 	@OnClick(R.id.sou_tv_btn)
 	private void inClickClean(View view) {
-		if (listSearchLog.getVisibility() == View.VISIBLE) {
+		if (viewLog.getVisibility() == View.VISIBLE) {
 			hideSearchWhat();
 		}
 		edSearch.getText().clear();
+	}
+	
+	@OnClick(R.id.tv_clean)
+	private void onCleanView(View view){
+		SharePrenceUtil.delSearchLog(context);
+		hideSearchWhat();
 	}
 
 	/**
@@ -536,8 +545,8 @@ public class GuangFragment extends BaseFrament {
 	private void edOnClick(){
 		
 		if (searchLogAdapter != null) {
-			listSearchLog.getBackground().setAlpha(230);
-			if (listSearchLog.getVisibility() == View.INVISIBLE) {
+			viewLog.getBackground().setAlpha(230);
+			if (viewLog.getVisibility() == View.INVISIBLE) {
 				List<SearchLogBean> sBeans = SharePrenceUtil.getSearchRecord(getActivity());
 				if (sBeans != null) {
 					searchLogAdapter.setList((ArrayList<SearchLogBean>) sBeans);
@@ -550,7 +559,7 @@ public class GuangFragment extends BaseFrament {
 	private void goSearchAct(String value){
 		
 		if(!StringUtils.isEmpty(value)){
-			if (listSearchLog.getVisibility() == View.VISIBLE) {
+			if (viewLog.getVisibility() == View.VISIBLE) {
 				hideSearchWhat();
 			}
 			edSearch.getText().clear();
@@ -568,7 +577,7 @@ public class GuangFragment extends BaseFrament {
 					Animation.RELATIVE_TO_SELF, -ImgUtils.dip2px(context, 48), Animation.RELATIVE_TO_SELF, 0.0f);
 		}
 		animationllShow.setDuration(animTime);
-		listSearchLog.startAnimation(animationllShow);
+		viewLog.startAnimation(animationllShow);
 	}
 
 	public void hideSearchWhat() {
@@ -578,7 +587,7 @@ public class GuangFragment extends BaseFrament {
 					Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -ImgUtils.dip2px(context, 48));
 		}
 		animationllHide.setDuration(animTime);
-		listSearchLog.startAnimation(animationllHide);
+		viewLog.startAnimation(animationllHide);
 	}
 
 	public void showBackBlack() {
@@ -605,7 +614,7 @@ public class GuangFragment extends BaseFrament {
 		public void onAnimationStart(Animation animation) {
 			animIsRunning = true;
 			backblack.setVisibility(View.VISIBLE);
-			listSearchLog.setVisibility(View.VISIBLE);
+			viewLog.setVisibility(View.VISIBLE);
 		}
 
 		@Override
@@ -631,7 +640,7 @@ public class GuangFragment extends BaseFrament {
 		@Override
 		public void onAnimationEnd(Animation animation) {
 			backblack.setVisibility(View.INVISIBLE);
-			listSearchLog.setVisibility(View.INVISIBLE);
+			viewLog.setVisibility(View.INVISIBLE);
 			animIsRunning = false;
 		}
 	};

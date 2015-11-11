@@ -275,7 +275,7 @@ public class MainActivity2 extends NetWorkActivity {
 				return true;
 			}
 			if(qunaerFragment.listSearchLog != null){
-				if (qunaerFragment.listSearchLog.getVisibility() == View.VISIBLE) {
+				if (qunaerFragment.viewLog.getVisibility() == View.VISIBLE) {
 					qunaerFragment.hideSearchWhat();
 					return true;
 				}

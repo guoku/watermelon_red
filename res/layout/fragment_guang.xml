@@ -138,21 +138,39 @@
             android:id="@+id/view_back_black"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="48dp"
             android:background="@color/gray_btm"
             android:clickable="true"
-            android:visibility="invisible" 
-            android:layout_marginTop="48dp"
-            />
+            android:visibility="invisible" />
 
-        <ListView
-            android:id="@+id/list_search_log"
+        <LinearLayout
+            android:id="@+id/layout_log"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray_bg"
-            android:visibility="invisible" 
             android:layout_marginTop="48dp"
-            >
-        </ListView>
+            android:background="@color/gray_bg"
+            android:orientation="vertical"
+            android:visibility="invisible" >
+
+            <ListView
+                android:id="@+id/list_search_log"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </ListView>
+
+            <include layout="@layout/line_gray" />
+
+            <TextView
+                android:id="@+id/tv_clean"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/tv_search_log_clean"
+                android:textColor="@color/gray_fzxx" 
+                android:textSize="14sp"
+                />
+        </LinearLayout>
     </FrameLayout>
 
 </LinearLayout>

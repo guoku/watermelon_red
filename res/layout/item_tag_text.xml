@@ -12,6 +12,6 @@
         android:padding="10dp"
         android:text="TextView"
         android:textSize="14sp"
-        android:textColor="@color/gray_fzxx" />
+        android:textColor="@color/black_body" />
 
 </LinearLayout>

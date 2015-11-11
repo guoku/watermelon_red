@@ -1,8 +1,8 @@
 package com.guoku.guokuv4.utils;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import com.alibaba.fastjson.JSON;
 import com.guoku.guokuv4.bean.SearchLogBean;
@@ -121,14 +121,14 @@ public class SharePrenceUtil {
 	 */
 	public static void saveSearchRecord(Context context, String str) {
 		
-		Set<String> set = new HashSet<String>();
-		set.add(str);
+		Set<String> set = new TreeSet<String>();
 		ArrayList<SearchLogBean> list = getSearchRecord(context);
 		if(list != null){
 			for(SearchLogBean sBean : list){
 				set.add(sBean.getSerchStr());
 			}
 		}
+		set.add(str);
 		context.getSharedPreferences(Constant.GUOKU_TAB, 0).edit().putStringSet(KEY_SEARCH, set).commit();
 	}
 
@@ -147,7 +147,20 @@ public class SharePrenceUtil {
 				sBean.setSerchStr(str);
 				list.add(sBean);
 			}
+			if(list.size() > 1){
+				SearchLogBean sLogBean = list.get(0);
+				list.add(sLogBean);
+				list.remove(0);
+			}
 			return list;
 		}
+	}
+	
+	/**
+	 * 删除搜索记录
+	 */
+	public static void delSearchLog(Context context){
+		
+		context.getSharedPreferences(Constant.GUOKU_TAB, 0).edit().clear().commit();
 	}
 }
