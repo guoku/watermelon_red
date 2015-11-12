@@ -481,12 +481,13 @@ public class GuangFragment extends BaseFrament {
 	/**
 	 * 
 	 */
-	@OnClick(R.id.sou_tv_btn)
+	@OnClick(R.id.tv_cancel)
 	private void inClickClean(View view) {
 		if (viewLog.getVisibility() == View.VISIBLE) {
 			hideSearchWhat();
 		}
 		edSearch.getText().clear();
+		GuokuUtil.hideKeyBoard(context);
 	}
 	
 	@OnClick(R.id.tv_clean)

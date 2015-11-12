@@ -175,7 +175,6 @@
                 android:background="@color/g_line" />
 
             <LinearLayout
-                android:id="@+id/setting_ll_weixin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#fff"

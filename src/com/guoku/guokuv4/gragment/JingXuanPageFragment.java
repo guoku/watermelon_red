@@ -19,6 +19,9 @@ import com.guoku.guokuv4.homepage.GoodTwoFragmnet;
  * @date 2015-9-9 下午4:03:08 4.1精选首页图文流
  */
 public class JingXuanPageFragment extends BasePageFragment{
+	
+	public GoodTwoFragmnet goodTwoFragmnet = new GoodTwoFragmnet();
+	public ArticleFragment articleFragment = new ArticleFragment();
 
 	int count = 2;
 
@@ -36,16 +39,6 @@ public class JingXuanPageFragment extends BasePageFragment{
 		for (int i = 0; i < count; i++) {
 			TextView textView = new TextView(getActivity());
 			switch (i) {
-			// case 0:
-			// textView.setText(R.string.tv_tab_recommend);
-			// break;
-			// case 1:
-			// textView.setText(R.string.tv_tab_commodity);
-			// break;
-			// case 2:
-			// textView.setText(R.string.tv_tab_image_text);
-			// break;
-			// }
 			case 0:
 				textView.setText(R.string.tv_tab_commodity);
 				break;
@@ -64,9 +57,8 @@ public class JingXuanPageFragment extends BasePageFragment{
 		// TODO Auto-generated method stub
 
 		ArrayList<Fragment> list = new ArrayList<Fragment>();
-		// list.add(new HomeOneFragment());
-		list.add(new GoodTwoFragmnet());
-		list.add(new ArticleFragment());
+		list.add(goodTwoFragmnet);
+		list.add(articleFragment);
 		return list;
 	}
 

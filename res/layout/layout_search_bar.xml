@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginLeft="12dp"
-        android:layout_toLeftOf="@+id/sou_tv_btn"
+        android:layout_toLeftOf="@+id/tv_cancel"
         android:background="@color/g_def"
         android:orientation="horizontal" 
         android:gravity="center_vertical"
@@ -38,7 +38,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/sou_tv_btn"
+        android:id="@+id/tv_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"

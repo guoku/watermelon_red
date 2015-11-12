@@ -49,6 +49,9 @@ public class SearchGoodFragment extends BaseFrament {
 
 	@ViewInject(R.id.pull_listview)
 	PullToRefreshListView listView;
+	
+	@ViewInject(R.id.layout_search_empty)
+	View viewEmpty;
 
 	private EntityAdapter entityAdapter;
 
@@ -98,6 +101,8 @@ public class SearchGoodFragment extends BaseFrament {
 		switch (where) {
 		case SEARCH:
 			try {
+				hideEmpty(viewEmpty, listView);
+				listView.setAdapter(entityAdapter);//为了listview在重新搜索的时候回到初始位置
 				JSONObject root = new JSONObject(result);
 				entityAdapter.setList(
 						(ArrayList<EntityBean>) JSON.parseArray(root.getString("entity_list"), EntityBean.class));
@@ -105,7 +110,7 @@ public class SearchGoodFragment extends BaseFrament {
 				e.printStackTrace();
 			}
 			if (entityAdapter.getCount() == 0) {
-				ToastUtil.show(context, "没有相关结果");
+				showEmpty(viewEmpty, listView);
 			}
 			break;
 		case SEARCHADD:
@@ -139,7 +144,7 @@ public class SearchGoodFragment extends BaseFrament {
 	@Override
 	protected void setData() {
 		// TODO Auto-generated method stub
-		getData(SearchAct.searchStr, true, 0);
+		getData(SearchAct.searchStr, false, 0);
 	}
 
 	public void getData(String str, boolean isShowDialog, int off) {

@@ -8,14 +8,20 @@ import com.guoku.guokuv4.act.seach.SearchInterface.OnActivityChangeListener;
 import com.guoku.guokuv4.act.seach.SearchInterface.OnFragmentChangeListener;
 import com.guoku.guokuv4.base.BaseActivity;
 import com.guoku.guokuv4.gragment.GuangFragment;
+import com.guoku.guokuv4.utils.GuokuUtil;
+import com.guoku.guokuv4.utils.SharePrenceUtil;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.guoku.guokuv4.view.EditTextWithDel;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
+import android.view.View;
 
 /**
  * @zhangyao
@@ -78,7 +84,6 @@ public class SearchAct extends BaseActivity implements OnActivityChangeListener{
 		public void afterTextChanged(Editable s) {
 			// TODO Auto-generated method stub
 			searchStr = s.toString();
-			ToastUtil.show(mContext, searchStr);
 			if (s.length() > 0) {
 //				search(0, seachConten);
 				onFragmentChangeListener.onFragmentChange(s.toString());
@@ -92,6 +97,24 @@ public class SearchAct extends BaseActivity implements OnActivityChangeListener{
 	public void onActivityChange() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@OnClick(R.id.tv_cancel)
+	private void inClickClean(View view) {
+		GuokuUtil.hideKeyBoard(this);
+	}
+	
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		// TODO Auto-generated method stub
+		if (KeyEvent.KEYCODE_ENTER == event.getKeyCode() && event.getAction() == KeyEvent.ACTION_DOWN) {
+			if(!StringUtils.isEmpty(searchStr)){
+				SharePrenceUtil.saveSearchRecord(this, searchStr);
+			}
+			GuokuUtil.hideKeyBoard(this);
+			return true;
+		}
+		return super.dispatchKeyEvent(event);
 	}
 
 }

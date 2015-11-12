@@ -40,7 +40,7 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 	private static final int TAG_ARTICLE_ADD = 1004;// 上拉更多
 
 	@ViewInject(R.id.list_article)
-	PullToRefreshListView listViewArtivle;
+	public PullToRefreshListView listViewArtivle;
 	
 	@ViewInject(R.id.tv_check_net)
 	ImageView tvCheckNet;

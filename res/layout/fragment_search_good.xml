@@ -5,5 +5,7 @@
     android:orientation="vertical" >
     
     <include layout="@layout/layout_pull_list_view"/>
+    
+    <include layout="@layout/layout_search_empty"/>
 
 </LinearLayout>

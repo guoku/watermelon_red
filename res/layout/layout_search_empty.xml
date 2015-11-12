@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:gravity="center"
+    android:id="@+id/layout_search_empty"
+    android:visibility="gone"
+    >
+    
+    <ImageView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/search_empty"
+        />
+    
+    <TextView 
+        style="@style/home_page_item_article_context"
+        android:text="@string/tv_search_empty"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black_body"
+        />
+    
+    <TextView 
+        style="@style/home_page_item_article_below"
+        android:text="@string/tv_search_empty_xx"
+        android:layout_marginTop="10dp"
+        android:lines="2"
+        android:gravity="center"
+        />
+    
+
+</LinearLayout>

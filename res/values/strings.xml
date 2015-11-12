@@ -26,6 +26,9 @@
 	<string name="tv_seach_like">按喜爱</string>
 	<string name="tv_search_please_Enter">请输入搜索内容</string>
 	<string name="tv_search_log_clean">清空历史搜索记录</string>
+	<string name="tv_search_empty">搜索无结果</string>
+	<string name="tv_search_empty_xx">没有找到任何相关商品／图文／品类／用户\n不妨换个关键词试试</string>
+	
 	
 	<!-- 修改密码 -->
 	<string name="tv_change_psd">修改密码</string>

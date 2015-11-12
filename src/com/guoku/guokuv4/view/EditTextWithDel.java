@@ -99,4 +99,13 @@ public class EditTextWithDel extends EditText {
 	protected void finalize() throws Throwable {
 		super.finalize();
 	}
+	
+	/**
+	 * 光标调整到末尾
+	 */
+	@Override
+	public void setSelection(int index) {
+		// TODO Auto-generated method stub
+		super.setSelection(length());
+	}
 }

@@ -17,5 +17,7 @@
         android:scrollbars="none"
         android:verticalSpacing="4dp" >
     </com.guoku.guokuv4.view.ScrollViewWithGridView>
+    
+    <include layout="@layout/layout_search_empty"/>
 
 </LinearLayout>

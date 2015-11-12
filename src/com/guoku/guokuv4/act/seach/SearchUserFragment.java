@@ -42,6 +42,9 @@ public class SearchUserFragment extends BaseFrament implements OnClickListener {
 
 	@ViewInject(R.id.pull_listview)
 	PullToRefreshListView listView;
+	
+	@ViewInject(R.id.layout_search_empty)
+	View viewEmpty;
 
 	private FansAdapter fansAdapter;
 
@@ -92,6 +95,7 @@ public class SearchUserFragment extends BaseFrament implements OnClickListener {
 		switch (where) {
 		case SEARCH:
 			try {
+				hideEmpty(viewEmpty, listView);
 				ArrayList<UserBean> list = (ArrayList<UserBean>) JSON.parseArray(result, UserBean.class);
 				ArrayList<UserBean> bufList = new ArrayList<UserBean>();
 				if (list != null && list.size() > 0) {
@@ -103,7 +107,7 @@ public class SearchUserFragment extends BaseFrament implements OnClickListener {
 					fansAdapter.setList(bufList);
 				}
 				if (fansAdapter.getCount() == 0) {
-					ToastUtil.show(context, "没有相关结果");
+					showEmpty(viewEmpty, listView);
 				}
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -149,7 +153,7 @@ public class SearchUserFragment extends BaseFrament implements OnClickListener {
 	@Override
 	protected void setData() {
 		// TODO Auto-generated method stub
-		getData(SearchAct.searchStr, true, 0);
+		getData(SearchAct.searchStr, false, 0);
 	}
 
 	@Override

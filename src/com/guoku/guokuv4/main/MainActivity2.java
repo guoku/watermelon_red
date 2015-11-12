@@ -4,6 +4,7 @@ import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.SettingAct;
 import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.base.BaseActivity.OnDoubleClickListener;
 import com.guoku.guokuv4.gragment.GuangFragment;
 import com.guoku.guokuv4.gragment.JingXuanPageFragment;
 import com.guoku.guokuv4.gragment.OrderFragment;
@@ -18,6 +19,8 @@ import com.umeng.update.UmengUpdateAgent;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
@@ -27,7 +30,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class MainActivity2 extends NetWorkActivity {
+public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListener {
 
 	@ViewInject(R.id.ll_destination)
 	private LinearLayout ll_destination;// 目的地
@@ -53,15 +56,9 @@ public class MainActivity2 extends NetWorkActivity {
 	@ViewInject(R.id.main_bar_4)
 	private ImageView main_bar_4;// 个人
 
-	// private ImageView iv_destination;//
-	// private ImageView iv_guang;//
-	// private ImageView iv_order;//
-	// private ImageView iv_personal;//
 	private Fragment mContent;
 
 	private JingXuanPageFragment jingXuanPageFragment;
-
-	// private JingXuanFragment destinationFragment;
 	private GuangFragment qunaerFragment;
 	private PersonalFragment personalFragment;
 	private OrderFragment orderFragment;
@@ -71,6 +68,8 @@ public class MainActivity2 extends NetWorkActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_activity);
 		UmengUpdateAgent.update(this);
+
+		registerDoubleClickListener(main_bar_1, this);
 	}
 
 	@Override
@@ -143,9 +142,6 @@ public class MainActivity2 extends NetWorkActivity {
 
 	@OnClick(R.id.ll_destination)
 	public void ll_destination(View v) {
-		// if (destinationFragment == null) {
-		// destinationFragment = new JingXuanFragment();
-		// }
 
 		if (jingXuanPageFragment == null) {
 			jingXuanPageFragment = new JingXuanPageFragment();
@@ -269,12 +265,12 @@ public class MainActivity2 extends NetWorkActivity {
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		// TODO Auto-generated method stub
-		if(qunaerFragment != null){
+		if (qunaerFragment != null) {
 			if (KeyEvent.KEYCODE_ENTER == event.getKeyCode() && event.getAction() == KeyEvent.ACTION_DOWN) {
 				qunaerFragment.onKeyDowns();
 				return true;
 			}
-			if(qunaerFragment.listSearchLog != null){
+			if (qunaerFragment.listSearchLog != null) {
 				if (qunaerFragment.viewLog.getVisibility() == View.VISIBLE) {
 					qunaerFragment.hideSearchWhat();
 					return true;
@@ -282,6 +278,73 @@ public class MainActivity2 extends NetWorkActivity {
 			}
 		}
 		return super.dispatchKeyEvent(event);
+	}
+
+	/**
+	 * 注册一个双击事件
+	 */
+	public void registerDoubleClickListener(View view, final OnDoubleClickListener listener) {
+		if (listener == null)
+			return;
+		view.setOnClickListener(new View.OnClickListener() {
+			private static final int DOUBLE_CLICK_TIME = 350; // 双击间隔时间350毫秒
+			private boolean waitDouble = true;
+
+			private Handler handler = new Handler() {
+				@Override
+				public void handleMessage(Message msg) {
+					listener.OnSingleClick((View) msg.obj);
+				}
+
+			};
+
+			// 等待双击
+			public void onClick(final View v) {
+				if (waitDouble) {
+					waitDouble = false; // 与执行双击事件
+					new Thread() {
+
+						public void run() {
+							try {
+								Thread.sleep(DOUBLE_CLICK_TIME);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} // 等待双击时间，否则执行单击事件
+							if (!waitDouble) {
+								// 如果过了等待事件还是预执行双击状态，则视为单击
+								waitDouble = true;
+								Message msg = handler.obtainMessage();
+								msg.obj = v;
+								handler.sendMessage(msg);
+							}
+						}
+
+					}.start();
+				} else {
+					waitDouble = true;
+					listener.OnDoubleClick(v); // 执行双击
+				}
+			}
+		});
+	}
+
+	@Override
+	public void OnSingleClick(View v) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void OnDoubleClick(View v) {
+		// TODO Auto-generated method stub
+		if (jingXuanPageFragment.currIndex == 0) {
+			jingXuanPageFragment.goodTwoFragmnet.jingxuan_lv_1.getRefreshableView().smoothScrollToPosition(0);
+		}
+		if (jingXuanPageFragment.currIndex == 1) {
+			jingXuanPageFragment.articleFragment.listViewArtivle.getRefreshableView().smoothScrollToPosition(0);
+		}
+
 	}
 
 }

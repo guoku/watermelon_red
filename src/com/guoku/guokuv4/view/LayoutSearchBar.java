@@ -41,7 +41,7 @@ public class LayoutSearchBar extends RelativeLayout {
 		inflater.inflate(R.layout.layout_search_bar, this);
 
 		editTextWithDel = (EditTextWithDel) findViewById(R.id.ed_search);
-		tvClean = (TextView) findViewById(R.id.sou_tv_btn);
+		tvClean = (TextView) findViewById(R.id.tv_cancel);
 
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LayoutSearch);
 

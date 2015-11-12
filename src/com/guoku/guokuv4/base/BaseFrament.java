@@ -484,4 +484,28 @@ public abstract class BaseFrament extends Fragment {
 
 		startActivity(intent);
 	}
+	
+	/**
+	 * 显示数据为null时的布局
+	 */
+	public void showEmpty(View view, View list){
+		if(view.getVisibility() == View.GONE){
+			view.setVisibility(View.VISIBLE);
+		}
+		if(list.getVisibility() == View.VISIBLE){
+			list.setVisibility(View.GONE);
+		}
+	}
+	
+	/**
+	 * 隐藏数据为null时的布局
+	 */
+	public void hideEmpty(View view, View list){
+		if(view.getVisibility() == View.VISIBLE){
+			view.setVisibility(View.GONE);
+		}
+		if(list.getVisibility() == View.GONE){
+			list.setVisibility(View.VISIBLE);
+		}
+	}
 }

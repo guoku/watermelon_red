@@ -8,7 +8,6 @@ import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.LoginAct;
 import com.guoku.guokuv4.act.ProductInfoAct;
-import com.guoku.guokuv4.act.RegisterAct;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.MyPreferences;
@@ -28,12 +27,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-import android.view.animation.Animation.AnimationListener;
 import android.view.ViewParent;
 import android.view.Window;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.TranslateAnimation;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -445,4 +444,10 @@ public abstract class BaseActivity extends FragmentActivity {
 			animIsRunning = false;
 		}
 	};
+	
+
+public interface OnDoubleClickListener {
+    public void OnSingleClick(View v);
+    public void OnDoubleClick(View v);
+}
 }

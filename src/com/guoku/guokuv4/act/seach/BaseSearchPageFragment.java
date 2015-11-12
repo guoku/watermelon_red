@@ -89,7 +89,8 @@ public class BaseSearchPageFragment extends BasePageFragment implements OnFragme
 			searchGoodFragment.getData(str, false, 0);
 			break;
 		case 1:
-
+			searchArticleFragment.page = 1;
+			searchArticleFragment.getData(str, false);
 			break;
 		case 2:
 			searchTagFragment.getData();

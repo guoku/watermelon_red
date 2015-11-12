@@ -8,6 +8,7 @@ import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.adapter.JingXuanAdapter;
+import com.guoku.guokuv4.base.BaseActivity.OnDoubleClickListener;
 import com.guoku.guokuv4.base.BaseFrament;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.PBean;
@@ -26,6 +27,8 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.umeng.analytics.MobclickAgent;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -45,7 +48,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 	public static final String INTNT_KEY = GoodTwoFragmnet.class.getName();
 	// private static final int UPDATA_LIKE_UN = 17;
 	@ViewInject(R.id.jingxuan_lv_1)
-	private PullToRefreshListView jingxuan_lv_1;
+	public PullToRefreshListView jingxuan_lv_1;
 	
 	@ViewInject(R.id.tv_check_net)
 	ImageView tvCheckNet;
