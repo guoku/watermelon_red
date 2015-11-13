@@ -3,14 +3,12 @@ package com.guoku.guokuv4.main;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.SettingAct;
-import com.guoku.guokuv4.base.NetWorkActivity;
 import com.guoku.guokuv4.base.BaseActivity.OnDoubleClickListener;
+import com.guoku.guokuv4.base.NetWorkActivity;
 import com.guoku.guokuv4.gragment.GuangFragment;
 import com.guoku.guokuv4.gragment.JingXuanPageFragment;
 import com.guoku.guokuv4.gragment.OrderFragment;
 import com.guoku.guokuv4.gragment.PersonalFragment;
-import com.guoku.guokuv4.utils.StringUtils;
-import com.guoku.guokuv4.utils.ToastUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -25,8 +23,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnKeyListener;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -174,7 +170,6 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 				main_bar_4.setImageResource(R.drawable.tabbar_icon_me);
 			}
 		} else {
-			ToastUtil.show(mContext, "请登录");
 			openLogin();
 		}
 	}
@@ -332,7 +327,18 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 	@Override
 	public void OnSingleClick(View v) {
 		// TODO Auto-generated method stub
-
+		if (jingXuanPageFragment == null) {
+			jingXuanPageFragment = new JingXuanPageFragment();
+		}
+		switchContent(jingXuanPageFragment);
+		main_bar_1.setImageResource(R.drawable.tabbar_icon_selection_press);
+		main_bar_2.setImageResource(R.drawable.tabbar_icon_discover);
+		main_bar_3.setImageResource(R.drawable.tabbar_icon_notifaction);
+		if (GuokuApplication.getInstance().getBean() == null) {
+			main_bar_4.setImageResource(R.drawable.tabbar_icon_setting);
+		} else {
+			main_bar_4.setImageResource(R.drawable.tabbar_icon_me);
+		}
 	}
 
 	@Override

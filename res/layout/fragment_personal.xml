@@ -98,7 +98,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="4dp"
                         android:text="个性"
-                        android:textColor="@color/g_red" />
+                        android:textColor="@color/gray_fzxx"
+                        />
                 </LinearLayout>
 
                 <ImageView
@@ -130,7 +131,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="4dp"
                         android:text="个性"
-                        android:textColor="@color/g_red" />
+                        android:textColor="@color/gray_fzxx"
+                        />
                 </LinearLayout>
             </LinearLayout>
 

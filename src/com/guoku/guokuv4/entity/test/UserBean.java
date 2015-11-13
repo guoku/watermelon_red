@@ -31,9 +31,6 @@ public class UserBean implements Serializable {
 
 
 	public String getArticle_count() {
-		if(StringUtils.isEmpty(article_count)){
-			return "0";
-		}
 		return article_count;
 	}
 
@@ -145,9 +142,6 @@ public class UserBean implements Serializable {
 	}
 
 	public String getEntity_note_count() {
-		if(StringUtils.isEmpty(entity_note_count)){
-			return "0";
-		}
 		return entity_note_count;
 	}
 

@@ -10,6 +10,13 @@
         layout="@layout/title" />
 
     <include layout="@layout/line_gray" />
+    
+    <LinearLayout
+        android:id="@+id/layout_data" 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
 
     <RelativeLayout
         android:id="@+id/layout_comment_title"
@@ -69,5 +76,8 @@
         </ListView>
         
     </FrameLayout>
+    </LinearLayout>
+    
+    <include layout="@layout/layout_user_empty"/>
 
 </LinearLayout>

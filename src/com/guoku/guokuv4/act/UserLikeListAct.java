@@ -50,7 +50,13 @@ public class UserLikeListAct extends NetWorkActivity {
 
 	private final int TABLIKE = 1001;// 喜欢
 	private final int PROINFO = 1002;
-
+	
+	@ViewInject(R.id.layout_data)
+	View layoutData;
+	
+	@ViewInject(R.id.tv_empty)
+	TextView tvEmpty;
+	
 	@ViewInject(R.id.layout_comment_title)
 	View viewTitle;
 
@@ -171,7 +177,8 @@ public class UserLikeListAct extends NetWorkActivity {
 		uBean = (UserBean) getIntent().getExtras().getSerializable(PersonalFragment.INTENT_CODE);
 		
 		if(getIntent().getExtras().getBoolean(PersonalFragment.IS_EMPTY)){
-			//喜欢数为0
+			isDataEmpty(true, layoutData, tvEmpty);
+			tvEmpty.setText(getResources().getString(R.string.tv_empty_other, title));
 		}else{
 			getLikeData(TABLIKE, true);
 		}

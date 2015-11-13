@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.guoku.R;
@@ -32,8 +33,11 @@ public class UserArticleListAct extends NetWorkActivity {
 
 	private final int TABNOTE = 1001;
 	private final int PROINFO = 1002;
+	
+	@ViewInject(R.id.tv_empty)
+	TextView tvEmpty;
 
-	@ViewInject(R.id.tab_lv)
+	@ViewInject(R.id.pull_listview)
 	private PullToRefreshListView listView;
 
 	ListImgLeftAdapter adapter;
@@ -115,8 +119,14 @@ public class UserArticleListAct extends NetWorkActivity {
 				PersonalFragment.class.getName());
 		uBean = (UserBean) getIntent().getExtras().getSerializable(
 				PersonalFragment.INTENT_CODE);
-		getLikeData(TABNOTE, true);
-
+		
+		if(getIntent().getExtras().getBoolean(PersonalFragment.IS_EMPTY)){
+			isDataEmpty(true, listView, tvEmpty);
+			tvEmpty.setText(getResources().getString(R.string.tv_empty_other, title));
+		}else{
+			getLikeData(TABNOTE, true);
+		}
+		
 		setGCenter(true, title);
 		setGLeft(true, R.drawable.back_selector);
 	}

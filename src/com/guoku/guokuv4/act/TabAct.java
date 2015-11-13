@@ -74,7 +74,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 	@ViewInject(R.id.check_box_show)
 	CheckBox cbShow;// tab上的显示方式按钮
 
-	@ViewInject(R.id.tab_lv)
+	@ViewInject(R.id.pull_listview)
 	private PullToRefreshListView tab_lv;
 
 	@ViewInject(R.id.tab_gv)

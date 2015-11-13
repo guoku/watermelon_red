@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.guoku.R;
 import com.guoku.guokuv4.adapter.ListImgLeftAdapter;
@@ -32,8 +33,11 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 public class UserTagListAct extends NetWorkActivity {
 
 	private final int TAB_TAG = 1001;
+	
+	@ViewInject(R.id.tv_empty)
+	TextView tvEmpty;
 
-	@ViewInject(R.id.tab_lv)
+	@ViewInject(R.id.pull_listview)
 	private PullToRefreshListView listView;
 
 	UserTagListAdapter adapter;
@@ -115,7 +119,14 @@ public class UserTagListAct extends NetWorkActivity {
 				PersonalFragment.class.getName());
 		uBean = (UserBean) getIntent().getExtras().getSerializable(
 				PersonalFragment.INTENT_CODE);
-		getNetData(TAB_TAG, true);
+		
+		if(getIntent().getExtras().getBoolean(PersonalFragment.IS_EMPTY)){
+			isDataEmpty(true, listView, tvEmpty);
+			tvEmpty.setText(getResources().getString(R.string.tv_empty_other, title));
+		}else{
+			getNetData(TAB_TAG, true);
+		}
+		
 
 		setGCenter(true, title);
 		setGLeft(true, R.drawable.back_selector);

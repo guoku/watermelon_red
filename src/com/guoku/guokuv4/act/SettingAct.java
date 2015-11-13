@@ -37,6 +37,8 @@ public class SettingAct extends NetWorkActivity {
 	private CustomShareBoard shareBoard;
 	final UMSocialService mController = UMServiceFactory
 			.getUMSocialService("com.umeng.share");
+	
+	boolean isLoginAct;//判断是否跳到登录页面
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -121,6 +123,7 @@ public class SettingAct extends NetWorkActivity {
 			startActivity(new Intent(mContext, LoginAct.class));
 			overridePendingTransition(R.anim.push_up_in,
 					R.anim.push_up_out);
+			isLoginAct = true;
 		} else {
 			GuokuApplication.getInstance().logout();
 			mController.deleteOauth(mContext, SHARE_MEDIA.SINA,
@@ -174,6 +177,17 @@ public class SettingAct extends NetWorkActivity {
 
 	@Override
 	protected void setupData() {
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		if(isLoginAct){
+			if (GuokuApplication.getInstance().getBean() != null){
+				finish();
+			}
+		}
 	}
 
 }

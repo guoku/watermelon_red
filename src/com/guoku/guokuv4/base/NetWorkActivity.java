@@ -187,6 +187,7 @@ public abstract class NetWorkActivity extends BaseActivity {
 		Logger.e("params", "sign----->" + ":" + genSign(paramsMap));
 		Logger.e("params", "api_key----->" + ":0b19c2b93687347e95c6b6f5cc91bb87");
 		Logger.e("params", "params----->" + ":" + params.toString());
+		Logger.e("params", "url----->" + ":" + url);
 		// Logger.e("params", "session----->" + ":" +
 		// GuokuApplication.getInstance()
 		// .getBean().getSession());

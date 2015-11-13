@@ -28,7 +28,6 @@
         android:textColor="@color/gray_fzxx"
         android:textSize="15sp"
         android:layout_toRightOf="@+id/textView1"
-        android:text="ddd"
         />
 
     <ImageView

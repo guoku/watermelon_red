@@ -59,23 +59,22 @@ public abstract class BaseActivity extends FragmentActivity {
 
 	TextView tvTwo;
 	ImageView imgTrage;
-	
-	public UMSocialService mController;//初始化友盟分享
-	
+
+	public UMSocialService mController;// 初始化友盟分享
+
 	public static boolean isRefrech;// 在弹出的popwindos是否刷新
-	
+
 	public static ArrayList<String> webViewTitle = new ArrayList<String>();
-	
+
 	public Animation animationBackShow;
 	public Animation animationBackHide;
 	public Animation animationllShow;
 	public Animation animationllHide;
 	public final int animTime = 300;
 	public boolean animIsRunning = false;
-	
+
 	public View listView;
 	public View backView;
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +85,7 @@ public abstract class BaseActivity extends FragmentActivity {
 		mContext = this;
 		isLive = true;
 		getWindow().setWindowAnimations(R.style.ActivityAnimation);
-		
+
 		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 	}
 
@@ -141,7 +140,7 @@ public abstract class BaseActivity extends FragmentActivity {
 			line.setVisibility(View.GONE);
 		}
 	}
-	
+
 	protected ImageView getGLeft() {
 		ImageView view = (ImageView) findViewById(R.id.title_bar_left_iv);
 		return view;
@@ -216,26 +215,24 @@ public abstract class BaseActivity extends FragmentActivity {
 		openActivityForResult(pClass, null, requestCode);
 	}
 
-	protected void openActivityForResult(Class<?> pClass, Bundle pBundle,
-			int requestCode) {
+	protected void openActivityForResult(Class<?> pClass, Bundle pBundle, int requestCode) {
 		Intent intent = new Intent(this, pClass);
 		if (pBundle != null) {
 			intent.putExtras(pBundle);
 		}
 		startActivityForResult(intent, requestCode);
 	}
-	
-	protected void openShopInfo(String result){
+
+	protected void openShopInfo(String result) {
 		PInfoBean bean = ParseUtil.getPI(result);
 		Intent intent = new Intent(mContext, ProductInfoAct.class);
 		intent.putExtra("data", JSON.toJSONString(bean));
 		startActivity(intent);
 	}
-	
-	protected void openLogin(){
+
+	protected void openLogin() {
 		startActivity(new Intent(this, LoginAct.class));
-		overridePendingTransition(R.anim.push_up_in,
-				R.anim.push_up_out);
+		overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
 	}
 
 	public void leftOnClick() {
@@ -262,7 +259,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-//		addGuideImage();// 添加引导页
+		// addGuideImage();// 添加引导页
 	}
 
 	/**
@@ -273,28 +270,24 @@ public abstract class BaseActivity extends FragmentActivity {
 		if (view == null)
 			return;
 		if (!MyPreferences.activityIsGuided(this, BaseActivity.this.getClass().getName())) {
-//			 引导过了
+			// 引导过了
 
 			ViewParent viewParent = view.getParent();
 			if (viewParent instanceof FrameLayout) {
 				frameLayout = (FrameLayout) viewParent;
 
-				FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-						LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+				FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+						LayoutParams.WRAP_CONTENT);
 				params.gravity = Gravity.CENTER;
 				LayoutInflater lInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				;
-				viewsOne = lInflater.inflate(R.layout.view_walkthrough_one,
-						null);
-				viewsTwo = lInflater.inflate(R.layout.view_walkthrough_two,
-						null);
+				viewsOne = lInflater.inflate(R.layout.view_walkthrough_one, null);
+				viewsTwo = lInflater.inflate(R.layout.view_walkthrough_two, null);
 
-				final TextView textView = (TextView) viewsOne
-						.findViewById(R.id.textView1);
+				final TextView textView = (TextView) viewsOne.findViewById(R.id.textView1);
 
 				tvTwo = (TextView) viewsTwo.findViewById(R.id.textView3);// 下面一层textview
-				imgTrage = (ImageView) viewsTwo
-						.findViewById(R.id.img_walkthrough_trgl);
+				imgTrage = (ImageView) viewsTwo.findViewById(R.id.img_walkthrough_trgl);
 
 				textView.setOnClickListener(new OnClickListener() {
 					@Override
@@ -304,8 +297,7 @@ public abstract class BaseActivity extends FragmentActivity {
 						frameLayout.removeViewAt(2);
 						showFrameLayoutTwo();
 						setCurrentItems();
-						MyPreferences.setIsGuided(getApplicationContext(), BaseActivity.this
-								.getClass().getName());// 设为已引导
+						MyPreferences.setIsGuided(getApplicationContext(), BaseActivity.this.getClass().getName());// 设为已引导
 					}
 				});
 				frameLayout.addView(viewsTwo);// 添加引导图片
@@ -342,21 +334,20 @@ public abstract class BaseActivity extends FragmentActivity {
 	public interface OnViewPageCurrentItem {
 		void onCurrentItem();
 	}
-	
-	
-	public String goBack(WebView view){
+
+	public String goBack(WebView view) {
 		if (view.canGoBack()) {
 			view.goBack(); // 后退
-			if(webViewTitle.size() > 0){
+			if (webViewTitle.size() > 0) {
 				webViewTitle.remove(webViewTitle.size() - 1);
 			}
 		} else {
 			finish();
 		}
-		
+
 		return webViewTitle.get(webViewTitle.size() - 1);
 	}
-	
+
 	/**
 	 * 分享的sso回调
 	 */
@@ -369,7 +360,7 @@ public abstract class BaseActivity extends FragmentActivity {
 			ssoHandler.authorizeCallBack(arg0, arg1, arg2);
 		}
 	}
-	
+
 	public void showSearchWhat() {
 		showBackBlack();
 		if (animationllShow == null) {
@@ -444,10 +435,30 @@ public abstract class BaseActivity extends FragmentActivity {
 			animIsRunning = false;
 		}
 	};
-	
 
-public interface OnDoubleClickListener {
-    public void OnSingleClick(View v);
-    public void OnDoubleClick(View v);
-}
+	/**
+	 * 双击tab接口
+	 * @zhangyao
+	 * @Description: TODO
+	 * @date 2015年11月13日 下午3:18:51
+	 */
+	public interface OnDoubleClickListener {
+		public void OnSingleClick(View v);
+
+		public void OnDoubleClick(View v);
+	}
+	
+	/**
+	 * 设置数据为空或不为空ui的显示（例如用户的喜爱）
+	 */
+	public void isDataEmpty(boolean isEmpty, View data, View unData){
+		if(isEmpty){
+			unData.setVisibility(View.VISIBLE);
+			data.setVisibility(View.GONE);
+		}else{
+			data.setVisibility(View.VISIBLE);
+			unData.setVisibility(View.GONE);
+		}
+	}
+
 }

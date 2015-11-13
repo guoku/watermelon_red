@@ -53,7 +53,7 @@ public class TabListSecondAct extends NetWorkActivity implements
 	@ViewInject(R.id.sv)
 	private PullToRefreshScrollView sv;//gridview上拉刷新
 	
-	@ViewInject(R.id.tab_lv)
+	@ViewInject(R.id.pull_listview)
 	private PullToRefreshListView tab_lv;
 
 	@ViewInject(R.id.tab_gv)

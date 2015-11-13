@@ -66,6 +66,7 @@
 	<string name="tv_user_tag">参与的标签</string>
 	<string name="tv_user_article_zan">赞过的图文</string>
 	<string name="tv_all">所有</string>
+	<string name="tv_empty_other" formatted="false">暂无%s</string>
 	
 	<!-- 分享popwindos -->
 	<string name="tv_share">分享</string>

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.guoku"
     android:installLocation="auto"
-    android:versionCode="413"
+    android:versionCode="412"
     android:versionName="1024.1" 
     >
     
@@ -52,7 +52,6 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme"
         android:uiOptions="splitActionBarWhenNarrow" 
-        android:debuggable="true"
         >
         <activity
             android:name="com.umeng.fb.ConversationActivity"
