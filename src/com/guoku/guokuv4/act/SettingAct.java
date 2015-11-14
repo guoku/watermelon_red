@@ -145,7 +145,6 @@ public class SettingAct extends NetWorkActivity {
 						}
 					});
 
-			startActivity(new Intent(mContext, MainActivity2.class));
 			LoginService loginService = AlibabaSDK
 					.getService(LoginService.class);
 			loginService.logout(this, new LogoutCallback() {
@@ -167,7 +166,9 @@ public class SettingAct extends NetWorkActivity {
 				}
 			});
 
-			finish();
+			Intent intent = new Intent(mContext, MainActivity2.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
 		}
 	}
 

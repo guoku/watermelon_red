@@ -27,6 +27,7 @@ import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.BroadUtil;
+import com.guoku.guokuv4.utils.LogGK;
 import com.guoku.guokuv4.utils.SharePrenceUtil;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
@@ -182,8 +183,10 @@ public class PersonalFragment extends BaseFrament {
 			startActivity(intent);
 			break;
 		case USERINFO:
-			Log.d("USERINFO=", result);
-			refreshUserInfo(result);
+			if (!isUser) {
+				Log.d("USERINFO=", result);
+				refreshUserInfo(result);
+			}
 			break;
 		case FOLLOW0:
 			setConcem();
@@ -261,7 +264,7 @@ public class PersonalFragment extends BaseFrament {
 		initReceiver();
 		initLike();
 		initConmment();
-		
+
 		getUserInfo();
 	}
 
@@ -415,7 +418,7 @@ public class PersonalFragment extends BaseFrament {
 
 	private void getUserInfo() {
 
-		sendConnection(Constant.USERINFO + uBean.getUser_id() + "/", new String[] {}, new String[] {}, USERINFO, false);
+		sendConnection(Constant.USERINFO + uBean.getUser_id() + "/", new String[] {"timestamp"}, new String[] {System.currentTimeMillis() / 1000 + ""}, USERINFO, false);
 	}
 
 	private void onStartAct(Class<?> activity, String title, String count) {
@@ -452,6 +455,22 @@ public class PersonalFragment extends BaseFrament {
 					if (bundle != null) {
 						switch (bundle.getInt(Constant.INTENT_ACTION_KEY)) {
 						case Constant.INTENT_ACTION_VALUE_LIKE:
+							new Thread(
+									new Runnable() {
+										@Override
+										public void run() {
+											// TODO Auto-generated method stub
+											try {
+												Thread.sleep(3000);
+												getLikeData(LIKE, "4", TABLIKE);
+												getUserInfo();
+											} catch (InterruptedException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										}
+									}).start();
+							
 							getLikeData(LIKE, "4", TABLIKE);
 							getUserInfo();
 							break;
@@ -488,7 +507,9 @@ public class PersonalFragment extends BaseFrament {
 			uBean = (UserBean) JSON.parseObject(root.getString("user"), UserBean.class);
 			AccountBean userAccountBean = new AccountBean();
 			userAccountBean.setUser(uBean);
-			userAccountBean.setSession(GuokuApplication.getInstance().getBean().getSession());
+			if (!StringUtils.isEmpty(GuokuApplication.getInstance().getBean().getSession())) {
+				userAccountBean.setSession(GuokuApplication.getInstance().getBean().getSession());
+			}
 			SharePrenceUtil.setUserBean(context, userAccountBean);
 
 			refreshUI();
@@ -562,11 +583,14 @@ public class PersonalFragment extends BaseFrament {
 		userArticle.tv1.setText(tempStr + getActivity().getResources().getString(R.string.tv_user_article));
 		userTag.tv1.setText(tempStr + getActivity().getResources().getString(R.string.tv_user_tag));
 		userArticleZan.tv1.setText(tempStr + getActivity().getResources().getString(R.string.tv_user_article_zan));
-	
+
 		refreshUI();
 	}
 
 	private boolean isUnZero(String str) {
+		if (StringUtils.isEmpty(str)) {
+			return false;
+		}
 		if (str.equals("0")) {
 			return false;
 		} else {
@@ -581,7 +605,7 @@ public class PersonalFragment extends BaseFrament {
 	private void refreshUI() {
 
 		psrson_tv_guanzhu.setText(uBean.getFollowing_count());
-		
+
 		if (isUnZero(uBean.getLike_count())) {
 			userLike.tv2.setText(uBean.getLike_count());
 		}
