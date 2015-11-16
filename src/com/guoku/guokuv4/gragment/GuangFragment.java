@@ -1,9 +1,7 @@
 package com.guoku.guokuv4.gragment;
 
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -44,10 +42,10 @@ import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.guoku.guokuv4.view.EditTextWithDel;
 import com.guoku.guokuv4.view.ImageAddTextLayout;
+import com.guoku.guokuv4.view.LayoutSearchBar;
 import com.guoku.guokuv4.view.ScrollViewWithListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
-import com.lidroid.xutils.view.annotation.event.OnItemClick;
 import com.umeng.analytics.MobclickAgent;
 
 import android.content.Intent;
@@ -61,12 +59,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.view.animation.Animation.AnimationListener;
-import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -77,7 +74,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
 public class GuangFragment extends BaseFrament {
 	private static final int PROINFO = 12;
@@ -85,6 +81,9 @@ public class GuangFragment extends BaseFrament {
 	private static final int USERINFO = 14;
 	private static final int DISCOVER = 15;// banner, 推荐文章， 推荐商品等
 
+	@ViewInject(R.id.layout_search_bar)
+	LayoutSearchBar viewSearchbar;
+	
 	@ViewInject(R.id.ed_search)
 	EditTextWithDel edSearch;
 	
@@ -553,6 +552,8 @@ public class GuangFragment extends BaseFrament {
 					searchLogAdapter.setList((ArrayList<SearchLogBean>) sBeans);
 					showSearchWhat();
 				}
+				
+				viewSearchbar.isShowClean(true);
 			}
 		}
 	}

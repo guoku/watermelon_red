@@ -21,7 +21,7 @@ import android.widget.TextView;
 public class LayoutSearchBar extends RelativeLayout {
 
 	public EditTextWithDel editTextWithDel;
-	TextView tvClean;
+	public TextView tvClean;
 
 	public LayoutSearchBar(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -46,6 +46,12 @@ public class LayoutSearchBar extends RelativeLayout {
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LayoutSearch);
 
 		boolean isShow = a.getBoolean(R.styleable.LayoutSearch_textRight, false);//取消按钮
+		
+		isShowClean(isShow);
+	}
+	
+	public void isShowClean(boolean isShow){
+		
 		if (isShow) {
 			tvClean.setVisibility(View.VISIBLE);
 		} else {

@@ -3,6 +3,7 @@ package com.guoku.guokuv4.gragment;
 import java.util.ArrayList;
 
 import com.alibaba.fastjson.JSON;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
 import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.adapter.ArrayListAdapter;
@@ -33,6 +34,7 @@ import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -180,10 +182,8 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 				holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
 
 				if (bean.getType().equals("user_like")) {
-					imageLoader.displayImage(bean.getContent().getLiker()
-							.get50(), holder.tongzhi_item_iv_userpic,
-							optionsRound,
-							new ImgUtils.AnimateFirstDisplayListener());
+					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getLiker()
+							.get50()));
 					StringUtils.setTextColor(
 							holder.tv_context,
 							bean.getContent().getLiker().getNickname()
@@ -196,10 +196,9 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 							.get50(), holder.tongzhi_item_iv_pimg, options,
 							new ImgUtils.AnimateFirstDisplayListener());
 				} else if (bean.getType().equals("entity")) {
-					imageLoader.displayImage(bean.getContent().getNote()
-							.getCreator().get50(),
-							holder.tongzhi_item_iv_userpic, optionsRound,
-							new ImgUtils.AnimateFirstDisplayListener());
+					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getNote()
+							.getCreator().get50()));
+					
 					StringUtils.setTextColor(
 							holder.tv_context,
 							bean.getContent().getNote().getCreator()
@@ -212,14 +211,14 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 									.getContent().getNote().getCreator()
 									.getNickname(),
 							DateUtils.getStandardDate(bean.getCreated_time()));
-					imageLoader.displayImage(bean.getContent().getEntity()
-							.get50(), holder.tongzhi_item_iv_pimg, options,
-							new ImgUtils.AnimateFirstDisplayListener());
+					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getEntity()
+							.get50()));
+					
 				} else if (bean.getType().equals("user_follow")) {
-					imageLoader.displayImage(bean.getContent().getUser()
-							.get50(), holder.tongzhi_item_iv_userpic,
-							optionsRound,
-							new ImgUtils.AnimateFirstDisplayListener());
+					
+					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getUser()
+							.get50()));
+					
 					StringUtils.setTextColor(
 							holder.tv_context,
 							bean.getContent().getUser().getNickname()
@@ -283,9 +282,8 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 									.getNickname(),
 							DateUtils.getStandardDate(bean.getCreated_time()));
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
-					imageLoader.displayImage(bean.getContent().getNote()
-							.get50(), holder.tongzhi_item_iv_pimg, options,
-							new ImgUtils.AnimateFirstDisplayListener());
+					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getNote()
+							.get50()));
 				} else if (bean.getType().equals("note_poke_message")) {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
 
@@ -304,20 +302,15 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 									.getContent().getPoker().getNickname(),
 							DateUtils.getStandardDate(bean.getCreated_time()));
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
-					imageLoader.displayImage(bean.getContent().getNote()
-							.get50(), holder.tongzhi_item_iv_pimg, options,
-							new ImgUtils.AnimateFirstDisplayListener());
+					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getNote()
+							.get50()));
 				} else if (bean.getType().equals("entity_note_message")) {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
-
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
-					imageLoader.displayImage(bean.getContent().getNote()
-							.getCreator().get50(),
-							holder.tongzhi_item_iv_userpic, optionsRound,
-							new ImgUtils.AnimateFirstDisplayListener());
-					imageLoader.displayImage(bean.getContent().getEntity()
-							.get50(), holder.tongzhi_item_iv_pimg, options,
-							new ImgUtils.AnimateFirstDisplayListener());
+					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getNote()
+							.get50()));
+					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getEntity()
+							.get50()));
 
 					StringUtils.setTextColor(
 							holder.tv_context,
@@ -377,9 +370,8 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 					holder.tongzhi_item_iv_userpic
 							.setImageResource(R.drawable.star);
 					// .setVisibility(View.INVISIBLE);
-					imageLoader.displayImage(bean.getContent().getEntity()
-							.get50(), holder.tongzhi_item_iv_pimg, options,
-							new ImgUtils.AnimateFirstDisplayListener());
+					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getEntity()
+							.get50()));
 					holder.tv_context
 							.setText("你添加的商品被收录精选 "
 									+ " "
@@ -401,10 +393,9 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 									.getContent().getLiker().getNickname(),
 							DateUtils.getStandardDate(bean.getCreated_time()));
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
-					imageLoader.displayImage(bean.getContent().getEntity()
-							.get50(), holder.tongzhi_item_iv_pimg,
-							optionsRound,
-							new ImgUtils.AnimateFirstDisplayListener());
+					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getEntity()
+							.get50()));
+					
 				}
 
 				return convertView;
@@ -520,10 +511,10 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 	private class ViewHolder {
 
 		@ViewInject(R.id.tongzhi_item_iv_pimg)
-		private ImageView tongzhi_item_iv_pimg;
+		private SimpleDraweeView tongzhi_item_iv_pimg;
 
 		@ViewInject(R.id.tongzhi_item_iv_userpic)
-		private ImageView tongzhi_item_iv_userpic;
+		private SimpleDraweeView tongzhi_item_iv_userpic;
 
 		@ViewInject(R.id.tongzhi_item_tv_context)
 		private TextView tv_context;

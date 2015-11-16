@@ -28,7 +28,7 @@
                 android:id="@+id/person_item_tv_context"
                 style="@style/home_page_item_article_context"
                 android:layout_alignParentLeft="true"
-                android:textColor="@color/gray_fzxx"
+                android:textColor="@color/black_body"
                 />
 
             <TextView

@@ -461,7 +461,7 @@ public class PersonalFragment extends BaseFrament {
 										public void run() {
 											// TODO Auto-generated method stub
 											try {
-												Thread.sleep(3000);
+												Thread.sleep(2000);
 												getLikeData(LIKE, "4", TABLIKE);
 												getUserInfo();
 											} catch (InterruptedException e) {
