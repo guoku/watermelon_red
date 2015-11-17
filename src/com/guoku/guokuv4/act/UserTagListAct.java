@@ -19,6 +19,7 @@ import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.gragment.PersonalFragment;
 import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
@@ -122,7 +123,7 @@ public class UserTagListAct extends NetWorkActivity {
 		
 		if(getIntent().getExtras().getBoolean(PersonalFragment.IS_EMPTY)){
 			isDataEmpty(true, listView, tvEmpty);
-			tvEmpty.setText(getResources().getString(R.string.tv_empty_other, title));
+			tvEmpty.setText(getResources().getString(R.string.tv_empty_other, StringUtils.setSubstring(title)));
 		}else{
 			getNetData(TAB_TAG, true);
 		}

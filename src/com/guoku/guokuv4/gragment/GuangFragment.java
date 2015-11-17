@@ -583,6 +583,7 @@ public class GuangFragment extends BaseFrament {
 	}
 
 	public void hideSearchWhat() {
+		viewSearchbar.isShowClean(false);
 		hideBackBlack();
 		if (animationllHide == null) {
 			animationllHide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,

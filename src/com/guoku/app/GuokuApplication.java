@@ -4,11 +4,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWChannel;
 import com.alibaba.sdk.android.AlibabaSDK;
 import com.alibaba.sdk.android.callback.InitResultCallback;
+import com.alibaba.wxlib.util.SysUtil;
 import com.avos.avoscloud.AVOSCloud;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.guoku.guokuv4.config.AlibabaConfig;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.config.Logger;
 import com.guoku.guokuv4.entity.test.AccountBean;
@@ -135,11 +138,14 @@ public class GuokuApplication extends Application {
 	}
 	
     private void initOpenIM(){
-		String str = "mm_28514026_0_0";
-		List<String> targetAppkeys = splitToList(str);
-		// 初始化接收消息的对象appkeys
-		YWChannel.prepare(this, str);
-		YWChannel.prepareTargetAppKeys(targetAppkeys);
+		
+		SysUtil.setApplication(this);
+		if(SysUtil.isTCMSServiceProcess(this)){
+		return;
+		}
+		//第一个参数是Application Context
+		//这里的APP_KEY即应用创建时申请的APP_KEY
+		YWAPI.init(this, AlibabaConfig.APP_KEY);
     }
     
     public List<String> splitToList(String param) {

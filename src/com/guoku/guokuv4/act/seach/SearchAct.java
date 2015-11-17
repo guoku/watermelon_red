@@ -101,7 +101,7 @@ public class SearchAct extends BaseActivity implements OnActivityChangeListener{
 	
 	@OnClick(R.id.tv_cancel)
 	private void inClickClean(View view) {
-		GuokuUtil.hideKeyBoard(this);
+		finish();
 	}
 	
 	@Override

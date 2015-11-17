@@ -28,6 +28,7 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -178,7 +179,7 @@ public class UserLikeListAct extends NetWorkActivity {
 		
 		if(getIntent().getExtras().getBoolean(PersonalFragment.IS_EMPTY)){
 			isDataEmpty(true, layoutData, tvEmpty);
-			tvEmpty.setText(getResources().getString(R.string.tv_empty_other, title));
+			tvEmpty.setText(getResources().getString(R.string.tv_empty_other, StringUtils.setSubstring(title)));
 		}else{
 			getLikeData(TABLIKE, true);
 		}
@@ -278,6 +279,16 @@ public class UserLikeListAct extends NetWorkActivity {
 	private void onCheckNetClick(View view) {
 		getLikeData(TABLIKE, true);
 	}
-
-
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		if (KeyEvent.KEYCODE_BACK == event.getKeyCode()) {
+			if (listTag.getVisibility() == View.VISIBLE) {
+				hideSearchWhat();
+				return true;
+			}
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 }

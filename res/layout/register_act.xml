@@ -65,7 +65,9 @@
             android:singleLine="true"
             android:textColor="#ffffffff"
             android:textCursorDrawable="@null"
-            android:textSize="14sp" />
+            android:textSize="14sp" 
+            android:inputType="textEmailAddress"
+            />
     </LinearLayout>
 
     <ImageView
@@ -100,7 +102,9 @@
             android:singleLine="true"
             android:textColor="#ffffffff"
             android:textCursorDrawable="@null"
-            android:textSize="14sp" />
+            android:textSize="14sp" 
+            android:inputType="textCapWords"
+            />
     </LinearLayout>
 
     <ImageView

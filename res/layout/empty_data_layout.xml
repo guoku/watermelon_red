@@ -8,6 +8,7 @@
     android:scaleType="centerInside"
     android:src="@drawable/refresh_net"
     android:visibility="gone" 
+    android:paddingBottom="150dp"
     >
 
 </ImageView>

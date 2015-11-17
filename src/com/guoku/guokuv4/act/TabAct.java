@@ -13,6 +13,7 @@ import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.GuokuUtil;
 import com.guoku.guokuv4.utils.SharePrenceUtil;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
@@ -499,5 +500,4 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 			openActivity(CategoryListAct.class, bundle);
 		}
 	}
-
 }
