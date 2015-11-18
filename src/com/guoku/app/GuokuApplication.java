@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alibaba.mobileim.YWAPI;
-import com.alibaba.mobileim.YWChannel;
+import com.alibaba.mobileim.YWIMKit;
+import com.alibaba.mobileim.utility.IMAutoLoginInfoStoreUtil;
 import com.alibaba.sdk.android.AlibabaSDK;
 import com.alibaba.sdk.android.callback.InitResultCallback;
 import com.alibaba.wxlib.util.SysUtil;
@@ -30,6 +31,7 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.text.TextUtils;
 
 public class GuokuApplication extends Application {
 	private static GuokuApplication instance;
@@ -38,6 +40,20 @@ public class GuokuApplication extends Application {
 	private List<Activity> activityList = new ArrayList<Activity>();
 	private AccountBean bean;
 	private String session;
+	
+	private YWIMKit mIMKit;
+	
+    public YWIMKit getIMKit() {
+        return mIMKit;
+    }
+
+    public void setIMKit(YWIMKit imkit) {
+        mIMKit = imkit;
+    }
+    
+    public void initIMKit(String userId, String appKey) {
+        mIMKit = YWAPI.getIMKitInstance(userId.toString(), appKey);
+    }
 
 	public AccountBean getBean() {
 		return bean;
@@ -143,9 +159,20 @@ public class GuokuApplication extends Application {
 		if(SysUtil.isTCMSServiceProcess(this)){
 		return;
 		}
-		//第一个参数是Application Context
-		//这里的APP_KEY即应用创建时申请的APP_KEY
-		YWAPI.init(this, AlibabaConfig.APP_KEY);
+//		//第一个参数是Application Context
+//		//这里的APP_KEY即应用创建时申请的APP_KEY
+//		YWAPI.init(this, AlibabaConfig.APP_KEY);
+		
+		//初始化IMKit，考虑到应用启动会自动登录的情况
+				final String userId = IMAutoLoginInfoStoreUtil.getLoginUserId();
+				final String appkey = IMAutoLoginInfoStoreUtil.getAppkey();
+				if (!TextUtils.isEmpty(userId) && !TextUtils.isEmpty(appkey)){
+					//初始化imkit
+					GuokuApplication.getInstance().initIMKit(userId, appkey);
+					//通知栏相关的初始化
+				}
+
+				YWAPI.init(this, AlibabaConfig.APP_KEY);
     }
     
     public List<String> splitToList(String param) {

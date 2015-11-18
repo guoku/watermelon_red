@@ -55,18 +55,20 @@ import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.TranslateAnimation;
-import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -275,13 +277,13 @@ public class GuangFragment extends BaseFrament {
 				arrayList = (ArrayList<Categories>) JSON.parseArray(root.getString("categories"), Categories.class);
 				for (int i = 0; i < arrayList.size(); i++) {
 					final ImageAddTextLayout imagTextLayout = new ImageAddTextLayout(getActivity());
-					LayoutParams params = new LayoutParams(280, 280);
-					imagTextLayout.setLayoutParams(params);
+					FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+					params.gravity = Gravity.CENTER;
 					imagTextLayout.setPadding(10, 0, 10, 0);
 					imagTextLayout.imView.setImageURI(Uri.parse(arrayList.get(i).getCategory().getCover_url()));
 					imagTextLayout.tView.setText(arrayList.get(i).getCategory().getTitle().trim().replace(" ", "\n"));
+					imagTextLayout.tView.setLayoutParams(params);
 					imagTextLayout.setTag(arrayList.get(i).getCategory());
-					// imagTextLayout.setTag(i);
 					vpRecommendSort.addView(imagTextLayout);
 					imagTextLayout.setOnClickListener(new OnClickListener() {
 

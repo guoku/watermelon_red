@@ -155,6 +155,20 @@ public abstract class BaseActivity extends FragmentActivity {
 			view.setVisibility(View.GONE);
 		}
 	}
+	
+	protected void setGRigthWang(boolean show) {
+		ImageView wang = (ImageView) findViewById(R.id.alibaba_wang);
+		if (show) {
+			wang.setVisibility(View.VISIBLE);
+		} else {
+			wang.setVisibility(View.GONE);
+		}
+	}
+	
+	protected ImageView getGRigthWang() {
+		ImageView wang = (ImageView) findViewById(R.id.alibaba_wang);
+		return wang;
+	}
 
 	protected void setGRigthText(boolean show, int resid) {
 		TextView rightTv = (TextView) findViewById(R.id.title_bar_rigth_tv);

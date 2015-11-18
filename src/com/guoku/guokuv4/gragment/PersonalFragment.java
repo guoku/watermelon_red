@@ -4,6 +4,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.mobileim.IYWLoginService;
+import com.alibaba.mobileim.YWLoginParam;
+import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
@@ -21,6 +24,7 @@ import com.guoku.guokuv4.act.UserTagListAct;
 import com.guoku.guokuv4.adapter.GridViewAdapter;
 import com.guoku.guokuv4.adapter.ListImgLeftAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
+import com.guoku.guokuv4.config.AlibabaConfig;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.AccountBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
@@ -47,6 +51,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -90,6 +95,9 @@ public class PersonalFragment extends BaseFrament {
 
 	@ViewInject(R.id.title_bar_left_iv1)
 	private ImageView tabLeftImgLine;
+
+	@ViewInject(R.id.alibaba_wang)
+	private ImageView ailWang;
 
 	@ViewInject(R.id.psrson_iv_pic)
 	private SimpleDraweeView psrson_iv_pic;
@@ -234,6 +242,8 @@ public class PersonalFragment extends BaseFrament {
 			iv_set.setVisibility(View.VISIBLE);
 			tv_title.setText("我");
 			iv_set.setImageResource(R.drawable.setting);
+
+//			initAliWang();
 		} else {
 			titleBar.setVisibility(View.GONE);
 			iv_set.setVisibility(View.GONE);
@@ -418,7 +428,8 @@ public class PersonalFragment extends BaseFrament {
 
 	private void getUserInfo() {
 
-		sendConnection(Constant.USERINFO + uBean.getUser_id() + "/", new String[] {"timestamp"}, new String[] {System.currentTimeMillis() / 1000 + ""}, USERINFO, false);
+		sendConnection(Constant.USERINFO + uBean.getUser_id() + "/", new String[] { "timestamp" },
+				new String[] { System.currentTimeMillis() / 1000 + "" }, USERINFO, false);
 	}
 
 	private void onStartAct(Class<?> activity, String title, String count) {
@@ -455,22 +466,21 @@ public class PersonalFragment extends BaseFrament {
 					if (bundle != null) {
 						switch (bundle.getInt(Constant.INTENT_ACTION_KEY)) {
 						case Constant.INTENT_ACTION_VALUE_LIKE:
-							new Thread(
-									new Runnable() {
-										@Override
-										public void run() {
-											// TODO Auto-generated method stub
-											try {
-												Thread.sleep(2000);
-												getLikeData(LIKE, "4", TABLIKE);
-												getUserInfo();
-											} catch (InterruptedException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											}
-										}
-									}).start();
-							
+							new Thread(new Runnable() {
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									try {
+										Thread.sleep(2000);
+										getLikeData(LIKE, "4", TABLIKE);
+										getUserInfo();
+									} catch (InterruptedException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
+							}).start();
+
 							getLikeData(LIKE, "4", TABLIKE);
 							getUserInfo();
 							break;
@@ -620,5 +630,104 @@ public class PersonalFragment extends BaseFrament {
 		}
 		userArticleZan.tv2.setText("555");
 	}
+	
+	/**************阿里openIM****************/
+
+	private void initAliWang() {
+		ailWang.setVisibility(View.VISIBLE);
+		ailWang.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+//				YWIMKit mIMKit = GuokuApplication.getInstance().getIMKit();
+//				if (mIMKit == null) {
+//					return;
+//				}
+//				Intent intent = mIMKit.getConversationActivityIntent();
+//				startActivity(intent);
+				
+				testLogIm();
+			}
+		});
+	}
+	
+	private void testLogIm(){
+		
+		new Thread(
+				new Runnable() {
+					
+					@Override
+					public void run() {
+						// TODO Auto-generated method stub
+						
+//						loginOut_Sample();
+						
+//						String userid = "test1";
+//						String password = "openim";
+						String userid = "13466452759";
+						String password = "zylove59";
+						
+						GuokuApplication.getInstance().initIMKit(userid, AlibabaConfig.APP_KEY);
+						
+						IYWLoginService loginService = GuokuApplication.getInstance().getIMKit().getLoginService();
+						YWLoginParam loginParam = YWLoginParam.createLoginParam(userid, password);
+						loginService.login(loginParam, new IWxCallback() {
+						 
+						    @Override
+						    public void onSuccess(Object... arg0) {
+						    	
+						    	Intent intent =GuokuApplication.getInstance().getIMKit().getConversationActivityIntent();
+						    	startActivity(intent);
+						    }
+						 
+						    @Override
+						    public void onProgress(int arg0) {
+						        // TODO Auto-generated method stub
+						    }
+						 
+						    @Override
+						    public void onError(int errCode, String description) {
+						        //如果登录失败，errCode为错误码,description是错误的具体描述信息
+						    	LogGK.d("*********"+ errCode + "" + description);
+						    }
+						});
+					}
+				}
+				).start();
+	}
+	
+    /**
+     * 登出
+     */
+    public void loginOut_Sample() {
+        if (GuokuApplication.getInstance().getIMKit() == null) {
+            return;
+        }
+
+
+        // openIM SDK提供的登录服务
+        IYWLoginService mLoginService = GuokuApplication.getInstance().getIMKit().getLoginService();
+        mLoginService.logout(new IWxCallback() {
+
+            @Override
+            public void onSuccess(Object... arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onProgress(int arg0) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onError(int arg0, String arg1) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+    }
 
 }

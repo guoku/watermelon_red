@@ -69,12 +69,15 @@
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:scrollbars="none" >
+                        android:scrollbars="none" 
+                        android:fadingEdge="none"
+                        android:overScrollMode="never"
+                        >
 
                         <LinearLayout
                             android:id="@+id/gallery_recommend_sort"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp"
+                            android:layout_height="90dp"
                             android:gravity="center"
                             android:orientation="horizontal" />
                     </HorizontalScrollView>

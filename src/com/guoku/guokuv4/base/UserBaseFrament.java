@@ -3,13 +3,12 @@
  */
 package com.guoku.guokuv4.base;
 
-import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-
 import com.guoku.R;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.gragment.PersonalFragment;
-import com.lidroid.xutils.view.annotation.event.OnClick;
+
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 
 /**
  * @zhangyao
@@ -20,13 +19,14 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 public class UserBaseFrament extends BaseActivity{
 
 	FragmentManager fm;
+	PersonalFragment pFragment;
 	
 	 @Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 		setContentView(R.layout.frament_user_base);
-		PersonalFragment pFragment = new PersonalFragment();
+		pFragment = new PersonalFragment();
 		pFragment.uBean = (UserBean) getIntent().getSerializableExtra("data");
 		pFragment.isUser = true;
 		fm = getSupportFragmentManager();

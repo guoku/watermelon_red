@@ -39,6 +39,24 @@
             android:singleLine="true"
             android:textColor="@color/g_main"
             android:textStyle="bold" />
+        
+        <ImageView
+            android:id="@+id/alibaba_wang" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/alibaba_wang_icon"
+            android:layout_marginRight="8dp"
+            android:visibility="gone"
+            />
+        
+        <ImageView 
+            android:id="@+id/alibaba_card" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/alibaba_cart"
+            android:layout_marginRight="8dp"
+            android:visibility="gone"
+            />
 
         <ImageView
             android:id="@+id/title_bar_rigth_iv"
@@ -82,7 +100,6 @@
             android:button="@drawable/laylut_check_box_black_bg" />
             
         </LinearLayout>
-        
         
     </LinearLayout>
 
