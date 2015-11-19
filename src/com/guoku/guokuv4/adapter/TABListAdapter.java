@@ -1,5 +1,14 @@
 package com.guoku.guokuv4.adapter;
 
+import com.guoku.R;
+import com.guoku.guokuv4.act.TabAct;
+import com.guoku.guokuv4.bean.CategoryBean;
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap.Config;
@@ -9,16 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.guoku.R;
-import com.guoku.guokuv4.act.TabAct;
-import com.guoku.guokuv4.entity.test.Tab2Bean;
-import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-
-public class TABListAdapter extends ArrayListAdapter<Tab2Bean> {
+public class TABListAdapter extends ArrayListAdapter<CategoryBean.ContentEntity> {
 	ImageLoader loader = ImageLoader.getInstance();
 
 	private DisplayImageOptions options;
@@ -48,7 +48,7 @@ public class TABListAdapter extends ArrayListAdapter<Tab2Bean> {
 			holder = (GVViewHold) convertView.getTag();
 		}
 
-		final Tab2Bean bean = mList.get(position);
+		final CategoryBean.ContentEntity bean = mList.get(position);
 		loader.displayImage(bean.getCategory_icon_small(),
 				holder.faxian_lv_gv_item_iv_img, options);
 		holder.faxian_lv_gv_item_tv_name.setText(bean.getCategory_title());

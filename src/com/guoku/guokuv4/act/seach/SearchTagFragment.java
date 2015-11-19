@@ -8,11 +8,10 @@ import java.util.ArrayList;
 import com.guoku.R;
 import com.guoku.guokuv4.adapter.SeachCommodityTypeAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
+import com.guoku.guokuv4.bean.CategoryBean;
 import com.guoku.guokuv4.config.Constant;
-import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.SharePrenceUtil;
-import com.guoku.guokuv4.utils.ToastUtil;
 import com.guoku.guokuv4.view.ScrollViewWithGridView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -33,7 +32,8 @@ public class SearchTagFragment extends BaseFrament {
 	@ViewInject(R.id.layout_search_empty)
 	View viewEmpty;
 
-	ArrayList<Tab2Bean> listTab, curList;
+	ArrayList<CategoryBean> listTab;
+	ArrayList<CategoryBean.ContentEntity> curList;
 
 	private SeachCommodityTypeAdapter seachCommodityTypeAdapter;
 
@@ -58,7 +58,7 @@ public class SearchTagFragment extends BaseFrament {
 			try {
 				SharePrenceUtil.setTabList(context, result);
 				listTab = ParseUtil.getTab2List(context);
-				curList = new ArrayList<Tab2Bean>();
+				curList = new ArrayList<CategoryBean.ContentEntity>();
 				getData();
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -87,9 +87,11 @@ public class SearchTagFragment extends BaseFrament {
 
 		curList.clear();
 		if (listTab.size() > 0) {
-			for (Tab2Bean bean : listTab) {
-				if (bean.getCategory_title().contains(SearchAct.searchStr)) {
-					curList.add(bean);
+			for (CategoryBean bean : listTab) {
+				for(CategoryBean.ContentEntity cEntity : bean.getContent()){
+					if (cEntity.getCategory_title().contains(SearchAct.searchStr)) {
+						curList.add(cEntity);
+					}
 				}
 			}
 			seachCommodityTypeAdapter.setList(curList);

@@ -51,6 +51,7 @@ public class UserLikeListAct extends NetWorkActivity {
 
 	private final int TABLIKE = 1001;// 喜欢
 	private final int PROINFO = 1002;
+	private final int TABLIKE_ADD = 1003;//加载更多喜欢
 	
 	@ViewInject(R.id.layout_data)
 	View layoutData;
@@ -129,7 +130,7 @@ public class UserLikeListAct extends NetWorkActivity {
 			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
 				// TODO Auto-generated method stub
 				countValue += 30;
-				getLikeData(TABLIKE, false);
+				getLikeData(TABLIKE_ADD, false);
 			}
 		});
 	}
@@ -143,7 +144,13 @@ public class UserLikeListAct extends NetWorkActivity {
 		sv.onRefreshComplete();
 		switch (where) {
 		case TABLIKE:
+			gvAdapter = new GridViewAdapter(mContext, 3);
 			gvAdapter.setList(ParseUtil.getTabLikeList(result));
+			tab_gv.setAdapter(gvAdapter);
+			break;
+		case TABLIKE_ADD:
+			gvAdapter.setList(ParseUtil.getTabLikeList(result));
+			tab_gv.setAdapter(gvAdapter);
 			break;
 		case PROINFO:
 			openShopInfo(result);

@@ -5,11 +5,11 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import com.alibaba.fastjson.JSON;
+import com.guoku.guokuv4.bean.CategoryBean;
 import com.guoku.guokuv4.bean.SearchLogBean;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.config.Logger;
 import com.guoku.guokuv4.entity.test.AccountBean;
-import com.guoku.guokuv4.entity.test.TAB1Bean;
 import com.guoku.guokuv4.parse.ParseUtil;
 
 import android.content.Context;
@@ -111,9 +111,8 @@ public class SharePrenceUtil {
 	 * @param context
 	 * @return
 	 */
-	public static ArrayList<TAB1Bean> getTabList(Context context) {
-		return ParseUtil
-				.getTabList(context.getSharedPreferences(Constant.GUOKU_TAB, 0).getString(Constant.GUOKU_TAB_LIST, ""));
+	public static String getTabList(Context context) {
+		return context.getSharedPreferences(Constant.GUOKU_TAB, 0).getString(Constant.GUOKU_TAB_LIST, "");
 	}
 
 	/**

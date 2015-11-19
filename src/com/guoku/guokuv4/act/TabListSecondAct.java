@@ -11,11 +11,11 @@ import com.guoku.guokuv4.adapter.EntityAdapter;
 import com.guoku.guokuv4.adapter.GridViewAdapter;
 import com.guoku.guokuv4.adapter.SeachCommodityTypeAdapter;
 import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.bean.CategoryBean;
 import com.guoku.guokuv4.bean.TagTwo;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
-import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.guoku.guokuv4.view.ScrollViewWithGridView;
@@ -69,7 +69,7 @@ public class TabListSecondAct extends NetWorkActivity implements
 	private EntityAdapter lvAdapter;
 
 	TagTwo tagTwo;// 从品类分类过来的
-	Tab2Bean tab2Bean;// 从品类搜索页过来的
+	CategoryBean.ContentEntity tab2Bean;// 从品类搜索页过来的
 
 	String title;// 标题
 
@@ -215,7 +215,7 @@ public class TabListSecondAct extends NetWorkActivity implements
 		// TODO Auto-generated method stub
 		tagTwo = (TagTwo) getIntent().getExtras().getSerializable(
 				TabAct.SECOND_ACT_ONTENT);
-		tab2Bean = (Tab2Bean) getIntent().getExtras().getSerializable(
+		tab2Bean = (CategoryBean.ContentEntity) getIntent().getExtras().getSerializable(
 				SeachCommodityTypeAdapter.SEACH_TAG);
 
 		if (tagTwo != null) {
@@ -223,7 +223,7 @@ public class TabListSecondAct extends NetWorkActivity implements
 			title = tagTwo.getCategory_title();
 		}
 		if (tab2Bean != null) {
-			id = tab2Bean.getCategory_id();
+			id = String.valueOf(tab2Bean.getCategory_id());
 			title = tab2Bean.getCategory_title();
 		}
 		setGCenter(true, title);

@@ -6,9 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
-
 import com.alibaba.fastjson.JSON;
+import com.guoku.guokuv4.bean.CategoryBean;
 import com.guoku.guokuv4.config.Logger;
 import com.guoku.guokuv4.entity.test.ContentBean;
 import com.guoku.guokuv4.entity.test.EntityBean;
@@ -17,17 +16,15 @@ import com.guoku.guokuv4.entity.test.NoteBean;
 import com.guoku.guokuv4.entity.test.PBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.PointBean;
-import com.guoku.guokuv4.entity.test.TAB1Bean;
-import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.TabNoteBean;
 import com.guoku.guokuv4.entity.test.TabTagBean;
+import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.entity.test.UserTagBean;
 import com.guoku.guokuv4.utils.SharePrenceUtil;
-import com.guoku.guokuv4.entity.test.UserBean;
+
+import android.content.Context;
 
 public class ParseUtil {
-
-	private static ArrayList<Tab2Bean> tab1Beans;
 
 	public static ArrayList<PBean> getJingXuanList(String result) {
 		ArrayList<PBean> productBeans = new ArrayList<PBean>();
@@ -111,118 +108,18 @@ public class ParseUtil {
 		return productBeans;
 	}
 
-	public static ArrayList<TAB1Bean> getTabList(String result) {
-		if (result == null || "".equals(result)) {
-			return new ArrayList<TAB1Bean>();
-		}
-		ArrayList<TAB1Bean> tab1Beans = new ArrayList<TAB1Bean>();
+	public static ArrayList<CategoryBean> getTab2List(Context context) {
+
 		try {
-			JSONArray root = new JSONArray(result);
-			int size1 = root.length();
-			int size2;
-			TAB1Bean tab1Bean;
-			for (int i = 0; i < size1; i++) {
-				tab1Bean = new TAB1Bean();
-				tab1Bean.setCategory_count(root.getJSONObject(i).getString(
-						"category_count"));
-				tab1Bean.setGroup_id(root.getJSONObject(i)
-						.getString("group_id"));
-				tab1Bean.setStatus(root.getJSONObject(i).getString("status"));
-				tab1Bean.setTitle(root.getJSONObject(i).getString("title"));
-				JSONArray array = root.getJSONObject(i).getJSONArray("content");
-				size2 = array.length();
-				ArrayList<Tab2Bean> list1 = new ArrayList<Tab2Bean>();
-				ArrayList<Tab2Bean> list2 = new ArrayList<Tab2Bean>();
-				Tab2Bean tab2Bean;
-				for (int j = 0; j < size2; j++) {
-					tab2Bean = new Tab2Bean();
-					tab2Bean = JSON.parseObject(array.getString(j),
-							Tab2Bean.class);
-					if (tab2Bean.getStatus().equals("1")) {
-						list1.add(tab2Bean);
-					} else {
-						list2.add(tab2Bean);
-					}
-				}
-				tab1Bean.setList1(list1);
-				tab1Bean.setList2(list2);
-				tab1Beans.add(tab1Bean);
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
+			ArrayList<CategoryBean> cBean = (ArrayList<CategoryBean>) JSON.parseArray(SharePrenceUtil.getTabList(context), CategoryBean.class);
+			return cBean;
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
-		return tab1Beans;
+		return null;
 	}
 
-	public static ArrayList<Tab2Bean> getTab2List(Context context) {
 
-		ArrayList<Tab2Bean> tab1Beans = new ArrayList<Tab2Bean>();
-		ArrayList<TAB1Bean> list = SharePrenceUtil.getTabList(context);
-		Logger.i("root", list.toString());
-		for (TAB1Bean bean : list) {
-			tab1Beans.addAll(bean.getList1());
-		}
-		return tab1Beans;
-	}
-
-	public static ArrayList<Tab2Bean> getTab2ALL(Context context) {
-		if (tab1Beans == null) {
-			tab1Beans = new ArrayList<Tab2Bean>();
-			ArrayList<TAB1Bean> list = SharePrenceUtil.getTabList(context);
-			Logger.i("root", list.toString());
-			for (TAB1Bean bean : list) {
-				tab1Beans.addAll(bean.getList1());
-				tab1Beans.addAll(bean.getList2());
-			}
-		}
-		return tab1Beans;
-	}
-
-	public static ArrayList<TAB1Bean> getTab1List(String result) {
-		if (result == null || "".equals(result)) {
-			return new ArrayList<TAB1Bean>();
-		}
-		ArrayList<TAB1Bean> tab1Beans = new ArrayList<TAB1Bean>();
-		try {
-			JSONArray root = new JSONArray(result);
-			int size1 = root.length();
-			int size2;
-			TAB1Bean tab1Bean;
-			for (int i = 0; i < size1; i++) {
-				if (root.getJSONObject(i).getString("status").equals("0")) {
-					continue;
-				}
-				tab1Bean = new TAB1Bean();
-				tab1Bean.setCategory_count(root.getJSONObject(i).getString(
-						"category_count"));
-				tab1Bean.setGroup_id(root.getJSONObject(i)
-						.getString("group_id"));
-				tab1Bean.setStatus(root.getJSONObject(i).getString("status"));
-				tab1Bean.setTitle(root.getJSONObject(i).getString("title"));
-				JSONArray array = root.getJSONObject(i).getJSONArray("content");
-				size2 = array.length();
-				ArrayList<Tab2Bean> list1 = new ArrayList<Tab2Bean>();
-				ArrayList<Tab2Bean> list2 = new ArrayList<Tab2Bean>();
-				Tab2Bean tab2Bean;
-				for (int j = 0; j < size2; j++) {
-					tab2Bean = new Tab2Bean();
-					tab2Bean = JSON.parseObject(array.getString(j),
-							Tab2Bean.class);
-					if (tab2Bean.getStatus().equals("1")) {
-						list1.add(tab2Bean);
-					} else {
-						list2.add(tab2Bean);
-					}
-				}
-				tab1Bean.setList1(list1);
-				tab1Bean.setList2(list2);
-				tab1Beans.add(tab1Bean);
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return tab1Beans;
-	}
 
 	public static PInfoBean getPI(String result) {
 		PInfoBean rootBean = new PInfoBean();

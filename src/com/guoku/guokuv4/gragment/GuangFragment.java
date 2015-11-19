@@ -23,6 +23,7 @@ import com.guoku.guokuv4.adapter.GuangShopAdapter;
 import com.guoku.guokuv4.adapter.SearchLogAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
 import com.guoku.guokuv4.base.UserBaseFrament;
+import com.guoku.guokuv4.bean.CategoryBean;
 import com.guoku.guokuv4.bean.Discover;
 import com.guoku.guokuv4.bean.SearchLogBean;
 import com.guoku.guokuv4.bean.Sharebean;
@@ -32,7 +33,6 @@ import com.guoku.guokuv4.entity.test.Categories;
 import com.guoku.guokuv4.entity.test.Categories.Category;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
-import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.GuokuUtil;
@@ -124,7 +124,7 @@ public class GuangFragment extends BaseFrament {
 	private SearchLogAdapter searchLogAdapter;//搜索记录
 
 	private ArrayList<BannerBean> list;
-	private ArrayList<Tab2Bean> list_cid;
+	private ArrayList<CategoryBean> list_cid;
 
 	private ArrayList<EntityBean> discover;// 分类
 	
@@ -239,11 +239,11 @@ public class GuangFragment extends BaseFrament {
 								sendConnection(Constant.USERINFO + last + "/", new String[] {}, new String[] {},
 										USERINFO, true);
 							} else if (url.contains("category_id")) {
-								for (Tab2Bean bean : list_cid) {
-									if (bean.getCategory_id().equals(last)) {
+								for (CategoryBean bean : list_cid) {
+									if (String.valueOf(bean.getGroup_id()).equals(last)) {
 										Intent intent = new Intent(context, TabAct.class);
-										intent.putExtra("data", bean.getCategory_id());
-										intent.putExtra("name", bean.getCategory_title());
+										intent.putExtra("data", String.valueOf(bean.getGroup_id()));
+										intent.putExtra("name", bean.getTitle());
 										startActivity(intent);
 									}
 								}

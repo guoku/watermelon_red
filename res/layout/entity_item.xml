@@ -32,11 +32,8 @@
 
             <TextView
                 android:id="@+id/entity_item_tv_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:lines="2"
-                android:textColor="@color/g_main" />
+                style="@style/home_page_item_article_title"
+                />
 
             <ImageView
                 android:id="@+id/entity_item_iv_islike"

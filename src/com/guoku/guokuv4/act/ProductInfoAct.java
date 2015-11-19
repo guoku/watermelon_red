@@ -30,7 +30,6 @@ import com.guoku.guokuv4.config.Logger;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.NoteBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
-import com.guoku.guokuv4.entity.test.Tab2Bean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.homepage.GoodTwoFragmnet;
 import com.guoku.guokuv4.parse.ParseUtil;
