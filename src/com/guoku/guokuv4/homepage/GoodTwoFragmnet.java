@@ -53,14 +53,14 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 	@ViewInject(R.id.tv_check_net)
 	ImageView tvCheckNet;
 	
-	private JingXuanAdapter adapter;
+	public JingXuanAdapter adapter;
 	private ArrayList<PBean> list;
 	private PBean pBean;
 
 	private int cur;
-	private View layoutView;// 刷新喜欢img
+	public View layoutView;// 刷新喜欢img
 
-	private int pos;// 纪录商品
+	public int pos;// 纪录商品
 
 	@Override
 	protected void init() {
@@ -251,56 +251,6 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
 	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		if (data != null) {
-			if (resultCode == UPDATA_LIKE) {
-				boolean isLike = data.getBooleanExtra(INTNT_KEY, false);
-				if (isLike) {
-					int count = 0;
-					if (StringUtils.isEmpty(adapter.getItem(pos).getContent()
-							.getEntity().getLike_count())) {
-						count++;
-					} else {
-						count = Integer.valueOf(adapter.getItem(pos)
-								.getContent().getEntity().getLike_count());
-						count++;
-					}
-					adapter.getItem(pos).getContent().getEntity()
-							.setLike_already("1");
-					adapter.getItem(pos).getContent().getEntity()
-							.setLike_count(String.valueOf(count));
-					adapter.setStatus(layoutView, adapter.getItem(pos));
-
-					BroadUtil.setBroadcastInt(context,
-							Constant.INTENT_ACTION_KEY,
-							Constant.INTENT_ACTION_VALUE_LIKE);
-				} else {
-					int count2 = 0;
-					if (!StringUtils.isEmpty(adapter.getItem(pos).getContent()
-							.getEntity().getLike_count())) {
-						count2 = Integer.valueOf(adapter.getItem(pos)
-								.getContent().getEntity().getLike_count());
-						if (count2 > 0) {
-							count2--;
-						} else {
-							count2 = 0;
-						}
-					}
-					adapter.getItem(pos).getContent().getEntity()
-							.setLike_already("0");
-					adapter.getItem(pos).getContent().getEntity()
-							.setLike_count(String.valueOf(count2));
-					adapter.setStatus(layoutView, adapter.getItem(pos));
-
-					BroadUtil.setBroadcastInt(context,
-							Constant.INTENT_ACTION_KEY,
-							Constant.INTENT_ACTION_VALUE_LIKE);
-				}
-			}
-		}
-	}
 	
 	@OnClick(R.id.tv_check_net)
 	private void onCheckNetClick(View view){

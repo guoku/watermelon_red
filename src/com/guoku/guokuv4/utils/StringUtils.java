@@ -388,7 +388,7 @@ public class StringUtils {
 	/**
 	 * 截取字符串，用在用户喜欢、评论、图文等页面，数据为null时的显示
 	 */
-	public static String setSubstring(String str){
+	public static String setSubstring(String str, int strStert, int strEnd){
 		
 		return str.substring(str.length() - 2, str.length());
 	}

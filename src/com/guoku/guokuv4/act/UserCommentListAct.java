@@ -122,7 +122,7 @@ public class UserCommentListAct extends NetWorkActivity {
 		
 		if(getIntent().getExtras().getBoolean(PersonalFragment.IS_EMPTY)){
 			isDataEmpty(true, listView, tvEmpty);
-			tvEmpty.setText(getResources().getString(R.string.tv_empty_other, StringUtils.setSubstring(title)));
+			tvEmpty.setText(getResources().getString(R.string.tv_empty_other, StringUtils.setSubstring(title, title.length() - 2, title.length())));
 		}else{
 			getLikeData(TABNOTE, true);
 		}

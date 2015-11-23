@@ -7,6 +7,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.mobileim.IYWLoginService;
 import com.alibaba.mobileim.YWLoginParam;
 import com.alibaba.mobileim.channel.event.IWxCallback;
+import com.alibaba.sdk.android.AlibabaSDK;
+import com.alibaba.sdk.android.login.LoginService;
+import com.alibaba.sdk.android.login.callback.LoginCallback;
+import com.alibaba.sdk.android.login.callback.LogoutCallback;
+import com.alibaba.sdk.android.openaccount.model.OpenAccountSession;
+import com.alibaba.sdk.android.session.model.Session;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
@@ -41,6 +47,7 @@ import com.guoku.guokuv4.view.ScrollViewWithListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -98,6 +105,9 @@ public class PersonalFragment extends BaseFrament {
 
 	@ViewInject(R.id.alibaba_wang)
 	private ImageView ailWang;
+	
+	@ViewInject(R.id.alibaba_card)
+	private ImageView ailCard;
 
 	@ViewInject(R.id.psrson_iv_pic)
 	private SimpleDraweeView psrson_iv_pic;
@@ -640,16 +650,17 @@ public class PersonalFragment extends BaseFrament {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-				// YWIMKit mIMKit = GuokuApplication.getInstance().getIMKit();
-				// if (mIMKit == null) {
-				// return;
-				// }
-				// Intent intent = mIMKit.getConversationActivityIntent();
-				// startActivity(intent);
-
-				// testLogIm();
-
-//				loginOpenAccount();
+				openOpenAccountLogin();
+			}
+		});
+		
+		ailCard.setVisibility(View.VISIBLE);
+		ailCard.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				loginOutAli();
 			}
 		});
 	}
@@ -657,90 +668,70 @@ public class PersonalFragment extends BaseFrament {
 	/**
 	 * open account 登录
 	 */
-	private void loginOpenAccount() {
+	public void openOpenAccountLogin() {
 
+		LoginService loginService = AlibabaSDK.getService(LoginService.class);
 		
-//		TaobaoClient client = new DefaultTaobaoClient(url, appkey, secret);
-//		OpenAccountTokenValidateRequest req = new OpenAccountTokenValidateRequest();
-//		req.setParamToken("xjkdfjiiji3jirj3irj3");
-//		OpenAccountTokenValidateResponse rsp = client.execute(req);
-//		System.out.println(rsp.getBody());
-	}
-
-	/**
-	 * openIM等录
-	 */
-	private void testLogIm() {
-
-		new Thread(new Runnable() {
+		loginService.showLogin(getActivity(), new LoginCallback() {
 
 			@Override
-			public void run() {
-				// TODO Auto-generated method stub
+			public void onSuccess(Session session) {
+				
+				ToastUtil.show(getActivity(), "鉴权成功");
+				LogGK.d("***********鉴权成功");
 
-				// loginOut_Sample();
-
-				// String userid = "test1";
-				// String password = "openim";
-				String userid = "13466452759";
-				String password = "zylove59";
-
-				GuokuApplication.getInstance().initIMKit(userid, AlibabaConfig.APP_KEY);
-
+				GuokuApplication.getInstance().initIMKit(session.getUser().nick, AlibabaConfig.APP_KEY);
 				IYWLoginService loginService = GuokuApplication.getInstance().getIMKit().getLoginService();
-				YWLoginParam loginParam = YWLoginParam.createLoginParam(userid, password);
-				loginService.login(loginParam, new IWxCallback() {
+
+				loginService.login(null, new IWxCallback() {
 
 					@Override
 					public void onSuccess(Object... arg0) {
-
-						Intent intent = GuokuApplication.getInstance().getIMKit().getConversationActivityIntent();
-						startActivity(intent);
+						// TODO Auto-generated method stub
+						ToastUtil.show(getActivity(), "IM登录成功");
+						LogGK.d("***********IM登录成功");
 					}
 
 					@Override
 					public void onProgress(int arg0) {
 						// TODO Auto-generated method stub
+
 					}
 
 					@Override
-					public void onError(int errCode, String description) {
-						// 如果登录失败，errCode为错误码,description是错误的具体描述信息
-						LogGK.d("*********" + errCode + "" + description);
+					public void onError(int arg0, String arg1) {
+						// TODO Auto-generated method stub
+						ToastUtil.show(getActivity(), "IM登录失败" + arg0 + arg1);
+						LogGK.d("***********IM登录失败" + arg0 + arg1);
 					}
 				});
 			}
-		}).start();
+
+			@Override
+			public void onFailure(int code, String message) {
+				ToastUtil.show(getActivity(), "授权取消");
+				LogGK.d("***********授权取消");
+			}
+		});
 	}
 
-	/**
-	 * 登出
-	 */
-	public void loginOut_Sample() {
-		if (GuokuApplication.getInstance().getIMKit() == null) {
-			return;
-		}
-
-		// openIM SDK提供的登录服务
-		IYWLoginService mLoginService = GuokuApplication.getInstance().getIMKit().getLoginService();
-		mLoginService.logout(new IWxCallback() {
-
+	
+	private void loginOutAli(){
+		
+		LoginService loginService = AlibabaSDK.getService(LoginService.class);
+		
+		loginService.logout(getActivity(), new LogoutCallback() {
+			
 			@Override
-			public void onSuccess(Object... arg0) {
+			public void onFailure(int arg0, String arg1) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+			
 			@Override
-			public void onProgress(int arg0) {
+			public void onSuccess() {
 				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onError(int arg0, String arg1) {
-				// TODO Auto-generated method stub
-
+				
 			}
 		});
 	}

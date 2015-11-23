@@ -164,13 +164,13 @@ public class GuokuApplication extends Application {
 //		YWAPI.init(this, AlibabaConfig.APP_KEY);
 		
 		//初始化IMKit，考虑到应用启动会自动登录的情况
-				final String userId = IMAutoLoginInfoStoreUtil.getLoginUserId();
-				final String appkey = IMAutoLoginInfoStoreUtil.getAppkey();
-				if (!TextUtils.isEmpty(userId) && !TextUtils.isEmpty(appkey)){
-					//初始化imkit
-					GuokuApplication.getInstance().initIMKit(userId, appkey);
-					//通知栏相关的初始化
-				}
+//				final String userId = IMAutoLoginInfoStoreUtil.getLoginUserId();
+//				final String appkey = IMAutoLoginInfoStoreUtil.getAppkey();
+//				if (!TextUtils.isEmpty(userId) && !TextUtils.isEmpty(appkey)){
+//					//初始化imkit
+//					GuokuApplication.getInstance().initIMKit(userId, appkey);
+//					//通知栏相关的初始化
+//				}
 
 				YWAPI.init(this, AlibabaConfig.APP_KEY);
     }

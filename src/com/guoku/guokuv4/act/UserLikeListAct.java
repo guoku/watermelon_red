@@ -144,6 +144,7 @@ public class UserLikeListAct extends NetWorkActivity {
 		sv.onRefreshComplete();
 		switch (where) {
 		case TABLIKE:
+			sv.getRefreshableView().smoothScrollTo(0, 0);
 			gvAdapter = new GridViewAdapter(mContext, 3);
 			gvAdapter.setList(ParseUtil.getTabLikeList(result));
 			tab_gv.setAdapter(gvAdapter);
@@ -186,7 +187,7 @@ public class UserLikeListAct extends NetWorkActivity {
 		
 		if(getIntent().getExtras().getBoolean(PersonalFragment.IS_EMPTY)){
 			isDataEmpty(true, layoutData, tvEmpty);
-			tvEmpty.setText(getResources().getString(R.string.tv_empty_other, StringUtils.setSubstring(title)));
+			tvEmpty.setText(getResources().getString(R.string.tv_empty_other, StringUtils.setSubstring(title, title.length() - 2, title.length())));
 		}else{
 			getLikeData(TABLIKE, true);
 		}

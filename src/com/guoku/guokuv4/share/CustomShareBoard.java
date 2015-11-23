@@ -8,6 +8,7 @@ import com.guoku.guokuv4.act.LoginAct;
 import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.PInfoBean;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -58,7 +59,15 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		ProductInfoAct.isRefrech = false;
 	}
 
-	private void configPlatforms() {
+	private void configPlatforms(String str) {
+		
+		//限制分享内容长度
+		if(!StringUtils.isEmpty(str)){
+			if(str.length() > 140){
+				str = StringUtils.setSubstring(str, 0, 140);
+			}
+		}
+		
 		mController.getConfig().setSsoHandler(new SinaSsoHandler());
 		addWXPlatform();
 	}
@@ -76,9 +85,10 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 
 	public void setShareContext(String context, UMImage imgUrl, String id,
 			String etid, PInfoBean bean) {
+		
 		pib = bean;
 		entityID = etid;
-		configPlatforms();
+		configPlatforms(context);
 
 		WeiXinShareContent weixinContent = new WeiXinShareContent();
 		weixinContent.setShareContent(context + "：" + bean.getTop_note()
@@ -116,7 +126,8 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 
 	public void setShareContext(Context mContext, String context, String url,
 			String imgUrl, String title) {
-		configPlatforms();
+		
+		configPlatforms(context);
 		this.url = url;
 		this.title = title;
 
@@ -140,7 +151,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 	}
 
 	public void setShareContext(String title, String url) {
-		configPlatforms();
+		configPlatforms(title);
 		this.url = url;
 
 		WeiXinShareContent weixinContent = new WeiXinShareContent();
@@ -162,7 +173,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 
 	public void setShareContext(String context, UMImage url, String tag,
 			String title) {
-		configPlatforms();
+		configPlatforms(context);
 
 		WeiXinShareContent weixinContent = new WeiXinShareContent();
 		weixinContent.setShareContent(context);
@@ -187,7 +198,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 	}
 
 	public void setShareContext(String context, UMImage url, String tag) {
-		configPlatforms();
+		configPlatforms(context);
 
 		WeiXinShareContent weixinContent = new WeiXinShareContent();
 		weixinContent.setShareContent(context);
