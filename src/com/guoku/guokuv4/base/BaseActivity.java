@@ -37,6 +37,7 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
@@ -159,7 +160,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	protected void setGRigthWang(boolean show) {
 		ImageView wang = (ImageView) findViewById(R.id.alibaba_wang);
 		if (show) {
-			wang.setVisibility(View.VISIBLE);
+			wang.setVisibility(View.VISIBLE);    
 		} else {
 			wang.setVisibility(View.GONE);
 		}
@@ -283,8 +284,8 @@ public abstract class BaseActivity extends FragmentActivity {
 		View view = findViewById(R.id.content);// 查找通过setContentView上的根布局
 		if (view == null)
 			return;
-		if (!MyPreferences.activityIsGuided(this, BaseActivity.this.getClass().getName())) {
-			// 引导过了
+//		if (!MyPreferences.activityIsGuided(this, BaseActivity.this.getClass().getName())) {
+//			 引导过了
 
 			ViewParent viewParent = view.getParent();
 			if (viewParent instanceof FrameLayout) {
@@ -294,8 +295,10 @@ public abstract class BaseActivity extends FragmentActivity {
 						LayoutParams.WRAP_CONTENT);
 				params.gravity = Gravity.CENTER;
 				LayoutInflater lInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				;
 				viewsOne = lInflater.inflate(R.layout.view_walkthrough_one, null);
+//				ImageView imageView = (ImageView) viewsOne.findViewById(R.id.img1);
+//				imageView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+				
 				viewsTwo = lInflater.inflate(R.layout.view_walkthrough_two, null);
 
 				final TextView textView = (TextView) viewsOne.findViewById(R.id.textView1);
@@ -317,7 +320,7 @@ public abstract class BaseActivity extends FragmentActivity {
 				frameLayout.addView(viewsTwo);// 添加引导图片
 				frameLayout.addView(viewsOne);// 添加引导图片
 			}
-		}
+//		}
 	}
 
 	public void setCurrentItems() {

@@ -10,6 +10,7 @@ import com.guoku.guokuv4.base.NetWorkActivity;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.NoteBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
+import com.guoku.guokuv4.utils.BroadUtil;
 import com.guoku.guokuv4.utils.GuokuUtil;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
@@ -119,6 +120,9 @@ public class CommentAct extends NetWorkActivity {
 		GuokuUtil.hideKeyboard(context, text);
 		switch (where) {
 		case COMMENTNOTE:
+			
+			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_COMMENT);
+			
 			AVAnalytics.onEvent(this, "poke");
 			MobclickAgent.onEvent(this, "poke");
 

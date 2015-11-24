@@ -145,9 +145,7 @@ public class UserLikeListAct extends NetWorkActivity {
 		switch (where) {
 		case TABLIKE:
 			sv.getRefreshableView().smoothScrollTo(0, 0);
-			gvAdapter = new GridViewAdapter(mContext, 3);
 			gvAdapter.setList(ParseUtil.getTabLikeList(result));
-			tab_gv.setAdapter(gvAdapter);
 			break;
 		case TABLIKE_ADD:
 			gvAdapter.setList(ParseUtil.getTabLikeList(result));

@@ -5,13 +5,11 @@ import org.json.JSONObject;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.mobileim.IYWLoginService;
-import com.alibaba.mobileim.YWLoginParam;
 import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.sdk.android.AlibabaSDK;
 import com.alibaba.sdk.android.login.LoginService;
 import com.alibaba.sdk.android.login.callback.LoginCallback;
 import com.alibaba.sdk.android.login.callback.LogoutCallback;
-import com.alibaba.sdk.android.openaccount.model.OpenAccountSession;
 import com.alibaba.sdk.android.session.model.Session;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
@@ -47,7 +45,6 @@ import com.guoku.guokuv4.view.ScrollViewWithListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -253,7 +250,7 @@ public class PersonalFragment extends BaseFrament {
 			tv_title.setText("我");
 			iv_set.setImageResource(R.drawable.setting);
 
-			initAliWang();
+//			initAliWang();
 		} else {
 			titleBar.setVisibility(View.GONE);
 			iv_set.setVisibility(View.GONE);
@@ -304,7 +301,7 @@ public class PersonalFragment extends BaseFrament {
 			}
 		});
 
-		getLikeData(LIKE, "4", TABLIKE);
+		getInitData(LIKE, "4", TABLIKE);
 	}
 
 	/**
@@ -323,7 +320,7 @@ public class PersonalFragment extends BaseFrament {
 			}
 		});
 
-		getLikeData(NOTE, "3", TABNOTE);
+		getInitData(NOTE, "3", TABNOTE);
 	}
 
 	/**
@@ -482,7 +479,7 @@ public class PersonalFragment extends BaseFrament {
 									// TODO Auto-generated method stub
 									try {
 										Thread.sleep(2000);
-										getLikeData(LIKE, "4", TABLIKE);
+										getInitData(LIKE, "4", TABLIKE);
 										getUserInfo();
 									} catch (InterruptedException e) {
 										// TODO Auto-generated catch block
@@ -491,13 +488,29 @@ public class PersonalFragment extends BaseFrament {
 								}
 							}).start();
 
-							getLikeData(LIKE, "4", TABLIKE);
+							getInitData(LIKE, "4", TABLIKE);
 							getUserInfo();
 							break;
 						case Constant.INTENT_ACTION_VALUE_FOLLOW:
 							getUserInfo();
 							break;
-
+						case Constant.INTENT_ACTION_VALUE_COMMENT:
+							
+							new Thread(new Runnable() {
+								@Override
+								public void run() {
+									// TODO Auto-generated method stub
+									try {
+										Thread.sleep(2000);
+										getUserInfo();
+										getInitData(NOTE, "3", TABNOTE);
+									} catch (InterruptedException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
+							}).start();
+							break;
 						default:
 							break;
 						}
@@ -583,7 +596,7 @@ public class PersonalFragment extends BaseFrament {
 		}
 	}
 
-	private void getLikeData(String value, String countValue, int net_tag) {
+	private void getInitData(String value, String countValue, int net_tag) {
 		sendConnection(Constant.TAB_USER + uBean.getUser_id() + "/" + value + "/",
 				new String[] { "count", "timestamp" },
 				new String[] { countValue, System.currentTimeMillis() / 1000 + "" }, net_tag, false);
