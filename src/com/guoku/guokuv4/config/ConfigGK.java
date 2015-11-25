@@ -11,4 +11,5 @@ package com.guoku.guokuv4.config;
 public class ConfigGK {
 
 	public static final String CHANNEL_BAIDU = "baidu";// 百度渠道
+	public static final String CHANNEL_ZHIHUIYUN = "zhihuiyun";// 华为渠道
 }

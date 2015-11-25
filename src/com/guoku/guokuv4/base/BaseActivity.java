@@ -284,7 +284,7 @@ public abstract class BaseActivity extends FragmentActivity {
 		View view = findViewById(R.id.content);// 查找通过setContentView上的根布局
 		if (view == null)
 			return;
-//		if (!MyPreferences.activityIsGuided(this, BaseActivity.this.getClass().getName())) {
+		if (!MyPreferences.activityIsGuided(this, BaseActivity.this.getClass().getName())) {
 //			 引导过了
 
 			ViewParent viewParent = view.getParent();
@@ -320,7 +320,7 @@ public abstract class BaseActivity extends FragmentActivity {
 				frameLayout.addView(viewsTwo);// 添加引导图片
 				frameLayout.addView(viewsOne);// 添加引导图片
 			}
-//		}
+		}
 	}
 
 	public void setCurrentItems() {

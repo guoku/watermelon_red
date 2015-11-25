@@ -85,18 +85,18 @@ public class GuangFragment extends BaseFrament {
 
 	@ViewInject(R.id.layout_search_bar)
 	LayoutSearchBar viewSearchbar;
-	
+
 	@ViewInject(R.id.ed_search)
 	EditTextWithDel edSearch;
-	
+
 	@ViewInject(R.id.list_search_log)
-	public ListView listSearchLog;//搜索记录list
-	
+	public ListView listSearchLog;// 搜索记录list
+
 	@ViewInject(R.id.layout_log)
 	public View viewLog;
-	
+
 	@ViewInject(R.id.view_back_black)
-	View backblack;//弹出搜索记录背景
+	View backblack;// 弹出搜索记录背景
 
 	@ViewInject(R.id.product_vp_img)
 	private ViewPager vp;
@@ -120,14 +120,14 @@ public class GuangFragment extends BaseFrament {
 	private GridView faxian_gv;
 
 	private GuangShopAdapter gvAdapter;
-	
-	private SearchLogAdapter searchLogAdapter;//搜索记录
+
+	private SearchLogAdapter searchLogAdapter;// 搜索记录
 
 	private ArrayList<BannerBean> list;
 	private ArrayList<CategoryBean> list_cid;
 
 	private ArrayList<EntityBean> discover;// 分类
-	
+
 	public Animation animationBackShow;
 	public Animation animationBackHide;
 	public Animation animationllShow;
@@ -277,7 +277,8 @@ public class GuangFragment extends BaseFrament {
 				arrayList = (ArrayList<Categories>) JSON.parseArray(root.getString("categories"), Categories.class);
 				for (int i = 0; i < arrayList.size(); i++) {
 					final ImageAddTextLayout imagTextLayout = new ImageAddTextLayout(getActivity());
-					FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+					FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT,
+							LayoutParams.MATCH_PARENT);
 					params.gravity = Gravity.CENTER;
 					imagTextLayout.setPadding(10, 0, 10, 0);
 					imagTextLayout.imView.setImageURI(Uri.parse(arrayList.get(i).getCategory().getCover_url()));
@@ -388,7 +389,7 @@ public class GuangFragment extends BaseFrament {
 			vp.setAdapter(adapter);
 
 			initArticle();
-			
+
 			initSearchLog();
 
 		} catch (Exception e) {
@@ -431,7 +432,7 @@ public class GuangFragment extends BaseFrament {
 		// startActivity(new Intent(context, SeachAct.class));
 		edOnClick();
 	}
-	
+
 	@OnClick(R.id.view_back_black)
 	private void inClickBlack(View view) {
 		if (viewLog.getVisibility() == View.VISIBLE) {
@@ -478,7 +479,7 @@ public class GuangFragment extends BaseFrament {
 			return super.getPageWidth(position);
 		}
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -490,9 +491,9 @@ public class GuangFragment extends BaseFrament {
 		edSearch.getText().clear();
 		GuokuUtil.hideKeyBoard(context);
 	}
-	
+
 	@OnClick(R.id.tv_clean)
-	private void onCleanView(View view){
+	private void onCleanView(View view) {
 		SharePrenceUtil.delSearchLog(context);
 		hideSearchWhat();
 	}
@@ -509,19 +510,19 @@ public class GuangFragment extends BaseFrament {
 			ToastUtil.show(getActivity(), getActivity().getResources().getString(R.string.tv_search_please_Enter));
 		}
 	}
-	
+
 	/**
 	 * 初始化搜索记录
 	 */
-	private void initSearchLog(){
-		
+	private void initSearchLog() {
+
 		searchLogAdapter = new SearchLogAdapter(getActivity());
 		listSearchLog.setAdapter(searchLogAdapter);
-		
+
 		ViewGroup.LayoutParams params = listSearchLog.getLayoutParams();
 		params.height = GuokuApplication.screenH / 3;
 		listSearchLog.setLayoutParams(params);
-		
+
 		listSearchLog.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -529,23 +530,24 @@ public class GuangFragment extends BaseFrament {
 				goSearchAct(searchLogAdapter.getItem(position).getSerchStr());
 			}
 		});
-		
+
 		edSearch.setOnTouchListener(new OnTouchListener() {
-			int touch_flag=0;
+			int touch_flag = 0;
+
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
 				touch_flag++;
-				if(touch_flag==2){
+				if (touch_flag == 2) {
 					edOnClick();
 				}
 				return false;
 			}
 		});
 	}
-	
-	private void edOnClick(){
-		
+
+	private void edOnClick() {
+
 		if (searchLogAdapter != null) {
 			viewLog.getBackground().setAlpha(230);
 			if (viewLog.getVisibility() == View.INVISIBLE) {
@@ -554,15 +556,15 @@ public class GuangFragment extends BaseFrament {
 					searchLogAdapter.setList((ArrayList<SearchLogBean>) sBeans);
 					showSearchWhat();
 				}
-				
+
 				viewSearchbar.isShowClean(true);
 			}
 		}
 	}
-	
-	private void goSearchAct(String value){
-		
-		if(!StringUtils.isEmpty(value)){
+
+	private void goSearchAct(String value) {
+
+		if (!StringUtils.isEmpty(value)) {
 			if (viewLog.getVisibility() == View.VISIBLE) {
 				hideSearchWhat();
 			}
@@ -571,9 +573,10 @@ public class GuangFragment extends BaseFrament {
 			Intent intent = new Intent(context, SearchAct.class);
 			intent.putExtra(GuangFragment.class.getName(), value);
 			startActivity(intent);
+			getActivity().overridePendingTransition(R.anim.act_fade_in, R.anim.act_fade_out);
 		}
 	}
-	
+
 	public void showSearchWhat() {
 		showBackBlack();
 		if (animationllShow == null) {

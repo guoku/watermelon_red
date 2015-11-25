@@ -57,6 +57,7 @@ public class SearchAct extends BaseActivity implements OnActivityChangeListener{
 		edTextWithDel.setText(searchStr);
 		edTextWithDel.addTextChangedListener(watcher);
 		edTextWithDel.clearFocus();
+		edTextWithDel.setSelection(searchStr.length());
 	}
 	
 	public void onAttachFragment(Fragment fragment) {
@@ -101,11 +102,11 @@ public class SearchAct extends BaseActivity implements OnActivityChangeListener{
 	
 	@OnClick(R.id.tv_cancel)
 	private void inClickClean(View view) {
-		finish();
+		finishAct();
 	}
 	
 	@Override
-	public boolean dispatchKeyEvent(KeyEvent event) {
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
 		if (KeyEvent.KEYCODE_ENTER == event.getKeyCode() && event.getAction() == KeyEvent.ACTION_DOWN) {
 			if(!StringUtils.isEmpty(searchStr)){
@@ -114,7 +115,20 @@ public class SearchAct extends BaseActivity implements OnActivityChangeListener{
 			GuokuUtil.hideKeyBoard(this);
 			return true;
 		}
-		return super.dispatchKeyEvent(event);
+		
+		if(event.getKeyCode() == KeyEvent.KEYCODE_BACK){
+			finishAct();
+			return true;
+		}
+		
+		return super.onKeyDown(keyCode, event);
+	}
+	
+	private void finishAct() {
+		if(!GuokuUtil.isKeyShow(this)){
+			finish();
+			overridePendingTransition(R.anim.act_fade_in, R.anim.act_fade_out);
+		}
 	}
 
 }

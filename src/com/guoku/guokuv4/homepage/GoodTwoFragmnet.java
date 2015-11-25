@@ -165,7 +165,6 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 			if (pBean == null) {
 				return;
 			}
-			ToastUtil.show(context, "取消喜爱");
 			pBean.getContent().getEntity().setLike_already("0");
 			pBean.getContent()
 					.getEntity()
@@ -185,7 +184,6 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 			if (pBean == null) {
 				return;
 			}
-			ToastUtil.show(context, "喜爱成功");
 			pBean.getContent().getEntity().setLike_already("1");
 			pBean.getContent()
 					.getEntity()
@@ -206,7 +204,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 		GuokuUtil.closeListViewHeader(jingxuan_lv_1);
 		switch (where) {
 		case LIKE0:
-			ToastUtil.show(context, "取消失敗");
+			ToastUtil.show(context, "取消喜爱失敗");
 			break;
 		case LIKE1:
 			ToastUtil.show(context, "喜爱失败");

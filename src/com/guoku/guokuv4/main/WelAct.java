@@ -20,7 +20,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import com.umeng.analytics.MobclickAgent;
 
 public class WelAct extends NetWorkActivity {
-	
+
 	private static final int TAG_CATEGORY = 1001;// 分类
 
 	@ViewInject(R.id.wecome)
@@ -38,23 +38,24 @@ public class WelAct extends NetWorkActivity {
 		ViewUtils.inject(this);
 		MobclickAgent.updateOnlineConfig(this);
 
-//		if (SharePrenceUtil.getFirstUsed(WelAct.this, Constant.SP_FIRST_URED)) {
-			anim = new AlphaAnimation(0.5f, 1.0f);
-			anim.setDuration(2000);
-			wecome.startAnimation(anim);
-			anim.setAnimationListener(am);
-//		} else {
-//			startActivity(new Intent(WelAct.this, NavigationActivity.class));
-//			finish();
-//		}
-//		init();
+		// if (SharePrenceUtil.getFirstUsed(WelAct.this,
+		// Constant.SP_FIRST_URED)) {
+		anim = new AlphaAnimation(0.5f, 1.0f);
+		anim.setDuration(2000);
+		wecome.startAnimation(anim);
+		anim.setAnimationListener(am);
+		// } else {
+		// startActivity(new Intent(WelAct.this, NavigationActivity.class));
+		// finish();
+		// }
+		init();
 	}
 
 	private void init() {
 
 		channel = StringUtils.getAppMetaData(this, "UMENG_CHANNEL");
 		if (!StringUtils.isEmpty(channel)) {
-			if (channel.equals(ConfigGK.CHANNEL_BAIDU)) {
+			if (channel.equals(ConfigGK.CHANNEL_ZHIHUIYUN)) {
 				imgBaidu.setVisibility(View.VISIBLE);
 			}
 		}
@@ -70,6 +71,11 @@ public class WelAct extends NetWorkActivity {
 		public void onAnimationEnd(Animation animation) {
 			// 动画执行结束的时候去主页面
 			startActivity(new Intent(WelAct.this, MainActivity2.class));
+
+			int VERSION = Integer.parseInt(android.os.Build.VERSION.SDK);
+			if (VERSION >= 5) {
+				overridePendingTransition(R.anim.act_fade_in, R.anim.act_fade_out);
+			}
 			finish();
 		}
 
@@ -101,12 +107,12 @@ public class WelAct extends NetWorkActivity {
 		// TODO Auto-generated method stub
 		switch (where) {
 		case TAG_CATEGORY:
-			SharePrenceUtil.setTab(context, result);//储存品类数据
+			SharePrenceUtil.setTab(context, result);// 储存品类数据
 			break;
 
 		default:
 			break;
-}
+		}
 	}
 
 	@Override
@@ -118,8 +124,7 @@ public class WelAct extends NetWorkActivity {
 	@Override
 	protected void setupData() {
 		// TODO Auto-generated method stub
-		sendConnection(Constant.CATAB, new String[] {}, new String[] {},
-				TAG_CATEGORY, false);
+		sendConnection(Constant.CATAB, new String[] {}, new String[] {}, TAG_CATEGORY, false);
 	}
 
 }

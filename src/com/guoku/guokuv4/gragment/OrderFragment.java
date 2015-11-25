@@ -10,14 +10,15 @@ import com.guoku.guokuv4.adapter.ArrayListAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
 import com.guoku.guokuv4.base.UserBaseFrament;
 import com.guoku.guokuv4.config.Constant;
-import com.guoku.guokuv4.config.Logger;
 import com.guoku.guokuv4.entity.test.MessageBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.PointBean;
+import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.DateUtils;
 import com.guoku.guokuv4.utils.ImgUtils;
 import com.guoku.guokuv4.utils.StringUtils;
+import com.guoku.guokuv4.utils.StringUtils.OnNoteTag;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -29,7 +30,6 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.nostra13.universalimageloader.core.listener.PauseOnScrollListener;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -79,22 +79,12 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 
 	@Override
 	protected int getContentId() {
-		optionsRound = new DisplayImageOptions.Builder()
-				.bitmapConfig(Bitmap.Config.RGB_565)
-				.imageScaleType(ImageScaleType.EXACTLY)
-				.displayer(new RoundedBitmapDisplayer(90))
-				.showImageForEmptyUri(R.drawable.user100)
-				.showImageOnFail(R.drawable.user100)
+		optionsRound = new DisplayImageOptions.Builder().bitmapConfig(Bitmap.Config.RGB_565)
+				.imageScaleType(ImageScaleType.EXACTLY).displayer(new RoundedBitmapDisplayer(90))
+				.showImageForEmptyUri(R.drawable.user100).showImageOnFail(R.drawable.user100)
 				.showImageOnLoading(R.drawable.user100).build();
 
 		return R.layout.fragment_order;
-	}
-
-	@Override
-	public void onLowMemory() {
-		// TODO Auto-generated method stub
-		super.onLowMemory();
-		imageLoader.clearMemoryCache();
 	}
 
 	@Override
@@ -151,9 +141,6 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 	@Override
 	protected void init() {
 
-		tongzhi_lv.setOnScrollListener(new PauseOnScrollListener(imageLoader,
-				true, true));
-
 		title_bar_centrt_tv.setText("通知");
 		title_bar_left_iv.setVisibility(View.GONE);
 		pointAdapter = new ArrayListAdapter<PointBean>(context) {
@@ -162,8 +149,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 			public View getView(int position, View convertView, ViewGroup parent) {
 				ViewHolder holder = null;
 				if (convertView == null) {
-					convertView = View.inflate(context, R.layout.tongzhi_item,
-							null);
+					convertView = View.inflate(context, R.layout.tongzhi_item, null);
 					holder = new ViewHolder();
 					ViewUtils.inject(holder, convertView);
 					convertView.setTag(holder);
@@ -172,67 +158,37 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 				}
 				final PointBean bean = mList.get(position);
 
-				holder.tongzhi_item_iv_userpic
-						.setOnClickListener(OrderFragment.this);
+				holder.tongzhi_item_iv_userpic.setOnClickListener(OrderFragment.this);
 				holder.tongzhi_item_iv_userpic.setTag(bean);
 
 				holder.tongzhi_item_iv_pimg.setTag(bean);
-				holder.tongzhi_item_iv_pimg
-						.setOnClickListener(OrderFragment.this);
+				holder.tongzhi_item_iv_pimg.setOnClickListener(OrderFragment.this);
 				holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
 
 				if (bean.getType().equals("user_like")) {
-					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getLiker()
-							.get50()));
-					StringUtils.setTextColor(
-							holder.tv_context,
-							bean.getContent().getLiker().getNickname()
-									+ " 喜爱了 1 件商品  "
-									+ DateUtils.getStandardDate(bean
-											.getCreated_time()), bean
-									.getContent().getLiker().getNickname(),
-							DateUtils.getStandardDate(bean.getCreated_time()));
-					imageLoader.displayImage(bean.getContent().getEntity()
-							.get50(), holder.tongzhi_item_iv_pimg, options,
-							new ImgUtils.AnimateFirstDisplayListener());
-				} else if (bean.getType().equals("entity")) {
-					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getNote()
-							.getCreator().get50()));
-					
-					StringUtils.setTextColor(
-							holder.tv_context,
-							bean.getContent().getNote().getCreator()
-									.getNickname()
-									+ " 点评了 1 件商品："
-									+ bean.getContent().getNote().getContent()
-									+ "  "
-									+ DateUtils.getStandardDate(bean
-											.getCreated_time()), bean
-									.getContent().getNote().getCreator()
-									.getNickname(),
-							DateUtils.getStandardDate(bean.getCreated_time()));
-					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getEntity()
-							.get50()));
-					
-				} else if (bean.getType().equals("user_follow")) {
-					
-					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getUser()
-							.get50()));
-					
-					StringUtils.setTextColor(
-							holder.tv_context,
-							bean.getContent().getUser().getNickname()
-									+ " 开始关注 "
-									+ bean.getContent().getTarget()
-											.getNickname()
-									+ "  "
-									+ DateUtils.getStandardDate(bean
-											.getCreated_time()), bean
-									.getContent().getUser().getNickname(), bean
-									.getContent().getTarget().getNickname(),
-							DateUtils.getStandardDate(bean.getCreated_time()));
-					holder.tongzhi_item_iv_pimg.setVisibility(View.INVISIBLE);
+					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getLiker().get50()));
 
+					openNickName(bean.getContent().getLiker(),
+							bean.getContent().getLiker().getNickname() + " 喜爱了 1 件商品  ",
+							bean.getContent().getLiker().getNickname().length(), holder.tv_context);
+
+					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getEntity().get50()));
+				} else if (bean.getType().equals("entity")) {
+					holder.tongzhi_item_iv_userpic
+							.setImageURI(Uri.parse(bean.getContent().getNote().getCreator().get50()));
+
+					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getEntity().get50()));
+
+					openNickName(bean.getContent().getNote().getCreator(),
+							bean.getContent().getNote().getCreator().getNickname() + " 点评了 1 件商品  ",
+							bean.getContent().getNote().getCreator().getNickname().length(), holder.tv_context);
+
+				} else if (bean.getType().equals("user_follow")) {
+
+					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getUser().get50()));
+					holder.tongzhi_item_iv_pimg.setVisibility(View.INVISIBLE);
+					openNickName(bean.getContent().getUser(), bean.getContent().getUser().getNickname() + " 开始关注  ",
+							bean.getContent().getUser().getNickname().length(), holder.tv_context);
 				}
 				return convertView;
 			}
@@ -244,8 +200,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 			public View getView(int position, View convertView, ViewGroup parent) {
 				ViewHolder holder = null;
 				if (convertView == null) {
-					convertView = View.inflate(context, R.layout.tongzhi_item2,
-							null);
+					convertView = View.inflate(context, R.layout.tongzhi_item2, null);
 					holder = new ViewHolder();
 					ViewUtils.inject(holder, convertView);
 					convertView.setTag(holder);
@@ -253,149 +208,76 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 					holder = (ViewHolder) convertView.getTag();
 				}
 				final MessageBean bean = mList.get(position);
-				holder.tongzhi_item_iv_userpic
-						.setOnClickListener(OrderFragment.this);
+				holder.tongzhi_item_iv_userpic.setOnClickListener(OrderFragment.this);
 				holder.tongzhi_item_iv_userpic.setTag(bean);
 
 				holder.tongzhi_item_iv_pimg.setTag(bean);
-				holder.tongzhi_item_iv_pimg
-						.setOnClickListener(OrderFragment.this);
+				holder.tongzhi_item_iv_pimg.setOnClickListener(OrderFragment.this);
 
 				if (bean.getType().equals("note_comment_message")) {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
-
-					imageLoader.displayImage(bean.getContent()
-							.getComment_user().get50(),
-							holder.tongzhi_item_iv_userpic, optionsRound,
-							new ImgUtils.AnimateFirstDisplayListener());
-					StringUtils.setTextColor(
-							holder.tv_context,
-							bean.getContent().getComment_user().getNickname()
-									+ " 评论了你撰写"
-									+ "的点评："
-									+ bean.getContent().getComment()
-											.getContent()
-									+ "  "
-									+ DateUtils.getStandardDate(bean
-											.getCreated_time()), bean
-									.getContent().getComment_user()
-									.getNickname(),
-							DateUtils.getStandardDate(bean.getCreated_time()));
+					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getComment_user().get50()));
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
 					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getNote()
 							.get50()));
+					openNickName(bean.getContent().getComment_user(),
+							bean.getContent().getComment_user().getNickname() + " 评论了你撰写的点评  ",
+							bean.getContent().getComment_user().getNickname().length(), holder.tv_context);
 				} else if (bean.getType().equals("note_poke_message")) {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
-
-					imageLoader.displayImage(bean.getContent().getPoker()
-							.get50(), holder.tongzhi_item_iv_userpic,
-							optionsRound,
-							new ImgUtils.AnimateFirstDisplayListener());
-
-					StringUtils.setTextColor(
-							holder.tv_context,
-							bean.getContent().getPoker().getNickname()
-									+ " 赞了你的点评"
-									+ " "
-									+ DateUtils.getStandardDate(bean
-											.getCreated_time()), bean
-									.getContent().getPoker().getNickname(),
-							DateUtils.getStandardDate(bean.getCreated_time()));
+					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getPoker().get50()));
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
-					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getNote()
-							.get50()));
+					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getNote().get50()));
+
+					openNickName(bean.getContent().getPoker(),
+							bean.getContent().getPoker().getNickname() + " 赞了你的点评  ",
+							bean.getContent().getPoker().getNickname().length(), holder.tv_context);
 				} else if (bean.getType().equals("entity_note_message")) {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
-					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getNote()
-							.get50()));
-					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getEntity()
-							.get50()));
+					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getNote().getCreator().get50()));
+					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getEntity().get50()));
 
-					StringUtils.setTextColor(
-							holder.tv_context,
-							bean.getContent().getNote().getCreator()
-									.getNickname()
-									+ " 点评了你添加的商品 "
-									+ " "
-									+ DateUtils.getStandardDate(bean
-											.getCreated_time()), bean
-									.getContent().getNote().getCreator()
-									.getNickname(),
-							DateUtils.getStandardDate(bean.getCreated_time()));
+					openNickName(bean.getContent().getNote().getCreator(),
+							bean.getContent().getNote().getCreator().getNickname() + " 点评了你添加的商品  ",
+							bean.getContent().getNote().getCreator().getNickname().length(), holder.tv_context);
 
 				} else if (bean.getType().equals("user_follow")) {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
 
-					imageLoader.displayImage(bean.getContent().getFollower()
-							.get50(), holder.tongzhi_item_iv_userpic,
-							optionsRound,
-							new ImgUtils.AnimateFirstDisplayListener());
+					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getFollower().get50()));
 
-					StringUtils.setTextColor(
-							holder.tv_context,
-							bean.getContent().getFollower().getNickname()
-									+ " 开始关注你 "
-									+ " "
-									+ DateUtils.getStandardDate(bean
-											.getCreated_time()), bean
-									.getContent().getFollower().getNickname(),
-							DateUtils.getStandardDate(bean.getCreated_time()));
 					holder.tongzhi_item_iv_pimg.setVisibility(View.INVISIBLE);
+
+					openNickName(bean.getContent().getFollower(), bean.getContent().getFollower().getNickname() + " 开始关注你  ",
+							bean.getContent().getFollower().getNickname().length(), holder.tv_context);
 
 				} else if (bean.getType().equals("note_comment_reply_message")) {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
-
-					imageLoader.displayImage(bean.getContent().getFollower()
-							.get50(), holder.tongzhi_item_iv_userpic,
-							optionsRound,
-							new ImgUtils.AnimateFirstDisplayListener());
-					StringUtils.setTextColor(
-							holder.tv_context,
-							bean.getContent().getNote().getCreator()
-									.getNickname()
-									+ "  回复了你的评论："
-									+ bean.getContent().getNote().getContent()
-									+ " "
-									+ DateUtils.getStandardDate(bean
-											.getCreated_time()), bean
-									.getContent().getNote().getCreator()
-									.getNickname(),
-							DateUtils.getStandardDate(bean.getCreated_time()));
+					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getFollower().get50()));
 					holder.tongzhi_item_iv_pimg.setVisibility(View.INVISIBLE);
+
+					openNickName(bean.getContent().getFollower(),
+							bean.getContent().getFollower().getNickname() + " 回复了你的评论  ",
+							bean.getContent().getFollower().getNickname().length(), holder.tv_context);
+
 				} else if (bean.getType().equals("note_selection_message")) {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
 
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
-					holder.tongzhi_item_iv_userpic
-							.setImageResource(R.drawable.star);
+					holder.tongzhi_item_iv_userpic.setImageResource(R.drawable.star);
 					// .setVisibility(View.INVISIBLE);
-					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getEntity()
-							.get50()));
-					holder.tv_context
-							.setText("你添加的商品被收录精选 "
-									+ " "
-									+ DateUtils.getStandardDate(bean
-											.getCreated_time()));
+					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getEntity().get50()));
+					holder.tv_context.setText("你添加的商品被收录精选 " + " " + DateUtils.getStandardDate(bean.getCreated_time()));
 				} else if (bean.getType().equals("entity_like_message")) {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
-					Logger.i(TAG, bean.getContent().getLiker().toString());
-					imageLoader.displayImage(bean.getContent().getLiker()
-							.get50(), holder.tongzhi_item_iv_userpic,
-							optionsRound,
-							new ImgUtils.AnimateFirstDisplayListener());
-					StringUtils.setTextColor(
-							holder.tv_context,
-							bean.getContent().getLiker().getNickname()
-									+ "  喜爱了你添加的商品  "
-									+ DateUtils.getStandardDate(bean
-											.getCreated_time()) + " ", bean
-									.getContent().getLiker().getNickname(),
-							DateUtils.getStandardDate(bean.getCreated_time()));
+					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getLiker().get50()));
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
-					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getEntity()
-							.get50()));
-					
+					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getEntity().get50()));
+
+					openNickName(bean.getContent().getLiker(),
+							bean.getContent().getLiker().getNickname() + " 喜爱了你添加的商品  ",
+							bean.getContent().getLiker().getNickname().length(), holder.tv_context);
 				}
 
 				return convertView;
@@ -422,22 +304,18 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
 				if (curTab == 1) {
 					if (pointList != null && pointList.size() - 1 > 0) {
-						if (pointList.get(pointList.size() - 1).getType()
-								.equals("entity")) {
-							getPointList(pointList.get(pointList.size() - 1)
-									.getContent().getNote().getUpdated_time());
-						} else if (pointList.get(pointList.size() - 1)
-								.getType().equals("user_like")) {
+						if (pointList.get(pointList.size() - 1).getType().equals("entity")) {
+							getPointList(pointList.get(pointList.size() - 1).getContent().getNote().getUpdated_time());
+						} else if (pointList.get(pointList.size() - 1).getType().equals("user_like")) {
 
-							getPointList(pointList.get(pointList.size() - 1)
-									.getContent().getEntity().getUpdated_time());
+							getPointList(
+									pointList.get(pointList.size() - 1).getContent().getEntity().getUpdated_time());
 						}
 					} else
 						tongzhi_lv.onRefreshComplete();
 				} else {
 					if (messageList != null && messageList.size() - 1 > 0) {
-						getMessageList(messageList.get(messageList.size() - 1)
-								.getCreated_time());
+						getMessageList(messageList.get(messageList.size() - 1).getCreated_time());
 					} else
 						tongzhi_lv.onRefreshComplete();
 				}
@@ -455,27 +333,23 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 	}
 
 	private void getPointList(String time) {
-		sendConnection(Constant.POINTLIST,
-				new String[] { "count", "timestamp" }, new String[] { "30",
-						time + "" }, POINTLIST, false);
+		sendConnection(Constant.POINTLIST, new String[] { "count", "timestamp" }, new String[] { "30", time + "" },
+				POINTLIST, false);
 	}
 
 	private void getPointList1(String time) {
-		sendConnection(Constant.POINTLIST,
-				new String[] { "count", "timestamp" }, new String[] { "30",
-						time + "" }, POINTLIST1, false);
+		sendConnection(Constant.POINTLIST, new String[] { "count", "timestamp" }, new String[] { "30", time + "" },
+				POINTLIST1, false);
 	}
 
 	private void getMessageList(String time) {
-		sendConnection(Constant.MESSAGELIST, new String[] { "count",
-				"timestamp" }, new String[] { "30", time + "" }, MESSAGELIST,
-				false);
+		sendConnection(Constant.MESSAGELIST, new String[] { "count", "timestamp" }, new String[] { "30", time + "" },
+				MESSAGELIST, false);
 	}
 
 	private void getMessageList1(String time) {
-		sendConnection(Constant.MESSAGELIST, new String[] { "count",
-				"timestamp" }, new String[] { "30", time + "" }, MESSAGELIST1,
-				false);
+		sendConnection(Constant.MESSAGELIST, new String[] { "count", "timestamp" }, new String[] { "30", time + "" },
+				MESSAGELIST1, false);
 	}
 
 	@OnClick(R.id.tongzhi_ll_tab1)
@@ -520,35 +394,22 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 		private TextView tv_context;
 	}
 
+	private void openUserAct(String entityInfo) {
+
+		sendConnection(Constant.PROINFO + entityInfo + "/", new String[] { "entity_id" }, new String[] { entityInfo },
+				PROINFO, true);
+	}
+
 	@Override
 	public void onClick(View arg0) {
 		switch (arg0.getId()) {
 		case R.id.tongzhi_item_iv_pimg:
 			if (curTab == 1) {
 				PointBean bean = (PointBean) arg0.getTag();
-				sendConnection(Constant.PROINFO
-						+ bean.getContent().getEntity().getEntity_id() + "/",
-						new String[] { "entity_id" }, new String[] { bean
-								.getContent().getEntity().getEntity_id() },
-						PROINFO, true);
+				openUserAct(bean.getContent().getEntity().getEntity_id());
 			} else {
 				MessageBean bean = (MessageBean) arg0.getTag();
-				// if (bean.getContent().getNote() != null
-				// && bean.getContent().getNote().getEntity_id() != null) {
-
-				sendConnection(Constant.PROINFO + bean.getEntity_id() + "/",
-						new String[] { "entity_id" },
-						new String[] { bean.getEntity_id() }, PROINFO, true);
-				// } else if (bean.getContent().getEntity() != null
-				// && bean.getContent().getEntity().getEntity_id() != null) {
-				// sendConnection(Constant.PROINFO
-				// + bean.getContent().getEntity().getEntity_id()
-				// + "/", new String[] { "entity_id" },
-				// new String[] { bean.getContent().getEntity()
-				// .getEntity_id() }, PROINFO, true);
-				//
-				// }
-
+				openUserAct(bean.getEntity_id());
 			}
 			break;
 
@@ -559,8 +420,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 				if (bean.getType().equals("user_like")) {
 					intent.putExtra("data", bean.getContent().getLiker());
 				} else if (bean.getType().equals("entity")) {
-					intent.putExtra("data", bean.getContent().getNote()
-							.getCreator());
+					intent.putExtra("data", bean.getContent().getNote().getCreator());
 				} else if (bean.getType().equals("user_follow")) {
 					intent.putExtra("data", bean.getContent().getUser());
 				}
@@ -577,8 +437,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 					startActivity(intent);
 				} else if (bean.getType().equals("entity_note_message")) {
 					Intent intent = new Intent(context, UserBaseFrament.class);
-					intent.putExtra("data", bean.getContent().getNote()
-							.getCreator());
+					intent.putExtra("data", bean.getContent().getNote().getCreator());
 					startActivity(intent);
 				} else if (bean.getType().equals("user_follow")) {
 					Intent intent = new Intent(context, UserBaseFrament.class);
@@ -598,5 +457,26 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 
 		}
 
+	}
+
+	/**
+	 * 点击nickname跳转到
+	 * 
+	 * @param userBean
+	 * @param str
+	 * @param end
+	 * @param tv
+	 */
+	private void openNickName(final UserBean userBean, String str, int end, TextView tv) {
+
+		StringUtils.setNickName(context, str, 0, end, tv, new OnNoteTag() {
+			@Override
+			public void setTagClick(String tagName) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(context, UserBaseFrament.class);
+				intent.putExtra("data", userBean);
+				startActivity(intent);
+			}
+		});
 	}
 }
