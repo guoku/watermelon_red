@@ -17,6 +17,7 @@ import com.guoku.guokuv4.act.LoginAct;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.config.Logger;
 import com.guoku.guokuv4.net.HttputilHelp;
+import com.guoku.guokuv4.net.NetConfig;
 import com.guoku.guokuv4.net.NetUtil;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
@@ -45,6 +46,7 @@ import android.support.v4.app.FragmentTransaction;
  * @author bu.xuesong
  */
 public abstract class NetWorkActivity extends BaseActivity {
+	
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
 	private CustomProgressDialog progressDialog;
 	private HttpUtils httpUtils;
@@ -67,7 +69,7 @@ public abstract class NetWorkActivity extends BaseActivity {
 		progressDialog = new CustomProgressDialog(NetWorkActivity.this);
 		progressDialog.setMessage("载入中...");
 		httpUtils = HttputilHelp.getHttpUtils();
-		// httpUtils.configUserAgent(GuokuApplication.userAgent);
+		httpUtils.configUserAgent(NetConfig.USER_AGENT);
 		vector = new Vector<Integer>();
 		options = new DisplayImageOptions.Builder().imageScaleType(ImageScaleType.EXACTLY).considerExifParams(true)
 				.bitmapConfig(Config.RGB_565).showImageOnLoading(R.drawable.item240)
@@ -143,7 +145,6 @@ public abstract class NetWorkActivity extends BaseActivity {
 
 		params.addQueryStringParameter("sign", genSign(paramsMap));
 		params.addQueryStringParameter("api_key", "0b19c2b93687347e95c6b6f5cc91bb87");
-
 		Logger.e("params", "params----->" + ":" + params.toString());
 		if (showDialog && !isFinishing()) {
 			showDialog();

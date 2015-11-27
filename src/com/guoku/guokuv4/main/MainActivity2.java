@@ -9,6 +9,9 @@ import com.guoku.guokuv4.gragment.GuangFragment;
 import com.guoku.guokuv4.gragment.JingXuanPageFragment;
 import com.guoku.guokuv4.gragment.OrderFragment;
 import com.guoku.guokuv4.gragment.PersonalFragment;
+import com.guoku.guokuv4.service.DownLoadService;
+import com.guoku.guokuv4.utils.StringUtils;
+import com.guoku.guokuv4.utils.ToastUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -66,6 +69,8 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 		UmengUpdateAgent.update(this);
 
 		registerDoubleClickListener(main_bar_1, this);
+		
+		startLaunch();
 	}
 
 	@Override
@@ -350,7 +355,15 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 		if (jingXuanPageFragment.currIndex == 1) {
 			jingXuanPageFragment.articleFragment.listViewArtivle.getRefreshableView().smoothScrollToPosition(0);
 		}
-
 	}
-
+	
+	private void startLaunch(){
+		
+		if (!StringUtils.isEmpty(GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url())) {
+			Intent intent = new Intent(this, DownLoadService.class);
+			startService(intent);
+			ToastUtil.show(mContext, GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url());
+		}
+	}
+	
 }

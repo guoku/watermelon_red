@@ -15,6 +15,7 @@ import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.LoginAct;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.net.HttputilHelp;
+import com.guoku.guokuv4.net.NetConfig;
 import com.guoku.guokuv4.net.NetUtil;
 import com.guoku.guokuv4.utils.LogGK;
 import com.guoku.guokuv4.utils.StringUtils;
@@ -43,10 +44,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-import android.view.animation.Animation.AnimationListener;
 
 public abstract class BaseFrament extends Fragment {
 
@@ -70,7 +67,7 @@ public abstract class BaseFrament extends Fragment {
 		progressDialog = new CustomProgressDialog(context);
 		progressDialog.setMessage("载入中...");
 		httpUtils = HttputilHelp.getHttpUtils();
-		httpUtils.configUserAgent(GuokuApplication.userAgent);
+		httpUtils.configUserAgent(NetConfig.USER_AGENT);
 		vector = new Vector<Integer>();
 	}
 

@@ -18,6 +18,8 @@ public class Constant {
 	public static String BASE_PATH = Environment.getExternalStorageDirectory()
 			+ "/guoku/";
 	public static String IMAGES_PATH = BASE_PATH + "/images/";
+	public static String LAUNCH_PATH = BASE_PATH + "launch/";//引导图
+	public static String LAUNCH_NAME = "launch.png";
 
 	// log开关
 	/** 以后log输出以(LogUtils.*)方式输出 **/

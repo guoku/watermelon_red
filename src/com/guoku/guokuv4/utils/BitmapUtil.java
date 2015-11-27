@@ -1,4 +1,5 @@
 package com.guoku.guokuv4.utils;
+
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -7,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.config.Logger;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
@@ -41,8 +43,7 @@ public class BitmapUtil {
 			// 从指定路径下读取图片，并获取其EXIF信息
 			ExifInterface exifInterface = new ExifInterface(path);
 			// 获取图片的旋转信息
-			int orientation = exifInterface.getAttributeInt(
-					ExifInterface.TAG_ORIENTATION,
+			int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION,
 					ExifInterface.ORIENTATION_NORMAL);
 			switch (orientation) {
 			case ExifInterface.ORIENTATION_ROTATE_90:
@@ -69,8 +70,7 @@ public class BitmapUtil {
 		matrix.postRotate(degree);
 		try {
 			// 将原始图片按照旋转矩阵进行旋转，并得到新的图片
-			returnBm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(),
-					bm.getHeight(), matrix, true);
+			returnBm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
 		} catch (OutOfMemoryError e) {
 		}
 		if (returnBm == null) {
@@ -82,8 +82,7 @@ public class BitmapUtil {
 		return returnBm;
 	}
 
-	public static <T extends View> void SetBitMapImage(final Context context,
-			T v, String url, final int defortIc) {
+	public static <T extends View> void SetBitMapImage(final Context context, T v, String url, final int defortIc) {
 		BitmapUtils utils = new BitmapUtils(context);
 		utils.configDefaultLoadingImage(defortIc);
 		utils.configDefaultLoadFailedImage(defortIc);
@@ -91,24 +90,22 @@ public class BitmapUtil {
 		utils.display(v, url, new BitmapLoadCallBack<View>() {
 
 			@Override
-			public void onLoadCompleted(View arg0, String arg1, Bitmap arg2,
-					BitmapDisplayConfig arg3, BitmapLoadFrom arg4) {
+			public void onLoadCompleted(View arg0, String arg1, Bitmap arg2, BitmapDisplayConfig arg3,
+					BitmapLoadFrom arg4) {
 				Logger.e("onLoadCompleted", "onLoadCompleted");
 				((ImageView) arg0).setImageBitmap(arg2);
 			}
 
 			@Override
 			public void onLoadFailed(View arg0, String arg1, Drawable arg2) {
-				Bitmap decodeResource = BitmapFactory.decodeResource(
-						context.getResources(), defortIc);
+				Bitmap decodeResource = BitmapFactory.decodeResource(context.getResources(), defortIc);
 				((ImageView) arg0).setImageBitmap(decodeResource);
 				Logger.e("onLoadFailed", "onLoadFailed");
 			}
 		});
 	}
 
-	public static <T extends View> void SetBitMaps(final Context context, T v,
-			String url, final int defortIc) {
+	public static <T extends View> void SetBitMaps(final Context context, T v, String url, final int defortIc) {
 		BitmapUtils utils = new BitmapUtils(context);
 		utils.configDefaultLoadingImage(defortIc);
 		utils.configDefaultLoadFailedImage(defortIc);
@@ -116,22 +113,20 @@ public class BitmapUtil {
 		utils.display(v, url, new BitmapLoadCallBack<View>() {
 
 			@Override
-			public void onLoadCompleted(View arg0, String arg1, Bitmap arg2,
-					BitmapDisplayConfig arg3, BitmapLoadFrom arg4) {
+			public void onLoadCompleted(View arg0, String arg1, Bitmap arg2, BitmapDisplayConfig arg3,
+					BitmapLoadFrom arg4) {
 				Logger.e("onLoadCompleted", "onLoadCompleted");
 				((ImageView) arg0).setImageBitmap(arg2);
 			}
 
 			@Override
 			public void onLoadFailed(View arg0, String arg1, Drawable arg2) {
-				Bitmap decodeResource = BitmapFactory.decodeResource(
-						context.getResources(), defortIc);
+				Bitmap decodeResource = BitmapFactory.decodeResource(context.getResources(), defortIc);
 				((ImageView) arg0).setImageBitmap(decodeResource);
 				Logger.e("onLoadFailed", "onLoadFailed");
 			}
 		});
 	}
-
 
 	public static int dip2pix(Context context, int dips) {
 		int densityDpi = context.getResources().getDisplayMetrics().densityDpi;
@@ -156,8 +151,7 @@ public class BitmapUtil {
 		}
 		if (!file.exists()) {
 			try {
-				bitmap.compress(CompressFormat.JPEG, 30, new FileOutputStream(
-						file));
+				bitmap.compress(CompressFormat.JPEG, 30, new FileOutputStream(file));
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -193,8 +187,7 @@ public class BitmapUtil {
 
 	// -------------------------------------------------------------------------------------------------------------------
 	public static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {
-		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
-				bitmap.getHeight(), Config.ARGB_8888);
+		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Config.ARGB_8888);
 		Canvas canvas = new Canvas(output);
 
 		final int color = 0xff424242;
@@ -297,12 +290,10 @@ public class BitmapUtil {
 	 * @param opts
 	 * @return Bitmap
 	 */
-	public static Bitmap getPicFromBytes(byte[] bytes,
-			BitmapFactory.Options opts) {
+	public static Bitmap getPicFromBytes(byte[] bytes, BitmapFactory.Options opts) {
 		if (bytes != null)
 			if (opts != null)
-				return BitmapFactory.decodeByteArray(bytes, 0, bytes.length,
-						opts);
+				return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, opts);
 			else
 				return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 		return null;
@@ -325,8 +316,7 @@ public class BitmapUtil {
 		float scaleWidth = (float) w / (float) width;
 		float scaleHeight = (float) h / (float) height;
 		matrix.postScale(scaleWidth, scaleHeight);
-		Bitmap newBmp = Bitmap.createBitmap(bitmap, 0, 0, width, height,
-				matrix, true);
+		Bitmap newBmp = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
 		return newBmp;
 	}
 
@@ -337,8 +327,7 @@ public class BitmapUtil {
 		float scaleWidth = (float) w / (float) width;
 		float scaleHeight = (float) h / (float) height;
 		matrix.postScale(scaleWidth, scaleHeight);
-		Bitmap newBmp = Bitmap.createBitmap(bitmap, 0, 0, width, height,
-				matrix, true);
+		Bitmap newBmp = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
 		return newBmp;
 	}
 
@@ -359,8 +348,7 @@ public class BitmapUtil {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		bitmap.compress(CompressFormat.PNG, 100, baos);
 		byte[] bytes = baos.toByteArray();
-		String data = Base64.encodeToString(bytes, 0, bytes.length,
-				Base64.DEFAULT);
+		String data = Base64.encodeToString(bytes, 0, bytes.length, Base64.DEFAULT);
 		return data;
 	}
 
@@ -410,16 +398,11 @@ public class BitmapUtil {
 
 	public static Bitmap drawableToBitmap(Drawable drawable) {
 
-		Bitmap bitmap = Bitmap
-				.createBitmap(
-						drawable.getIntrinsicWidth(),
-						drawable.getIntrinsicHeight(),
-						drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
-								: Bitmap.Config.RGB_565);
+		Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
+				drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
 		Canvas canvas = new Canvas(bitmap);
 
-		drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
-				drawable.getIntrinsicHeight());
+		drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
 		drawable.draw(canvas);
 
 		return bitmap;
@@ -442,8 +425,7 @@ public class BitmapUtil {
 		int degree = 0;
 		try {
 			ExifInterface exifInterface = new ExifInterface(path);
-			int orientation = exifInterface.getAttributeInt(
-					ExifInterface.TAG_ORIENTATION,
+			int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION,
 					ExifInterface.ORIENTATION_NORMAL);
 			switch (orientation) {
 			case ExifInterface.ORIENTATION_ROTATE_90:
@@ -460,6 +442,26 @@ public class BitmapUtil {
 			e.printStackTrace();
 		}
 		return degree;
+	}
+
+	/**
+	 * 保存文件
+	 * 
+	 * @param bm
+	 * @param fileName
+	 * @throws IOException
+	 */
+	public static void saveFile(Bitmap bm) throws IOException {
+		String path = Constant.LAUNCH_PATH;
+		File dirFile = new File(path);
+		if (!dirFile.exists()) {
+			dirFile.mkdir();
+		}
+		File myCaptureFile = new File(path + Constant.LAUNCH_NAME);
+		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
+		bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+		bos.flush();
+		bos.close();
 	}
 
 }
