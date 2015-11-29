@@ -284,7 +284,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		 addGuideImage();// 添加引导页
+//		 addGuideImage();// 添加引导页
 	}
 
 	/**

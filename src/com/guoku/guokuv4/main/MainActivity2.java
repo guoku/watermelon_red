@@ -1,9 +1,12 @@
 package com.guoku.guokuv4.main;
 
+import java.io.File;
+
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.SettingAct;
 import com.guoku.guokuv4.base.BaseActivity.OnDoubleClickListener;
+import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.base.NetWorkActivity;
 import com.guoku.guokuv4.gragment.GuangFragment;
 import com.guoku.guokuv4.gragment.JingXuanPageFragment;
@@ -19,6 +22,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -360,9 +364,14 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 	private void startLaunch(){
 		
 		if (!StringUtils.isEmpty(GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url())) {
-			Intent intent = new Intent(this, DownLoadService.class);
-			startService(intent);
-			ToastUtil.show(mContext, GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url());
+			
+			String path = Constant.LAUNCH_PATH + StringUtils.setReplace(GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url());
+			File file = new File(path);
+			if (!file.exists()) {
+				Intent intent = new Intent(this, DownLoadService.class);
+				startService(intent);
+				ToastUtil.show(mContext, GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url());
+			}
 		}
 	}
 	

@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.config.Logger;
 import com.lidroid.xutils.BitmapUtils;
@@ -455,11 +456,11 @@ public class BitmapUtil {
 		String path = Constant.LAUNCH_PATH;
 		File dirFile = new File(path);
 		if (!dirFile.exists()) {
-			dirFile.mkdir();
+			dirFile.mkdirs();
 		}
-		File myCaptureFile = new File(path + Constant.LAUNCH_NAME);
+		File myCaptureFile = new File(path + StringUtils.setReplace(GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url()));
 		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
-		bm.compress(Bitmap.CompressFormat.JPEG, 80, bos);
+		bm.compress(Bitmap.CompressFormat.JPEG, 20, bos);
 		bos.flush();
 		bos.close();
 	}

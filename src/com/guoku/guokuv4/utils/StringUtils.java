@@ -29,6 +29,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.guoku.R;
+import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.config.Logger;
 import com.guoku.guokuv4.view.NoLineClickSpan;
 
@@ -359,6 +360,16 @@ public class StringUtils {
 	public static String setSubstring(String str, int strStert, int strEnd) {
 
 		return str.substring(str.length() - 2, str.length());
+	}
+	
+	/**
+	 * 设置引导图名称
+	 */
+	public static String setReplace(String oldStr){
+		if(!isEmpty(oldStr)){
+			return oldStr.replace(Constant.URL_IMG + "images/", "");
+		}
+		return "";
 	}
 
 }
