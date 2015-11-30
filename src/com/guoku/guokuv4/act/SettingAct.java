@@ -58,7 +58,7 @@ public class SettingAct extends NetWorkActivity {
 		setGCenter(true, "设置");
 		setGLeft(true, R.drawable.back_selector);
 		if (GuokuApplication.getInstance().getBean() == null) {
-			button.setBackgroundResource(R.color.g_blue);
+			button.setBackgroundResource(R.drawable.blue_shap);
 			button.setText("登录");
 		}
 		tv.setText(GuokuUtil.getVersionName(mContext));

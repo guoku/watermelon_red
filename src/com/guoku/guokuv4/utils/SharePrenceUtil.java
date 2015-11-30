@@ -21,6 +21,7 @@ import android.content.SharedPreferences.Editor;
 public class SharePrenceUtil {
 
 	public static String KEY_SEARCH = "KEY_SEARCH";
+	public static String KEY_LAUNCH = "KEY_LAUNCH";
 
 	public static boolean isLogin(Context context) {
 		return context.getSharedPreferences(Constant.EKWING_LOGIN, 0).getBoolean(Constant.SP_HAS_LOGIN, false);
@@ -161,5 +162,25 @@ public class SharePrenceUtil {
 	public static void delSearchLog(Context context){
 		
 		context.getSharedPreferences(Constant.GUOKU_TAB, 0).edit().clear().commit();
+	}
+	
+	/**
+	 * 记录引导图片
+	 * 
+	 * @param context
+	 * @param isCloce  true:继续显示   false:不显示
+	 */
+	public static void setLaunch(Context context, boolean isShow) {
+		context.getSharedPreferences(Constant.GUOKU_TAB, 0).edit().putBoolean(KEY_LAUNCH, isShow).commit();
+	}
+
+	/**
+	 * 记录引导图片
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static boolean getLaunch(Context context) {
+		return context.getSharedPreferences(Constant.GUOKU_TAB, 0).getBoolean(KEY_LAUNCH, false);
 	}
 }

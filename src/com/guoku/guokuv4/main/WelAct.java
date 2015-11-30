@@ -126,6 +126,7 @@ public class WelAct extends NetWorkActivity {
 			if (!StringUtils.isEmpty(result)) {
 				LaunchBean launchBean = JSON.parseObject(result, LaunchBean.class);
 				GuokuApplication.getInstance().setLaunchBean(launchBean);
+//				ToastUtil.show(mContext, launchBean.getLaunch_image_url());
 			}
 			break;
 		default:
@@ -138,7 +139,7 @@ public class WelAct extends NetWorkActivity {
 		// TODO Auto-generated method stub
 		switch (where) {
 		case LAUNCH:
-			ToastUtil.show(this, "引导页加载失败");
+//			ToastUtil.show(this, "引导页加载失败");
 			break;
 
 		default:

@@ -164,6 +164,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 				holder.tongzhi_item_iv_pimg.setTag(bean);
 				holder.tongzhi_item_iv_pimg.setOnClickListener(OrderFragment.this);
 				holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
+				holder.tv_context2.setVisibility(View.GONE);
 
 				if (bean.getType().equals("user_like")) {
 					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getLiker().get50()));
@@ -189,6 +190,15 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 					holder.tongzhi_item_iv_pimg.setVisibility(View.INVISIBLE);
 					openNickName(bean.getContent().getUser(), bean.getContent().getUser().getNickname() + " 开始关注  ",
 							bean.getContent().getUser().getNickname().length(), holder.tv_context);
+					
+					holder.tv_context2.setVisibility(View.VISIBLE);
+					
+//					
+					openNickName(bean.getContent().getTarget(), bean.getContent().getTarget().getNickname(),
+							bean.getContent().getTarget().getNickname().length(), holder.tv_context2);
+					
+//					bean
+//					.getContent().getTarget().getNickname()
 				}
 				return convertView;
 			}
@@ -392,6 +402,9 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 
 		@ViewInject(R.id.tongzhi_item_tv_context)
 		private TextView tv_context;
+		
+		@ViewInject(R.id.tongzhi_item_tv_context2)
+		private TextView tv_context2;
 	}
 
 	private void openUserAct(String entityInfo) {

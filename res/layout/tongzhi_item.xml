@@ -28,6 +28,15 @@
             android:layout_height="wrap_content"
             android:lineSpacingMultiplier="1.3"
             android:textColor="@color/g_main" />
+        
+        <TextView
+            android:id="@+id/tongzhi_item_tv_context2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingMultiplier="1.3"
+            android:textColor="@color/g_main" 
+            android:visibility="gone"
+            />
 
         <ImageView
             android:layout_width="fill_parent"

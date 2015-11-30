@@ -3,6 +3,8 @@
  */
 package com.guoku.guokuv4.bean;
 
+import com.guoku.guokuv4.utils.StringUtils;
+
 /**
  * @zhangyao
  * @Description: TODO
@@ -52,22 +54,37 @@ public class LaunchBean {
     }
 
     public String getAction_title() {
+    	if(StringUtils.isEmpty(action_title)){
+    		return "";
+    	}
         return action_title;
     }
 
     public String getDescription() {
+    	if(StringUtils.isEmpty(description)){
+    		return "";
+    	}
         return description;
     }
 
     public String getTitle() {
+    	if(StringUtils.isEmpty(title)){
+    		return "";
+    	}
         return title;
     }
 
     public String getLaunch_image_url() {
+    	if(StringUtils.isEmpty(launch_image_url)){
+    		return "";
+    	}
         return launch_image_url;
     }
 
     public String getAction() {
+    	if(StringUtils.isEmpty(action)){
+    		return "";
+    	}
         return action;
     }
 

@@ -6,6 +6,18 @@
     android:layout_height="wrap_content"
     android:gravity="center" 
     >
+    
+    <FrameLayout 
+        android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+        >
+    
+    <LinearLayout 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp"
+        >
 
     <RelativeLayout
         android:id="@+id/layout_ra"
@@ -52,6 +64,7 @@
             android:layout_gravity="center"
             fresco:placeholderImage="@color/gray_bg" 
             android:layout_centerHorizontal="true"
+            android:background="@color/white"
             />
     </RelativeLayout>
 
@@ -59,11 +72,26 @@
         android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_ra"
         android:background="@drawable/walkthrough_below_bt_bg"
         android:gravity="center"
         android:padding="10dp"
         android:textColor="@color/white"
         android:textSize="17sp" />
+    </LinearLayout>
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        
+        <ImageView
+            android:id="@+id/close_launch"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/launch_close" />
+        
+    </RelativeLayout>
+    </FrameLayout>
 
 </RelativeLayout>

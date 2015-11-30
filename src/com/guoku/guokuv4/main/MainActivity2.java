@@ -4,6 +4,7 @@ import java.io.File;
 
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.act.IntroAct;
 import com.guoku.guokuv4.act.SettingAct;
 import com.guoku.guokuv4.base.BaseActivity.OnDoubleClickListener;
 import com.guoku.guokuv4.config.Constant;
@@ -13,6 +14,7 @@ import com.guoku.guokuv4.gragment.JingXuanPageFragment;
 import com.guoku.guokuv4.gragment.OrderFragment;
 import com.guoku.guokuv4.gragment.PersonalFragment;
 import com.guoku.guokuv4.service.DownLoadService;
+import com.guoku.guokuv4.utils.SharePrenceUtil;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -363,14 +365,18 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 	
 	private void startLaunch(){
 		
-		if (!StringUtils.isEmpty(GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url())) {
-			
-			String path = Constant.LAUNCH_PATH + StringUtils.setReplace(GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url());
-			File file = new File(path);
-			if (!file.exists()) {
-				Intent intent = new Intent(this, DownLoadService.class);
-				startService(intent);
-				ToastUtil.show(mContext, GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url());
+		if(GuokuApplication.getInstance().getLaunchBean() != null){
+			if (!StringUtils.isEmpty(GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url())) {
+				String path = Constant.LAUNCH_PATH + StringUtils.setReplace(GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url());
+				File file = new File(path);
+				if (!file.exists()) {
+					Intent intent = new Intent(this, DownLoadService.class);
+					startService(intent);
+				}else{
+					if(SharePrenceUtil.getLaunch(this)){
+						openActivity(IntroAct.class);
+					}
+				}
 			}
 		}
 	}
