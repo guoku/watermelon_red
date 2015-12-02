@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVAnalytics;
+import com.facebook.drawee.generic.RoundingParams;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.ProductInfoAct;
@@ -47,7 +48,7 @@ import com.guoku.guokuv4.view.ScrollViewWithListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.umeng.analytics.MobclickAgent;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -182,6 +183,7 @@ public class GuangFragment extends BaseFrament {
 		return R.layout.fragment_guang;
 	}
 
+	@SuppressLint("ResourceAsColor")
 	@Override
 	protected void onSuccess(String result, int where) {
 		if (getActivity() == null) {

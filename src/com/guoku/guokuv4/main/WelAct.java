@@ -71,6 +71,8 @@ public class WelAct extends NetWorkActivity {
 		if (!StringUtils.isEmpty(channel)) {
 			if (channel.equals(ConfigGK.CHANNEL_ZHIHUIYUN)) {
 				imgBaidu.setVisibility(View.VISIBLE);
+			}else{
+				imgBaidu.setVisibility(View.GONE);
 			}
 		}
 	}
