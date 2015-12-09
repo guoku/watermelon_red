@@ -222,8 +222,6 @@ public abstract class BaseFrament extends Fragment {
 		} else {
 			Intent intent = new Intent(getActivity(), LoginAct.class);
 			startActivity(intent);
-			context.overridePendingTransition(R.anim.push_up_in,
-					R.anim.push_up_out);
 			return;
 		}
 		params.addBodyParameter("sign", genSign(paramsMap));

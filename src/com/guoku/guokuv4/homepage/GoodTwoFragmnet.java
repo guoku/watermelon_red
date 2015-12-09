@@ -156,10 +156,14 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 			adapter.setList(list);
 			break;
 		case PROINFO:
-			PInfoBean bean = ParseUtil.getPI(result);
-			Intent intent = new Intent(context, ProductInfoAct.class);
-			intent.putExtra("data", JSON.toJSONString(bean));
-			startActivityForResult(intent, UPDATA_LIKE);
+			try {
+				PInfoBean bean = ParseUtil.getPI(result);
+				Intent intent = new Intent(context, ProductInfoAct.class);
+				intent.putExtra("data", JSON.toJSONString(bean));
+				startActivityForResult(intent, UPDATA_LIKE);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 			break;
 		case LIKE0:
 			if (pBean == null) {

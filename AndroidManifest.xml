@@ -3,12 +3,12 @@
     package="com.guoku"
     android:installLocation="auto"
     android:versionCode="414"
-    android:versionName="4.1.3" >
+    android:versionName="1024.1" >
 
     <!-- 正式版本号 -->
     <!--
-    android:versionCode="412"
-    android:versionName="4.1.1"
+    android:versionCode="414"
+    android:versionName="4.1.3"
     -->
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -90,7 +90,7 @@
             android:name="UMENG"
             android:value="yes" />
 
-        <receiver
+<!--         <receiver
             android:name="com.baidu.autoupdatesdk.receiver.BDBroadcastReceiver"
             android:exported="false" >
             <intent-filter>
@@ -99,7 +99,7 @@
                 <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_AS" />
                 <action android:name="com.baidu.autoupdatesdk.ACTION_AS_DOWNLOAD_COMPLETE" />
             </intent-filter>
-        </receiver>
+        </receiver> -->
 
         <activity
             android:name="com.guoku.guokuv4.main.WelAct"

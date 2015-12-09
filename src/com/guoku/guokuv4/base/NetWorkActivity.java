@@ -178,8 +178,6 @@ public abstract class NetWorkActivity extends BaseActivity {
 		} else {
 			Intent intent = new Intent(this, LoginAct.class);
 			startActivity(intent);
-			overridePendingTransition(R.anim.push_up_in,
-					R.anim.push_up_out);
 			return;
 		}
 		params.addBodyParameter("sign", genSign(paramsMap));

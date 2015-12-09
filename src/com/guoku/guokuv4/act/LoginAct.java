@@ -230,6 +230,10 @@ public class LoginAct extends NetWorkActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		overridePendingTransition(R.anim.push_up_in,
+				R.anim.push_up_out);
+		
 		setContentView(R.layout.login_act);
 	}
 

@@ -6,6 +6,7 @@ import com.alibaba.sdk.android.login.callback.LogoutCallback;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.bean.Sharebean;
 import com.guoku.guokuv4.main.MainActivity2;
 import com.guoku.guokuv4.share.CustomShareBoard;
 import com.guoku.guokuv4.utils.GuokuUtil;
@@ -103,9 +104,18 @@ public class SettingAct extends NetWorkActivity {
 
 	@OnClick(R.id.setting_ll_clear)
 	public void clear(View v) {
-		ImageLoader.getInstance().clearDiskCache();
-		ImageLoader.getInstance().clearMemoryCache();
-		ToastUtil.show(context, "清理完成");
+//		ImageLoader.getInstance().clearDiskCache();
+//		ImageLoader.getInstance().clearMemoryCache();
+//		ToastUtil.show(context, "清理完成");
+		
+//		测试代码
+		String url = "http://m.guoku.com/event/20151212/";
+		Bundle bundle = new Bundle();
+		Sharebean sharebean = new Sharebean();
+		sharebean.setAricleUrl(url);
+		bundle.putSerializable(WebShareAct.class.getName(), sharebean);
+		openActivity(WebShareAct.class, bundle);
+		
 	}
 
 	@Override
@@ -121,8 +131,6 @@ public class SettingAct extends NetWorkActivity {
 	public void LogOut(View v) {
 		if (GuokuApplication.getInstance().getBean() == null) {
 			startActivity(new Intent(mContext, LoginAct.class));
-			overridePendingTransition(R.anim.push_up_in,
-					R.anim.push_up_out);
 			isLoginAct = true;
 		} else {
 			GuokuApplication.getInstance().logout();

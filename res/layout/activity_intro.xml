@@ -52,8 +52,8 @@
             android:textColor="@color/gray_fzxx"
             android:textSize="17sp" 
             android:layout_centerHorizontal="true"
-            android:lines="2"
             android:ellipsize="end"
+            android:singleLine="false"
             />
 
         <com.facebook.drawee.view.SimpleDraweeView
@@ -64,7 +64,6 @@
             android:layout_gravity="center"
             fresco:placeholderImage="@color/gray_bg" 
             android:layout_centerHorizontal="true"
-            android:background="@color/white"
             />
     </RelativeLayout>
 

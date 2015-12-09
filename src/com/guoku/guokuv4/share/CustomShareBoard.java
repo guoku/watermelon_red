@@ -309,8 +309,6 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 				mActivity.startActivity(intent2);
 			} else {
 				mActivity.startActivity(new Intent(mActivity, LoginAct.class));
-				mActivity.overridePendingTransition(R.anim.push_up_in,
-						R.anim.push_up_out);
 			}
 			break;
 		default:

@@ -49,7 +49,7 @@ public class LikesAct extends NetWorkActivity implements OnClickListener {
 		setGCenter(true, getIntent().getStringExtra("name"));
 		setGLeft(true, R.drawable.back_selector);
 
-		getFans(page);
+		getFans();
 	}
 
 	@Override
@@ -113,9 +113,9 @@ public class LikesAct extends NetWorkActivity implements OnClickListener {
 		}
 	}
 
-	private void getFans(int off) {
+	private void getFans() {
 		sendConnection(Constant.PROINFO + eid + "/liker/",
-				new String[] { "page" }, new String[] { off + "" }, Likes,
+				new String[] { "page" }, new String[] { page + "" }, Likes,
 				false);
 	}
 
@@ -138,7 +138,8 @@ public class LikesAct extends NetWorkActivity implements OnClickListener {
 			public void onPullUpToRefresh(
 					PullToRefreshBase<ListView> refreshView) {
 				if (adapter.getCount() > 0) {
-					getFans(adapter.getCount() / 15 + 1);
+					page ++;
+					getFans();
 				} else {
 				}
 			}

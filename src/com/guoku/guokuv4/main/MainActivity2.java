@@ -75,7 +75,7 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 		UmengUpdateAgent.update(this);
 
 		registerDoubleClickListener(main_bar_1, this);
-		
+
 		startLaunch();
 	}
 
@@ -362,23 +362,35 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 			jingXuanPageFragment.articleFragment.listViewArtivle.getRefreshableView().smoothScrollToPosition(0);
 		}
 	}
-	
-	private void startLaunch(){
-		
-		if(GuokuApplication.getInstance().getLaunchBean() != null){
+
+	private void startLaunch() {
+
+		if (GuokuApplication.getInstance().getLaunchBean() != null) {
 			if (!StringUtils.isEmpty(GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url())) {
-				String path = Constant.LAUNCH_PATH + StringUtils.setReplace(GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url());
+				String path = Constant.LAUNCH_PATH
+						+ StringUtils.setReplace(GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url());
 				File file = new File(path);
 				if (!file.exists()) {
 					Intent intent = new Intent(this, DownLoadService.class);
 					startService(intent);
-				}else{
-					if(SharePrenceUtil.getLaunch(this)){
-						openActivity(IntroAct.class);
+				} else {
+					if (SharePrenceUtil.getLaunch(this)) {
+						openActivityForResult(IntroAct.class, IntroAct.CODE);
 					}
 				}
 			}
 		}
 	}
-	
+
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		// TODO Auto-generated method stub
+
+		if (arg2 != null) {
+			if (arg1 == IntroAct.CODE) {
+				switchContent(qunaerFragment);
+			}
+		}
+	}
+
 }

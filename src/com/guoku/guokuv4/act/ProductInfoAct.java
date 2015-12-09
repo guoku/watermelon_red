@@ -25,6 +25,7 @@ import com.guoku.guokuv4.base.NetWorkActivity;
 import com.guoku.guokuv4.base.UserBaseFrament;
 import com.guoku.guokuv4.bean.TagBean;
 import com.guoku.guokuv4.bean.TagTwo;
+import com.guoku.guokuv4.config.AlibabaConfig;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.config.Logger;
 import com.guoku.guokuv4.entity.test.EntityBean;
@@ -86,7 +87,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class ProductInfoAct extends NetWorkActivity
-		implements OnClickListener, DialogInterface.OnClickListener, OnScrollListener, OnCheckedChangeListener {
+		implements OnClickListener, DialogInterface.OnClickListener, OnScrollListener {
 	public static final String KEY_INTENT = "ProductInfoAct";
 
 	private static final int GUESS = 10;
@@ -124,7 +125,7 @@ public class ProductInfoAct extends NetWorkActivity
 	private TextView product_tv_like_size;
 
 	@ViewInject(R.id.product_iv_likes)
-	private CheckBox cbliks;// title上的喜欢按钮
+	private ImageView cbliks;// title上的喜欢按钮
 
 	@ViewInject(R.id.product_tv_price)
 	private TextView product_tv_price;
@@ -201,7 +202,6 @@ public class ProductInfoAct extends NetWorkActivity
 
 	private void init() {
 		sv.setOnScrollListener(this);
-		cbliks.setOnCheckedChangeListener(this);
 		isLikes();
 	}
 
@@ -209,14 +209,10 @@ public class ProductInfoAct extends NetWorkActivity
 
 		if ("1".equals(productBean.getEntity().getLike_already())) {
 			product_iv_like.setImageResource(R.drawable.like_red);
-			cbliks.setOnCheckedChangeListener(null);// 为了不触发cbliks事件
-			cbliks.setChecked(true);
-			cbliks.setOnCheckedChangeListener(this);
+			cbliks.setImageResource(R.drawable.like_red);
 		} else {
 			product_iv_like.setImageResource(R.drawable.like_gary);
-			cbliks.setOnCheckedChangeListener(null);
-			cbliks.setChecked(false);
-			cbliks.setOnCheckedChangeListener(this);
+			cbliks.setImageResource(R.drawable.like_gary);
 		}
 
 	}
@@ -437,7 +433,7 @@ public class ProductInfoAct extends NetWorkActivity
 				image.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View arg0) {
-						gotoTaoBao();
+						gotoTaoBao(productBean, 0);
 					}
 				});
 				imgs.add(image);
@@ -451,7 +447,7 @@ public class ProductInfoAct extends NetWorkActivity
 			image.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					gotoTaoBao();
+					gotoTaoBao(productBean, 0);
 				}
 			});
 			imgs.add(0, image);
@@ -706,9 +702,10 @@ public class ProductInfoAct extends NetWorkActivity
 					sendConnection(Constant.PROINFO + productBean.getEntity().getEntity_id() + "/",
 							new String[] { "entity_id" }, new String[] { productBean.getEntity().getEntity_id() },
 							PROINFO_REFRESH, true);
-					
-					sendConnection(Constant.GUESS, new String[] { "count", "cid", "eid" },
-							new String[] { "10", productBean.getEntity().getCategory_id(), productBean.getEntity().getEntity_id() },
+
+					sendConnection(Constant.GUESS,
+							new String[] { "count", "cid", "eid" }, new String[] { "10",
+									productBean.getEntity().getCategory_id(), productBean.getEntity().getEntity_id() },
 							GUESS, false);
 				}
 			}
@@ -718,6 +715,11 @@ public class ProductInfoAct extends NetWorkActivity
 
 	@OnClick(R.id.product_iv_like)
 	public void Like(View v) {
+		likeClick();
+	}
+	
+	@OnClick(R.id.product_iv_likes)
+	public void LikeTitleBar(View v) {
 		likeClick();
 	}
 
@@ -735,9 +737,6 @@ public class ProductInfoAct extends NetWorkActivity
 
 	@OnClick(R.id.product_ll_like_2)
 	public void Like_2(View v) {
-		// sendConnectionPOST(Constant.TOLIKE
-		// + productBean.getEntity().getEntity_id() + "/like/",
-		// new String[] {}, new String[] {}, LIKE1, false);
 		Intent intent = new Intent(mContext, LikesAct.class);
 		intent.putExtra("data", productBean.getEntity().getEntity_id());
 		startActivity(intent);
@@ -759,64 +758,64 @@ public class ProductInfoAct extends NetWorkActivity
 
 	@OnClick(R.id.product_tv_price)
 	public void Price(View v) {
-		gotoTaoBao();
+		gotoTaoBao(productBean, 0);
 	}
 
-	private void gotoTaoBao() {
-		AVAnalytics.onEvent(this, "buy");
-		MobclickAgent.onEvent(this, "buy");
-
-		try {
-			JSONArray array;
-			array = new JSONArray(productBean.getEntity().getItem_list());
-			if (!(array.getJSONObject(0).getString("origin_source").contains("taobao")
-					|| array.getJSONObject(0).getString("origin_source").contains("tmall"))) {
-				Intent intent = new Intent(context, WebAct.class);
-				intent.putExtra("data", array.getJSONObject(0).getString("buy_link"));
-				intent.putExtra("name", "  ");
-				intent.putExtra("UA", "UA");
-				startActivity(intent);
-				return;
-
-			}
-			TaeWebViewUiSettings taeWebViewUiSettings = new TaeWebViewUiSettings();
-			TaokeParams taokeParams = new TaokeParams();
-			taokeParams.pid = "mm_28514026_4132785_24810648";
-			taokeParams.unionId = "null";
-
-			if (AlibabaSDK.isInitSucceed()) {
-				ItemService itemService = AlibabaSDK.getService(ItemService.class);
-				itemService.showTaokeItemDetailByItemId(this, new TradeProcessCallback() {
-
-					@Override
-					public void onPaySuccess(TradeResult tradeResult) {
-						// Toast.makeText(MainActivity.this, "支付成功",
-						// Toast.LENGTH_SHORT).show();
-						ToastUtil.show(mContext, "支付成功");
-
-					}
-
-					@Override
-					public void onFailure(int code, String msg) {
-						if (code == ResultCode.QUERY_ORDER_RESULT_EXCEPTION.code) {
-							// ToastUtil.show(mContext, "确认交易订单失败");
-						} else {
-							// ToastUtil.show(mContext, "交易取消");
-						}
-					}
-
-				}, taeWebViewUiSettings, array.getJSONObject(0).getLong("origin_id"), 1, null, taokeParams);
-			} else {
-				ToastUtil.show(mContext, "淘宝小二开小差喽，请稍后再试");
-				return;
-			}
-
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
+//	private void gotoTaoBao() {
+//		AVAnalytics.onEvent(this, "buy");
+//		MobclickAgent.onEvent(this, "buy");
+//
+//		try {
+//			JSONArray array;
+//			array = new JSONArray(productBean.getEntity().getItem_list());
+//			if (!(array.getJSONObject(0).getString("origin_source").contains("taobao")
+//					|| array.getJSONObject(0).getString("origin_source").contains("tmall"))) {
+//				Intent intent = new Intent(context, WebAct.class);
+//				intent.putExtra("data", array.getJSONObject(0).getString("buy_link"));
+//				intent.putExtra("name", "  ");
+//				intent.putExtra("UA", "UA");
+//				startActivity(intent);
+//				return;
+//
+//			}
+//			TaeWebViewUiSettings taeWebViewUiSettings = new TaeWebViewUiSettings();
+//			TaokeParams taokeParams = new TaokeParams();
+//			taokeParams.pid = AlibabaConfig.PID;
+//			taokeParams.unionId = "null";
+//
+//			if (AlibabaSDK.isInitSucceed()) {
+//				ItemService itemService = AlibabaSDK.getService(ItemService.class);
+//				itemService.showTaokeItemDetailByItemId(this, new TradeProcessCallback() {
+//
+//					@Override
+//					public void onPaySuccess(TradeResult tradeResult) {
+//						// Toast.makeText(MainActivity.this, "支付成功",
+//						// Toast.LENGTH_SHORT).show();
+//						ToastUtil.show(mContext, "支付成功");
+//
+//					}
+//
+//					@Override
+//					public void onFailure(int code, String msg) {
+//						if (code == ResultCode.QUERY_ORDER_RESULT_EXCEPTION.code) {
+//							// ToastUtil.show(mContext, "确认交易订单失败");
+//						} else {
+//							// ToastUtil.show(mContext, "交易取消");
+//						}
+//					}
+//
+//				}, taeWebViewUiSettings, array.getJSONObject(0).getLong("origin_id"), 1, null, taokeParams);
+//			} else {
+//				ToastUtil.show(mContext, "淘宝小二开小差喽，请稍后再试");
+//				return;
+//			}
+//
+//		} catch (JSONException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//	}
 
 	@OnClick(R.id.product_tv_comment)
 	public void Comment(View v) {
@@ -962,10 +961,6 @@ public class ProductInfoAct extends NetWorkActivity
 			break;
 		case R.id.comment_item_iv_pic:
 			NoteBean noteBean = (NoteBean) arg0.getTag();
-			// Intent intent = new Intent(mContext, UserAct.class);
-			// intent.putExtra("data", noteBean.getCreator());
-			// startActivity(intent);
-
 			sendConnection(Constant.USERINFO + noteBean.getUser_id() + "/", new String[] {}, new String[] {}, USERINFO,
 					true);
 			break;
@@ -1104,17 +1099,4 @@ public class ProductInfoAct extends NetWorkActivity
 			}
 		}
 	}
-
-	@Override
-	public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-		// TODO Auto-generated method stub
-		if (arg0 == cbliks) {
-			if (arg1) {
-				likeClick();
-			} else {
-				likeClick();
-			}
-		}
-	}
-
 }

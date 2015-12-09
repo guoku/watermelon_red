@@ -2,7 +2,16 @@ package com.guoku.guokuv4.base;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import com.alibaba.fastjson.JSON;
+import com.alibaba.sdk.android.AlibabaSDK;
+import com.alibaba.sdk.android.ResultCode;
+import com.alibaba.sdk.android.trade.ItemService;
+import com.alibaba.sdk.android.trade.callback.TradeProcessCallback;
+import com.alibaba.sdk.android.trade.model.TaokeParams;
+import com.alibaba.sdk.android.trade.model.TradeResult;
 import com.avos.avoscloud.AVAnalytics;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.controller.BaseControllerListener;
@@ -13,7 +22,9 @@ import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.LoginAct;
 import com.guoku.guokuv4.act.ProductInfoAct;
+import com.guoku.guokuv4.act.WebAct;
 import com.guoku.guokuv4.bean.LaunchBean;
+import com.guoku.guokuv4.config.AlibabaConfig;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.service.DownLoadService;
@@ -21,6 +32,7 @@ import com.guoku.guokuv4.utils.MyPreferences;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.lidroid.xutils.ViewUtils;
+import com.taobao.tae.sdk.webview.TaeWebViewUiSettings;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
@@ -166,16 +178,16 @@ public abstract class BaseActivity extends FragmentActivity {
 			view.setVisibility(View.GONE);
 		}
 	}
-	
+
 	protected void setGRigthWang(boolean show) {
 		ImageView wang = (ImageView) findViewById(R.id.alibaba_wang);
 		if (show) {
-			wang.setVisibility(View.VISIBLE);    
+			wang.setVisibility(View.VISIBLE);
 		} else {
 			wang.setVisibility(View.GONE);
 		}
 	}
-	
+
 	protected ImageView getGRigthWang() {
 		ImageView wang = (ImageView) findViewById(R.id.alibaba_wang);
 		return wang;
@@ -249,15 +261,18 @@ public abstract class BaseActivity extends FragmentActivity {
 	}
 
 	protected void openShopInfo(String result) {
-		PInfoBean bean = ParseUtil.getPI(result);
-		Intent intent = new Intent(mContext, ProductInfoAct.class);
-		intent.putExtra("data", JSON.toJSONString(bean));
-		startActivity(intent);
+		try {
+			PInfoBean bean = ParseUtil.getPI(result);
+			Intent intent = new Intent(mContext, ProductInfoAct.class);
+			intent.putExtra("data", JSON.toJSONString(bean));
+			startActivity(intent);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	protected void openLogin() {
 		startActivity(new Intent(this, LoginAct.class));
-		overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
 	}
 
 	public void leftOnClick() {
@@ -284,7 +299,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-//		 addGuideImage();// 添加引导页
+		// addGuideImage();// 添加引导页
 	}
 
 	/**
@@ -295,7 +310,7 @@ public abstract class BaseActivity extends FragmentActivity {
 		if (view == null)
 			return;
 		if (!MyPreferences.activityIsGuided(this, BaseActivity.this.getClass().getName())) {
-//			 引导过了
+			// 引导过了
 
 			ViewParent viewParent = view.getParent();
 			if (viewParent instanceof FrameLayout) {
@@ -306,9 +321,12 @@ public abstract class BaseActivity extends FragmentActivity {
 				params.gravity = Gravity.CENTER;
 				LayoutInflater lInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				viewsOne = lInflater.inflate(R.layout.view_walkthrough_one, null);
-//				ImageView imageView = (ImageView) viewsOne.findViewById(R.id.img1);
-//				imageView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-				
+				// ImageView imageView = (ImageView)
+				// viewsOne.findViewById(R.id.img1);
+				// imageView.setLayoutParams(new
+				// RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+				// RelativeLayout.LayoutParams.WRAP_CONTENT));
+
 				viewsTwo = lInflater.inflate(R.layout.view_walkthrough_two, null);
 
 				final TextView textView = (TextView) viewsOne.findViewById(R.id.textView1);
@@ -367,12 +385,12 @@ public abstract class BaseActivity extends FragmentActivity {
 			view.goBack(); // 后退
 			if (webViewTitle.size() > 0) {
 				webViewTitle.remove(webViewTitle.size() - 1);
+				return webViewTitle.get(webViewTitle.size() - 1);
 			}
 		} else {
 			finish();
 		}
-
-		return webViewTitle.get(webViewTitle.size() - 1);
+		return "";
 	}
 
 	/**
@@ -465,6 +483,7 @@ public abstract class BaseActivity extends FragmentActivity {
 
 	/**
 	 * 双击tab接口
+	 * 
 	 * @zhangyao
 	 * @Description: TODO
 	 * @date 2015年11月13日 下午3:18:51
@@ -474,18 +493,80 @@ public abstract class BaseActivity extends FragmentActivity {
 
 		public void OnDoubleClick(View v);
 	}
-	
+
 	/**
 	 * 设置数据为空或不为空ui的显示（例如用户的喜爱）
 	 */
-	public void isDataEmpty(boolean isEmpty, View data, View unData){
-		if(isEmpty){
+	public void isDataEmpty(boolean isEmpty, View data, View unData) {
+		if (isEmpty) {
 			unData.setVisibility(View.VISIBLE);
 			data.setVisibility(View.GONE);
-		}else{
+		} else {
 			data.setVisibility(View.VISIBLE);
 			unData.setVisibility(View.GONE);
 		}
+	}
+
+	/**
+	 * 跳到淘宝商品详情页
+	 */
+	
+	public void gotoTaoBao(PInfoBean productBean, long origin_id) {
+		AVAnalytics.onEvent(this, "buy");
+		MobclickAgent.onEvent(this, "buy");
+
+		try {
+			
+			if(productBean != null){
+				JSONArray array;
+				array = new JSONArray(productBean.getEntity().getItem_list());
+				origin_id = array.getJSONObject(0).getLong("origin_id");
+				
+				if (!(array.getJSONObject(0).getString("origin_source").contains("taobao")
+						|| array.getJSONObject(0).getString("origin_source").contains("tmall"))) {
+					Intent intent = new Intent(mContext, WebAct.class);
+					intent.putExtra("data", array.getJSONObject(0).getString("buy_link"));
+					intent.putExtra("name", "  ");
+					intent.putExtra("UA", "UA");
+					startActivity(intent);
+					return;
+				}
+			}
+			
+			TaeWebViewUiSettings taeWebViewUiSettings = new TaeWebViewUiSettings();
+			TaokeParams taokeParams = new TaokeParams();
+			taokeParams.pid = AlibabaConfig.PID;
+			taokeParams.unionId = "null";
+
+			if (AlibabaSDK.isInitSucceed()) {
+				ItemService itemService = AlibabaSDK.getService(ItemService.class);
+				itemService.showTaokeItemDetailByItemId(this, new TradeProcessCallback() {
+
+					@Override
+					public void onPaySuccess(TradeResult tradeResult) {
+//						ToastUtil.show(mContext, "支付成功");
+					}
+
+					@Override
+					public void onFailure(int code, String msg) {
+						if (code == ResultCode.QUERY_ORDER_RESULT_EXCEPTION.code) {
+							// ToastUtil.show(mContext, "确认交易订单失败");
+						} else {
+							// ToastUtil.show(mContext, "交易取消");
+						}
+					}
+
+				}, taeWebViewUiSettings, origin_id, 1, null, taokeParams);
+			} else {
+				ToastUtil.show(mContext, "淘宝小二开小差喽，请稍后再试");
+				return;
+			}
+
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }

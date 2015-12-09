@@ -5,30 +5,26 @@
     android:gravity="center"
     android:orientation="horizontal" >
 
-    <CheckBox
+    <ImageView
         android:id="@+id/product_iv_likes"
         style="@style/layout_width_more"
-        android:layout_weight="1"
-        android:background="@drawable/like_select_bg"
-        android:gravity="center_vertical"
-        android:button="@null"
         android:layout_marginRight="24dp"
+        android:src="@drawable/like_gary" 
+        android:layout_weight="1"
         />
 
     <ImageView
         android:id="@+id/product_tv_comments"
         style="@style/layout_width_more"
-        android:layout_weight="1"
-        android:src="@drawable/comment_2" 
         android:layout_marginRight="24dp"
-        />
+        android:layout_weight="1"
+        android:src="@drawable/comment_2" />
 
     <ImageView
         android:id="@+id/product_tv_mores"
         style="@style/layout_width_more"
-        android:layout_weight="1"
-        android:src="@drawable/more_shop" 
         android:layout_marginRight="24dp"
-        />
+        android:layout_weight="1"
+        android:src="@drawable/more_shop" />
 
 </LinearLayout>

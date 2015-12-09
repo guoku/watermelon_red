@@ -49,8 +49,6 @@ public class GuangShopAdapter extends ArrayListAdapter<Discover.EntitiesEntity> 
 		} else {
 			holder = (ViewHold) convertView.getTag();
 		}
-
-		LogGK.d("****" + position);
 		
 		if(!StringUtils.isEmpty(mList.get(position).getEntity().getChief_image())){
 			holder.imgIcon.setImageURI(Uri.parse(mList.get(position).getEntity().getChief_image()));

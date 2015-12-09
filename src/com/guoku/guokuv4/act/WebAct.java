@@ -5,7 +5,7 @@ import com.guoku.guokuv4.base.BaseActivity;
 import com.guoku.guokuv4.share.CustomShareBoard;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
-
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -23,6 +23,7 @@ public class WebAct extends BaseActivity {
 	private String name;
 	private String url;
 
+	@SuppressLint("SetJavaScriptEnabled")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -46,15 +47,13 @@ public class WebAct extends BaseActivity {
 		view.setWebChromeClient(wvcc);
 		setGLeft(true, R.drawable.back_selector);
 		url = getIntent().getStringExtra("data");
-		view.loadUrl(url);
+
 		view.getSettings().setJavaScriptEnabled(true);
 		view.getSettings().setUseWideViewPort(true);
 		view.getSettings().setLoadWithOverviewMode(true);
 
-		if ("UA".equals(getIntent().getStringExtra("UA"))) {
-
-		} else
-			view.getSettings().setUserAgentString("guoku-client");
+		view.loadUrl(url);
+		view.getSettings().setUserAgentString("guoku-client");
 		view.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -62,7 +61,7 @@ public class WebAct extends BaseActivity {
 				setGCenter(true, view.getTitle());
 				return true;
 			}
-			
+
 			public void onPageFinished(WebView view, String url) {
 				// TODO Auto-generated method stub
 				webViewTitle.add(view.getTitle());
@@ -103,8 +102,7 @@ public class WebAct extends BaseActivity {
 		CustomShareBoard shareBoard = new CustomShareBoard(this);
 		shareBoard.setShareContext(name, url);
 		shareBoard.setAnimationStyle(R.style.popwin_anim_style);
-		shareBoard.showAtLocation(this.getWindow().getDecorView(),
-				Gravity.BOTTOM, 0, 0);
+		shareBoard.showAtLocation(this.getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
 		WindowManager.LayoutParams params = getWindow().getAttributes();
 		params.alpha = 0.6f;
 		getWindow().setAttributes(params);
@@ -122,7 +120,7 @@ public class WebAct extends BaseActivity {
 			}
 		});
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub

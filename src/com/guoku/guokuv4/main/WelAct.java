@@ -126,9 +126,12 @@ public class WelAct extends NetWorkActivity {
 			break;
 		case LAUNCH:
 			if (!StringUtils.isEmpty(result)) {
-				LaunchBean launchBean = JSON.parseObject(result, LaunchBean.class);
-				GuokuApplication.getInstance().setLaunchBean(launchBean);
-//				ToastUtil.show(mContext, launchBean.getLaunch_image_url());
+				try {
+					LaunchBean launchBean = JSON.parseObject(result, LaunchBean.class);
+					GuokuApplication.getInstance().setLaunchBean(launchBean);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
 			}
 			break;
 		default:

@@ -12,5 +12,6 @@ package com.guoku.guokuv4.config;
 public class AlibabaConfig {
 	
 	public static String APP_KEY = "23093827";
+	public static String PID = "mm_28514026_4132785_24810648";
 
 }
