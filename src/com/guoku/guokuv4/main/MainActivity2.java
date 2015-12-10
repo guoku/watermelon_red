@@ -7,8 +7,8 @@ import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.IntroAct;
 import com.guoku.guokuv4.act.SettingAct;
 import com.guoku.guokuv4.base.BaseActivity.OnDoubleClickListener;
-import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.gragment.GuangFragment;
 import com.guoku.guokuv4.gragment.JingXuanPageFragment;
 import com.guoku.guokuv4.gragment.OrderFragment;
@@ -24,7 +24,9 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -363,32 +365,33 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 		}
 	}
 
+	/**
+	 * 启动引导页
+	 * versioncode大于才接口version才启动
+	 */
 	private void startLaunch() {
 
 		if (GuokuApplication.getInstance().getLaunchBean() != null) {
-			if (!StringUtils.isEmpty(GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url())) {
-				String path = Constant.LAUNCH_PATH
-						+ StringUtils.setReplace(GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url());
-				File file = new File(path);
-				if (!file.exists()) {
-					Intent intent = new Intent(this, DownLoadService.class);
-					startService(intent);
-				} else {
-					if (SharePrenceUtil.getLaunch(this)) {
-						openActivityForResult(IntroAct.class, IntroAct.CODE);
+			try {
+				PackageInfo pinfo = getPackageManager().getPackageInfo("com.guoku", PackageManager.GET_CONFIGURATIONS);
+				if (pinfo.versionCode >= GuokuApplication.getInstance().getLaunchBean().getVersion()) {
+					if (!StringUtils.isEmpty(GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url())) {
+						String path = Constant.LAUNCH_PATH + StringUtils
+								.setReplace(GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url());
+						File file = new File(path);
+						if (!file.exists()) {
+							Intent intent = new Intent(this, DownLoadService.class);
+							startService(intent);
+						} else {
+							if (SharePrenceUtil.getLaunch(this)) {
+								openActivity(IntroAct.class);
+							}
+						}
 					}
 				}
-			}
-		}
-	}
-
-	@Override
-	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
-		// TODO Auto-generated method stub
-
-		if (arg2 != null) {
-			if (arg1 == IntroAct.CODE) {
-				switchContent(qunaerFragment);
+			} catch (NameNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}

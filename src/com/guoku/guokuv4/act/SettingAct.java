@@ -104,18 +104,9 @@ public class SettingAct extends NetWorkActivity {
 
 	@OnClick(R.id.setting_ll_clear)
 	public void clear(View v) {
-//		ImageLoader.getInstance().clearDiskCache();
-//		ImageLoader.getInstance().clearMemoryCache();
-//		ToastUtil.show(context, "清理完成");
-		
-//		测试代码
-		String url = "http://m.guoku.com/event/20151212/";
-		Bundle bundle = new Bundle();
-		Sharebean sharebean = new Sharebean();
-		sharebean.setAricleUrl(url);
-		bundle.putSerializable(WebShareAct.class.getName(), sharebean);
-		openActivity(WebShareAct.class, bundle);
-		
+		ImageLoader.getInstance().clearDiskCache();
+		ImageLoader.getInstance().clearMemoryCache();
+		ToastUtil.show(context, "清理完成");
 	}
 
 	@Override

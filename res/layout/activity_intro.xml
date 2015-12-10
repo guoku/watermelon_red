@@ -53,7 +53,7 @@
             android:textSize="17sp" 
             android:layout_centerHorizontal="true"
             android:ellipsize="end"
-            android:singleLine="false"
+            android:lines="2"
             />
 
         <com.facebook.drawee.view.SimpleDraweeView

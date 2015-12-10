@@ -128,6 +128,7 @@ public class WelAct extends NetWorkActivity {
 			if (!StringUtils.isEmpty(result)) {
 				try {
 					LaunchBean launchBean = JSON.parseObject(result, LaunchBean.class);
+					launchBean.getLaunch_image_url().replace(".jpg", ".gif");
 					GuokuApplication.getInstance().setLaunchBean(launchBean);
 				} catch (Exception e) {
 					// TODO: handle exception

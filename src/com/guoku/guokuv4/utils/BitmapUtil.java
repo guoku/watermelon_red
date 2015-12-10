@@ -460,7 +460,7 @@ public class BitmapUtil {
 		}
 		File myCaptureFile = new File(path + StringUtils.setReplace(GuokuApplication.getInstance().getLaunchBean().getLaunch_image_url()));
 		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(myCaptureFile));
-		bm.compress(Bitmap.CompressFormat.JPEG, 90, bos);
+		bm.compress(Bitmap.CompressFormat.WEBP, 90, bos);
 		bos.flush();
 		bos.close();
 	}

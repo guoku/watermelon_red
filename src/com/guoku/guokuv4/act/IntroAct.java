@@ -12,8 +12,6 @@ import com.alibaba.fastjson.JSON;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.facebook.imagepipeline.request.ImageRequest;
-import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.base.NetWorkActivity;
@@ -33,8 +31,10 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
@@ -43,22 +43,19 @@ import android.widget.TextView;
  * @date 2015年11月26日 下午2:35:57 引导页
  */
 public class IntroAct extends NetWorkActivity {
-	
-	public final static int CODE = 1000;
 
 	private final int PROINFO = 1001;
 	private final int USERINFO = 1002;
 	private final int TAG_PROINFO = 1003;
 
 	private final String ACTION_START = "guoku://start";// 什么都不做，只关闭dialog
-	private final String ACTION_ENTITY = "guoku://entity";// 跳到商品
+	private final String ACTION_ENTITY = "guoku://entity/";// 跳到商品
 	private final String ACTION_HTTP = "http://";// 跳到webview
-	private final String ACTION_USER = "guoku://user";// 跳到某个用户
-	private final String ACTION_TAG = "guoku://tag";// 跳到某个标签页
-	private final String ACTION_CATEGORY = "guoku://category";// 跳到品类
-	private final String ACTION_ARTICLE = "guoku://article";// 跳到图文
+	private final String ACTION_USER = "guoku://user/";// 跳到某个用户
+	private final String ACTION_TAG = "guoku://tag/";// 跳到某个标签页
+	private final String ACTION_CATEGORY = "guoku://category/";// 跳到品类
+	private final String ACTION_ARTICLE = "guoku://article/";// 跳到图文
 	private final String ACTION_CLOSE = "guoku://close";// 关闭引导页
-	private final String ACTION_PAGE = "guoku://page";// 跳到首页的第几页 从1开始
 
 	@ViewInject(R.id.text1)
 	TextView tvTitle;// 标题
@@ -95,25 +92,17 @@ public class IntroAct extends NetWorkActivity {
 		String path = Constant.LAUNCH_PATH + StringUtils.setReplace(lBean.getLaunch_image_url());
 		File file = new File(path);
 		if (file.exists()) {
-//			simpleDraweeView.setImageURI(Uri.parse("file://" + path));
-			
-//			ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse("file://" + path))
-//			    .build();
-
-			DraweeController controller = Fresco.newDraweeControllerBuilder()
-//			    .setImageRequest(request)
-			    .setAutoPlayAnimations(true)
-			    .setUri(Uri.parse("file://" + path))
-			    .build();
+			// simpleDraweeView.setImageURI(Uri.parse("file://" + path));
+			DraweeController controller = Fresco.newDraweeControllerBuilder().setAutoPlayAnimations(true)
+					.setUri(Uri.parse("file://" + path)).build();
 			simpleDraweeView.setController(controller);
 		}
 
-		tvTitle.setText(lBean.getTitle());
+		tvTitle.setText(Html.fromHtml(lBean.getTitle()));
 
-		tvContext.setText(lBean.getDescription());
+		tvContext.setText(Html.fromHtml(lBean.getDescription()));
 
-		tvButton.setText(lBean.getAction_title());
-
+		tvButton.setText(Html.fromHtml(lBean.getAction_title()));
 	}
 
 	@OnClick(R.id.textView1)
@@ -125,14 +114,14 @@ public class IntroAct extends NetWorkActivity {
 			String id = lBean.getAction().replace(ACTION_ENTITY, "");
 			sendConnection(Constant.PROINFO + id, new String[] { "entity_id" }, new String[] { id }, PROINFO, true);
 		} else if (lBean.getAction().contains(ACTION_HTTP)) {
-			
+
 			Bundle bundle = new Bundle();
 			Sharebean sharebean = new Sharebean();
 			sharebean.setAricleUrl(lBean.getAction());
 			bundle.putSerializable(WebShareAct.class.getName(), sharebean);
 			openActivity(WebShareAct.class, bundle);
 			finishAct();
-			
+
 		} else if (lBean.getAction().contains(ACTION_USER)) {
 			sendConnection(Constant.USERINFO + lBean.getAction().replace(ACTION_USER, ""), new String[] { "timestamp" },
 					new String[] { System.currentTimeMillis() / 1000 + "" }, USERINFO, false);
@@ -148,12 +137,12 @@ public class IntroAct extends NetWorkActivity {
 			}
 			finishAct();
 		} else if (lBean.getAction().contains(ACTION_CATEGORY)) {
-			// 品类需要单独接口，后续增加
 			// String categoryId = lBean.getAction().replace(ACTION_CATEGORY,
 			// "");
 			// sendConnection(Constant.PROINFO + categoryId,
 			// new String[] { "entity_id" }, new String[] { categoryId },
 			// TAG_PROINFO, true);
+			finishAct();
 		} else if (lBean.getAction().contains(ACTION_ARTICLE)) {
 			Bundle bundle = new Bundle();
 			Sharebean sharebean = new Sharebean();
@@ -161,12 +150,7 @@ public class IntroAct extends NetWorkActivity {
 			bundle.putSerializable(WebShareAct.class.getName(), sharebean);
 			openActivity(WebShareAct.class, bundle);
 			finishAct();
-		} else if (lBean.getAction().contains(ACTION_PAGE)) {
-			Intent intent = new Intent();
-			setResult(CODE, intent);
-			finishAct();
-		}
-		else {
+		} else {
 			finishAct();
 		}
 	}

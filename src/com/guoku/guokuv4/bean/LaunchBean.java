@@ -28,8 +28,17 @@ public class LaunchBean {
     private String launch_image_url;
     private String action;
     private int launch_id;
+    private int version;
 
-    public void setAction_title(String action_title) {
+    public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	public void setAction_title(String action_title) {
         this.action_title = action_title;
     }
 
