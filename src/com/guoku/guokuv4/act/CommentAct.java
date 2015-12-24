@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 
@@ -48,7 +49,10 @@ public class CommentAct extends NetWorkActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
 		setContentView(R.layout.comment);
+		
 		setGCenter(true, "撰写点评");
 		setGLeft(true, R.drawable.back_selector);
 		setGRigth(true, R.drawable.send);
@@ -61,15 +65,13 @@ public class CommentAct extends NetWorkActivity {
 		text.addTextChangedListener(new TextWatcher() {
 
 			@Override
-			public void onTextChanged(CharSequence arg0, int arg1, int arg2,
-					int arg3) {
+			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
 				// TODO Auto-generated method stub
 
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence arg0, int arg1,
-					int arg2, int arg3) {
+			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
 				// TODO Auto-generated method stub
 
 			}
@@ -95,20 +97,14 @@ public class CommentAct extends NetWorkActivity {
 		if (!StringUtils.isEmpty(text.getText().toString())) {
 			if (up) {
 				if (isUpData) {
-					sendConnectionPOST(Constant.COMMENTLIST + noteid
-							+ "/update/", new String[] { "note" },
-							new String[] { text.getText().toString() },
-							COMMENTNOTE, true);
+					sendConnectionPOST(Constant.COMMENTLIST + noteid + "/update/", new String[] { "note" },
+							new String[] { text.getText().toString() }, COMMENTNOTE, true);
 				} else {
 					finish();
 				}
 			} else
-				sendConnectionPOST(
-						Constant.COMMENTNOTE
-								+ productBean.getEntity().getEntity_id()
-								+ "/add/note/", new String[] { "note" },
-						new String[] { text.getText().toString() },
-						COMMENTNOTE, true);
+				sendConnectionPOST(Constant.COMMENTNOTE + productBean.getEntity().getEntity_id() + "/add/note/",
+						new String[] { "note" }, new String[] { text.getText().toString() }, COMMENTNOTE, true);
 
 		} else {
 			ToastUtil.show(mContext, "总得说点什么吧~");
@@ -120,9 +116,9 @@ public class CommentAct extends NetWorkActivity {
 		GuokuUtil.hideKeyboard(context, text);
 		switch (where) {
 		case COMMENTNOTE:
-			
+
 			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_COMMENT);
-			
+
 			AVAnalytics.onEvent(this, "poke");
 			MobclickAgent.onEvent(this, "poke");
 
@@ -148,16 +144,13 @@ public class CommentAct extends NetWorkActivity {
 
 	@Override
 	protected void setupData() {
-		productBean = JSON.parseObject(getIntent().getStringExtra("data"),
-				PInfoBean.class);
+		productBean = JSON.parseObject(getIntent().getStringExtra("data"), PInfoBean.class);
 		noteid = getIntent().getStringExtra("noteid");
 		if (GuokuApplication.getInstance().getBean() != null) {
 			ArrayList<NoteBean> list = productBean.getNote_list();
 			for (NoteBean bean : list) {
-				if (bean.getCreator()
-						.getUser_id()
-						.equals(GuokuApplication.getInstance().getBean()
-								.getUser().getUser_id())) {
+				if (bean.getCreator().getUser_id()
+						.equals(GuokuApplication.getInstance().getBean().getUser().getUser_id())) {
 					strContent = bean.getContent();
 					text.setText(strContent);
 					up = true;
@@ -165,6 +158,24 @@ public class CommentAct extends NetWorkActivity {
 			}
 		}
 
+	}
+
+	@OnClick(R.id.reg_tv_l)
+	public void onLeftClick(View v) {
+		finishAct();
+	}
+
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			finishAct();
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+	private void finishAct() {
+		finish();
+		overridePendingTransition(R.anim.push_down_in, R.anim.push_down_out);
 	}
 
 }

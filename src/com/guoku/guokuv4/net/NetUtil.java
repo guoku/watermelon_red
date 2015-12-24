@@ -50,12 +50,14 @@ public class NetUtil {
 	 * @return
 	 */
 	public static boolean isWifi(Context context) {
-		ConnectivityManager manager = (ConnectivityManager) context
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo networkInfo = manager
-				.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-		if (networkInfo != null) {
-			return networkInfo.isConnected();
+		if(context != null){
+			ConnectivityManager manager = (ConnectivityManager) context
+					.getSystemService(Context.CONNECTIVITY_SERVICE);
+			NetworkInfo networkInfo = manager
+					.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+			if (networkInfo != null) {
+				return networkInfo.isConnected();
+			}
 		}
 		return false;
 	}

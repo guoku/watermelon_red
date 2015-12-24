@@ -54,6 +54,7 @@ public class WebShareAct extends NetWorkActivity {
 	String IF_ENTITY = "guoku://entity/";
 	String IF_USER = "guoku://user/";
 	String IF_TMALL = "detail.tmall.com";
+	String IF_TAOBAO = "taobao.com";
 
 	@ViewInject(R.id.webview)
 	private WebView view;
@@ -113,7 +114,7 @@ public class WebShareAct extends NetWorkActivity {
 
 					return true;
 				}
-				if (url.contains(IF_TMALL)) {// 如果是淘宝商品
+				if (url.contains(IF_TMALL) || url.contains(IF_TAOBAO)) {// 如果是淘宝商品
 					urls = url;
 					if(!StringUtils.isEmpty(urls)){
 						showPage(null);

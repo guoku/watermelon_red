@@ -192,10 +192,12 @@ public class PersonalFragment extends BaseFrament {
 			startActivity(intent);
 			break;
 		case PROINFO:
-			PInfoBean bean = ParseUtil.getPI(result);
-			intent = new Intent(context, ProductInfoAct.class);
-			intent.putExtra("data", JSON.toJSONString(bean));
-			startActivity(intent);
+			if(isAdded()){
+				PInfoBean bean = ParseUtil.getPI(result);
+				intent = new Intent(context, ProductInfoAct.class);
+				intent.putExtra("data", JSON.toJSONString(bean));
+				startActivity(intent);
+			}
 			break;
 		case USERINFO:
 			if (!isUser) {

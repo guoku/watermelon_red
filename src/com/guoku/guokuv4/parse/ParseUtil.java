@@ -62,9 +62,13 @@ public class ParseUtil {
 
 	public static ArrayList<PointBean> getPointList(String result) {
 		ArrayList<PointBean> productBeans = new ArrayList<PointBean>();
-		productBeans = (ArrayList<PointBean>) JSON.parseArray(result,
-				PointBean.class);
-		Logger.i("getPointList", "getPointList-->" + productBeans.toString());
+		try {
+			productBeans = (ArrayList<PointBean>) JSON.parseArray(result,
+					PointBean.class);
+			Logger.i("getPointList", "getPointList-->" + productBeans.toString());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return productBeans;
 	}
 

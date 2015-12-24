@@ -218,13 +218,6 @@ public class GuangFragment extends BaseFrament {
 							MobclickAgent.onEvent(getActivity(), "banner");
 
 							if (url.contains("http")) {
-								// Intent intent = new Intent(context,
-								// WebAct.class);
-								// intent.putExtra("data", url);
-								// intent.putExtra("name", " ");
-								// intent.putExtra("type", "banner");
-								// startActivity(intent);
-
 								Bundle bundle = new Bundle();
 								Sharebean sharebean = new Sharebean();
 								sharebean.setTitle("");

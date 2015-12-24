@@ -3,7 +3,7 @@
     package="com.guoku"
     android:installLocation="auto"
     android:versionCode="415"
-    android:versionName="4.1.4" >
+    android:versionName="1024.1" >
 
     <!-- 正式版本号 -->
     <!--
@@ -48,10 +48,9 @@
         <activity
             android:name="com.umeng.fb.ContactActivity"
             android:theme="@android:style/Theme.NoTitleBar" />
-
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="guoku" />
+            android:value="channel" />
         <meta-data
             android:name="leancloud"
             android:value="main" />
@@ -180,8 +179,10 @@
         </activity>
         <activity
             android:name="com.guoku.guokuv4.act.CommentAct"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" >
+            android:configChanges="keyboard"
+            android:screenOrientation="portrait" 
+            android:theme="@style/Translucent_NoTitle"
+            >
         </activity>
         <activity
             android:name="com.guoku.guokuv4.act.SettingAct"
@@ -213,12 +214,6 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
         </activity>
-
-        <service
-            android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService" >
-        </service>
-
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
@@ -286,8 +281,17 @@
             android:theme="@style/dialog"
             >
         </activity>
+        <activity
+            android:name=".guokuv4.act.PhotoViewAct"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
         
         <service android:name="com.guoku.guokuv4.service.DownLoadService"></service>
+         <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService" >
+        </service>
     </application>
 
 </manifest>

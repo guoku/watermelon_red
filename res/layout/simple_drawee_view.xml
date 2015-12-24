@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.guoku.guokuv4.photoview.PhotoView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/imgview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+</com.guoku.guokuv4.photoview.PhotoView>

@@ -84,23 +84,24 @@ public class SearchTagFragment extends BaseFrament {
 	}
 
 	public void getData() {
-
-		curList.clear();
-		if (listTab.size() > 0) {
-			for (CategoryBean bean : listTab) {
-				for(CategoryBean.ContentEntity cEntity : bean.getContent()){
-					if (cEntity.getCategory_title().contains(SearchAct.searchStr)) {
-						curList.add(cEntity);
+		
+		if(curList != null){
+			curList.clear();
+			if (listTab.size() > 0) {
+				for (CategoryBean bean : listTab) {
+					for(CategoryBean.ContentEntity cEntity : bean.getContent()){
+						if (cEntity.getCategory_title().contains(SearchAct.searchStr)) {
+							curList.add(cEntity);
+						}
 					}
 				}
-			}
-			seachCommodityTypeAdapter.setList(curList);
-			hideEmpty(viewEmpty, gridView);
-			if (seachCommodityTypeAdapter.getCount() == 0) {
-				showEmpty(viewEmpty, gridView);
+				seachCommodityTypeAdapter.setList(curList);
+				hideEmpty(viewEmpty, gridView);
+				if (seachCommodityTypeAdapter.getCount() == 0) {
+					showEmpty(viewEmpty, gridView);
+				}
 			}
 		}
-
 	}
 
 }

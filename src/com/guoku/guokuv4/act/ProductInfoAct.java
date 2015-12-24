@@ -338,7 +338,7 @@ public class ProductInfoAct extends NetWorkActivity
 	protected void onFailure(String result, int where) {
 		switch (where) {
 		case LIKE0:
-			ToastUtil.show(context, "取消失败");
+			ToastUtil.show(context, "取消喜爱失败");
 			break;
 		case LIKE1:
 			ToastUtil.show(context, "喜爱失败");
@@ -433,24 +433,29 @@ public class ProductInfoAct extends NetWorkActivity
 				image.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View arg0) {
-						gotoTaoBao(productBean, 0);
+//						gotoTaoBao(productBean, 0);
+						
+						Bundle bundle = new Bundle();
+						bundle.putSerializable(PhotoViewAct.class.getName(), productBean);
+						bundle.putInt(PhotoViewAct.KEY_ITEM, (Integer) image.getTag());
+						openActivity(PhotoViewAct.class, bundle);
 					}
 				});
 				imgs.add(image);
 			}
-			Logger.i(TAG, "imgs-->" + imgs.size());
-			// if (imgs.size() == 0) {
-			final ImageView image = new ImageView(this);
-			image.setScaleType(ScaleType.FIT_CENTER);
-			imageLoader.displayImage(productBean.getEntity().get800(), image,
-					new ImgUtils.AnimateFirstDisplayListener());
-			image.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View arg0) {
-					gotoTaoBao(productBean, 0);
-				}
-			});
-			imgs.add(0, image);
+//			Logger.i(TAG, "imgs-->" + imgs.size());
+//			// if (imgs.size() == 0) {
+//			final ImageView image = new ImageView(this);
+//			image.setScaleType(ScaleType.FIT_CENTER);
+//			imageLoader.displayImage(productBean.getEntity().get800(), image,
+//					new ImgUtils.AnimateFirstDisplayListener());
+//			image.setOnClickListener(new OnClickListener() {
+//				@Override
+//				public void onClick(View arg0) {
+////					gotoTaoBao(productBean, 0);
+//				}
+//			});
+//			imgs.add(0, image);
 			// }
 
 			vp.setOnTouchListener(new OnTouchListener() {
@@ -760,62 +765,6 @@ public class ProductInfoAct extends NetWorkActivity
 	public void Price(View v) {
 		gotoTaoBao(productBean, 0);
 	}
-
-//	private void gotoTaoBao() {
-//		AVAnalytics.onEvent(this, "buy");
-//		MobclickAgent.onEvent(this, "buy");
-//
-//		try {
-//			JSONArray array;
-//			array = new JSONArray(productBean.getEntity().getItem_list());
-//			if (!(array.getJSONObject(0).getString("origin_source").contains("taobao")
-//					|| array.getJSONObject(0).getString("origin_source").contains("tmall"))) {
-//				Intent intent = new Intent(context, WebAct.class);
-//				intent.putExtra("data", array.getJSONObject(0).getString("buy_link"));
-//				intent.putExtra("name", "  ");
-//				intent.putExtra("UA", "UA");
-//				startActivity(intent);
-//				return;
-//
-//			}
-//			TaeWebViewUiSettings taeWebViewUiSettings = new TaeWebViewUiSettings();
-//			TaokeParams taokeParams = new TaokeParams();
-//			taokeParams.pid = AlibabaConfig.PID;
-//			taokeParams.unionId = "null";
-//
-//			if (AlibabaSDK.isInitSucceed()) {
-//				ItemService itemService = AlibabaSDK.getService(ItemService.class);
-//				itemService.showTaokeItemDetailByItemId(this, new TradeProcessCallback() {
-//
-//					@Override
-//					public void onPaySuccess(TradeResult tradeResult) {
-//						// Toast.makeText(MainActivity.this, "支付成功",
-//						// Toast.LENGTH_SHORT).show();
-//						ToastUtil.show(mContext, "支付成功");
-//
-//					}
-//
-//					@Override
-//					public void onFailure(int code, String msg) {
-//						if (code == ResultCode.QUERY_ORDER_RESULT_EXCEPTION.code) {
-//							// ToastUtil.show(mContext, "确认交易订单失败");
-//						} else {
-//							// ToastUtil.show(mContext, "交易取消");
-//						}
-//					}
-//
-//				}, taeWebViewUiSettings, array.getJSONObject(0).getLong("origin_id"), 1, null, taokeParams);
-//			} else {
-//				ToastUtil.show(mContext, "淘宝小二开小差喽，请稍后再试");
-//				return;
-//			}
-//
-//		} catch (JSONException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//	}
 
 	@OnClick(R.id.product_tv_comment)
 	public void Comment(View v) {
