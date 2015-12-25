@@ -7,25 +7,18 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.sdk.android.AlibabaSDK;
-import com.alibaba.sdk.android.ResultCode;
-import com.alibaba.sdk.android.trade.ItemService;
-import com.alibaba.sdk.android.trade.callback.TradeProcessCallback;
-import com.alibaba.sdk.android.trade.model.TaokeParams;
-import com.alibaba.sdk.android.trade.model.TradeResult;
 import com.avos.avoscloud.AVAnalytics;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.adapter.ArrayListAdapter;
 import com.guoku.guokuv4.base.NetWorkActivity;
 import com.guoku.guokuv4.base.UserBaseFrament;
+import com.guoku.guokuv4.bean.LikesBean;
 import com.guoku.guokuv4.bean.TagBean;
 import com.guoku.guokuv4.bean.TagTwo;
-import com.guoku.guokuv4.config.AlibabaConfig;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.config.Logger;
 import com.guoku.guokuv4.entity.test.EntityBean;
@@ -49,7 +42,6 @@ import com.guoku.guokuv4.view.ScrollViewWithListView;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
-import com.taobao.tae.sdk.webview.TaeWebViewUiSettings;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.media.UMImage;
 
@@ -76,15 +68,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import de.greenrobot.event.EventBus;
 
 public class ProductInfoAct extends NetWorkActivity
 		implements OnClickListener, DialogInterface.OnClickListener, OnScrollListener {
@@ -97,7 +87,7 @@ public class ProductInfoAct extends NetWorkActivity
 	private static final int LIKE1 = 16;
 	private static final int LIKE0 = 15;
 	private static final int COMMENTLIST = 14;
-	private static final int PROINFOFULL = 17;
+//	private static final int PROINFOFULL = 17;
 	private static final int NOTE_TAG = 18;// 标签
 	private static final int USERINFO = 1001;// 用户信息
 	private static final int PROINFO_REFRESH = 1002;// 刷新商品
@@ -193,10 +183,9 @@ public class ProductInfoAct extends NetWorkActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		EventBus.getDefault().register(this);
 		setContentView(R.layout.product_act);
-
 		lineView = View.inflate(mContext, R.layout.line_gray, null);
-
 		init();
 	}
 
@@ -253,39 +242,18 @@ public class ProductInfoAct extends NetWorkActivity
 			intent.putExtra("data", JSON.toJSONString(bean));
 			startActivity(intent);
 			break;
-		case PROINFOFULL:
-			productBean = ParseUtil.getPI(result);
-			// setupData();
-			gv1Adapter.setList(productBean.getLike_user_list());
-			comAdapter.setList(productBean.getNote_list());
-
-			break;
-
 		case COMMENTLIST:
 			intent = new Intent(mContext, CommentTalkAct.class);
 			intent.putExtra("data", result);
 			startActivity(intent);
 			break;
 		case LIKE0:
-			if (productBean == null) {
-				return;
-			}
-			productBean.getEntity().setLike_already("0");
-			isLike = 1;
-			isLikes();
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE);
+			EventBus.getDefault().post(new LikesBean(false));
 			break;
 		case LIKE1:
 			AVAnalytics.onEvent(this, "like");
 			MobclickAgent.onEvent(this, "like");
-
-			if (productBean == null) {
-				return;
-			}
-			productBean.getEntity().setLike_already("1");
-			isLike = 2;
-			isLikes();
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE);
+			EventBus.getDefault().post(new LikesBean(true));
 			break;
 		case PY1:
 			AVAnalytics.onEvent(this, "poke");
@@ -376,6 +344,18 @@ public class ProductInfoAct extends NetWorkActivity
 		productBean = JSON.parseObject(getIntent().getStringExtra("data"), PInfoBean.class);
 		refresh();
 	}
+	
+	private void refreshLikeLayout(){
+		
+		if (!productBean.getEntity().getLike_count().equals("")) {
+			product_tv_like_size.setText(productBean.getEntity().getLike_count() + " 人喜爱");
+//			if(gv1Adapter != null){
+//				gv1Adapter.notifyDataSetChanged();
+//			}
+		} else {
+			layout_like.setVisibility(View.GONE);
+		}
+	}
 
 	private void refresh() {
 
@@ -402,11 +382,8 @@ public class ProductInfoAct extends NetWorkActivity
 			product_tv_name.setText(productBean.getEntity().getTitle());
 		// product_tv_likes.setText(productBean.getEntity().getLike_count());
 
-		if (!productBean.getEntity().getLike_count().equals("")) {
-			product_tv_like_size.setText(productBean.getEntity().getLike_count() + " 人喜爱");
-		} else {
-			layout_like.setVisibility(View.GONE);
-		}
+		refreshLikeLayout();
+		
 		product_tv_price
 				.setText(getResources().getString(R.string.tv_commodity_go_buy, productBean.getEntity().getPrice()));
 		// imageLoader.displayImage(productBean.getPic(), product_iv_pic);
@@ -443,20 +420,6 @@ public class ProductInfoAct extends NetWorkActivity
 				});
 				imgs.add(image);
 			}
-//			Logger.i(TAG, "imgs-->" + imgs.size());
-//			// if (imgs.size() == 0) {
-//			final ImageView image = new ImageView(this);
-//			image.setScaleType(ScaleType.FIT_CENTER);
-//			imageLoader.displayImage(productBean.getEntity().get800(), image,
-//					new ImgUtils.AnimateFirstDisplayListener());
-//			image.setOnClickListener(new OnClickListener() {
-//				@Override
-//				public void onClick(View arg0) {
-////					gotoTaoBao(productBean, 0);
-//				}
-//			});
-//			imgs.add(0, image);
-			// }
 
 			vp.setOnTouchListener(new OnTouchListener() {
 				@Override
@@ -950,15 +913,6 @@ public class ProductInfoAct extends NetWorkActivity
 	}
 
 	private void requestIntent() {
-
-		Intent intent = new Intent();
-		if (isLike == 1) {
-			intent.putExtra(GoodTwoFragmnet.INTNT_KEY, false);
-		}
-		if (isLike == 2) {
-			intent.putExtra(GoodTwoFragmnet.INTNT_KEY, true);
-		}
-		setResult(GoodTwoFragmnet.UPDATA_LIKE, intent);
 		finish();
 	}
 
@@ -1047,5 +1001,44 @@ public class ProductInfoAct extends NetWorkActivity
 				}
 			}
 		}
+	}
+	
+	public void onEventMainThread(LikesBean likesBean) {
+		if(likesBean.isLike()){
+			isLike();
+		}else{
+			isUnLike();
+		}
+	}
+	
+	private void isLike(){
+		if (productBean == null) {
+			return;
+		}
+		productBean.getEntity().setLike_already("1");
+		productBean.getEntity().getLike_countAdd();
+		isLike = 2;
+		productBean.getLike_user_list().add(0, GuokuApplication.getInstance().getBean().getUser());
+		isLikes();
+		refreshLikeLayout();
+	}
+	
+	private void isUnLike(){
+		if (productBean == null) {
+			return;
+		}
+		productBean.getEntity().setLike_already("0");
+		productBean.getEntity().getLike_countCut();
+		isLike = 1;
+		productBean.getLike_user_list().remove(GuokuApplication.getInstance().getBean().getUser());
+		isLikes();
+		refreshLikeLayout();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
 	}
 }

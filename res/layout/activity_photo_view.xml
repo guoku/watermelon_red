@@ -38,7 +38,7 @@
             <ImageView
                 android:id="@+id/product_iv_like"
                 style="@style/layout_width_more"
-                android:src="@drawable/like_gary" />
+                android:src="@drawable/photo_heart" />
 
             <TextView
                 android:id="@+id/likes_count"
@@ -59,7 +59,7 @@
             <ImageView
                 android:id="@+id/product_tv_comment"
                 style="@style/layout_width_more"
-                android:src="@drawable/comment_2" />
+                android:src="@drawable/photo_note" />
 
             <TextView
                 android:id="@+id/comment_count"
@@ -74,7 +74,7 @@
             android:id="@+id/img_taobao"
             style="@style/layout_width_more"
             android:layout_marginLeft="35dp"
-            android:src="@drawable/more_shop" />
+            android:src="@drawable/photo_buy" />
     </LinearLayout>
 
 </FrameLayout>

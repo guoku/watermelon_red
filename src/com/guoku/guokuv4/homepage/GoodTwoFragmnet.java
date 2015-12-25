@@ -9,6 +9,7 @@ import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.adapter.JingXuanAdapter;
 import com.guoku.guokuv4.base.BaseActivity.OnDoubleClickListener;
+import com.guoku.guokuv4.bean.LikesBean;
 import com.guoku.guokuv4.base.BaseFrament;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.PBean;
@@ -34,6 +35,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import de.greenrobot.event.EventBus;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -44,7 +46,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 	private static final int LIKE1 = 13;
 	private static final int LIKE0 = 14;
 	private static final int TYPE = 15;
-	public static final int UPDATA_LIKE = 16;
+//	public static final int UPDATA_LIKE = 16;
 	public static final String INTNT_KEY = GoodTwoFragmnet.class.getName();
 	// private static final int UPDATA_LIKE_UN = 17;
 	@ViewInject(R.id.jingxuan_lv_1)
@@ -160,42 +162,20 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 				PInfoBean bean = ParseUtil.getPI(result);
 				Intent intent = new Intent(context, ProductInfoAct.class);
 				intent.putExtra("data", JSON.toJSONString(bean));
-				startActivityForResult(intent, UPDATA_LIKE);
+				startActivity(intent);
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
 			break;
 		case LIKE0:
-			if (pBean == null) {
-				return;
-			}
-			pBean.getContent().getEntity().setLike_already("0");
-			pBean.getContent()
-					.getEntity()
-					.setLike_count(
-							pBean.getContent().getEntity().getLike_countCut());
-
-			adapter.setStatus(layoutView, pBean);
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY,
-					Constant.INTENT_ACTION_VALUE_LIKE);
+			EventBus.getDefault().post(new LikesBean(false));
 			break;
 		case LIKE1:
 			AVAnalytics.onEvent(context, "like_click", pBean.getContent()
 					.getEntity().getTitle());
 			AVAnalytics.onEvent(context, "like");
 			MobclickAgent.onEvent(context, "like");
-
-			if (pBean == null) {
-				return;
-			}
-			pBean.getContent().getEntity().setLike_already("1");
-			pBean.getContent()
-					.getEntity()
-					.setLike_count(
-							pBean.getContent().getEntity().getLike_countAdd());
-			adapter.setStatus(layoutView, pBean);
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY,
-					Constant.INTENT_ACTION_VALUE_LIKE);
+			EventBus.getDefault().post(new LikesBean(true));
 			break;
 		default:
 			break;

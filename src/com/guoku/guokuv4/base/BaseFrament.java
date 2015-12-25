@@ -13,6 +13,7 @@ import org.apache.http.message.BasicNameValuePair;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.LoginAct;
+import com.guoku.guokuv4.bean.LikesBean;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.net.HttputilHelp;
 import com.guoku.guokuv4.net.NetConfig;
@@ -502,5 +503,10 @@ public abstract class BaseFrament extends Fragment {
 		if(list.getVisibility() == View.GONE){
 			list.setVisibility(View.VISIBLE);
 		}
+	}
+
+	public void onEventMainThread(LikesBean likesBean) {
+		// TODO Auto-generated method stub
+		
 	}
 }

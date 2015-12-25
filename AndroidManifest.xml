@@ -179,9 +179,8 @@
         </activity>
         <activity
             android:name="com.guoku.guokuv4.act.CommentAct"
-            android:configChanges="keyboard"
-            android:screenOrientation="portrait" 
-            android:theme="@style/Translucent_NoTitle"
+            android:windowSoftInputMode="stateVisible"
+            android:theme="@style/dialog"
             >
         </activity>
         <activity

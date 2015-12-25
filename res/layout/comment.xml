@@ -3,9 +3,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
+    android:gravity="bottom"
     android:orientation="vertical" >
 
-    <include layout="@layout/title" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#fafafa"
+        android:orientation="vertical" 
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        >
+        
+        <ImageView
+            android:id="@+id/title_bar_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY" 
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/product_xdetel"
+            android:layout_centerVertical="true"
+            />
+        
+        <TextView
+            android:id="@+id/title_bar_centrt_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/g_main"
+            android:textStyle="bold" 
+            android:layout_centerInParent="true"
+            android:text="撰写点评"
+            />
+        
+        <ImageView
+            android:id="@+id/title_bar_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY" 
+            android:layout_alignParentRight="true"
+            android:src="@drawable/send"
+            android:layout_centerVertical="true"
+            />
+        
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/comment_ed_com"
@@ -15,7 +55,7 @@
         android:background="@color/g_224"
         android:gravity="left|top"
         android:hint="撰写真实、有用、有趣的商品点评..."
-        android:lines="10"
+        android:lines="5"
         android:padding="8dp"
         android:textColor="@color/g_main" />
 

@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.widget.TextView;
+import de.greenrobot.event.EventBus;
 
 import com.guoku.R;
 import com.guoku.guokuv4.base.BasePageFragment;
+import com.guoku.guokuv4.bean.LikesBean;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.homepage.ArticleFragment;
 import com.guoku.guokuv4.homepage.GoodTwoFragmnet;
@@ -28,6 +30,13 @@ public class JingXuanPageFragment extends BasePageFragment {
 	public ArticleFragment articleFragment = new ArticleFragment();
 
 	int count = 2;
+	
+	@Override
+	protected void init() {
+		// TODO Auto-generated method stub
+		super.init();
+		EventBus.getDefault().register(this);
+	}
 
 	@Override
 	public int tabCount() {
@@ -65,52 +74,48 @@ public class JingXuanPageFragment extends BasePageFragment {
 		list.add(articleFragment);
 		return list;
 	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		if (data != null) {
-			if (resultCode == goodTwoFragmnet.UPDATA_LIKE) {
-				boolean isLike = data.getBooleanExtra(goodTwoFragmnet.INTNT_KEY, false);
-				if (isLike) {
-					int count = 0;
-					if (StringUtils.isEmpty(goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent()
-							.getEntity().getLike_count())) {
-						count++;
-					} else {
-						count = Integer.valueOf(goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent()
-								.getEntity().getLike_count());
-						count++;
-					}
-					goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent().getEntity().setLike_already("1");
-					goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent().getEntity()
-							.setLike_count(String.valueOf(count));
-					goodTwoFragmnet.adapter.setStatus(goodTwoFragmnet.layoutView,
-							goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos));
-
-//					BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE);
+	
+	public void onEventMainThread(LikesBean likesBean) {
+		if(likesBean.isLike()){
+			int count = 0;
+			if (StringUtils.isEmpty(goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent()
+					.getEntity().getLike_count())) {
+				count++;
+			} else {
+				count = Integer.valueOf(goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent()
+						.getEntity().getLike_count());
+				count++;
+			}
+			goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent().getEntity().setLike_already("1");
+			goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent().getEntity()
+					.setLike_count(String.valueOf(count));
+			goodTwoFragmnet.adapter.setStatus(goodTwoFragmnet.layoutView,
+					goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos));
+		}else{
+			int count2 = 0;
+			if (!StringUtils.isEmpty(goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent()
+					.getEntity().getLike_count())) {
+				count2 = Integer.valueOf(goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent()
+						.getEntity().getLike_count());
+				if (count2 > 0) {
+					count2--;
 				} else {
-					int count2 = 0;
-					if (!StringUtils.isEmpty(goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent()
-							.getEntity().getLike_count())) {
-						count2 = Integer.valueOf(goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent()
-								.getEntity().getLike_count());
-						if (count2 > 0) {
-							count2--;
-						} else {
-							count2 = 0;
-						}
-					}
-					goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent().getEntity().setLike_already("0");
-					goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent().getEntity()
-							.setLike_count(String.valueOf(count2));
-					goodTwoFragmnet.adapter.setStatus(goodTwoFragmnet.layoutView,
-							goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos));
-
-//					BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE);
+					count2 = 0;
 				}
 			}
+			goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent().getEntity().setLike_already("0");
+			goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent().getEntity()
+					.setLike_count(String.valueOf(count2));
+			goodTwoFragmnet.adapter.setStatus(goodTwoFragmnet.layoutView,
+					goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos));
 		}
+	}
+	
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
 	}
 
 }

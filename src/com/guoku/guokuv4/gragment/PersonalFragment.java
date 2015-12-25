@@ -28,6 +28,7 @@ import com.guoku.guokuv4.act.UserTagListAct;
 import com.guoku.guokuv4.adapter.GridViewAdapter;
 import com.guoku.guokuv4.adapter.ListImgLeftAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
+import com.guoku.guokuv4.bean.LikesBean;
 import com.guoku.guokuv4.config.AlibabaConfig;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.AccountBean;
@@ -58,6 +59,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import de.greenrobot.event.EventBus;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -102,7 +104,7 @@ public class PersonalFragment extends BaseFrament {
 
 	@ViewInject(R.id.alibaba_wang)
 	private ImageView ailWang;
-	
+
 	@ViewInject(R.id.alibaba_card)
 	private ImageView ailCard;
 
@@ -163,6 +165,20 @@ public class PersonalFragment extends BaseFrament {
 	private int temp;
 
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		EventBus.getDefault().register(this);
+	}
+
+	@Override
+	public void onDestroyView() {
+		// TODO Auto-generated method stub
+		super.onDestroyView();
+		EventBus.getDefault().unregister(this);
+	}
+
+	@Override
 	protected int getContentId() {
 
 		if (isUser) {
@@ -192,7 +208,7 @@ public class PersonalFragment extends BaseFrament {
 			startActivity(intent);
 			break;
 		case PROINFO:
-			if(isAdded()){
+			if (isAdded()) {
 				PInfoBean bean = ParseUtil.getPI(result);
 				intent = new Intent(context, ProductInfoAct.class);
 				intent.putExtra("data", JSON.toJSONString(bean));
@@ -252,7 +268,7 @@ public class PersonalFragment extends BaseFrament {
 			tv_title.setText("我");
 			iv_set.setImageResource(R.drawable.setting);
 
-//			initAliWang();
+			// initAliWang();
 		} else {
 			titleBar.setVisibility(View.GONE);
 			iv_set.setVisibility(View.GONE);
@@ -472,30 +488,11 @@ public class PersonalFragment extends BaseFrament {
 					Bundle bundle = intent.getExtras();
 					if (bundle != null) {
 						switch (bundle.getInt(Constant.INTENT_ACTION_KEY)) {
-						case Constant.INTENT_ACTION_VALUE_LIKE:
-							new Thread(new Runnable() {
-								@Override
-								public void run() {
-									// TODO Auto-generated method stub
-									try {
-										Thread.sleep(2000);
-										getInitData(LIKE, "4", TABLIKE);
-										getUserInfo();
-									} catch (InterruptedException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-								}
-							}).start();
-
-							getInitData(LIKE, "4", TABLIKE);
-							getUserInfo();
-							break;
 						case Constant.INTENT_ACTION_VALUE_FOLLOW:
 							getUserInfo();
 							break;
 						case Constant.INTENT_ACTION_VALUE_COMMENT:
-							
+
 							new Thread(new Runnable() {
 								@Override
 								public void run() {
@@ -666,10 +663,10 @@ public class PersonalFragment extends BaseFrament {
 				openOpenAccountLogin();
 			}
 		});
-		
+
 		ailCard.setVisibility(View.VISIBLE);
 		ailCard.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -684,12 +681,12 @@ public class PersonalFragment extends BaseFrament {
 	public void openOpenAccountLogin() {
 
 		LoginService loginService = AlibabaSDK.getService(LoginService.class);
-		
+
 		loginService.showLogin(getActivity(), new LoginCallback() {
 
 			@Override
 			public void onSuccess(Session session) {
-				
+
 				ToastUtil.show(getActivity(), "鉴权成功");
 				LogGK.d("***********鉴权成功");
 
@@ -728,25 +725,44 @@ public class PersonalFragment extends BaseFrament {
 		});
 	}
 
-	
-	private void loginOutAli(){
-		
+	private void loginOutAli() {
+
 		LoginService loginService = AlibabaSDK.getService(LoginService.class);
-		
+
 		loginService.logout(getActivity(), new LogoutCallback() {
-			
+
 			@Override
 			public void onFailure(int arg0, String arg1) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void onSuccess() {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
+	}
+
+	public void onEventMainThread(LikesBean likesBean) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				try {
+					Thread.sleep(2000);
+					getInitData(LIKE, "4", TABLIKE);
+					getUserInfo();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}).start();
+
+		getInitData(LIKE, "4", TABLIKE);
+		getUserInfo();
 	}
 
 }

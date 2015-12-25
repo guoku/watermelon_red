@@ -14,7 +14,6 @@ import com.guoku.guokuv4.utils.BroadUtil;
 import com.guoku.guokuv4.utils.GuokuUtil;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
-import com.handmark.pulltorefresh.library.internal.Utils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.umeng.analytics.MobclickAgent;
@@ -23,6 +22,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -52,16 +53,20 @@ public class CommentAct extends NetWorkActivity {
 
 		overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
 		setContentView(R.layout.comment);
-		
-		setGCenter(true, "撰写点评");
-		setGLeft(true, R.drawable.back_selector);
-		setGRigth(true, R.drawable.send);
 
 		init();
 	}
 
-	private void init() {
+	@Override
+	public void onStart() {
+		super.onStart();
+		DisplayMetrics dm = new DisplayMetrics();
+		this.getWindowManager().getDefaultDisplay().getMetrics(dm);
+		this.getWindow().setGravity(Gravity.BOTTOM);
+		this.getWindow().setLayout(dm.widthPixels, this.getWindow().getAttributes().height);
+	}
 
+	private void init() {
 		text.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -92,7 +97,7 @@ public class CommentAct extends NetWorkActivity {
 		});
 	}
 
-	@OnClick(R.id.title_bar_rigth_iv)
+	@OnClick(R.id.title_bar_right)
 	public void Push(View v) {
 		if (!StringUtils.isEmpty(text.getText().toString())) {
 			if (up) {
@@ -160,7 +165,7 @@ public class CommentAct extends NetWorkActivity {
 
 	}
 
-	@OnClick(R.id.reg_tv_l)
+	@OnClick(R.id.title_bar_left)
 	public void onLeftClick(View v) {
 		finishAct();
 	}

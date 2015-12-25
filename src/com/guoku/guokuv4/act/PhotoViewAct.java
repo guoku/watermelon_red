@@ -10,15 +10,15 @@ import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVAnalytics;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
-import com.guoku.guokuv4.base.BaseActivity;
 import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.bean.LikesBean;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.photoview.HackyViewPager;
 import com.guoku.guokuv4.photoview.PhotoView;
 import com.guoku.guokuv4.utils.BroadUtil;
-import com.guoku.guokuv4.utils.ToastUtil;
 import com.guoku.guokuv4.utils.ImgUtils.AnimateFirstDisplayListener;
+import com.guoku.guokuv4.utils.ToastUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -39,7 +39,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.TextView;;
+import android.widget.TextView;
+import de.greenrobot.event.EventBus;;
 
 /**
  * @zhangyao
@@ -91,13 +92,10 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 			}
 			pInfoBean.getEntity().setLike_already("0");
 			isLikes(pInfoBean);
-			int count0 = Integer.valueOf(pInfoBean.getEntity().getLike_count());
-			if (count0 != 0) {
-				count0--;
-				pInfoBean.getEntity().setLike_count(String.valueOf(count0));
-				likeCount.setText(String.valueOf(pInfoBean.getEntity().getLike_count()));
-			}
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE);
+			likeCount.setText(pInfoBean.getEntity().getLike_countCut());
+
+			EventBus.getDefault().post(new LikesBean(false));
+
 			break;
 		case LIKE1:
 			AVAnalytics.onEvent(this, "like");
@@ -107,11 +105,9 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 			}
 			pInfoBean.getEntity().setLike_already("1");
 			isLikes(pInfoBean);
-			int count1 = Integer.valueOf(pInfoBean.getEntity().getLike_count());
-			count1++;
-			pInfoBean.getEntity().setLike_count(String.valueOf(count1));
-			likeCount.setText(String.valueOf(pInfoBean.getEntity().getLike_count()));
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_LIKE);
+			likeCount.setText(pInfoBean.getEntity().getLike_countAdd());
+
+			EventBus.getDefault().post(new LikesBean(true));
 			break;
 		}
 	}
@@ -172,9 +168,9 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 	private void isLikes(PInfoBean productBean) {
 
 		if ("1".equals(productBean.getEntity().getLike_already())) {
-			imageLike.setImageResource(R.drawable.like_red);
+			imageLike.setImageResource(R.drawable.photo_hearted);
 		} else {
-			imageLike.setImageResource(R.drawable.like_gary);
+			imageLike.setImageResource(R.drawable.photo_heart);
 		}
 
 	}
@@ -206,7 +202,11 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 
 	@OnClick(R.id.layout_like)
 	private void onLike(View v) {
-		likeClick();
+		if (GuokuApplication.getInstance().getBean() != null) {
+			likeClick();
+		} else {
+			startActivity(new Intent(mContext, LoginAct.class));
+		}
 	}
 
 	@OnClick(R.id.layout_comment)
@@ -219,12 +219,11 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 			startActivity(new Intent(mContext, LoginAct.class));
 		}
 	}
-	
+
 	@OnClick(R.id.img_taobao)
 	private void onTaobao(View v) {
 		gotoTaoBao(pInfoBean, 0);
 	}
-	
 
 	private void likeClick() {
 
