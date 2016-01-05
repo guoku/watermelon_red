@@ -16,6 +16,7 @@ import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.adapter.ArrayListAdapter;
 import com.guoku.guokuv4.base.NetWorkActivity;
 import com.guoku.guokuv4.base.UserBaseFrament;
+import com.guoku.guokuv4.bean.CommentsBean;
 import com.guoku.guokuv4.bean.LikesBean;
 import com.guoku.guokuv4.bean.TagBean;
 import com.guoku.guokuv4.bean.TagTwo;
@@ -746,41 +747,26 @@ public class ProductInfoAct extends NetWorkActivity
 			if (myNoteBean != null) {
 				intent.putExtra("noteid", myNoteBean.getNote_id());
 			}
-			startActivityForResult(intent, 10086);
+			startActivity(intent);
 		} else {
 			startActivity(new Intent(mContext, LoginAct.class));
 		}
 	}
-
-	@Override
-	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(arg0, arg1, arg2);
-		if (arg2 != null) {
-			switch (arg0) {
-			case 10086:
-				if (arg2.getExtras() != null) {
-
-					myNoteBean = JSON.parseObject(arg2.getStringExtra(CommentAct.KEY_DATA), NoteBean.class);
-
-					if (arg2.getExtras().getBoolean(CommentAct.KEY_UPDATA)) {
-						for (int i = 0; i < productBean.getNote_list().size(); i++) {
-							if (myNoteBean.getNote_id().equals(productBean.getNote_list().get(i).getNote_id())) {
-								productBean.getNote_list().set(i, myNoteBean);
-							}
-						}
-						comAdapter.notifyDataSetChanged();
-					} else {
-						productBean.getNote_list().add(myNoteBean);
-						comAdapter.notifyDataSetChanged();
-					}
+	
+	public void onEventMainThread(CommentsBean commentsBean) {
+		myNoteBean = JSON.parseObject(commentsBean.getData(), NoteBean.class);
+		if(commentsBean.isAdd){
+			for (int i = 0; i < productBean.getNote_list().size(); i++) {
+				if (myNoteBean.getNote_id().equals(productBean.getNote_list().get(i).getNote_id())) {
+					productBean.getNote_list().set(i, myNoteBean);
 				}
-				break;
-
-			default:
-				break;
 			}
+			comAdapter.notifyDataSetChanged();
+		}else{
+			productBean.getNote_list().add(myNoteBean);
+			comAdapter.notifyDataSetChanged();
 		}
+		
 	}
 
 	@OnClick(R.id.product_ll_tab)

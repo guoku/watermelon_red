@@ -3,6 +3,8 @@
  */
 package com.guoku.guokuv4.act;
 
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -11,8 +13,10 @@ import com.avos.avoscloud.AVAnalytics;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.bean.CommentsBean;
 import com.guoku.guokuv4.bean.LikesBean;
 import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.entity.test.NoteBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.photoview.HackyViewPager;
 import com.guoku.guokuv4.photoview.PhotoView;
@@ -34,6 +38,7 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -79,6 +84,11 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		
+		EventBus.getDefault().register(this);
+
+		overridePendingTransition(R.anim.push_fade_in, R.anim.push_fade_out);
+
 		setContentView(R.layout.activity_photo_view);
 	}
 
@@ -213,8 +223,15 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 	private void onComment(View v) {
 		if (GuokuApplication.getInstance().getBean() != null) {
 			Intent intent = new Intent(mContext, CommentAct.class);
+			ArrayList<NoteBean> list = pInfoBean.getNote_list();
+			for (NoteBean bean : list) {
+				if (bean.getCreator().getUser_id()
+						.equals(GuokuApplication.getInstance().getBean().getUser().getUser_id())) {
+					intent.putExtra("noteid", bean.getNote_id());
+				}
+			}
 			intent.putExtra("data", JSON.toJSONString(pInfoBean));
-			startActivityForResult(intent, 10086);
+			startActivity(intent);
 		} else {
 			startActivity(new Intent(mContext, LoginAct.class));
 		}
@@ -301,4 +318,31 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 			((ViewPager) container).removeView((View) object);
 		}
 	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			finish();
+			overridePendingTransition(R.anim.push_fade_down_in, R.anim.push_fade_down_out);
+		}
+
+		return super.onKeyDown(keyCode, event);
+	}
+	
+	public void onEventMainThread(CommentsBean commentsBean) {
+		if(commentsBean.isAdd){
+			pInfoBean.getEntity().setNote_count(commentsBean.getCommentValue());
+		}else{
+			commentCount.setText(pInfoBean.getEntity().getNote_countAdd());
+		}
+		
+	}
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		EventBus.getDefault().unregister(this);
+		super.onDestroy();
+	}
+	
 }

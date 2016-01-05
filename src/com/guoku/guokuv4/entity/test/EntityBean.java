@@ -63,6 +63,15 @@ public class EntityBean implements Serializable {
 	public void setNote_count(String note_count) {
 		this.note_count = note_count;
 	}
+	
+	public String getNote_countAdd() {
+		if (getNote_count().equals("")) {
+			note_count = "0";
+		}
+		int buf = Integer.parseInt(note_count) + 1;
+		note_count = buf + "";
+		return note_count;
+	}
 
 	public String getPrice() {
 		return price;

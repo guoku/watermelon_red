@@ -7,6 +7,8 @@ import com.avos.avoscloud.AVAnalytics;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.bean.CommentsBean;
+import com.guoku.guokuv4.bean.LikesBean;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.NoteBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
@@ -27,6 +29,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
+import de.greenrobot.event.EventBus;
 
 public class CommentAct extends NetWorkActivity {
 
@@ -54,6 +57,8 @@ public class CommentAct extends NetWorkActivity {
 		overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
 		setContentView(R.layout.comment);
 
+		this.setFinishOnTouchOutside(false);
+		
 		init();
 	}
 
@@ -121,20 +126,31 @@ public class CommentAct extends NetWorkActivity {
 		GuokuUtil.hideKeyboard(context, text);
 		switch (where) {
 		case COMMENTNOTE:
+			CommentsBean commentsBean = new CommentsBean();
+			if(isUpData){
+				commentsBean.setAdd(false);
+			}else{
+				commentsBean.setAdd(true);
+			}
+			commentsBean.setCommentValue(text.getText().toString());
+			commentsBean.setData(result);
+			EventBus.getDefault().post(commentsBean);
 
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_COMMENT);
-
-			AVAnalytics.onEvent(this, "poke");
-			MobclickAgent.onEvent(this, "poke");
-
-			AVAnalytics.onEvent(mContext, "success");
-			Intent intent = new Intent();
-			Bundle bundle = new Bundle();
-			bundle.putString(KEY_DATA, result);
-			bundle.putBoolean(KEY_UPDATA, up);
-			intent.putExtras(bundle);
-			setResult(10086, intent);
+//			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_COMMENT);
+//
+//			AVAnalytics.onEvent(this, "poke");
+//			MobclickAgent.onEvent(this, "poke");
+//
+//			AVAnalytics.onEvent(mContext, "success");
+//			Intent intent = new Intent();
+//			Bundle bundle = new Bundle();
+//			bundle.putString(KEY_DATA, result);
+//			bundle.putBoolean(KEY_UPDATA, up);
+//			intent.putExtras(bundle);
+//			setResult(10086, intent);
 			finish();
+			
+			
 			break;
 
 		default:
