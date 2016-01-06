@@ -5,7 +5,7 @@ package com.guoku.guokuv4.my;
 
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
-import com.guoku.guokuv4.act.UserInfoAct;
+import com.guoku.guokuv4.act.SettingAct;
 import com.guoku.guokuv4.base.NetWorkActivity;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.utils.StringUtils;
@@ -91,7 +91,7 @@ public class ChangeEmailAct extends NetWorkActivity {
 			GuokuApplication.getInstance().getBean().getUser()
 					.setEmail(tvEmailNew.edDel.getText().toString());
 			Intent intent = new Intent();
-			setResult(UserInfoAct.INTENT_REQUEST_CODE, intent);
+			setResult(SettingAct.INTENT_REQUEST_CODE, intent);
 			finish();
 			break;
 
@@ -115,14 +115,12 @@ public class ChangeEmailAct extends NetWorkActivity {
 	private boolean isCheckText() {
 
 		if (StringUtils.isEmpty(tvEmailNew.edDel.getText().toString())) {
-			ToastUtil.show(mContext, "1");
 			return false;
 		}
 		if (StringUtils.isEmpty(tvEmailPsd.edDel.getText().toString())) {
-			ToastUtil.show(mContext, "2");
 			return false;
 		}
-		if (!StringUtils.isEmail(tvEmailPsd.edDel.getText().toString())) {
+		if (StringUtils.checkEmail(tvEmailPsd.edDel.getText().toString())) {
 			ToastUtil.show(mContext, R.string.tv_email_input_email_error);
 			return false;
 		}

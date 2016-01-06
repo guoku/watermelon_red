@@ -112,15 +112,12 @@ public class ChangePasswordAct extends NetWorkActivity {
 	private boolean isCheckText() {
 
 		if (StringUtils.isEmpty(lyoutPsdOld.edDel.getText().toString())) {
-			ToastUtil.show(mContext, "1");
 			return false;
 		}
 		if (StringUtils.isEmpty(lyoutPsdNew.edDel.getText().toString())) {
-			ToastUtil.show(mContext, "2");
 			return false;
 		}
 		if (StringUtils.isEmpty(lyoutPsdOK.edDel.getText().toString())) {
-			ToastUtil.show(mContext, "3");
 			return false;
 		}
 		if (!lyoutPsdNew.edDel.getText().toString()
@@ -128,7 +125,10 @@ public class ChangePasswordAct extends NetWorkActivity {
 			ToastUtil.show(mContext, R.string.tv_psd_disaffinity);
 			return false;
 		}
-
+		if (lyoutPsdNew.edDel.getText().toString().length() < 8) {
+			ToastUtil.show(mContext, R.string.tv_psd_length);
+			return false;
+		}
 		return true;
 	}
 

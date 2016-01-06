@@ -48,21 +48,6 @@ public class StringUtils {
 		return (str == null || str.trim().length() == 0 || "null".equals(str));
 	}
 
-	/**
-	 * 邮箱正则
-	 * 
-	 * @param mail
-	 * @return
-	 */
-	public static boolean isEmail(String mail) {
-		if (TextUtils.isEmpty(mail)) {
-			return false;
-		}
-		String str = "^([a-z0-9A-Z]+[-|_|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
-		Pattern p = Pattern.compile(str);
-		Matcher m = p.matcher(mail);
-		return m.matches();
-	}
 
 	/**
 	 * 设置评论里的标签

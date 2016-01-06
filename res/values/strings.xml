@@ -2,81 +2,84 @@
 <resources>
 
     <string name="app_name">果库</string>
-    
+
     <!-- http net -->
     <string name="error_bad_request">请求失败，请稍后重试！</string>
     <string name="error_network">搜索失败,请检查网络连接！</string>
     <string name="result_failure">加载数据失败，请检查您的网络连接并重试.</string>
     <string name="check_net">点击重新加载</string>
     <string name="error_data_json">数据加载错误，请稍后重试</string>
-    
+
     <!-- 公共 -->
     <string name="tv_static_title">果库－精英消费指南</string>
     <string name="tv_save">保存</string>
     <string name="tv_cancel">取消</string>
     <string name="tv_already_copy">已复制到剪切板</string>
-    
+
     <!-- 搜索界面相关 -->
     <string name="tv_seach">搜索</string>
     <string name="tv_commodity">商品</string>
     <string name="tv_article">图文</string>
-	<string name="tv_commodity_type">品类</string>
-	<string name="tv_user">用户</string>
-	<string name="tv_seach_time">按时间</string>
-	<string name="tv_seach_like">按喜爱</string>
-	<string name="tv_search_please_Enter">请输入搜索内容</string>
-	<string name="tv_search_log_clean">清空历史搜索记录</string>
-	<string name="tv_search_empty">搜索无结果</string>
-	<string name="tv_search_empty_xx">没有找到任何相关商品／图文／品类／用户\n不妨换个关键词试试</string>
-	
-	
-	<!-- 修改密码 -->
-	<string name="tv_change_psd">修改密码</string>
-	<string name="tv_psd_old">原密码</string>
-	<string name="tv_psd_new">新密码</string>
-	<string name="tv_psd_ok">确认密码</string>
-	<string name="tv_psd_update_ok">密码修改成功</string>
-	<string name="tv_psd_update_error">密码修改失败，请稍后重试</string>
-	<string name="tv_psd_disaffinity">两次输入的新密码不正确</string>
-	
-		<!-- 修改邮箱 -->
-	<string name="tv_change_email">修改邮箱</string>
-	<string name="tv_email_now">当前邮箱：</string>
-	<string name="tv_email_new">新邮箱</string>
-	<string name="tv_email_psd">密码</string>
-	<string name="tv_email_psd_toast">为保证账号安全，请输入密码：</string>
-	<string name="tv_email_update_ok">邮箱修改成功</string>
-	<string name="tv_email_update_error">邮箱修改失败，请稍后重试</string>
-	<string name="tv_email_input_email_error">请输入正确的邮箱</string>
-	
-	<!-- 商品详情页 -->
-	<string name="tv_commodity_go_buy" formatted="false">￥ %s 去购买</string>
-	
-	<!-- 首页图文精选流-->
-	<string name="tv_tab_recommend">推荐</string>
-	<string name="tv_tab_commodity">商品</string>
-	<string name="tv_tab_image_text">图文</string>
-	
-	<!-- user页  包括账号本人和其它用户 -->
-	<string name="tv_user_my">我</string>
-	<string name="tv_user_he">TA&#160;</string>
-	<string name="tv_user_like" >的喜爱</string>
-	<string name="tv_user_comment">的点评</string>
-	<string name="tv_user_article">的图文</string>
-	<string name="tv_user_tag">参与的标签</string>
-	<string name="tv_user_article_zan">赞过的图文</string>
-	<string name="tv_all">所有</string>
-	<string name="tv_empty_other" formatted="false">暂无%s</string>
-	
-	<!-- 分享popwindos -->
-	<string name="tv_share">分享</string>
-	<string name="tv_share_wxpyq">微信朋友圈</string>
-	<string name="tv_share_wxhy">微信好友</string>
-	<string name="tv_share_sina">新浪微博</string>
-	<string name="tv_share_ie">在浏览器中打开</string>
-	<string name="tv_share_mail">Mail</string>
-	<string name="tv_share_refresh">刷新</string>
-	<string name="tv_share_copy">复制链接</string>
-	<string name="tv_share_report">举报</string>
+    <string name="tv_commodity_type">品类</string>
+    <string name="tv_user">用户</string>
+    <string name="tv_seach_time">按时间</string>
+    <string name="tv_seach_like">按喜爱</string>
+    <string name="tv_search_please_Enter">请输入搜索内容</string>
+    <string name="tv_search_log_clean">清空历史搜索记录</string>
+    <string name="tv_search_empty">搜索无结果</string>
+    <string name="tv_search_empty_xx">没有找到任何相关商品／图文／品类／用户\n不妨换个关键词试试</string>
+
+    <!-- 修改密码 -->
+    <string name="tv_change_psd">修改密码</string>
+    <string name="tv_psd_old">原密码</string>
+    <string name="tv_psd_new">新密码</string>
+    <string name="tv_psd_ok">确认密码</string>
+    <string name="tv_psd_update_ok">密码修改成功</string>
+    <string name="tv_psd_update_error">密码修改失败，请稍后重试</string>
+    <string name="tv_psd_disaffinity">两次输入的新密码不正确</string>
+    <string name="tv_psd_length">密码长度不能小于8位</string>
+
+    <!-- 修改邮箱 -->
+    <string name="tv_change_email">修改邮箱</string>
+    <string name="tv_email_now">当前邮箱：</string>
+    <string name="tv_email_new">新邮箱</string>
+    <string name="tv_email_psd">密码</string>
+    <string name="tv_email_psd_toast">为保证账号安全，请输入密码：</string>
+    <string name="tv_email_update_ok">邮箱修改成功</string>
+    <string name="tv_email_update_error">邮箱修改失败，请稍后重试</string>
+    <string name="tv_email_input_email_error">请输入正确的邮箱</string>
+
+    <!-- 商品详情页 -->
+    <string name="tv_commodity_go_buy" formatted="false">￥ %s 去购买</string>
+
+    <!-- 首页图文精选流 -->
+    <string name="tv_tab_recommend">推荐</string>
+    <string name="tv_tab_commodity">商品</string>
+    <string name="tv_tab_image_text">图文</string>
+
+    <!-- user页  包括账号本人和其它用户 -->
+    <string name="tv_user_my">我</string>
+    <string name="tv_user_he">TA&#160;</string>
+    <string name="tv_user_like">的喜爱</string>
+    <string name="tv_user_comment">的点评</string>
+    <string name="tv_user_article">的图文</string>
+    <string name="tv_user_tag">参与的标签</string>
+    <string name="tv_user_article_zan">赞过的图文</string>
+    <string name="tv_all">所有</string>
+    <string name="tv_empty_other" formatted="false">暂无%s</string>
+
+    <!-- 分享popwindos -->
+    <string name="tv_share">分享</string>
+    <string name="tv_share_wxpyq">微信朋友圈</string>
+    <string name="tv_share_wxhy">微信好友</string>
+    <string name="tv_share_sina">新浪微博</string>
+    <string name="tv_share_ie">在浏览器中打开</string>
+    <string name="tv_share_mail">Mail</string>
+    <string name="tv_share_refresh">刷新</string>
+    <string name="tv_share_copy">复制链接</string>
+    <string name="tv_share_report">举报</string>
+
+    <!-- 设置 -->
+    <string name="tv_set_version_code" formatted="false">version %s</string>
 
 </resources>

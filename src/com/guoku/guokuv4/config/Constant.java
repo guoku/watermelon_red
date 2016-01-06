@@ -105,7 +105,6 @@ public class Constant {
 	public static final String INTENT_ACTION_KEY = Constant.class.getName()
 			+ "_KEY";
 	public static final int INTENT_ACTION_VALUE_FOLLOW = 2;// 关注
-	public static final int INTENT_ACTION_VALUE_COMMENT = 3;// 评论
 
 	public static void init(GuokuApplication lezyoApplication) {
 		if (lezyoApplication != null) {

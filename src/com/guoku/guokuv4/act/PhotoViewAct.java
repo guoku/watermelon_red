@@ -322,19 +322,19 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			finish();
-			overridePendingTransition(R.anim.push_fade_down_in, R.anim.push_fade_down_out);
+			finishAct();
 		}
 
 		return super.onKeyDown(keyCode, event);
 	}
 	
 	public void onEventMainThread(CommentsBean commentsBean) {
-		if(commentsBean.isAdd){
-			pInfoBean.getEntity().setNote_count(commentsBean.getCommentValue());
-		}else{
-			commentCount.setText(pInfoBean.getEntity().getNote_countAdd());
-		}
+//		if(commentsBean.isAdd){
+//			pInfoBean.getEntity().setNote_count(commentsBean.getCommentValue());
+//		}else{
+//			commentCount.setText(pInfoBean.getEntity().getNote_countAdd());
+//		}
+		finishAct();
 		
 	}
 	
@@ -343,6 +343,11 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 		// TODO Auto-generated method stub
 		EventBus.getDefault().unregister(this);
 		super.onDestroy();
+	}
+	
+	private void finishAct() {
+		finish();
+		overridePendingTransition(R.anim.push_fade_down_in, R.anim.push_fade_down_out);
 	}
 	
 }

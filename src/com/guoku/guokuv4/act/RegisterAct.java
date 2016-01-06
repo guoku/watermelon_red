@@ -68,7 +68,7 @@ public class RegisterAct extends NetWorkActivity {
 		String name = ed_name.getText().toString();
 		if (email != null && pass != null && name != null) {
 			if (StringUtils.checkEmail(email)) {
-				if (16 >= ed_pass.length() && ed_pass.length() >= 6) {
+				if (16 >= ed_pass.length() && ed_pass.length() >= 8) {
 					if (name.length() >= 3 && name.length() <= 30) {
 						if (StringUtils.isNickName(name)) {
 							if (type != null && type.equals("sina")) {

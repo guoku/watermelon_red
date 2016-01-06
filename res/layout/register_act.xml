@@ -97,7 +97,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="24dp"
             android:background="#00ffffff"
-            android:hint="6-16位字母/数字"
+            android:hint="8-16位字母/数字"
             android:password="true"
             android:singleLine="true"
             android:textColor="#ffffffff"

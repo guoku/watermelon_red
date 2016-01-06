@@ -28,6 +28,7 @@ import com.guoku.guokuv4.act.UserTagListAct;
 import com.guoku.guokuv4.adapter.GridViewAdapter;
 import com.guoku.guokuv4.adapter.ListImgLeftAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
+import com.guoku.guokuv4.bean.CommentsBean;
 import com.guoku.guokuv4.bean.LikesBean;
 import com.guoku.guokuv4.config.AlibabaConfig;
 import com.guoku.guokuv4.config.Constant;
@@ -491,23 +492,6 @@ public class PersonalFragment extends BaseFrament {
 						case Constant.INTENT_ACTION_VALUE_FOLLOW:
 							getUserInfo();
 							break;
-						case Constant.INTENT_ACTION_VALUE_COMMENT:
-
-							new Thread(new Runnable() {
-								@Override
-								public void run() {
-									// TODO Auto-generated method stub
-									try {
-										Thread.sleep(2000);
-										getUserInfo();
-										getInitData(NOTE, "3", TABNOTE);
-									} catch (InterruptedException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-								}
-							}).start();
-							break;
 						default:
 							break;
 						}
@@ -763,6 +747,11 @@ public class PersonalFragment extends BaseFrament {
 
 		getInitData(LIKE, "4", TABLIKE);
 		getUserInfo();
+	}
+	
+	public void onEventMainThread(CommentsBean commentsBean) {
+		getUserInfo();
+		getInitData(NOTE, "3", TABNOTE);
 	}
 
 }

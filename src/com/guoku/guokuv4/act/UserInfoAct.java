@@ -38,8 +38,6 @@ import android.widget.TextView;
 
 public class UserInfoAct extends NetWorkActivity {
 
-	public static final int INTENT_REQUEST_CODE = 1001;
-
 	private static final int ADD = 10;
 	private static final int NAME = 11;
 	private static final int SIGN = 14;
@@ -49,9 +47,6 @@ public class UserInfoAct extends NetWorkActivity {
 
 	@ViewInject(R.id.user_info_tv_add)
 	private TextView tv_add;
-
-	@ViewInject(R.id.user_info_tv_email)
-	private TextView tv_email;
 
 	@ViewInject(R.id.user_info_tv_name)
 	private TextView tv_name;
@@ -124,12 +119,6 @@ public class UserInfoAct extends NetWorkActivity {
 		}, "修改所在地", text).show();
 	}
 
-	@OnClick(R.id.user_info_ll_email)
-	public void email(View v) {
-
-		openActivityForResult(ChangeEmailAct.class, INTENT_REQUEST_CODE);
-	}
-
 	@OnClick(R.id.user_info_ll_name)
 	public void name(View v) {
 		final EditText text = new EditText(mContext);
@@ -147,12 +136,6 @@ public class UserInfoAct extends NetWorkActivity {
 				}
 			}
 		}, "修改昵称", text).show();
-	}
-
-	@OnClick(R.id.user_info_ll_pass)
-	public void pass(View v) {
-
-		startActivity(new Intent(this, ChangePasswordAct.class));
 	}
 
 	@OnClick(R.id.user_info_ll_sex)
@@ -264,7 +247,6 @@ public class UserInfoAct extends NetWorkActivity {
 
 		bean = GuokuApplication.getInstance().getBean();
 		tv_add.setText(bean.getUser().getLocation());
-		tv_email.setText(bean.getUser().getEmail());
 		tv_name.setText(bean.getUser().getNickname());
 		tv_sign.setText(bean.getUser().getBio());
 		tv_sex.setText(bean.getUser().getGender());
@@ -294,45 +276,40 @@ public class UserInfoAct extends NetWorkActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (data != null) {
-			if (resultCode == INTENT_REQUEST_CODE) {
-				bean = GuokuApplication.getInstance().getBean();
-				tv_email.setText(bean.getUser().getEmail());
-			} else {
-				Bitmap ed_Bitmap = null;
-				if (requestCode == 0) {
-					Uri uri = data.getData();
-					ContentResolver cr = this.getContentResolver();
-					try {
-						BitmapFactory.Options options = new BitmapFactory.Options();
-						options.inJustDecodeBounds = false;
-						options.inSampleSize = 4;
-						ed_Bitmap = BitmapFactory.decodeStream(
-								cr.openInputStream(uri), null, options);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				} else if (requestCode == 1) {
-					try {
-						Bundle bundle = data.getExtras();
-						Bitmap buf = (Bitmap) bundle.get("data");
+			Bitmap ed_Bitmap = null;
+			if (requestCode == 0) {
+				Uri uri = data.getData();
+				ContentResolver cr = this.getContentResolver();
+				try {
+					BitmapFactory.Options options = new BitmapFactory.Options();
+					options.inJustDecodeBounds = false;
+					options.inSampleSize = 4;
+					ed_Bitmap = BitmapFactory.decodeStream(
+							cr.openInputStream(uri), null, options);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else if (requestCode == 1) {
+				try {
+					Bundle bundle = data.getExtras();
+					Bitmap buf = (Bitmap) bundle.get("data");
 
-						ed_Bitmap = Bitmap.createBitmap(buf);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					ed_Bitmap = Bitmap.createBitmap(buf);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-				String sdState = Environment.getExternalStorageState();
-				if (!sdState.equals(Environment.MEDIA_MOUNTED)) {
-					return;
-				}
-				iv_pic.setImageBitmap(ed_Bitmap);
-				BitmapUtil.saveBitmap(Constant.IMAGES_PATH + "temp.png",
-						ed_Bitmap);
-				int d = BitmapUtil.getBitmapDegree(Constant.IMAGES_PATH
-						+ "temp.png");
-				ed_Bitmap = BitmapUtil.rotateBitmapByDegree(ed_Bitmap, d);
-				upPic(Constant.USERUPDATA, ed_Bitmap, PIC);
 			}
+			String sdState = Environment.getExternalStorageState();
+			if (!sdState.equals(Environment.MEDIA_MOUNTED)) {
+				return;
+			}
+			iv_pic.setImageBitmap(ed_Bitmap);
+			BitmapUtil.saveBitmap(Constant.IMAGES_PATH + "temp.png",
+					ed_Bitmap);
+			int d = BitmapUtil.getBitmapDegree(Constant.IMAGES_PATH
+					+ "temp.png");
+			ed_Bitmap = BitmapUtil.rotateBitmapByDegree(ed_Bitmap, d);
+			upPic(Constant.USERUPDATA, ed_Bitmap, PIC);
 		}
 	}
 

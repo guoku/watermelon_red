@@ -7,7 +7,10 @@ import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.base.NetWorkActivity;
 import com.guoku.guokuv4.bean.Sharebean;
+import com.guoku.guokuv4.entity.test.AccountBean;
 import com.guoku.guokuv4.main.MainActivity2;
+import com.guoku.guokuv4.my.ChangeEmailAct;
+import com.guoku.guokuv4.my.ChangePasswordAct;
 import com.guoku.guokuv4.share.CustomShareBoard;
 import com.guoku.guokuv4.utils.GuokuUtil;
 import com.guoku.guokuv4.utils.ToastUtil;
@@ -31,8 +34,21 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class SettingAct extends NetWorkActivity {
+	
+	public static final int INTENT_REQUEST_CODE = 1001;
+	
+	@ViewInject(R.id.view_line)
+	View viewLine;
+	@ViewInject(R.id.user_info_ll_pass)
+	View userPass;
+	@ViewInject(R.id.user_info_ll_email)
+	View userEmail;
+	@ViewInject(R.id.user_info_tv_email)
+	private TextView tv_email;
 	@ViewInject(R.id.set_logout)
-	private Button button;
+	private TextView button;
+	@ViewInject(R.id.set_login)
+	Button btLogin;
 	@ViewInject(R.id.setting_tv_code)
 	private TextView tv;
 	private CustomShareBoard shareBoard;
@@ -40,6 +56,8 @@ public class SettingAct extends NetWorkActivity {
 			.getUMSocialService("com.umeng.share");
 	
 	boolean isLoginAct;//判断是否跳到登录页面
+	
+	private AccountBean bean;
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -50,6 +68,12 @@ public class SettingAct extends NetWorkActivity {
 		if (ssoHandler != null) {
 			ssoHandler.authorizeCallBack(requestCode, resultCode, data);
 		}
+		if (data != null) {
+			if (resultCode == INTENT_REQUEST_CODE) {
+				bean = GuokuApplication.getInstance().getBean();
+				tv_email.setText(bean.getUser().getEmail());
+			}
+			}
 	}
 
 	@Override
@@ -59,10 +83,16 @@ public class SettingAct extends NetWorkActivity {
 		setGCenter(true, "设置");
 		setGLeft(true, R.drawable.back_selector);
 		if (GuokuApplication.getInstance().getBean() == null) {
-			button.setBackgroundResource(R.drawable.blue_shap);
-			button.setText("登录");
+			btLogin.setVisibility(View.VISIBLE);
+			button.setVisibility(View.GONE);
+			userEmail.setVisibility(View.GONE);
+			userPass.setVisibility(View.GONE);
+			viewLine.setVisibility(View.GONE);
+		}else{
+			bean = GuokuApplication.getInstance().getBean();
+			tv_email.setText(bean.getUser().getEmail());
 		}
-		tv.setText(GuokuUtil.getVersionName(mContext));
+		tv.setText(getResources().getString(R.string.tv_set_version_code, GuokuUtil.getVersionName(mContext)));
 		shareBoard = new CustomShareBoard(this);
 		shareBoard
 				.setShareContext(
@@ -117,58 +147,59 @@ public class SettingAct extends NetWorkActivity {
 			break;
 		}
 	}
+	
+	@OnClick(R.id.set_login)
+	public void Login(View v){
+		startActivity(new Intent(mContext, LoginAct.class));
+		isLoginAct = true;
+	}
 
 	@OnClick(R.id.set_logout)
 	public void LogOut(View v) {
-		if (GuokuApplication.getInstance().getBean() == null) {
-			startActivity(new Intent(mContext, LoginAct.class));
-			isLoginAct = true;
-		} else {
-			GuokuApplication.getInstance().logout();
-			mController.deleteOauth(mContext, SHARE_MEDIA.SINA,
-					new SocializeClientListener() {
-						@Override
-						public void onStart() {
+		GuokuApplication.getInstance().logout();
+		mController.deleteOauth(mContext, SHARE_MEDIA.SINA,
+				new SocializeClientListener() {
+					@Override
+					public void onStart() {
+					}
+
+					@Override
+					public void onComplete(int status,
+							SocializeEntity entity) {
+						if (status == 200) {
+							// Toast.makeText(mContext, "删除成功.",
+							// Toast.LENGTH_SHORT).show();
+						} else {
+							// Toast.makeText(mContext, "删除失败",
+							// Toast.LENGTH_SHORT).show();
 						}
+					}
+				});
 
-						@Override
-						public void onComplete(int status,
-								SocializeEntity entity) {
-							if (status == 200) {
-								// Toast.makeText(mContext, "删除成功.",
-								// Toast.LENGTH_SHORT).show();
-							} else {
-								// Toast.makeText(mContext, "删除失败",
-								// Toast.LENGTH_SHORT).show();
-							}
-						}
-					});
+		LoginService loginService = AlibabaSDK
+				.getService(LoginService.class);
+		loginService.logout(this, new LogoutCallback() {
 
-			LoginService loginService = AlibabaSDK
-					.getService(LoginService.class);
-			loginService.logout(this, new LogoutCallback() {
+			@Override
+			public void onFailure(int code, String msg) {
+				// Toast.makeText(SettingAct.this, "登出失败",
+				// Toast.LENGTH_SHORT)
+				// .show();
 
-				@Override
-				public void onFailure(int code, String msg) {
-					// Toast.makeText(SettingAct.this, "登出失败",
-					// Toast.LENGTH_SHORT)
-					// .show();
+			}
 
-				}
+			@Override
+			public void onSuccess() {
+				// Toast.makeText(SettingAct.this, "登出成功",
+				// Toast.LENGTH_SHORT)
+				// .show();
 
-				@Override
-				public void onSuccess() {
-					// Toast.makeText(SettingAct.this, "登出成功",
-					// Toast.LENGTH_SHORT)
-					// .show();
+			}
+		});
 
-				}
-			});
-
-			Intent intent = new Intent(mContext, MainActivity2.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-		}
+		Intent intent = new Intent(mContext, MainActivity2.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
 	}
 
 	@Override
@@ -189,5 +220,15 @@ public class SettingAct extends NetWorkActivity {
 			}
 		}
 	}
+	
+	@OnClick(R.id.user_info_ll_pass)
+	public void pass(View v) {
 
+		startActivity(new Intent(this, ChangePasswordAct.class));
+	}
+	
+	@OnClick(R.id.user_info_ll_email)
+	public void email(View v) {
+		openActivityForResult(ChangeEmailAct.class, INTENT_REQUEST_CODE);
+	}
 }
