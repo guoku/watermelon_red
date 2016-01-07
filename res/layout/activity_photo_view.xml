@@ -20,6 +20,19 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layout_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="horizontal" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/btm_black" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/layout_more"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

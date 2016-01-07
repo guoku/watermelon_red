@@ -20,7 +20,6 @@ import com.guoku.guokuv4.entity.test.NoteBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.photoview.HackyViewPager;
 import com.guoku.guokuv4.photoview.PhotoView;
-import com.guoku.guokuv4.utils.BroadUtil;
 import com.guoku.guokuv4.utils.ImgUtils.AnimateFirstDisplayListener;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -41,6 +40,9 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -84,12 +86,36 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
+
+		// overridePendingTransition(R.anim.push_fade_in, R.anim.push_fade_out);
+
+		overridePendingTransition(R.anim.act_fade_in, R.anim.act_fade_out);
+
 		EventBus.getDefault().register(this);
 
-		overridePendingTransition(R.anim.push_fade_in, R.anim.push_fade_out);
-
 		setContentView(R.layout.activity_photo_view);
+
+		// handleTransEffect();
+
+//		mViewPager.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				finishAct();
+//			}
+//		});
+//
+//		mViewPager.setOnTouchListener(new OnTouchListener() {
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				// TODO Auto-generated method stub
+//				finishAct();
+//				return true;
+//			}
+//
+//		});
+		
 	}
 
 	@Override
@@ -256,6 +282,13 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 		}
 	}
 
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		// TODO Auto-generated method stub
+		finishAct();
+		return super.onKeyUp(keyCode, event);
+	}
+
 	class SamplePagerAdapter extends PagerAdapter {
 
 		PInfoBean pBean;
@@ -318,7 +351,32 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 			((ViewPager) container).removeView((View) object);
 		}
 	}
-	
+
+	private void handleTransEffect() {
+		Animation anim = AnimationUtils.loadAnimation(mContext, R.anim.photo_trans);
+		anim.setAnimationListener(new AnimationListener() {
+
+			@Override
+			public void onAnimationStart(Animation animation) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+		mViewPager.startAnimation(anim);
+	}
+
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -327,27 +385,29 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 
 		return super.onKeyDown(keyCode, event);
 	}
-	
+
 	public void onEventMainThread(CommentsBean commentsBean) {
-//		if(commentsBean.isAdd){
-//			pInfoBean.getEntity().setNote_count(commentsBean.getCommentValue());
-//		}else{
-//			commentCount.setText(pInfoBean.getEntity().getNote_countAdd());
-//		}
+		// if(commentsBean.isAdd){
+		// pInfoBean.getEntity().setNote_count(commentsBean.getCommentValue());
+		// }else{
+		// commentCount.setText(pInfoBean.getEntity().getNote_countAdd());
+		// }
 		finishAct();
-		
+
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		EventBus.getDefault().unregister(this);
 		super.onDestroy();
 	}
-	
+
 	private void finishAct() {
 		finish();
-		overridePendingTransition(R.anim.push_fade_down_in, R.anim.push_fade_down_out);
+		// overridePendingTransition(R.anim.push_fade_down_in,
+		// R.anim.push_fade_down_out);
+		overridePendingTransition(R.anim.act_fade_in, R.anim.act_fade_out);
 	}
-	
+
 }

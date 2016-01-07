@@ -192,8 +192,10 @@
     <color name="line_box_gray">#e6e6e6</color>
     <!--  类似购买按钮的蓝色-->
     <color name="like_buy_blue">#6EAAF0</color>
-    <!--  半透明-->
+    <!--  蓝色半透明-->
     <color name="btm">#ff6495ED</color>
+    <!--  黑色半透明-->
+    <color name="btm_black">#b0000000</color>
     <!--  灰色lavout 背景-->
     <color name="view_gray_bg">#fafafa</color>
     <!--  dialog透明-->
