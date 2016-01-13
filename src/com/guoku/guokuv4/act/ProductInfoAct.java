@@ -397,6 +397,9 @@ public class ProductInfoAct extends NetWorkActivity
 			sv.smoothScrollTo(0, 0);
 
 			JSONArray thumbs = new JSONArray(productBean.getEntity().getDetail_images());
+			if(thumbs.length() == 0){
+				thumbs.put(productBean.getEntity().getChief_image());
+			}
 			List<ImageView> imgs = new ArrayList<ImageView>();
 			for (int i = 0; i < thumbs.length(); i++) {
 				String url = thumbs.getString(i);

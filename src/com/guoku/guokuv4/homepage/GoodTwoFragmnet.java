@@ -8,16 +8,13 @@ import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.adapter.JingXuanAdapter;
-import com.guoku.guokuv4.base.BaseActivity.OnDoubleClickListener;
-import com.guoku.guokuv4.bean.LikesBean;
 import com.guoku.guokuv4.base.BaseFrament;
+import com.guoku.guokuv4.bean.LikesBean;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.PBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;
-import com.guoku.guokuv4.utils.BroadUtil;
 import com.guoku.guokuv4.utils.GuokuUtil;
-import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -28,16 +25,14 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.umeng.analytics.MobclickAgent;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import de.greenrobot.event.EventBus;
 import android.widget.ImageView;
 import android.widget.ListView;
+import de.greenrobot.event.EventBus;
 
 public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
@@ -46,15 +41,15 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 	private static final int LIKE1 = 13;
 	private static final int LIKE0 = 14;
 	private static final int TYPE = 15;
-//	public static final int UPDATA_LIKE = 16;
+	// public static final int UPDATA_LIKE = 16;
 	public static final String INTNT_KEY = GoodTwoFragmnet.class.getName();
 	// private static final int UPDATA_LIKE_UN = 17;
 	@ViewInject(R.id.jingxuan_lv_1)
 	public PullToRefreshListView jingxuan_lv_1;
-	
+
 	@ViewInject(R.id.tv_check_net)
 	ImageView tvCheckNet;
-	
+
 	public JingXuanAdapter adapter;
 	private ArrayList<PBean> list;
 	private PBean pBean;
@@ -62,7 +57,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 	private int cur;
 	public View layoutView;// 刷新喜欢img
 
-	public int pos;// 纪录商品
+	public int pos;// 记录点击的哪个商品
 
 	@Override
 	protected void init() {
@@ -80,9 +75,8 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 		jingxuan_lv_1.setOnRefreshListener(new OnRefreshListener2<ListView>() {
 
 			@Override
-			public void onPullDownToRefresh(
-					PullToRefreshBase<ListView> refreshView) {
-				if(list != null){
+			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+				if (list != null) {
 					if (list.size() > 0) {
 						getJingXuan(System.currentTimeMillis() / 1000 + "", false);
 					}
@@ -90,10 +84,9 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 			}
 
 			@Override
-			public void onPullUpToRefresh(
-					PullToRefreshBase<ListView> refreshView) {
-				
-				if(list != null){
+			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+
+				if (list != null) {
 					if (list.size() > 0) {
 						getJingXuanDown(list.get(list.size() - 1).getPost_time());
 					}
@@ -104,15 +97,12 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 		jingxuan_lv_1.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				layoutView = arg1;
 				pos = arg2 - 1;
-				sendConnection(Constant.PROINFO
-						+ list.get(pos).getContent().getEntity().getEntity_id()
-						+ "/", new String[] { "entity_id" },
-						new String[] { list.get(pos).getContent().getEntity()
-								.getEntity_id() }, PROINFO, true);
+				sendConnection(Constant.PROINFO + list.get(pos).getContent().getEntity().getEntity_id() + "/",
+						new String[] { "entity_id" },
+						new String[] { list.get(pos).getContent().getEntity().getEntity_id() }, PROINFO, true);
 			}
 		});
 	}
@@ -126,14 +116,13 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 	}
 
 	private void getJingXuan(String time, boolean isShowDialog) {
-		sendConnection(Constant.JINGXUAN, new String[] { "count", "timestamp",
-				"rcat" }, new String[] { "30", time, cur + "" }, TYPE, isShowDialog);
+		sendConnection(Constant.JINGXUAN, new String[] { "count", "timestamp", "rcat" },
+				new String[] { "30", time, cur + "" }, TYPE, isShowDialog);
 	}
 
 	private void getJingXuanDown(String time) {
-		sendConnection(Constant.JINGXUAN, new String[] { "count", "timestamp",
-				"rcat" }, new String[] { "30", time, cur + "" }, JINGXUANUP,
-				false);
+		sendConnection(Constant.JINGXUAN, new String[] { "count", "timestamp", "rcat" },
+				new String[] { "30", time, cur + "" }, JINGXUANUP, false);
 	}
 
 	@Override
@@ -143,7 +132,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
 	@Override
 	protected void onSuccess(String result, int where) {
-		if(jingxuan_lv_1.getVisibility() == View.GONE){
+		if (jingxuan_lv_1.getVisibility() == View.GONE) {
 			tvCheckNet.setVisibility(View.GONE);
 			jingxuan_lv_1.setVisibility(View.VISIBLE);
 		}
@@ -171,10 +160,6 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 			EventBus.getDefault().post(new LikesBean(false));
 			break;
 		case LIKE1:
-			AVAnalytics.onEvent(context, "like_click", pBean.getContent()
-					.getEntity().getTitle());
-			AVAnalytics.onEvent(context, "like");
-			MobclickAgent.onEvent(context, "like");
 			EventBus.getDefault().post(new LikesBean(true));
 			break;
 		default:
@@ -194,7 +179,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 			ToastUtil.show(context, "喜爱失败");
 			break;
 		case TYPE:
-			if(list == null){
+			if (list == null) {
 				tvCheckNet.setVisibility(View.VISIBLE);
 				jingxuan_lv_1.setVisibility(View.GONE);
 			}
@@ -211,19 +196,16 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 		switch (arg0.getId()) {
 		case R.id.jingxuan_item_ll_like:
 			pBean = (PBean) arg0.getTag();
+			pos = pBean.getPosition();
 			layoutView = arg0;
 			if (pBean.getContent().getEntity().getLike_already().equals("0")) {
 
-				sendConnectionPost(Constant.TOLIKE
-						+ pBean.getContent().getEntity().getEntity_id()
-						+ "/like/1/", new String[] {}, new String[] {}, LIKE1,
-						false);
+				sendConnectionPost(Constant.TOLIKE + pBean.getContent().getEntity().getEntity_id() + "/like/1/",
+						new String[] {}, new String[] {}, LIKE1, false);
 			} else {
 
-				sendConnectionPost(Constant.TOLIKE
-						+ pBean.getContent().getEntity().getEntity_id()
-						+ "/like/0/", new String[] {}, new String[] {}, LIKE0,
-						false);
+				sendConnectionPost(Constant.TOLIKE + pBean.getContent().getEntity().getEntity_id() + "/like/0/",
+						new String[] {}, new String[] {}, LIKE0, false);
 			}
 			break;
 
@@ -233,9 +215,31 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
 	}
 
-	
 	@OnClick(R.id.tv_check_net)
-	private void onCheckNetClick(View view){
+	private void onCheckNetClick(View view) {
 		getJingXuan(System.currentTimeMillis() / 1000 + "", true);
+	}
+
+	public void onEventMainThread(LikesBean likesBean) {
+		if (likesBean.isLike()) {
+			AVAnalytics.onEvent(context, "like_click", pBean.getContent().getEntity().getTitle());
+			AVAnalytics.onEvent(context, "like");
+			MobclickAgent.onEvent(context, "like");
+
+			if (pBean == null) {
+				return;
+			}
+			pBean.getContent().getEntity().setLike_already("1");
+			pBean.getContent().getEntity().setLike_count(pBean.getContent().getEntity().getLike_countAdd());
+			adapter.setStatus(layoutView, pBean);
+		} else {
+			if (pBean == null) {
+				return;
+			}
+			pBean.getContent().getEntity().setLike_already("0");
+			pBean.getContent().getEntity().setLike_count(pBean.getContent().getEntity().getLike_countCut());
+
+			adapter.setStatus(layoutView, pBean);
+		}
 	}
 }

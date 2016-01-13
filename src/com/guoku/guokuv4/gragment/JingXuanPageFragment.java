@@ -77,39 +77,23 @@ public class JingXuanPageFragment extends BasePageFragment {
 	
 	public void onEventMainThread(LikesBean likesBean) {
 		if(likesBean.isLike()){
-			int count = 0;
-			if (StringUtils.isEmpty(goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent()
-					.getEntity().getLike_count())) {
-				count++;
-			} else {
-				count = Integer.valueOf(goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent()
-						.getEntity().getLike_count());
-				count++;
-			}
+			String count = goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent().getEntity().getLike_countAdd();
 			goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent().getEntity().setLike_already("1");
 			goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent().getEntity()
-					.setLike_count(String.valueOf(count));
+					.setLike_count(count);
 			goodTwoFragmnet.adapter.setStatus(goodTwoFragmnet.layoutView,
 					goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos));
 		}else{
-			int count2 = 0;
-			if (!StringUtils.isEmpty(goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent()
-					.getEntity().getLike_count())) {
-				count2 = Integer.valueOf(goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent()
-						.getEntity().getLike_count());
-				if (count2 > 0) {
-					count2--;
-				} else {
-					count2 = 0;
-				}
-			}
+			String count2 = goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent().getEntity().getLike_countCut();
 			goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent().getEntity().setLike_already("0");
 			goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos).getContent().getEntity()
-					.setLike_count(String.valueOf(count2));
+					.setLike_count(count2);
 			goodTwoFragmnet.adapter.setStatus(goodTwoFragmnet.layoutView,
 					goodTwoFragmnet.adapter.getItem(goodTwoFragmnet.pos));
 		}
 	}
+	
+	
 	
 	@Override
 	public void onDestroy() {

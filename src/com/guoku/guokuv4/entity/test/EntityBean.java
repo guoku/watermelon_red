@@ -21,6 +21,13 @@ public class EntityBean implements Serializable {
 		}
 		return chief_image;
 	}
+	
+	public String get640() {
+		if (chief_image.contains("images")) {
+			return chief_image.replaceFirst("images", "images/640");
+		}
+		return chief_image;
+	}
 
 	public String get800() {
 		if (chief_image.contains("images")) {

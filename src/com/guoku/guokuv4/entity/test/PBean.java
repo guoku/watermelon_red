@@ -3,6 +3,16 @@ package com.guoku.guokuv4.entity.test;
 public class PBean {
 	private ContentBean content;
 	private String post_time, type;
+	
+	private int position;
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
 
 	public ContentBean getContent() {
 		return content;

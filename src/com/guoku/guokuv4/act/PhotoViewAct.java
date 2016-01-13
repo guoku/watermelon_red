@@ -281,6 +281,12 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 			}
 		}
 	}
+	
+	@OnClick(R.id.close_img)
+	private void closeImg(View view){
+		
+		finishAct();
+	}
 
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
@@ -303,6 +309,9 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 
 			try {
 				thumbs = new JSONArray(pBean.getEntity().getDetail_images());
+				if(thumbs.length() == 0){
+					thumbs.put(pBean.getEntity().getChief_image());
+				}
 			} catch (Exception e) {
 				// TODO: handle exception
 			}

@@ -47,9 +47,10 @@ public class JingXuanAdapter extends ArrayListAdapter<PBean> {
 		params.width = w;
 
 		holder.iv_img.setImageURI(Uri.parse(bean.getContent().getEntity()
-				.get800()));
+				.get640()));
 		holder.iv_img.setLayoutParams(params);
 
+		bean.setPosition(position);
 		holder.ll_likes.setTag(bean);
 		holder.ll_likes.setOnClickListener(listener);
 
