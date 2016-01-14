@@ -22,6 +22,9 @@ public class WebAct extends BaseActivity {
 	private WebView view;
 	private String name;
 	private String url;
+	
+	private String URL_KAOLA_OLD = "www.m.kaola.com";
+	private String URL_KAOLA_NEW = "m.kaola.com";
 
 	@SuppressLint("SetJavaScriptEnabled")
 	@Override
@@ -57,6 +60,9 @@ public class WebAct extends BaseActivity {
 		view.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				if(url.contains(URL_KAOLA_OLD)){
+					url = url.replace(URL_KAOLA_OLD, URL_KAOLA_NEW);
+				}
 				view.loadUrl(url);
 				setGCenter(true, view.getTitle());
 				return true;

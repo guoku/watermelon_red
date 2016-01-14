@@ -94,6 +94,9 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 		EventBus.getDefault().register(this);
 
 		setContentView(R.layout.activity_photo_view);
+		
+		mTintManager.setStatusBarTintEnabled(true);
+		mTintManager.setStatusBarTintResource(R.color.btm_black);
 
 		// handleTransEffect();
 

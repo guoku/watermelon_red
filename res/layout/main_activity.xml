@@ -4,7 +4,10 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#ff2e2e2e"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    >
 
     <FrameLayout
         android:id="@+id/fl_content"

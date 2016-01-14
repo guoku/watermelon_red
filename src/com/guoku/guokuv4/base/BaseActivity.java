@@ -13,35 +13,28 @@ import com.alibaba.sdk.android.trade.callback.TradeProcessCallback;
 import com.alibaba.sdk.android.trade.model.TaokeParams;
 import com.alibaba.sdk.android.trade.model.TradeResult;
 import com.avos.avoscloud.AVAnalytics;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.drawee.controller.ControllerListener;
-import com.facebook.drawee.interfaces.DraweeController;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.LoginAct;
 import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.act.WebAct;
-import com.guoku.guokuv4.bean.LaunchBean;
 import com.guoku.guokuv4.config.AlibabaConfig;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;
-import com.guoku.guokuv4.service.DownLoadService;
 import com.guoku.guokuv4.utils.MyPreferences;
-import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.lidroid.xutils.ViewUtils;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.taobao.tae.sdk.webview.TaeWebViewUiSettings;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.sso.UMSsoHandler;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Animatable;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -52,6 +45,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewParent;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
@@ -98,11 +92,21 @@ public abstract class BaseActivity extends FragmentActivity {
 
 	public View listView;
 	public View backView;
+	
+	protected SystemBarTintManager mTintManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(true);
+        }
+        mTintManager = new SystemBarTintManager(this);
+        mTintManager.setStatusBarDarkMode(true, this);
+        mTintManager.setStatusBarTintEnabled(true);
+        mTintManager.setStatusBarTintResource(R.color.g_tfz);//沉侵模式
 
 		GuokuApplication.getInstance().addActivity(this);
 		mContext = this;
@@ -112,6 +116,19 @@ public abstract class BaseActivity extends FragmentActivity {
 		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 	}
 
+    @TargetApi(19)
+    protected void setTranslucentStatus(boolean on) {
+        Window win = getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
+    }
+	
 	@Override
 	public void setContentView(int layoutResID) {
 		super.setContentView(layoutResID);
