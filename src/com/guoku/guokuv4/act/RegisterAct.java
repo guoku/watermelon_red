@@ -58,6 +58,9 @@ public class RegisterAct extends NetWorkActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		mTintManager.setStatusBarTintResource(0);
+		
 		setContentView(R.layout.register_act);
 	}
 

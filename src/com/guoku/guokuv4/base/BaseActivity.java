@@ -100,13 +100,13 @@ public abstract class BaseActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
         }
         mTintManager = new SystemBarTintManager(this);
-        mTintManager.setStatusBarDarkMode(true, this);
         mTintManager.setStatusBarTintEnabled(true);
-        mTintManager.setStatusBarTintResource(R.color.g_tfz);//沉侵模式
+        mTintManager.setStatusBarTintResource(R.color.gray);
 
 		GuokuApplication.getInstance().addActivity(this);
 		mContext = this;

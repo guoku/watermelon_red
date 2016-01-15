@@ -5,6 +5,8 @@
     android:background="@color/act_transparent"
     android:orientation="vertical" 
     android:layout_gravity="center_horizontal"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
     >
     
         <RelativeLayout

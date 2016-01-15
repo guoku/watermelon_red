@@ -48,6 +48,9 @@ public class WelAct extends NetWorkActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		mTintManager.setStatusBarTintEnabled(false);
+		
 		setContentView(R.layout.welact);
 		ViewUtils.inject(this);
 		MobclickAgent.updateOnlineConfig(this);

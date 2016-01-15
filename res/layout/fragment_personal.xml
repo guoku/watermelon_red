@@ -7,7 +7,10 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#fafafa"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    >
 
     <include layout="@layout/title" />
 

@@ -231,6 +231,8 @@ public class LoginAct extends NetWorkActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+        mTintManager.setStatusBarTintResource(0);
+		
 		overridePendingTransition(R.anim.push_up_in,
 				R.anim.push_up_out);
 		
