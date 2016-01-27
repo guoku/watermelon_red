@@ -26,6 +26,8 @@ public class Constant {
 
 	public static final String SP_USERINFO = "sp_userinfo";
 	public static final String SP_CODEPIC = "SP_CODEPIC";
+	public static final String USERINFO_LOGIN_TYPE = "userinfo_login_type";
+	public static final String USERINFO_LOGIN_TYPE_KEY = "userinfo_login_type_key";
 	public final static String LEZYO = "LEZYO";
 
 	/** 缓存图片路径 */

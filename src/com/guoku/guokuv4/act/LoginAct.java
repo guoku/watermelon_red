@@ -21,6 +21,7 @@ import com.guoku.guokuv4.entity.test.AccountBean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.utils.DialogUtils;
 import com.guoku.guokuv4.utils.GuokuUtil;
+import com.guoku.guokuv4.utils.SharePrenceUtil;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -315,6 +316,7 @@ public class LoginAct extends NetWorkActivity {
 					bean.setSession(root.getString("session"));
 					bean.setUser(JSON.parseObject(root.getString("user"), UserBean.class));
 					GuokuApplication.getInstance().login(bean);
+					SharePrenceUtil.saveLoginType(this, 1);
 					finishAct();
 				} else {
 					ToastUtil.show(context, "用户名或密码错误");

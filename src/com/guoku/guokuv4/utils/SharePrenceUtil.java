@@ -6,6 +6,7 @@ import java.util.TreeSet;
 
 import com.alibaba.fastjson.JSON;
 import com.guoku.guokuv4.bean.CategoryBean;
+import com.guoku.guokuv4.bean.LoginInfo;
 import com.guoku.guokuv4.bean.SearchLogBean;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.config.Logger;
@@ -41,7 +42,7 @@ public class SharePrenceUtil {
 			str = "";
 		context.getSharedPreferences(Constant.SP_USERINFO, 0).edit().putString(Constant.SP_CODEPIC, str).commit();
 	}
-
+	
 	/**
 	 * 得到用户的基本信息
 	 * 
@@ -51,6 +52,8 @@ public class SharePrenceUtil {
 	public static AccountBean getUserBean(Context context) {
 		AccountBean bean = null;
 		SharedPreferences sp = context.getSharedPreferences(Constant.SP_USERINFO, 0);
+		SharedPreferences sp_login_type = context.getSharedPreferences(Constant.USERINFO_LOGIN_TYPE, 0);
+		LoginInfo.type = sp_login_type.getInt(Constant.USERINFO_LOGIN_TYPE_KEY, 0);
 		if (sp.getString(Constant.SP_CODEPIC, "") != null && !"".equals(sp.getString(Constant.SP_CODEPIC, ""))) {
 			bean = JSON.parseObject(sp.getString(Constant.SP_CODEPIC, ""), AccountBean.class);
 			Logger.d("getUserBean", bean.toString());
@@ -61,6 +64,28 @@ public class SharePrenceUtil {
 		}
 		return bean;
 	}
+	
+	/**
+	 * 保存登录方式状态
+	 * @param context
+	 * @param loginInfo
+	 */
+	public static void saveLoginType(Context context, int loginInfo){
+		context.getSharedPreferences(Constant.USERINFO_LOGIN_TYPE, 0).edit().putInt(Constant.USERINFO_LOGIN_TYPE_KEY, loginInfo).commit();
+	}
+
+	/**
+	 * 获取登录方式状态
+	 * @param context
+	 * @param loginInfo
+	 */
+	public static LoginInfo getLoginfo(Context context) {
+		SharedPreferences sp_login_type = context.getSharedPreferences(Constant.USERINFO_LOGIN_TYPE, 0);
+		LoginInfo loginInfo = new LoginInfo();
+		loginInfo.type = sp_login_type.getInt(Constant.USERINFO_LOGIN_TYPE_KEY, 0);
+		return loginInfo;
+	}
+
 
 	/**
 	 * 是否是第一次使用

@@ -96,6 +96,9 @@ public class PersonalFragment extends BaseFrament {
 
 	@ViewInject(R.id.title_bar_rigth_iv)
 	private ImageView iv_set;
+	
+	@ViewInject(R.id.title_bar_rigth_red_round)
+	private ImageView redRound;
 
 	@ViewInject(R.id.title_bar_left_iv)
 	private ImageView tabLeftImg;
@@ -268,7 +271,7 @@ public class PersonalFragment extends BaseFrament {
 			iv_set.setVisibility(View.VISIBLE);
 			tv_title.setText("我");
 			iv_set.setImageResource(R.drawable.setting);
-
+			redRound.setVisibility(View.VISIBLE);
 			// initAliWang();
 		} else {
 			titleBar.setVisibility(View.GONE);
@@ -276,7 +279,7 @@ public class PersonalFragment extends BaseFrament {
 			tabLeftImg.setImageResource(R.drawable.back);
 			tabLeftImgLine.setVisibility(View.VISIBLE);
 			title.setText(uBean.getNickname());
-
+			redRound.setVisibility(View.GONE);
 			setConcem();
 		}
 

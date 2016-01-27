@@ -2,13 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.guoku"
     android:installLocation="auto"
-    android:versionCode="415"
+    android:versionCode="416"
     android:versionName="1024.1" >
 
     <!-- 正式版本号 -->
     <!--
-    android:versionCode="415"
-    android:versionName="4.1.4"
+    android:versionCode="416"
+    android:versionName="4.1.5"
     -->
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -282,6 +282,11 @@
         </activity>
         <activity
             android:name=".guokuv4.act.PhotoViewAct"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".guokuv4.act.EmailCheckAct"
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
         </activity>

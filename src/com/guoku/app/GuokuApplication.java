@@ -12,6 +12,7 @@ import com.alibaba.wxlib.util.SysUtil;
 import com.avos.avoscloud.AVOSCloud;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.guoku.guokuv4.bean.LaunchBean;
+import com.guoku.guokuv4.bean.LoginInfo;
 import com.guoku.guokuv4.config.AlibabaConfig;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.config.Logger;
