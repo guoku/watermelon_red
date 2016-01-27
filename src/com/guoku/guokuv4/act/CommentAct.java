@@ -53,6 +53,7 @@ public class CommentAct extends NetWorkActivity {
 		super.onCreate(savedInstanceState);
 
 		overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+		
 		setContentView(R.layout.comment);
 	}
 	
