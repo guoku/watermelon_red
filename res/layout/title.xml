@@ -66,17 +66,15 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/title_bar_rigth_red_round"
+            
+            <include layout="@layout/view_red_round"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="12dp"
                 android:layout_toRightOf="@+id/title_bar_rigth_iv"
-                android:src="@drawable/red_round" 
-                android:visibility="gone" 
                 />
+
         </RelativeLayout>
 
         <TextView

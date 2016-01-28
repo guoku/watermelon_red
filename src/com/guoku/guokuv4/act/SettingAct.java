@@ -6,6 +6,7 @@ import com.alibaba.sdk.android.login.callback.LogoutCallback;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.bean.CommentsBean;
 import com.guoku.guokuv4.bean.Sharebean;
 import com.guoku.guokuv4.entity.test.AccountBean;
 import com.guoku.guokuv4.main.MainActivity2;
@@ -25,18 +26,20 @@ import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners.SocializeClientListener;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.UMSsoHandler;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import de.greenrobot.event.EventBus;
 
 public class SettingAct extends NetWorkActivity {
 	
-	public static final int INTENT_REQUEST_CODE = 1001;
-	
+	@ViewInject(R.id.img_red_round)
+	ImageView redRound;
 	@ViewInject(R.id.view_line)
 	View viewLine;
 	@ViewInject(R.id.user_info_ll_pass)
@@ -68,17 +71,36 @@ public class SettingAct extends NetWorkActivity {
 		if (ssoHandler != null) {
 			ssoHandler.authorizeCallBack(requestCode, resultCode, data);
 		}
-		if (data != null) {
-			if (resultCode == INTENT_REQUEST_CODE) {
-				bean = GuokuApplication.getInstance().getBean();
-				tv_email.setText(bean.getUser().getEmail());
-			}
-			}
+	}
+	
+	public void onEventMainThread(String email) {
+		bean = GuokuApplication.getInstance().getBean();
+		if(bean.getUser().isMail_verified()){
+			isCheckEmail(true);
+		}else{
+			isCheckEmail(false);
+		}
+	}
+	
+	@SuppressLint("ResourceAsColor")
+	private void isCheckEmail(boolean isCheck){
+		if(isCheck){
+			tv_email.setTextColor(getResources().getColor(R.color.g_main));
+			tv_email.setText(bean.getUser().getEmail());
+			redRound.setVisibility(View.GONE);
+		}else{
+			tv_email.setText(bean.getUser().getEmail() + getResources().getString(R.string.tv_email_uncheck));
+			tv_email.setTextColor(getResources().getColor(R.color.gray_fzxx));
+			redRound.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		EventBus.getDefault().register(this);
+		
 		setContentView(R.layout.settingact);
 		setGCenter(true, "设置");
 		setGLeft(true, R.drawable.back_selector);
@@ -90,7 +112,11 @@ public class SettingAct extends NetWorkActivity {
 			viewLine.setVisibility(View.GONE);
 		}else{
 			bean = GuokuApplication.getInstance().getBean();
-			tv_email.setText(bean.getUser().getEmail());
+			if(bean.getUser().isMail_verified()){
+				isCheckEmail(true);
+			}else{
+				isCheckEmail(false);
+			}
 		}
 		tv.setText(getResources().getString(R.string.tv_set_version_code, GuokuUtil.getVersionName(mContext)));
 		shareBoard = new CustomShareBoard(this);
@@ -229,6 +255,17 @@ public class SettingAct extends NetWorkActivity {
 	
 	@OnClick(R.id.user_info_ll_email)
 	public void email(View v) {
-		openActivityForResult(ChangeEmailAct.class, INTENT_REQUEST_CODE);
+		if(bean.getUser().isMail_verified()){
+			openActivity(ChangeEmailAct.class);
+		}else{
+			openActivity(EmailCheckAct.class);
+		}
+	}
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		EventBus.getDefault().unregister(this);
+		super.onDestroy();
 	}
 }

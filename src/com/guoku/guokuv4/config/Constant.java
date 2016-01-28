@@ -94,6 +94,8 @@ public class Constant {
 	public static final String DETAIL = URL_ARTICLES_SHARE + "/detail/";
 	/** 引导页 */
 	public static final String LAUNCH = URL + "/mobile/v4/launchboard/";
+	/** 验证邮箱 */
+	public static final String EMAIL_VERIFIED = URL + "/mobile/v4/user/email/verified/";
 	
 	public static final String DESCRIPTOR = "1";
 	public static final String WX_APPID = "wx59118ccde8270caa";

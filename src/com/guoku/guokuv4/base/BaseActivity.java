@@ -255,6 +255,12 @@ public abstract class BaseActivity extends FragmentActivity {
 	protected void openActivity(Class<?> pClass) {
 		openActivity(pClass, null);
 	}
+	
+	protected void openActivity(Class<?> pClass, int flags) {
+		Intent intent = new Intent(this, pClass);
+		intent.setFlags(flags);
+		startActivity(intent);
+	}
 
 	protected void openActivity(Class<?> pClass, Bundle pBundle) {
 		Intent intent = new Intent(this, pClass);

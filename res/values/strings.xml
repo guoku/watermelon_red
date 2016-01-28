@@ -41,6 +41,7 @@
 
     <!-- 修改&验证邮箱 -->
     <string name="tv_change_email">修改邮箱</string>
+    <string name="tv_email_uncheck">(未验证)</string>
     <string name="tv_email_now">当前邮箱：</string>
     <string name="tv_email_new">新邮箱</string>
     <string name="tv_email_psd">密码</string>
@@ -51,8 +52,9 @@
     <string name="tv_check_email">为保证更好使用果库的各项功能，请进入邮箱查看验证邮件，并点击邮件中的链接完成验证。</string>
 	<string name="tv_send_email_already">已发送至当前邮箱</string>
 	<string name="tv_send_email_now">发送至当前邮箱</string>
-	<string name="tv_send_email_again">重新发送</string>
+	<string name="tv_send_email_again">重新发送&#160;&#160;</string>
 	<string name="tv_send_email">发送验证邮件</string>
+	<string name="tv_check_email_title">验证邮件</string>
     
     
     <!-- 商品详情页 -->

@@ -28,7 +28,15 @@ public class UserBean implements Serializable {
     private String article_count;
     private String nickname;
     private String email;
+    private boolean mail_verified;
 
+	public boolean isMail_verified() {
+		return mail_verified;
+	}
+
+	public void setMail_verified(boolean mail_verified) {
+		this.mail_verified = mail_verified;
+	}
 
 	public String getArticle_count() {
 		return article_count;

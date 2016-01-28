@@ -3,11 +3,16 @@
  */
 package com.guoku.guokuv4.my;
 
+import com.alibaba.fastjson.JSON;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.act.EmailCheckAct;
 import com.guoku.guokuv4.act.SettingAct;
 import com.guoku.guokuv4.base.NetWorkActivity;
 import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.entity.test.AccountBean;
+import com.guoku.guokuv4.entity.test.UserBean;
+import com.guoku.guokuv4.utils.LogGK;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.guoku.guokuv4.view.LayoutItemEdit;
@@ -16,9 +21,11 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
 import android.widget.TextView;
+import de.greenrobot.event.EventBus;
 
 /**
  * @zhangyao
@@ -42,6 +49,9 @@ public class ChangeEmailAct extends NetWorkActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		
+		EventBus.getDefault().register(this);
+		
 		setContentView(R.layout.layout_change_emali);
 		setGCenter(true, R.string.tv_change_email);
 		setGLeft(true, R.drawable.back_selector);
@@ -63,6 +73,7 @@ public class ChangeEmailAct extends NetWorkActivity {
 		tvEmailPsd.edDel.setTransformationMethod(PasswordTransformationMethod
 				.getInstance());
 
+		tvEmailNew.edDel.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 		tvEmailNew.edDel.addTextChangedListener(tWatcher1);
 		tvEmailPsd.edDel.addTextChangedListener(tWatcher2);
 
@@ -87,12 +98,14 @@ public class ChangeEmailAct extends NetWorkActivity {
 		// TODO Auto-generated method stub
 		switch (where) {
 		case EMAIL:
-			ToastUtil.show(mContext, R.string.tv_email_update_ok);
-			GuokuApplication.getInstance().getBean().getUser()
-					.setEmail(tvEmailNew.edDel.getText().toString());
-			Intent intent = new Intent();
-			setResult(SettingAct.INTENT_REQUEST_CODE, intent);
-			finish();
+			UserBean uBean = JSON.parseObject(result, UserBean.class);
+			if(uBean != null){
+				AccountBean bean = new AccountBean();
+				bean.setSession(GuokuApplication.getInstance().getSession());
+				bean.setUser(uBean);
+				GuokuApplication.getInstance().login(bean);
+			}
+			EventBus.getDefault().post(tvEmailNew.edDel.getText().toString());
 			break;
 
 		default:
@@ -109,7 +122,6 @@ public class ChangeEmailAct extends NetWorkActivity {
 	@Override
 	protected void setupData() {
 		// TODO Auto-generated method stub
-
 	}
 
 	private boolean isCheckText() {
@@ -191,6 +203,20 @@ public class ChangeEmailAct extends NetWorkActivity {
 			rightTv.setTextColor(getResources()
 					.getColor(R.color.title_bar_blue));
 		}
+	}
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		EventBus.getDefault().unregister(this);
+		super.onDestroy();
+	}
+	
+	public void onEventMainThread(String email) {
+		
+		ToastUtil.show(mContext, R.string.tv_email_update_ok);
+		openActivity(EmailCheckAct.class);
+		finish();
 	}
 
 }

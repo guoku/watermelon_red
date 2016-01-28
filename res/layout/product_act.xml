@@ -91,7 +91,7 @@
                     android:id="@+id/product_tv_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/blue_shap"
+                    android:background="@drawable/bt_blue_bg"
                     android:gravity="center"
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp"

@@ -97,7 +97,7 @@ public class PersonalFragment extends BaseFrament {
 	@ViewInject(R.id.title_bar_rigth_iv)
 	private ImageView iv_set;
 	
-	@ViewInject(R.id.title_bar_rigth_red_round)
+	@ViewInject(R.id.red_round)
 	private ImageView redRound;
 
 	@ViewInject(R.id.title_bar_left_iv)
@@ -271,7 +271,11 @@ public class PersonalFragment extends BaseFrament {
 			iv_set.setVisibility(View.VISIBLE);
 			tv_title.setText("我");
 			iv_set.setImageResource(R.drawable.setting);
-			redRound.setVisibility(View.VISIBLE);
+			if(uBean.isMail_verified()){
+				redRound.setVisibility(View.GONE);
+			}else{
+				redRound.setVisibility(View.VISIBLE);
+			}
 			// initAliWang();
 		} else {
 			titleBar.setVisibility(View.GONE);

@@ -3,10 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff0f0f0"
-    android:orientation="vertical" 
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
-    >
+    android:orientation="vertical" >
 
     <include layout="@layout/title" />
 
@@ -29,7 +28,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#fff"
-                android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="12dp" >
 
@@ -39,12 +37,17 @@
                     android:text="邮箱"
                     android:textColor="@color/g_main" />
 
+                <include layout="@layout/view_red_round" 
+                    android:id="@+id/img_red_round"
+                    />
+
                 <TextView
                     android:id="@+id/user_info_tv_email"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:paddingLeft="5dp"
                     android:text="所在地"
                     android:textColor="@color/g_main" />
 

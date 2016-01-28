@@ -238,6 +238,9 @@ public class LoginAct extends NetWorkActivity {
 				R.anim.push_up_out);
 		
 		setContentView(R.layout.login_act);
+		
+		ed_name.setText("455350733@qq.com");
+		ed_pass.setText("11111111");
 	}
 
 	@OnClick(R.id.login_btn_login)
@@ -266,7 +269,7 @@ public class LoginAct extends NetWorkActivity {
 					GuokuApplication.getInstance().login(bean);
 					finishAct();
 				} else {
-					ToastUtil.show(context, "邮箱或密码错误");
+					ToastUtil.show(context, root.getString("message"));
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

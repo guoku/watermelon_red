@@ -2,10 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@color/white"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    >
 
     <include layout="@layout/title" />
 
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        >
+    
     <TextView
         android:id="@+id/tv_emali_now"
         style="@style/edit_item_left2"
@@ -15,16 +26,56 @@
         android:text="@string/tv_check_email" />
 
     <TextView
+        android:id="@+id/tv_email_hint"
         style="@style/edit_item2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/tv_send_email_now" />
+        android:text="@string/tv_send_email_now" 
+        android:layout_marginTop="20dp"
+        />
     
     <TextView
+        android:id="@+id/tv_email"
         style="@style/edit_item_left2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:singleLine="false"
         android:text="ssssss" />
+    
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        >
+        
+        <Button
+        android:id="@+id/send_num_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_send_email"
+        android:textSize="14sp" 
+        android:layout_weight="1"
+        android:textColor="@color/white"
+        android:background="@drawable/bt_blue_bg_enabled"
+        android:layout_margin="5dp"
+        />
+        
+        <Button
+        android:id="@+id/modify_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_change_email"
+        android:textSize="14sp" 
+        android:layout_weight="1"
+        android:textColor="@color/white"
+        android:background="@drawable/bt_blue_bg"
+        android:layout_margin="5dp"
+        />
+        
+    </LinearLayout>
+    
+    </LinearLayout>
 
 </LinearLayout>
