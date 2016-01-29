@@ -14,6 +14,7 @@ import com.avos.avoscloud.AVAnalytics;
 import com.facebook.drawee.generic.RoundingParams;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.act.FirstCategoryAct;
 import com.guoku.guokuv4.act.ProductInfoAct;
 //import com.guoku.guokuv4.act.SeachAct;
 import com.guoku.guokuv4.act.TabAct;
@@ -236,7 +237,8 @@ public class GuangFragment extends BaseFrament {
 							} else if (url.contains("category_id")) {
 								for (CategoryBean bean : list_cid) {
 									if (String.valueOf(bean.getGroup_id()).equals(last)) {
-										Intent intent = new Intent(context, TabAct.class);
+//										Intent intent = new Intent(context, TabAct.class);
+										Intent intent = new Intent(getActivity(), FirstCategoryAct.class);
 										intent.putExtra("data", String.valueOf(bean.getGroup_id()));
 										intent.putExtra("name", bean.getTitle());
 										startActivity(intent);
@@ -287,7 +289,8 @@ public class GuangFragment extends BaseFrament {
 						public void onClick(View arg0) {
 							// TODO Auto-generated method stub
 							Categories.Category category = (Category) arg0.getTag();
-							Intent intent = new Intent(getActivity(), TabAct.class);
+//							Intent intent = new Intent(getActivity(), TabAct.class);
+							Intent intent = new Intent(getActivity(), FirstCategoryAct.class);
 							intent.putExtra("data", category.getId());
 							intent.putExtra("name", category.getTitle());
 							getActivity().startActivity(intent);

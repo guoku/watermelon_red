@@ -228,14 +228,12 @@
                 android:layout_marginTop="10dp"
                 layoutview:textColorLeft="@color/black_body"
                 layoutview:textLeft="我的图文" 
-                android:visibility="gone"
                 >
             </com.guoku.guokuv4.view.LayoutItemView>
 
             <include
                 layout="@layout/line_gray"
                 android:background="@color/text_bg_box" 
-                android:visibility="gone"
                 />
 
             <com.guoku.guokuv4.view.LayoutItemView

@@ -5,7 +5,7 @@ package com.guoku.guokuv4.adapter;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
-import com.guoku.guokuv4.bean.Discover;
+import com.guoku.guokuv4.bean.Articles;
 import com.guoku.guokuv4.config.Constant;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -19,12 +19,12 @@ import android.widget.TextView;
 /**
  * @zhangyao
  * @Description: TODO
- * @date 2015-10-13 上午11:29:11 
- * 发现页精选文章
+ * @date 2016年1月29日 下午5:01:54 
+ * 一级品类中的图文
  */
-public class GuangArticlesAdapter extends ArrayListAdapter<Discover.ArticlesEntity> {
+public class ArticlesCategoryAdapter extends ArrayListAdapter<Articles> {
 
-	public GuangArticlesAdapter(Context context) {
+	public ArticlesCategoryAdapter(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
 	}
@@ -44,11 +44,11 @@ public class GuangArticlesAdapter extends ArrayListAdapter<Discover.ArticlesEnti
 			holder = (ViewHold) convertView.getTag();
 		}
 
-		Discover.ArticlesEntity articles = mList.get(position);
-		holder.tvName.setText(articles.getArticle().getTitle());
-		holder.tvBelow.setText(articles.getArticle().getContent());
+		Articles articles = mList.get(position);
+		holder.tvName.setText(articles.getTitle());
+//		holder.tvBelow.setText(articles.getContent());
 		holder.imgIcon.setImageURI(Uri.parse(Constant.URL_IMG
-				+ articles.getArticle().getCover()));
+				+ articles.get240()));
 
 		return convertView;
 	}

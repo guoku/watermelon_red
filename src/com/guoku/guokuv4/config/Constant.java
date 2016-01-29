@@ -96,6 +96,8 @@ public class Constant {
 	public static final String LAUNCH = URL + "/mobile/v4/launchboard/";
 	/** 验证邮箱 */
 	public static final String EMAIL_VERIFIED = URL + "/mobile/v4/user/email/verified/";
+	/** 一级品类中的图文 */
+	public static final String CATEGORY_FIRST = URL + "/mobile/v4/category/";
 	
 	public static final String DESCRIPTOR = "1";
 	public static final String WX_APPID = "wx59118ccde8270caa";

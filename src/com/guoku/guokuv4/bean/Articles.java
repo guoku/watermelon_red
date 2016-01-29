@@ -108,6 +108,13 @@ public class Articles {
 	public String getCover() {
 		return cover;
 	}
+	
+	public String get240() {
+		if (cover.contains("images")) {
+			return cover.replaceFirst("images", "images/240");
+		}
+		return cover;
+	}
 
 	public CreatorEntity getCreator() {
 		return creator;

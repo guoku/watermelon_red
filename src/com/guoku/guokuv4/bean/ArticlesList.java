@@ -151,6 +151,13 @@ public class ArticlesList {
 	public String getContent() {
 		return content;
 	}
+	
+	public String getContent50() {
+		if(content.length() > 50){
+			content.substring(0, 50);
+		}
+		return content;
+	}
 
 	public int getArticle_id() {
 		return article_id;

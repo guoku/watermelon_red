@@ -15,6 +15,8 @@
     <string name="tv_save">保存</string>
     <string name="tv_cancel">取消</string>
     <string name="tv_already_copy">已复制到剪切板</string>
+    <string name="tv_more">更多</string>
+    <string name="tv_article_all">全部图文</string>
 
     <!-- 搜索界面相关 -->
     <string name="tv_seach">搜索</string>
@@ -89,5 +91,6 @@
 
     <!-- 设置 -->
     <string name="tv_set_version_code" formatted="false">version %s</string>
+    
 
 </resources>

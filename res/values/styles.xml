@@ -468,4 +468,13 @@
         <item name="android:windowExitAnimation">@anim/pophidden_anim</item>
     </style>
 
+    <!-- 更多 -->
+    <style name="tv_more">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/gray_fzxx</item>
+        <item name="android:text">@string/tv_more</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">12dp</item>
+    </style>
 </resources>

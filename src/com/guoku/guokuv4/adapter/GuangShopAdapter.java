@@ -51,7 +51,7 @@ public class GuangShopAdapter extends ArrayListAdapter<Discover.EntitiesEntity> 
 		}
 		
 		if(!StringUtils.isEmpty(mList.get(position).getEntity().getChief_image())){
-			holder.imgIcon.setImageURI(Uri.parse(mList.get(position).getEntity().getChief_image()));
+			holder.imgIcon.setImageURI(Uri.parse(mList.get(position).getEntity().get240()));
 		}
 
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

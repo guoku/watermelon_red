@@ -665,6 +665,13 @@ public class Discover {
             public String getChief_image() {
                 return chief_image;
             }
+            
+            public String get240() {
+        		if (chief_image.contains("images")) {
+        			return chief_image.replaceFirst("images", "images/240");
+        		}
+        		return chief_image;
+        	}
 
             public int getCreated_time() {
                 return created_time;

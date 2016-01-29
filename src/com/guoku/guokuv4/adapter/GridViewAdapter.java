@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * @zhangyao
@@ -37,8 +38,13 @@ public class GridViewAdapter extends ArrayListAdapter<EntityBean> {
 
 		ViewHold holder = null;
 		if (convertView == null) {
-			convertView = View.inflate(mContext, R.layout.grid_view_img_item,
-					null);
+			if(count == 2){
+				convertView = View.inflate(mContext, R.layout.grid2_view_img_item,
+						null);
+			}else{
+				convertView = View.inflate(mContext, R.layout.grid_view_img_item,
+						null);
+			}
 			holder = new ViewHold();
 			ViewUtils.inject(holder, convertView);
 			convertView.setTag(holder);
@@ -52,6 +58,12 @@ public class GridViewAdapter extends ArrayListAdapter<EntityBean> {
 				GuokuApplication.screenW / count - 10,
 				GuokuApplication.screenW / count - 10);
 		holder.imgIcon.setLayoutParams(params);
+		
+		if(count == 2){
+			holder.title.setText(mList.get(position).getBrand());
+			holder.context.setText(mList.get(position).getTitle());
+			holder.money.setText(mList.get(position).getPrice());
+		}
 
 		return convertView;
 	}
@@ -59,5 +71,11 @@ public class GridViewAdapter extends ArrayListAdapter<EntityBean> {
 	class ViewHold {
 		@ViewInject(R.id.img)
 		SimpleDraweeView imgIcon;
+		@ViewInject(R.id.title)
+		TextView title;
+		@ViewInject(R.id.context)
+		TextView context;
+		@ViewInject(R.id.money)
+		TextView money;
 	}
 }

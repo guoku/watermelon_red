@@ -54,7 +54,7 @@ public class ArticleAdapter extends ArrayListAdapter<ArticlesList> {
 
 		ArticlesList articles = mList.get(position);
 		holder.tvName.setText(articles.getTitle());
-		holder.tvContext.setText(articles.getContent());
+		holder.tvContext.setText(articles.getContent50());
 		holder.imgIcon.setImageURI(Uri.parse(Constant.URL_IMG
 				+ articles.getCover().replace("images", "images/750")));
 

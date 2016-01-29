@@ -247,6 +247,16 @@ public abstract class BaseActivity extends FragmentActivity {
 			view.setVisibility(View.GONE);
 		}
 	}
+	
+	protected void setBarCenter(boolean show, int resid) {
+		TextView view = (TextView) findViewById(R.id.title_bar_center);
+		if (show) {
+			view.setVisibility(View.VISIBLE);
+			view.setText(getResources().getString(resid));
+		} else {
+			view.setVisibility(View.GONE);
+		}
+	}
 
 	protected void rightTextOnClick() {
 
