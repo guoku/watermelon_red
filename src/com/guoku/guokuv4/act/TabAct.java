@@ -311,7 +311,7 @@ public class TabAct extends NetWorkActivity implements OnClickListener,
 							// TODO Auto-generated method stub
 							Bundle bundle = new Bundle();
 							bundle.putSerializable(SECOND_ACT_ONTENT, tagtwo);
-							openActivity(TabListSecondAct.class, bundle);
+							openActivity(SecondCategoryAct.class, bundle);
 						}
 					});
 					layoutAddTag.addView(textView);

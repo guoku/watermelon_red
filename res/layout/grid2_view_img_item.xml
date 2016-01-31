@@ -18,16 +18,20 @@
     <TextView
         android:id="@+id/title"
         style="@style/home_page_item_article_context" 
+        android:maxLines="1"
         />
 
     <TextView
         android:id="@+id/context"
         style="@style/home_page_item_article_title"
+        android:lines="2"
         />
 
     <TextView
         android:id="@+id/money"
         style="@style/home_page_item_article_title"
-        android:textColor="@color/title_bar_blue" />
+        android:textColor="@color/title_bar_blue" 
+        android:maxLines="1"
+        />
 
 </LinearLayout>

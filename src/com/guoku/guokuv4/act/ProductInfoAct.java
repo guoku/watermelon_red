@@ -780,7 +780,7 @@ public class ProductInfoAct extends NetWorkActivity
 
 		Bundle bundle = new Bundle();
 		bundle.putSerializable(TabAct.SECOND_ACT_ONTENT, tagTwo);
-		openActivity(TabListSecondAct.class, bundle);
+		openActivity(SecondCategoryAct.class, bundle);
 	}
 
 	private class ViewHolder {

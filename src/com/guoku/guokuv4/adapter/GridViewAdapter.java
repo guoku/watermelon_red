@@ -7,6 +7,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.entity.test.EntityBean;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -60,6 +61,12 @@ public class GridViewAdapter extends ArrayListAdapter<EntityBean> {
 		holder.imgIcon.setLayoutParams(params);
 		
 		if(count == 2){
+//			if(StringUtils.isEmpty(mList.get(position).getBrand())){
+//				holder.title.setVisibility(View.GONE);
+//			}else{
+//				holder.title.setVisibility(View.VISIBLE);
+//				holder.title.setText(mList.get(position).getBrand());
+//			}
 			holder.title.setText(mList.get(position).getBrand());
 			holder.context.setText(mList.get(position).getTitle());
 			holder.money.setText(mList.get(position).getPrice());

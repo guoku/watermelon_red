@@ -5,9 +5,8 @@ package com.guoku.guokuv4.adapter;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
-import com.guoku.guokuv4.act.TabListSecondAct;
+import com.guoku.guokuv4.act.SecondCategoryAct;
 import com.guoku.guokuv4.bean.CategoryBean;
-import com.guoku.guokuv4.utils.ImgUtils;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -63,7 +62,7 @@ public class SeachCommodityTypeAdapter extends ArrayListAdapter<CategoryBean.Con
 
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(mContext, TabListSecondAct.class);
+				Intent intent = new Intent(mContext, SecondCategoryAct.class);
 				Bundle bundle = new Bundle();
 				bundle.putSerializable(SEACH_TAG, bean);
 				intent.putExtras(bundle);

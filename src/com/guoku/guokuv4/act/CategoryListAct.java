@@ -54,7 +54,7 @@ public class CategoryListAct extends BaseActivity implements
 		// TODO Auto-generated method stub
 		Bundle bundle = new Bundle();
 		bundle.putSerializable(TabAct.SECOND_ACT_ONTENT, cAdapter.getItem(arg2));
-		openActivity(TabListSecondAct.class, bundle);
+		openActivity(SecondCategoryAct.class, bundle);
 	}
 
 }
