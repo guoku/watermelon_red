@@ -38,16 +38,6 @@
             android:singleLine="true"
             android:textColor="@color/g_main"
             android:textStyle="bold" />
-        
-        <TextView
-            android:id="@+id/title_bar_center"
-            style="@style/right_top_bar_tv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/g_main"
-            android:visibility="gone"
-            />
 
         <ImageView
             android:id="@+id/alibaba_wang"

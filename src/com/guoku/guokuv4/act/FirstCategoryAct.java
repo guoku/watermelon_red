@@ -186,6 +186,7 @@ public class FirstCategoryAct extends NetWorkActivity {
 
 		gvAdapter = new GridViewAdapter(context, 2);
 		tab_gv.setNumColumns(2);
+		tab_gv.setHorizontalSpacing(40);
 		tab_gv.setAdapter(gvAdapter);
 		tab_gv.setOnItemClickListener(new OnItemClickListener() {
 
@@ -283,6 +284,7 @@ public class FirstCategoryAct extends NetWorkActivity {
 		if (tagBean != null) {
 			Bundle bundle = new Bundle();
 			bundle.putString(FirstCategoryAct.class.getName(), cid);
+			bundle.putString("TITLE_BAR", getIntent().getStringExtra("name"));
 			openActivity(ArticleListAllAct.class, bundle);
 		}
 	}

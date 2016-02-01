@@ -202,5 +202,7 @@
     <color name="gray_btm">#55000000</color>
     <!-- 类似登录 注册act的透明therm -->
     <color name="act_transparent">#E6000000</color>
+    <!-- 接近黑色 沉浸 -->
+    <color name="black_bar">#232323</color>
 
 </resources>

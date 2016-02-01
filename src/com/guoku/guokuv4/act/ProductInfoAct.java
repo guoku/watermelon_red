@@ -1,6 +1,7 @@
 package com.guoku.guokuv4.act;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -26,10 +27,8 @@ import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.NoteBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.UserBean;
-import com.guoku.guokuv4.homepage.GoodTwoFragmnet;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.share.CustomShareBoard;
-import com.guoku.guokuv4.utils.BroadUtil;
 import com.guoku.guokuv4.utils.DateUtils;
 import com.guoku.guokuv4.utils.ImgUtils;
 import com.guoku.guokuv4.utils.SharePrenceUtil;
@@ -397,11 +396,11 @@ public class ProductInfoAct extends NetWorkActivity
 			sv.smoothScrollTo(0, 0);
 
 			JSONArray thumbs = new JSONArray(productBean.getEntity().getDetail_images());
-			if(thumbs.length() == 0){
+//			if(thumbs.length() == 0){
 				thumbs.put(productBean.getEntity().getChief_image());
-			}
+//			}
 			List<ImageView> imgs = new ArrayList<ImageView>();
-			for (int i = 0; i < thumbs.length(); i++) {
+			for (int i = thumbs.length() - 1; i >= 0; i--) {
 				String url = thumbs.getString(i);
 				if (url.contains("images")) {
 					url = url.replaceFirst("images", "images/800");

@@ -96,28 +96,6 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 		setContentView(R.layout.activity_photo_view);
 		
 		mTintManager.setStatusBarTintResource(0);
-
-		// handleTransEffect();
-
-//		mViewPager.setOnClickListener(new OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				// TODO Auto-generated method stub
-//				finishAct();
-//			}
-//		});
-//
-//		mViewPager.setOnTouchListener(new OnTouchListener() {
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				// TODO Auto-generated method stub
-//				finishAct();
-//				return true;
-//			}
-//
-//		});
-		
 	}
 
 	@Override
@@ -187,7 +165,7 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 	private void initRound() {
 		if (thumbs != null) {
 			if (thumbs.length() > 1) {
-				for (int i = 0; i < thumbs.length(); i++) {
+				for (int i = thumbs.length() - 1; i >= 0; i--) {
 					ImageView imageView = new ImageView(mContext);
 					LayoutParams lParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 					lParams.setMargins(10, 0, 10, 0);
@@ -311,9 +289,9 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 
 			try {
 				thumbs = new JSONArray(pBean.getEntity().getDetail_images());
-				if(thumbs.length() == 0){
+//				if(thumbs.length() == 0){
 					thumbs.put(pBean.getEntity().getChief_image());
-				}
+//				}
 			} catch (Exception e) {
 				// TODO: handle exception
 			}

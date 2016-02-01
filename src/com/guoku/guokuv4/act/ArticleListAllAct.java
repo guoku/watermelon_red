@@ -122,9 +122,8 @@ public class ArticleListAllAct extends NetWorkActivity {
 		// TODO Auto-generated method stub
 
 		cid = getIntent().getExtras().getString(FirstCategoryAct.class.getName());
-
-		setBarCenter(true, R.string.tv_article_all);
-//		setGCenter(true, R.string.tv_article_all);
+		String title = getIntent().getExtras().getString("TITLE_BAR") + getResources().getString(R.string.tv_article_all);
+		setGCenter(true, title);
 		setGLeft(true, R.drawable.back_selector);
 
 		getData(NET_ARTICLE, true);

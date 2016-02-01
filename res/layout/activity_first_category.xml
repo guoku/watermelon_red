@@ -38,10 +38,12 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:drawableRight="@drawable/more_right"
+            android:drawableRight="@drawable/right"
             android:gravity="center"
             android:text="更多"
-            android:textColor="@color/gray_fzxx" />
+            android:textColor="@color/gray_fzxx" 
+            android:paddingRight="3dp"
+            />
     </RelativeLayout>
 
     <include layout="@layout/line_gray" />
@@ -104,7 +106,9 @@
                 style="@style/gray_bg_text"
                 android:text="商品" />
 
-            <include layout="@layout/grid_view_count3" />
+            <include layout="@layout/grid_view_count3" 
+                android:horizontalSpacing="30dp"
+                />
         </LinearLayout>
     </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 

@@ -477,4 +477,12 @@
         <item name="android:gravity">center</item>
         <item name="android:padding">12dp</item>
     </style>
+    
+    <!-- gridview item  -->
+    <style name="gridview_count_2">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/g_main</item>
+        <item name="android:ellipsize">end</item>
+    </style>
 </resources>

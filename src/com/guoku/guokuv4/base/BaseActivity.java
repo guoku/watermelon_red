@@ -106,7 +106,7 @@ public abstract class BaseActivity extends FragmentActivity {
         }
         mTintManager = new SystemBarTintManager(this);
         mTintManager.setStatusBarTintEnabled(true);
-        mTintManager.setStatusBarTintResource(R.color.gray);
+        mTintManager.setStatusBarTintResource(R.color.black_bar);
 
 		GuokuApplication.getInstance().addActivity(this);
 		mContext = this;
@@ -243,16 +243,6 @@ public abstract class BaseActivity extends FragmentActivity {
 		if (show) {
 			view.setVisibility(View.VISIBLE);
 			view.setText(resid);
-		} else {
-			view.setVisibility(View.GONE);
-		}
-	}
-	
-	protected void setBarCenter(boolean show, int resid) {
-		TextView view = (TextView) findViewById(R.id.title_bar_center);
-		if (show) {
-			view.setVisibility(View.VISIBLE);
-			view.setText(getResources().getString(resid));
 		} else {
 			view.setVisibility(View.GONE);
 		}
