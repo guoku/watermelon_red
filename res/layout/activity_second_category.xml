@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:orientation="vertical" >
@@ -25,13 +24,17 @@
             android:orientation="vertical" >
 
             <View
+                android:id="@+id/view_bg"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="@color/gray_bg" />
 
-            <include layout="@layout/line_gray" />
+            <include 
+                android:id="@+id/view_line"
+                layout="@layout/line_gray" />
 
             <RelativeLayout
+                android:id="@+id/view_tw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -55,7 +58,6 @@
                 android:id="@+id/listView_article"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/relayout"
                 android:background="@color/white"
                 android:listSelector="@android:color/transparent" />
 
@@ -63,16 +65,16 @@
                 layout="@layout/line_gray"
                 android:background="@color/text_bg_box" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/gray_bg" />
-
             <TextView
                 style="@style/gray_bg_text"
                 android:text="商品" />
 
-            <include layout="@layout/grid_view_count3" />
+            <include layout="@layout/grid_view_count3" 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                />
         </LinearLayout>
     </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 

@@ -26,11 +26,13 @@ import android.widget.TextView;
 public class GridViewAdapter extends ArrayListAdapter<EntityBean> {
 
 	int count;
+	Context mContext;
 	
 	public GridViewAdapter(Context context, int counts) {
 		super(context);
 		// TODO Auto-generated constructor stub
 		this.count = counts;
+		this.mContext = context;
 	}
 
 	@Override
@@ -54,10 +56,10 @@ public class GridViewAdapter extends ArrayListAdapter<EntityBean> {
 		}
 
 		holder.imgIcon.setImageURI(Uri.parse(mList.get(position).get240()));
-
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 				GuokuApplication.screenW / count - 10,
 				GuokuApplication.screenW / count - 10);
+//		params.setMargins(0, 10, 0, 0);
 		holder.imgIcon.setLayoutParams(params);
 		
 		if(count == 2){
@@ -69,7 +71,7 @@ public class GridViewAdapter extends ArrayListAdapter<EntityBean> {
 //			}
 			holder.title.setText(mList.get(position).getBrand());
 			holder.context.setText(mList.get(position).getTitle());
-			holder.money.setText(mList.get(position).getPrice());
+			holder.money.setText(mContext.getResources().getString(R.string.tv_rmb, mList.get(position).getPrice()));
 		}
 
 		return convertView;

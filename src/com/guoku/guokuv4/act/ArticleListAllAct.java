@@ -43,6 +43,8 @@ public class ArticleListAllAct extends NetWorkActivity {
 
 	int page = 1;
 	String cid;
+	
+	boolean isFirst;//是否是一级的更多 true是  false否
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -120,9 +122,15 @@ public class ArticleListAllAct extends NetWorkActivity {
 	@Override
 	protected void setupData() {
 		// TODO Auto-generated method stub
-
+		isFirst = getIntent().getExtras().getBoolean("IS_FIRST");
 		cid = getIntent().getExtras().getString(FirstCategoryAct.class.getName());
-		String title = getIntent().getExtras().getString("TITLE_BAR") + getResources().getString(R.string.tv_article_all);
+		String title;
+		if(isFirst){
+			title = getIntent().getExtras().getString("TITLE_BAR") + getResources().getString(R.string.tv_article_all);
+		}else{
+			title = getResources().getString(R.string.tv_article_all2);
+		}
+		
 		setGCenter(true, title);
 		setGLeft(true, R.drawable.back_selector);
 
@@ -131,8 +139,14 @@ public class ArticleListAllAct extends NetWorkActivity {
 
 	private void getData(int netTag, boolean isDialog) {
 
-		sendConnection(Constant.CATEGORY_FIRST + cid + "/articles/", new String[] { "page" }, new String[] { String.valueOf(page) },
-				netTag, isDialog);
+		if(isFirst){
+			sendConnection(Constant.CATEGORY_FIRST + cid + "/articles/", new String[] { "page" }, new String[] { String.valueOf(page) },
+					netTag, isDialog);
+		}
+		else{
+			sendConnection(Constant.CATEGORY_FIRST + "sub/" + cid + "/articles/", new String[] { "page", "size" },
+					new String[] { String.valueOf(page), "30" }, netTag, isDialog);
+		}
 	}
 
 }

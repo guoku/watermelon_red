@@ -57,6 +57,15 @@ public class FirstCategoryAct extends NetWorkActivity {
 
 	public static final String SECOND_ACT_ONTENT = "SECOND_ACT_ONTENT";// 二级分类ACT
 
+	@ViewInject(R.id.view_tw)
+	View view;
+	
+	@ViewInject(R.id.view_line)
+	View viewLine;
+	
+	@ViewInject(R.id.view_bg)
+	View viewBg;
+	
 	@ViewInject(R.id.tv_more_articles)
 	TextView tvMoreArticles;//更多图文
 	
@@ -96,12 +105,19 @@ public class FirstCategoryAct extends NetWorkActivity {
 		case NET_FIRST_ARTICLES:
 			try {
 				ArticlesCategoryFirst aFirst = JSON.parseObject(result, ArticlesCategoryFirst.class);
-				articlesAdapter.setList(aFirst.getArticles());
-				if(aFirst.getStat().getAll_count() > 3){
-					tvMoreArticles.setVisibility(View.VISIBLE);
+				
+				if(aFirst.getArticles().size() > 0){
+					articlesAdapter.setList(aFirst.getArticles());
+					if(aFirst.getStat().getAll_count() > 3){
+						tvMoreArticles.setVisibility(View.VISIBLE);
+					}else{
+						tvMoreArticles.setVisibility(View.GONE);
+					}
+					hideView(false);
 				}else{
-					tvMoreArticles.setVisibility(View.GONE);
+					hideView(true);
 				}
+				
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -186,7 +202,7 @@ public class FirstCategoryAct extends NetWorkActivity {
 
 		gvAdapter = new GridViewAdapter(context, 2);
 		tab_gv.setNumColumns(2);
-		tab_gv.setHorizontalSpacing(40);
+//		tab_gv.setHorizontalSpacing(40);
 		tab_gv.setAdapter(gvAdapter);
 		tab_gv.setOnItemClickListener(new OnItemClickListener() {
 
@@ -285,6 +301,7 @@ public class FirstCategoryAct extends NetWorkActivity {
 			Bundle bundle = new Bundle();
 			bundle.putString(FirstCategoryAct.class.getName(), cid);
 			bundle.putString("TITLE_BAR", getIntent().getStringExtra("name"));
+			bundle.putBoolean("IS_FIRST", true);
 			openActivity(ArticleListAllAct.class, bundle);
 		}
 	}
@@ -300,6 +317,18 @@ public class FirstCategoryAct extends NetWorkActivity {
 		sendConnection(Constant.CATEGORY_FIRST + urlValue + cid + "/articles/", new String[] { "page","size" },
 				new String[] { "1","3" }, tag, isLoding);
 
+	}
+	
+	private void hideView(boolean isShow){
+		if(isShow){
+			view.setVisibility(View.GONE);
+			viewLine.setVisibility(View.GONE);
+			viewBg.setVisibility(View.GONE);
+		}else{
+			view.setVisibility(View.VISIBLE);
+			viewLine.setVisibility(View.VISIBLE);
+			viewBg.setVisibility(View.VISIBLE);
+		}
 	}
 
 }

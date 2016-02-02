@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@drawable/white_cir_bg"
     android:orientation="vertical" 
-    android:background="@color/white"
+    android:padding="10dp"
     >
 
     <com.facebook.drawee.view.SimpleDraweeView
@@ -13,26 +14,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        fresco:placeholderImage="@drawable/item240" />
+        fresco:placeholderImage="@color/gray" />
 
-    <TextView
-        android:id="@+id/title"
-        style="@style/gridview_count_2" 
-        android:maxLines="1"
-        android:textColor="@color/gray_fzxx" 
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="10dp"
+        >
 
-    <TextView
-        android:id="@+id/context"
-        style="@style/gridview_count_2"
-        android:lines="2"
-        />
+        <TextView
+            android:id="@+id/title"
+            style="@style/gridview_count_2"
+            android:maxLines="1"
+            android:textColor="@color/gray_fzxx" />
 
-    <TextView
-        android:id="@+id/money"
-        style="@style/gridview_count_2"
-        android:textColor="@color/title_bar_blue" 
-        android:maxLines="1"
-        />
+        <TextView
+            android:id="@+id/context"
+            style="@style/gridview_count_2"
+            android:maxLines="1" />
+
+        <TextView
+            android:id="@+id/money"
+            style="@style/gridview_count_2"
+            android:maxLines="1"
+            android:textColor="@color/title_bar_blue" 
+            />
+    </LinearLayout>
 
 </LinearLayout>

@@ -3,15 +3,12 @@
     android:id="@+id/tab_gv"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
     android:gravity="center"
     android:listSelector="@android:color/transparent"
     android:numColumns="3"
     android:scrollbars="none"
-    android:verticalSpacing="3dp"
-    android:horizontalSpacing="3dp"
+    android:verticalSpacing="10dp"
+    android:horizontalSpacing="10dp"
     >
 
 </com.guoku.guokuv4.view.ScrollViewWithGridView>

@@ -34,6 +34,26 @@ public class ArticlesCategoryFirst {
 
 	public class Stat {
 		int all_count;
+		
+		boolean is_sub;//是否是二级品类
+		
+		int group_id;//二级所属的一级品类id
+		
+		public boolean isIs_sub() {
+			return is_sub;
+		}
+
+		public void setIs_sub(boolean is_sub) {
+			this.is_sub = is_sub;
+		}
+
+		public int getGroup_id() {
+			return group_id;
+		}
+
+		public void setGroup_id(int group_id) {
+			this.group_id = group_id;
+		}
 
 		public int getAll_count() {
 			return all_count;

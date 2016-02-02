@@ -51,6 +51,16 @@ public class SecondCategoryAct extends NetWorkActivity {
 
 	public static final String SECOND_ACT_ONTENT = "SECOND_ACT_ONTENT";// 二级分类ACT
 
+	
+	@ViewInject(R.id.view_tw)
+	View view;
+	
+	@ViewInject(R.id.view_line)
+	View viewLine;
+	
+	@ViewInject(R.id.view_bg)
+	View viewBg;
+	
 	@ViewInject(R.id.tv_more_articles)
 	TextView tvMoreArticles;// 更多图文
 
@@ -78,6 +88,8 @@ public class SecondCategoryAct extends NetWorkActivity {
 	CategoryBean.ContentEntity tab2Bean;// 从品类搜索页过来的
 	String title;// 标题
 	String id;// 分类id
+	
+	ArticlesCategoryFirst aFirst;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,13 +105,19 @@ public class SecondCategoryAct extends NetWorkActivity {
 		switch (where) {
 		case NET_FIRST_ARTICLES:
 			try {
-				ArticlesCategoryFirst aFirst = JSON.parseObject(result, ArticlesCategoryFirst.class);
-				articlesAdapter.setList(aFirst.getArticles());
-				if (aFirst.getStat().getAll_count() > 3) {
-					tvMoreArticles.setVisibility(View.VISIBLE);
-				} else {
-					tvMoreArticles.setVisibility(View.GONE);
+				aFirst = JSON.parseObject(result, ArticlesCategoryFirst.class);
+				if(aFirst.getArticles().size() > 0){
+					articlesAdapter.setList(aFirst.getArticles());
+					if (aFirst.getStat().getAll_count() > 3) {
+						tvMoreArticles.setVisibility(View.VISIBLE);
+					} else {
+						tvMoreArticles.setVisibility(View.GONE);
+					}
+					hideView(false);
+				}else{
+					hideView(true);
 				}
+				
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -146,16 +164,6 @@ public class SecondCategoryAct extends NetWorkActivity {
 	@Override
 	protected void setupData() {
 		// TODO Auto-generated method stub
-		// cid = getIntent().getStringExtra("data");
-		// setGCenter(true, getIntent().getStringExtra("name"));
-		// setGLeft(true, R.drawable.back_selector);
-		//
-		// sendDataAricles(NET_FIRST_ARTICLES, true, "");
-		// sendData(CATABLIST, true);
-		// init();
-		// initArticle();
-		// initShop();
-
 		tagTwo = (TagTwo) getIntent().getExtras().getSerializable(TabAct.SECOND_ACT_ONTENT);
 		tab2Bean = (CategoryBean.ContentEntity) getIntent().getExtras()
 				.getSerializable(SeachCommodityTypeAdapter.SEACH_TAG);
@@ -243,9 +251,13 @@ public class SecondCategoryAct extends NetWorkActivity {
 	@OnClick(R.id.tv_more_articles)
 	private void onClickMoreArticles(View v) {
 
-		Bundle bundle = new Bundle();
-		bundle.putString(FirstCategoryAct.class.getName(), id);
-		openActivity(ArticleListAllAct.class, bundle);
+		if(aFirst != null){
+			if(aFirst.getStat().isIs_sub()){
+				Bundle bundle = new Bundle();
+				bundle.putString(FirstCategoryAct.class.getName(), String.valueOf(id));
+				openActivity(ArticleListAllAct.class, bundle);
+			}
+		}
 	}
 
 	private void sendData(int tag, boolean isLoding) {
@@ -259,6 +271,18 @@ public class SecondCategoryAct extends NetWorkActivity {
 		sendConnection(Constant.CATEGORY_FIRST + "sub/" + id + "/articles/", new String[] { "page", "size" },
 				new String[] { "1", "3" }, tag, isLoding);
 
+	}
+	
+	private void hideView(boolean isShow){
+		if(isShow){
+			view.setVisibility(View.GONE);
+			viewLine.setVisibility(View.GONE);
+			viewBg.setVisibility(View.GONE);
+		}else{
+			view.setVisibility(View.VISIBLE);
+			viewLine.setVisibility(View.VISIBLE);
+			viewBg.setVisibility(View.VISIBLE);
+		}
 	}
 
 }

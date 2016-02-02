@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:orientation="vertical" >
@@ -17,7 +16,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:gravity="center_vertical" >
+        android:gravity="center_vertical" 
+        android:background="@color/white"
+        >
 
         <LinearLayout
             android:id="@+id/layout_add_tag"
@@ -40,10 +41,9 @@
             android:layout_marginLeft="5dp"
             android:drawableRight="@drawable/right"
             android:gravity="center"
-            android:text="更多"
-            android:textColor="@color/gray_fzxx" 
             android:paddingRight="3dp"
-            />
+            android:text="更多"
+            android:textColor="@color/gray_fzxx" />
     </RelativeLayout>
 
     <include layout="@layout/line_gray" />
@@ -59,13 +59,17 @@
             android:orientation="vertical" >
 
             <View
+                android:id="@+id/view_bg"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="@color/gray_bg" />
 
-            <include layout="@layout/line_gray" />
+            <include layout="@layout/line_gray" 
+                android:id="@+id/view_line"
+                />
 
             <RelativeLayout
+                android:id="@+id/view_tw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
@@ -89,7 +93,6 @@
                 android:id="@+id/listView_article"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/relayout"
                 android:background="@color/white"
                 android:listSelector="@android:color/transparent" />
 
@@ -106,8 +109,12 @@
                 style="@style/gray_bg_text"
                 android:text="商品" />
 
-            <include layout="@layout/grid_view_count3" 
-                android:horizontalSpacing="30dp"
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                layout="@layout/grid_view_count3" 
                 />
         </LinearLayout>
     </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
