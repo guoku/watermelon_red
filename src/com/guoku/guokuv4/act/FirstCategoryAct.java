@@ -4,14 +4,14 @@
 package com.guoku.guokuv4.act;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.alibaba.fastjson.JSON;
 import com.guoku.R;
+import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.adapter.ArticlesCategoryAdapter;
 import com.guoku.guokuv4.adapter.GridViewAdapter;
-import com.guoku.guokuv4.adapter.GuangArticlesAdapter;
 import com.guoku.guokuv4.base.NetWorkActivity;
-import com.guoku.guokuv4.bean.Articles;
 import com.guoku.guokuv4.bean.ArticlesCategoryFirst;
 import com.guoku.guokuv4.bean.Sharebean;
 import com.guoku.guokuv4.bean.TagBean;
@@ -20,19 +20,21 @@ import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.LogGK;
 import com.guoku.guokuv4.utils.SharePrenceUtil;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.view.ScrollViewWithGridView;
 import com.guoku.guokuv4.view.ScrollViewWithListView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -59,16 +61,19 @@ public class FirstCategoryAct extends NetWorkActivity {
 
 	@ViewInject(R.id.view_tw)
 	View view;
-	
+
 	@ViewInject(R.id.view_line)
 	View viewLine;
-	
+
 	@ViewInject(R.id.view_bg)
 	View viewBg;
-	
+
+	@ViewInject(R.id.tv_more)
+	TextView tvMore;
+
 	@ViewInject(R.id.tv_more_articles)
-	TextView tvMoreArticles;//更多图文
-	
+	TextView tvMoreArticles;// 更多图文
+
 	@ViewInject(R.id.layout_add_tag)
 	LinearLayout layoutAddTag;// 标签layout
 
@@ -105,19 +110,19 @@ public class FirstCategoryAct extends NetWorkActivity {
 		case NET_FIRST_ARTICLES:
 			try {
 				ArticlesCategoryFirst aFirst = JSON.parseObject(result, ArticlesCategoryFirst.class);
-				
-				if(aFirst.getArticles().size() > 0){
+
+				if (aFirst.getArticles().size() > 0) {
 					articlesAdapter.setList(aFirst.getArticles());
-					if(aFirst.getStat().getAll_count() > 3){
+					if (aFirst.getStat().getAll_count() > 3) {
 						tvMoreArticles.setVisibility(View.VISIBLE);
-					}else{
+					} else {
 						tvMoreArticles.setVisibility(View.GONE);
 					}
 					hideView(false);
-				}else{
+				} else {
 					hideView(true);
 				}
-				
+
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -184,7 +189,7 @@ public class FirstCategoryAct extends NetWorkActivity {
 			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 				// TODO Auto-generated method stub
 				page = 1;
-				
+
 				sendDataAricles(NET_FIRST_ARTICLES, false, "");
 				sendData(CATABLIST, false);
 			}
@@ -202,7 +207,7 @@ public class FirstCategoryAct extends NetWorkActivity {
 
 		gvAdapter = new GridViewAdapter(context, 2);
 		tab_gv.setNumColumns(2);
-//		tab_gv.setHorizontalSpacing(40);
+		// tab_gv.setHorizontalSpacing(40);
 		tab_gv.setAdapter(gvAdapter);
 		tab_gv.setOnItemClickListener(new OnItemClickListener() {
 
@@ -227,27 +232,44 @@ public class FirstCategoryAct extends NetWorkActivity {
 
 					if (String.valueOf(tBean.get(i).getGroup_id()).equals(cid)) {
 						tagBean = tBean.get(i);
-						for (int j = 0; j < 5; j++) {
-							final TagTwo tagtwo = tBean.get(i).getContent().get(j);
-							final TextView textView = new TextView(this);
+						final TextView textTemp = (TextView) View.inflate(mContext, R.layout.textview_tag, null);
+						textTemp.setText("我");
+						Paint paint = new Paint();
+						paint.setTextSize(textTemp.getTextSize());
+						float size = paint.measureText(textTemp.getText().toString());
+						float w = (GuokuApplication.screenW - tvMore.getWidth()) / size;
+						
+						StringBuffer sBuffer = new StringBuffer();
+						List<TagTwo> litTemp = new ArrayList<TagTwo>();
+						for (int k = 0; k < tBean.get(i).getContent().size(); k++) {
+							final TagTwo tagtwo = tBean.get(i).getContent().get(k);
+							if (sBuffer.length() > w) {
+								break;
+							}
+							sBuffer.append(tagtwo.getCategory_title());
+							litTemp.add(tagtwo);
+						}
+
+
+						for (int j = 0; j < litTemp.size() / 2; j++) {
+							final TagTwo tagtwo = litTemp.get(j);
+							final TextView textView = (TextView) View.inflate(mContext, R.layout.textview_tag, null);
 							LinearLayout.LayoutParams lParams = new LinearLayout.LayoutParams(
 									LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,
 									1.0f);
-							lParams.setMargins(5, 5, 5, 5);
-							textView.setLayoutParams(lParams);
+							lParams.setMargins(0, 0, 10, 0);
 							textView.setText(tagtwo.getCategory_title());
-							textView.setBackgroundResource(R.drawable.text_bg_box_gray);
-							textView.setGravity(Gravity.CENTER);
-							textView.setPadding(3, 3, 3, 3);
+							textView.setLayoutParams(lParams);
 							textView.setOnClickListener(new OnClickListener() {
 								@Override
 								public void onClick(View arg0) {
 									// TODO Auto-generated method stub
 									Bundle bundle = new Bundle();
 									bundle.putSerializable(SECOND_ACT_ONTENT, tagtwo);
-//									openActivity(TabListSecondAct.class, bundle);
+									// openActivity(TabListSecondAct.class,
+									// bundle);
 									openActivity(SecondCategoryAct.class, bundle);
-									
+
 								}
 							});
 							layoutAddTag.addView(textView);
@@ -293,7 +315,7 @@ public class FirstCategoryAct extends NetWorkActivity {
 			openActivity(CategoryListAct.class, bundle);
 		}
 	}
-	
+
 	@OnClick(R.id.tv_more_articles)
 	private void onClickMoreArticles(View v) {
 
@@ -312,19 +334,19 @@ public class FirstCategoryAct extends NetWorkActivity {
 				new String[] { String.valueOf(page), defWgat }, tag, isLoding);
 
 	}
-	
+
 	private void sendDataAricles(int tag, boolean isLoding, String urlValue) {
-		sendConnection(Constant.CATEGORY_FIRST + urlValue + cid + "/articles/", new String[] { "page","size" },
-				new String[] { "1","3" }, tag, isLoding);
+		sendConnection(Constant.CATEGORY_FIRST + urlValue + cid + "/articles/", new String[] { "page", "size" },
+				new String[] { "1", "3" }, tag, isLoding);
 
 	}
-	
-	private void hideView(boolean isShow){
-		if(isShow){
+
+	private void hideView(boolean isShow) {
+		if (isShow) {
 			view.setVisibility(View.GONE);
 			viewLine.setVisibility(View.GONE);
 			viewBg.setVisibility(View.GONE);
-		}else{
+		} else {
 			view.setVisibility(View.VISIBLE);
 			viewLine.setVisibility(View.VISIBLE);
 			viewBg.setVisibility(View.VISIBLE);

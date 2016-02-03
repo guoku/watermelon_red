@@ -65,7 +65,7 @@ public class WelAct extends NetWorkActivity {
 		// startActivity(new Intent(WelAct.this, NavigationActivity.class));
 		// finish();
 		// }
-		init();
+//		init();
 	}
 
 	private void init() {

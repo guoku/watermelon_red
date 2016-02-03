@@ -15,7 +15,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="40dp"
         android:gravity="center_vertical" 
         android:background="@color/white"
         >
@@ -25,11 +25,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="3dp"
             android:layout_toLeftOf="@+id/tv_more"
             android:gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="horizontal" 
+            android:paddingLeft="10dp"
+            >
         </LinearLayout>
 
         <TextView
@@ -41,7 +43,6 @@
             android:layout_marginLeft="5dp"
             android:drawableRight="@drawable/right"
             android:gravity="center"
-            android:paddingRight="3dp"
             android:text="更多"
             android:textColor="@color/gray_fzxx" />
     </RelativeLayout>
@@ -62,7 +63,7 @@
                 android:id="@+id/view_bg"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="@color/gray_bg" />
+                />
 
             <include layout="@layout/line_gray" 
                 android:id="@+id/view_line"
@@ -99,11 +100,6 @@
             <include
                 layout="@layout/line_gray"
                 android:background="@color/text_bg_box" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/gray_bg" />
 
             <TextView
                 style="@style/gray_bg_text"

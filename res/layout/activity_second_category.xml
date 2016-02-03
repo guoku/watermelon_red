@@ -27,7 +27,7 @@
                 android:id="@+id/view_bg"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:background="@color/gray_bg" />
+                />
 
             <include 
                 android:id="@+id/view_line"

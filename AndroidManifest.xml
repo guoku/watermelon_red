@@ -2,13 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.guoku"
     android:installLocation="auto"
-    android:versionCode="416"
-    android:versionName="1024.1" >
+    android:versionCode="417"
+    android:versionName="4.1.6" >
 
     <!-- 正式版本号 -->
     <!--
-    android:versionCode="416"
-    android:versionName="4.1.5"
+    android:versionCode="417"
+    android:versionName="4.1.6"
     -->
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
