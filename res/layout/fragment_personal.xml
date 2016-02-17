@@ -194,6 +194,30 @@
                 android:paddingBottom="4dp"
                 android:scrollbars="none"
                 android:verticalSpacing="4px" />
+            
+            <include
+                layout="@layout/line_gray"
+                android:background="@color/text_bg_box" />
+
+            <com.guoku.guokuv4.view.LayoutItemView
+                android:id="@+id/tv_user_article"
+                style="@style/therm_tab_title_style"
+                android:layout_marginTop="10dp"
+                layoutview:textColorLeft="@color/black_body"
+                layoutview:textLeft="我的图文" 
+                >
+            </com.guoku.guokuv4.view.LayoutItemView>
+            
+            <com.guoku.guokuv4.view.ScrollViewWithListView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/listview_user_article"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffffff"
+                android:divider="@color/g_line"
+                android:dividerHeight="1px"
+                android:listSelector="@android:color/transparent" >
+            </com.guoku.guokuv4.view.ScrollViewWithListView>
 
             <include
                 layout="@layout/line_gray"
@@ -217,19 +241,6 @@
                 android:dividerHeight="1px"
                 android:listSelector="@android:color/transparent" >
             </com.guoku.guokuv4.view.ScrollViewWithListView>
-
-            <include
-                layout="@layout/line_gray"
-                android:background="@color/text_bg_box" />
-
-            <com.guoku.guokuv4.view.LayoutItemView
-                android:id="@+id/tv_user_article"
-                style="@style/therm_tab_title_style"
-                android:layout_marginTop="10dp"
-                layoutview:textColorLeft="@color/black_body"
-                layoutview:textLeft="我的图文" 
-                >
-            </com.guoku.guokuv4.view.LayoutItemView>
 
             <include
                 layout="@layout/line_gray"

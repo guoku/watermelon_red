@@ -3,7 +3,7 @@
     package="com.guoku"
     android:installLocation="auto"
     android:versionCode="417"
-    android:versionName="4.1.6" >
+    android:versionName="1024.0" >
 
     <!-- 正式版本号 -->
     <!--
@@ -29,6 +29,8 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS" />
+    <uses-permission android:name="android.permission.AREQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <uses-sdk
         android:minSdkVersion="14"/>
@@ -305,6 +307,12 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".guokuv4.act.PhotoCheckAct"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
+        </activity>
+        
         
         <service android:name="com.guoku.guokuv4.service.DownLoadService"></service>
          <service

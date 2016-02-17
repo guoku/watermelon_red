@@ -1,5 +1,7 @@
 package com.guoku.guokuv4.gragment;
 
+import java.util.ArrayList;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,6 +19,7 @@ import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.CommentTalkAct;
 import com.guoku.guokuv4.act.FansAct;
 import com.guoku.guokuv4.act.LoginAct;
+import com.guoku.guokuv4.act.PhotoCheckAct;
 import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.act.RegisterAct;
 import com.guoku.guokuv4.act.SettingAct;
@@ -25,11 +28,15 @@ import com.guoku.guokuv4.act.UserCommentListAct;
 import com.guoku.guokuv4.act.UserInfoAct;
 import com.guoku.guokuv4.act.UserLikeListAct;
 import com.guoku.guokuv4.act.UserTagListAct;
+import com.guoku.guokuv4.act.WebShareAct;
+import com.guoku.guokuv4.adapter.ArticlesCategoryAdapter;
 import com.guoku.guokuv4.adapter.GridViewAdapter;
 import com.guoku.guokuv4.adapter.ListImgLeftAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
+import com.guoku.guokuv4.bean.Articles;
 import com.guoku.guokuv4.bean.CommentsBean;
 import com.guoku.guokuv4.bean.LikesBean;
+import com.guoku.guokuv4.bean.Sharebean;
 import com.guoku.guokuv4.config.AlibabaConfig;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.AccountBean;
@@ -60,10 +67,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import de.greenrobot.event.EventBus;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import de.greenrobot.event.EventBus;
 
 public class PersonalFragment extends BaseFrament {
 
@@ -78,10 +85,12 @@ public class PersonalFragment extends BaseFrament {
 
 	private final int TABLIKE = 1002;// 喜欢
 	private final int TABNOTE = 1003;// 点评
+	private final int TABARTICLE = 1004;// 图文
 	public static final String IS_EMPTY = "IS_EMPTY";// //判断喜爱、点评、图文、标签等个数，来传给下一个act
 
 	private final String LIKE = "like";
 	private final String NOTE = "entity/note";
+	private final String ARTICLE = "articles";
 
 	public boolean isUser;// 是否是非本人 true＝是
 
@@ -147,6 +156,9 @@ public class PersonalFragment extends BaseFrament {
 
 	@ViewInject(R.id.gridview_like)
 	private ScrollViewWithGridView gridviewLike;// 喜欢 gridview
+	
+	@ViewInject(R.id.listview_user_article)
+	private ScrollViewWithListView listArticle;// 用户图文listview
 
 	@ViewInject(R.id.listview_commit)
 	private ScrollViewWithListView listComment;// 点评 listview
@@ -154,6 +166,8 @@ public class PersonalFragment extends BaseFrament {
 	private GridViewAdapter gvAdapter;
 
 	private ListImgLeftAdapter listImgLeftAdapter;// 左侧图片
+	
+	private ArticlesCategoryAdapter articlesAdapter;// 图文adapter
 
 	@ViewInject(R.id.psrson_tv_name)
 	private TextView psrson_tv_name;
@@ -243,6 +257,10 @@ public class PersonalFragment extends BaseFrament {
 			gvAdapter.setList(ParseUtil.getTabLikeList(result));
 			// userLike.tv2.setText(uBean.getLike_count());
 			break;
+		case TABARTICLE:
+			ArrayList<Articles> arrayList = (ArrayList<Articles>) JSON.parseArray(result, Articles.class);
+			articlesAdapter.setList(arrayList);
+			break;
 		case TABNOTE:
 			listImgLeftAdapter.setList(ParseUtil.getTabNoteList(result));
 			break;
@@ -306,6 +324,7 @@ public class PersonalFragment extends BaseFrament {
 		setUserTab();
 		initReceiver();
 		initLike();
+		initArticle();
 		initConmment();
 
 		getUserInfo();
@@ -329,6 +348,34 @@ public class PersonalFragment extends BaseFrament {
 
 		getInitData(LIKE, "4", TABLIKE);
 	}
+	
+	/***
+	 * 初始化图文
+	 */
+	private void initArticle() {
+		articlesAdapter = new ArticlesCategoryAdapter(getActivity());
+		listArticle.setAdapter(articlesAdapter);
+		listArticle.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				// TODO Auto-generated method stub
+
+				Bundle bundle = new Bundle();
+				Sharebean sharebean = new Sharebean();
+				sharebean.setTitle(articlesAdapter.getList().get(arg2).getTitle());
+				sharebean.setContext(articlesAdapter.getList().get(arg2).getContent().substring(0, 50));
+				sharebean.setAricleUrl(articlesAdapter.getList().get(arg2).getUrl());
+				sharebean.setImgUrl(articlesAdapter.getList().get(arg2).getCover());
+				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
+
+				openActivity(WebShareAct.class, bundle);
+			}
+		});
+		
+		getInitData(ARTICLE, "3", TABARTICLE);
+	}
+	
 
 	/**
 	 * 初始化点评
@@ -373,6 +420,13 @@ public class PersonalFragment extends BaseFrament {
 				psrson_tv_btn.setTextColor(Color.argb(255, 19, 143, 215));
 			}
 		}
+	}
+	
+	@OnClick(R.id.psrson_iv_pic)
+	public void onHeadImg(View v) {
+		Bundle bundle = new Bundle();
+		bundle.putString(PhotoCheckAct.class.getName(), uBean.get800());
+		openActivity(PhotoCheckAct.class, bundle);
 	}
 
 	@OnClick(R.id.title_bar_rigth_iv)

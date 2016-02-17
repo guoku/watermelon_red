@@ -30,6 +30,7 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.KeyEvent;
@@ -75,6 +76,11 @@ public class IntroAct extends NetWorkActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(false);
+        }
+        mTintManager.setStatusBarTintEnabled(false);
 
 		overridePendingTransition(R.anim.up_to_down_push_in, R.anim.up_to_down_push_out);
 

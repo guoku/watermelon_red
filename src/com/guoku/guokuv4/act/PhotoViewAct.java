@@ -52,7 +52,7 @@ import de.greenrobot.event.EventBus;;
 /**
  * @zhangyao
  * @Description: TODO
- * @date 2015年12月17日 下午5:13:40 查看图片大图
+ * @date 2015年12月17日 下午5:13:40 查看商品大图
  */
 public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListener {
 
