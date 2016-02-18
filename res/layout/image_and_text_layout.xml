@@ -12,7 +12,6 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
         fresco:placeholderImage="@color/gray"
-        fresco:roundWithOverlayColor="@color/white"
         fresco:roundedCornerRadius="10dp"
         />
 

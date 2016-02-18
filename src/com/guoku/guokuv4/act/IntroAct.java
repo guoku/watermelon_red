@@ -10,6 +10,8 @@ import org.json.JSONObject;
 
 import com.alibaba.fastjson.JSON;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.generic.GenericDraweeHierarchy;
+import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
@@ -35,6 +37,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -67,8 +70,8 @@ public class IntroAct extends NetWorkActivity {
 	@ViewInject(R.id.img_launch)
 	SimpleDraweeView simpleDraweeView;
 
-	@ViewInject(R.id.textView1)
-	TextView tvButton;
+	@ViewInject(R.id.layout_ra)
+	RelativeLayout reLayout;
 
 	LaunchBean lBean;
 
@@ -76,11 +79,11 @@ public class IntroAct extends NetWorkActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
+
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(false);
-        }
-        mTintManager.setStatusBarTintEnabled(false);
+			setTranslucentStatus(false);
+		}
+		mTintManager.setStatusBarTintEnabled(false);
 
 		overridePendingTransition(R.anim.up_to_down_push_in, R.anim.up_to_down_push_out);
 
@@ -99,6 +102,10 @@ public class IntroAct extends NetWorkActivity {
 		File file = new File(path);
 		if (file.exists()) {
 			// simpleDraweeView.setImageURI(Uri.parse("file://" + path));
+			ViewGroup.LayoutParams params = simpleDraweeView.getLayoutParams();
+			params.width = GuokuApplication.screenW - 28;
+			params.height = params.width;
+			simpleDraweeView.setLayoutParams(params);
 			DraweeController controller = Fresco.newDraweeControllerBuilder().setAutoPlayAnimations(true)
 					.setUri(Uri.parse("file://" + path)).build();
 			simpleDraweeView.setController(controller);
@@ -108,10 +115,10 @@ public class IntroAct extends NetWorkActivity {
 
 		tvContext.setText(Html.fromHtml(lBean.getDescription()));
 
-		tvButton.setText(Html.fromHtml(lBean.getAction_title()));
+		// tvButton.setText(Html.fromHtml(lBean.getAction_title()));
 	}
 
-	@OnClick(R.id.textView1)
+	@OnClick(R.id.img_launch)
 	private void onViewClick(View view) {
 
 		if (lBean.getAction().contains(ACTION_START) || lBean.getAction().contains(ACTION_CLOSE)) {
