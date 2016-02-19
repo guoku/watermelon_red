@@ -6,13 +6,13 @@ import java.util.List;
 
 import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWIMKit;
+import com.alibaba.mobileim.utility.IMAutoLoginInfoStoreUtil;
 import com.alibaba.sdk.android.AlibabaSDK;
 import com.alibaba.sdk.android.callback.InitResultCallback;
 import com.alibaba.wxlib.util.SysUtil;
 import com.avos.avoscloud.AVOSCloud;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.guoku.guokuv4.bean.LaunchBean;
-import com.guoku.guokuv4.bean.LoginInfo;
 import com.guoku.guokuv4.config.AlibabaConfig;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.config.Logger;
@@ -32,6 +32,7 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.text.TextUtils;
 
 public class GuokuApplication extends Application {
 	private static GuokuApplication instance;
@@ -180,6 +181,7 @@ public class GuokuApplication extends Application {
 //				}
 
 				YWAPI.init(this, AlibabaConfig.APP_KEY);
+//				mIMKit = YWAPI.getIMKitInstance();
     }
     
     public List<String> splitToList(String param) {

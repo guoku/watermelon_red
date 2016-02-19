@@ -27,8 +27,7 @@
                     android:id="@+id/layout_search_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    layoutview:textRight="false" 
-                    >
+                    layoutview:textRight="false" >
                 </com.guoku.guokuv4.view.LayoutSearchBar>
 
                 <RelativeLayout
@@ -61,6 +60,31 @@
 
                     <TextView
                         style="@style/gray_bg_text"
+                        android:text="推荐用户" />
+
+                    <com.guoku.guokuv4.view.HorizontalListView
+                        android:id="@+id/listview_user"
+                        android:layout_width="match_parent"
+                        android:layout_height="72dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        >
+                    </com.guoku.guokuv4.view.HorizontalListView>
+
+                    <include
+                        layout="@layout/line_gray"
+                        android:background="@color/text_bg_box" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        style="@style/gray_bg_text"
                         android:text="推荐品类" />
 
                     <HorizontalScrollView
@@ -69,10 +93,9 @@
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:scrollbars="none" 
                         android:fadingEdge="none"
                         android:overScrollMode="never"
-                        >
+                        android:scrollbars="none" >
 
                         <LinearLayout
                             android:id="@+id/gallery_recommend_sort"
@@ -172,9 +195,8 @@
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="@string/tv_search_log_clean"
-                android:textColor="@color/gray_fzxx" 
-                android:textSize="14sp"
-                />
+                android:textColor="@color/gray_fzxx"
+                android:textSize="14sp" />
         </LinearLayout>
     </FrameLayout>
 

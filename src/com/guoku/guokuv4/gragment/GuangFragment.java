@@ -11,20 +11,20 @@ import org.json.JSONObject;
 
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVAnalytics;
-import com.facebook.drawee.generic.RoundingParams;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.FirstCategoryAct;
 import com.guoku.guokuv4.act.ProductInfoAct;
-//import com.guoku.guokuv4.act.SeachAct;
-import com.guoku.guokuv4.act.TabAct;
 import com.guoku.guokuv4.act.WebShareAct;
 import com.guoku.guokuv4.act.seach.SearchAct;
 import com.guoku.guokuv4.adapter.GuangArticlesAdapter;
 import com.guoku.guokuv4.adapter.GuangShopAdapter;
+import com.guoku.guokuv4.adapter.RecommendUserAdapter;
 import com.guoku.guokuv4.adapter.SearchLogAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
 import com.guoku.guokuv4.base.UserBaseFrament;
+import com.guoku.guokuv4.bean.AuthorizeduserBean;
 import com.guoku.guokuv4.bean.CategoryBean;
 import com.guoku.guokuv4.bean.Discover;
 import com.guoku.guokuv4.bean.SearchLogBean;
@@ -43,12 +43,14 @@ import com.guoku.guokuv4.utils.SharePrenceUtil;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.guoku.guokuv4.view.EditTextWithDel;
+import com.guoku.guokuv4.view.HorizontalListView;
 import com.guoku.guokuv4.view.ImageAddTextLayout;
 import com.guoku.guokuv4.view.LayoutSearchBar;
 import com.guoku.guokuv4.view.ScrollViewWithListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.umeng.analytics.MobclickAgent;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
@@ -58,6 +60,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -106,6 +109,9 @@ public class GuangFragment extends BaseFrament {
 	@ViewInject(R.id.faxian_sv)
 	private ScrollView sv;
 
+	@ViewInject(R.id.listview_user)
+	private HorizontalListView  listViewUser;// 推荐用户
+	
 	@ViewInject(R.id.gallery_recommend_sort)
 	private LinearLayout vpRecommendSort;// 推荐品类
 
@@ -113,6 +119,8 @@ public class GuangFragment extends BaseFrament {
 	private ScrollViewWithListView lvArticle;// 热门图文
 
 	GuangArticlesAdapter articlesAdapter;// 热门图文
+	
+	RecommendUserAdapter rUserAdapter;
 
 	private ScheduledExecutorService scheduledExecutorService;
 	private boolean onTouchTrue;
@@ -297,7 +305,7 @@ public class GuangFragment extends BaseFrament {
 						}
 					});
 				}
-
+				
 				/******** 热门图文 *********/
 				Discover discover = JSON.parseObject(result, Discover.class);
 				articlesAdapter.setList(discover.getArticles());
@@ -308,6 +316,8 @@ public class GuangFragment extends BaseFrament {
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
+				
+				setRecommendUser(discover.getAuthorizeduser());
 
 				sv.scrollTo(0, 0);
 				sv.smoothScrollTo(0, 0);
@@ -389,6 +399,8 @@ public class GuangFragment extends BaseFrament {
 			initArticle();
 
 			initSearchLog();
+			
+			initReUser();
 
 		} catch (Exception e) {
 		}
@@ -416,12 +428,33 @@ public class GuangFragment extends BaseFrament {
 			}
 		});
 	}
+	
+	private void initReUser(){
+		
+		rUserAdapter = new RecommendUserAdapter(context);
+		listViewUser.setAdapter(rUserAdapter);
+		listViewUser.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(context, UserBaseFrament.class);
+				intent.putExtra("data", rUserAdapter.getList().get(position).getUser());
+				startActivity(intent);
+			}
+		});
+	}
 
 	@Override
 	protected void setData() {
 		list_cid = ParseUtil.getTab2List(context);
 		sendConnection(Constant.FAXIANHOME, new String[] {}, new String[] {}, FAXIANHOME, false);
 		sendConnection(Constant.DISCOVER, new String[] {}, new String[] {}, DISCOVER, false);
+	}
+	
+	/******** 推荐用户 *********/
+	private void setRecommendUser(ArrayList<AuthorizeduserBean> authorizeduserBeans){
+		
+		rUserAdapter.setList(authorizeduserBeans);
 	}
 
 	@OnClick(R.id.ed_search)

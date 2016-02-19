@@ -7,12 +7,12 @@ import org.json.JSONObject;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.mobileim.IYWLoginService;
+import com.alibaba.mobileim.YWAPI;
+import com.alibaba.mobileim.YWLoginParam;
 import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.sdk.android.AlibabaSDK;
 import com.alibaba.sdk.android.login.LoginService;
-import com.alibaba.sdk.android.login.callback.LoginCallback;
 import com.alibaba.sdk.android.login.callback.LogoutCallback;
-import com.alibaba.sdk.android.session.model.Session;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
@@ -37,7 +37,6 @@ import com.guoku.guokuv4.bean.Articles;
 import com.guoku.guokuv4.bean.CommentsBean;
 import com.guoku.guokuv4.bean.LikesBean;
 import com.guoku.guokuv4.bean.Sharebean;
-import com.guoku.guokuv4.config.AlibabaConfig;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.AccountBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
@@ -294,7 +293,7 @@ public class PersonalFragment extends BaseFrament {
 			}else{
 				redRound.setVisibility(View.VISIBLE);
 			}
-			// initAliWang();
+//			 initAliWang();
 		} else {
 			titleBar.setVisibility(View.GONE);
 			iv_set.setVisibility(View.GONE);
@@ -725,49 +724,74 @@ public class PersonalFragment extends BaseFrament {
 	 */
 	public void openOpenAccountLogin() {
 
-		LoginService loginService = AlibabaSDK.getService(LoginService.class);
-
-		loginService.showLogin(getActivity(), new LoginCallback() {
-
-			@Override
-			public void onSuccess(Session session) {
-
-				ToastUtil.show(getActivity(), "鉴权成功");
-				LogGK.d("***********鉴权成功");
-
-				GuokuApplication.getInstance().initIMKit(session.getUser().nick, AlibabaConfig.APP_KEY);
-				IYWLoginService loginService = GuokuApplication.getInstance().getIMKit().getLoginService();
-
-				loginService.login(null, new IWxCallback() {
-
-					@Override
-					public void onSuccess(Object... arg0) {
-						// TODO Auto-generated method stub
-						ToastUtil.show(getActivity(), "IM登录成功");
-						LogGK.d("***********IM登录成功");
-					}
-
-					@Override
-					public void onProgress(int arg0) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onError(int arg0, String arg1) {
-						// TODO Auto-generated method stub
-						ToastUtil.show(getActivity(), "IM登录失败" + arg0 + arg1);
-						LogGK.d("***********IM登录失败" + arg0 + arg1);
-					}
-				});
-			}
-
-			@Override
-			public void onFailure(int code, String message) {
-				ToastUtil.show(getActivity(), "授权取消");
-				LogGK.d("***********授权取消");
-			}
+		String userid = "13466452759";
+		String password = "zylove59";
+		IYWLoginService loginService = GuokuApplication.getInstance().getIMKit().getLoginService();
+		YWLoginParam loginParam = YWLoginParam.createLoginParam(userid, password);
+		loginService.login(loginParam, new IWxCallback() {
+		 
+		    @Override
+		    public void onSuccess(Object... arg0) {
+		    	ToastUtil.show(getActivity(), "IM登录成功");
+				LogGK.d("***********IM登录成功");
+		    }
+		 
+		    @Override
+		    public void onProgress(int arg0) {
+		        // TODO Auto-generated method stub
+		    	ToastUtil.show(getActivity(), "正在登录");
+		    }
+		 
+		    @Override
+		    public void onError(int errCode, String description) {
+		        //如果登录失败，errCode为错误码,description是错误的具体描述信息
+		    	ToastUtil.show(getActivity(), "登录失败");
+				LogGK.d("***********IM登录失败:" + description + errCode);
+		    }
 		});
+		
+//		LoginService loginService = AlibabaSDK.getService(LoginService.class);
+//		loginService.showLogin(getActivity(), new LoginCallback() {
+//
+//			@Override
+//			public void onSuccess(Session session) {
+//
+//				ToastUtil.show(getActivity(), "鉴权成功");
+//				LogGK.d("***********鉴权成功");
+//
+//				GuokuApplication.getInstance().initIMKit(session.getUser().nick, AlibabaConfig.APP_KEY);
+//				IYWLoginService loginService = GuokuApplication.getInstance().getIMKit().getLoginService();
+//
+//				loginService.login(null, new IWxCallback() {
+//
+//					@Override
+//					public void onSuccess(Object... arg0) {
+//						// TODO Auto-generated method stub
+//						ToastUtil.show(getActivity(), "IM登录成功");
+//						LogGK.d("***********IM登录成功");
+//					}
+//
+//					@Override
+//					public void onProgress(int arg0) {
+//						// TODO Auto-generated method stub
+//
+//					}
+//
+//					@Override
+//					public void onError(int arg0, String arg1) {
+//						// TODO Auto-generated method stub
+//						ToastUtil.show(getActivity(), "IM登录失败" + arg0 + arg1);
+//						LogGK.d("***********IM登录失败" + arg0 + arg1);
+//					}
+//				});
+//			}
+//
+//			@Override
+//			public void onFailure(int code, String message) {
+//				ToastUtil.show(getActivity(), "授权取消");
+//				LogGK.d("***********授权取消");
+//			}
+//		});
 	}
 
 	private void loginOutAli() {

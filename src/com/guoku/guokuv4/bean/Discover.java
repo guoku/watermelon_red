@@ -28,8 +28,17 @@ public class Discover {
     private ArrayList<BannerEntity> banner;
     private ArrayList<CategoriesEntity> categories;
     private ArrayList<EntitiesEntity> entities;
+    private ArrayList<AuthorizeduserBean> authorizeduser;
 
-    public void setArticles(ArrayList<ArticlesEntity> articles) {
+    public ArrayList<AuthorizeduserBean> getAuthorizeduser() {
+		return authorizeduser;
+	}
+
+	public void setAuthorizeduser(ArrayList<AuthorizeduserBean> authorizeduser) {
+		this.authorizeduser = authorizeduser;
+	}
+
+	public void setArticles(ArrayList<ArticlesEntity> articles) {
         this.articles = articles;
     }
 
