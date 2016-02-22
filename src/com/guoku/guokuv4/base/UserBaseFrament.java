@@ -28,7 +28,7 @@ public class UserBaseFrament extends BaseActivity{
 		setContentView(R.layout.frament_user_base);
 		pFragment = new PersonalFragment();
 		pFragment.uBean = (UserBean) getIntent().getSerializableExtra("data");
-		pFragment.isUser = true;
+		pFragment.userType = 1;
 		fm = getSupportFragmentManager();
 		fm.beginTransaction().add(R.id.fl_content, pFragment).commit();
 		

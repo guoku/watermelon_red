@@ -10,6 +10,7 @@ import com.alibaba.mobileim.IYWLoginService;
 import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWLoginParam;
 import com.alibaba.mobileim.channel.event.IWxCallback;
+import com.alibaba.mobileim.ui.multi.common.YWPopupWindow.ViewInit;
 import com.alibaba.sdk.android.AlibabaSDK;
 import com.alibaba.sdk.android.login.LoginService;
 import com.alibaba.sdk.android.login.callback.LogoutCallback;
@@ -64,6 +65,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewStub;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
@@ -89,9 +91,9 @@ public class PersonalFragment extends BaseFrament {
 
 	private final String LIKE = "like";
 	private final String NOTE = "entity/note";
-	private final String ARTICLE = "articles";
+	private final String ARTICLE = "last_post_article";
 
-	public boolean isUser;// 是否是非本人 true＝是
+	public int userType;// 0=本人（默认）1=普通用户 2=认证用户
 
 	@ViewInject(R.id.title_bar)
 	LinearLayout titleBar;
@@ -104,7 +106,7 @@ public class PersonalFragment extends BaseFrament {
 
 	@ViewInject(R.id.title_bar_rigth_iv)
 	private ImageView iv_set;
-	
+
 	@ViewInject(R.id.red_round)
 	private ImageView redRound;
 
@@ -155,17 +157,27 @@ public class PersonalFragment extends BaseFrament {
 
 	@ViewInject(R.id.gridview_like)
 	private ScrollViewWithGridView gridviewLike;// 喜欢 gridview
-	
+
 	@ViewInject(R.id.listview_user_article)
 	private ScrollViewWithListView listArticle;// 用户图文listview
 
 	@ViewInject(R.id.listview_commit)
 	private ScrollViewWithListView listComment;// 点评 listview
 
+	@ViewInject(R.id.view_stub_user_authen)
+	ViewStub viewArticleList;// 鉴权媒体认证用户
+
+	@ViewInject(R.id.view_stub_user)
+	View viewUserList;// 本人和普通用户
+
+	ScrollViewWithListView listUserAuthon;// 鉴权媒体认证用户图文list
+
+	ArticlesCategoryAdapter articlesAuthonAdapter;// 鉴权媒体认证用户图文adapter
+
 	private GridViewAdapter gvAdapter;
 
 	private ListImgLeftAdapter listImgLeftAdapter;// 左侧图片
-	
+
 	private ArticlesCategoryAdapter articlesAdapter;// 图文adapter
 
 	@ViewInject(R.id.psrson_tv_name)
@@ -198,15 +210,22 @@ public class PersonalFragment extends BaseFrament {
 	@Override
 	protected int getContentId() {
 
-		if (isUser) {
-			return R.layout.fragment_personal;
-		} else {
+		int layoutID;
+		switch (userType) {
+		case 0:
 			if (GuokuApplication.getInstance().getBean() == null) {
-
-				return R.layout.pserson_no_log;
+				layoutID = R.layout.pserson_no_log;
 			} else
-				return R.layout.fragment_personal;
+				layoutID = R.layout.fragment_personal;
+			break;
+		case 1:
+			layoutID = R.layout.fragment_personal;
+			break;
+		default:
+			layoutID = R.layout.fragment_personal;
+			break;
 		}
+		return layoutID;
 	}
 
 	@Override
@@ -233,10 +252,10 @@ public class PersonalFragment extends BaseFrament {
 			}
 			break;
 		case USERINFO:
-			if (!isUser) {
-				Log.d("USERINFO=", result);
-				refreshUserInfo(result);
-			}
+			// if (userType == 0) {
+			// refreshUserInfo(result);
+			// }
+			refreshUserInfo(result);
 			break;
 		case FOLLOW0:
 			setConcem();
@@ -283,34 +302,63 @@ public class PersonalFragment extends BaseFrament {
 	@Override
 	protected void init() {
 
-		if (!isUser) {
+		switch (userType) {
+		case 0:
+			viewUserList.setVisibility(View.VISIBLE);
 			uBean = GuokuApplication.getInstance().getBean().getUser();
 			iv_set.setVisibility(View.VISIBLE);
 			tv_title.setText("我");
 			iv_set.setImageResource(R.drawable.setting);
-			if(uBean.isMail_verified()){
+			if (uBean.isMail_verified()) {
 				redRound.setVisibility(View.GONE);
-			}else{
+			} else {
 				redRound.setVisibility(View.VISIBLE);
 			}
-//			 initAliWang();
-		} else {
-			titleBar.setVisibility(View.GONE);
-			iv_set.setVisibility(View.GONE);
-			tabLeftImg.setImageResource(R.drawable.back);
-			tabLeftImgLine.setVisibility(View.VISIBLE);
-			title.setText(uBean.getNickname());
-			redRound.setVisibility(View.GONE);
-			setConcem();
-		}
+			initUnUserAuthon();
+			break;
+		case 1:
+			viewUserList.setVisibility(View.VISIBLE);
+			initUnUser();
+			initUnUserAuthon();
+			break;
+		case 2:
+			viewUserList.setVisibility(View.GONE);
+			initUnUser();
+			viewArticleList.inflate();
+			setTextRightImg(psrson_iv_sex, R.drawable.official);
+			initUserAuthon();
+			break;
 
+		default:
+			break;
+		}
 		psrson_tv_fans.setText(uBean.getFan_count());
 		psrson_tv_guanzhu.setText(uBean.getFollowing_count());
-
 		psrson_tv_name.setText(uBean.getNickname());
 		psrson_tv_sign.setText(uBean.getBio());
-
 		psrson_iv_pic.setImageURI(Uri.parse(uBean.get240()));
+
+		getUserInfo();
+	}
+
+	/**
+	 * 初始化非本人用户UI
+	 */
+	private void initUnUser() {
+
+		titleBar.setVisibility(View.GONE);
+		iv_set.setVisibility(View.GONE);
+		tabLeftImg.setImageResource(R.drawable.back);
+		tabLeftImgLine.setVisibility(View.VISIBLE);
+		title.setText(uBean.getNickname());
+		redRound.setVisibility(View.GONE);
+		setConcem();
+	}
+
+	/**
+	 * 初始化非鉴权用户逻辑&数据
+	 */
+	private void initUnUserAuthon() {
 
 		if (uBean.getGender().equals("男")) {
 			psrson_iv_sex.setTextColor(Color.rgb(19, 143, 215));
@@ -319,14 +367,11 @@ public class PersonalFragment extends BaseFrament {
 			psrson_iv_sex.setTextColor(Color.rgb(253, 189, 217));
 			setTextRightImg(psrson_iv_sex, R.drawable.female);
 		}
-
 		setUserTab();
 		initReceiver();
 		initLike();
 		initArticle();
 		initConmment();
-
-		getUserInfo();
 	}
 
 	/**
@@ -347,7 +392,7 @@ public class PersonalFragment extends BaseFrament {
 
 		getInitData(LIKE, "4", TABLIKE);
 	}
-	
+
 	/***
 	 * 初始化图文
 	 */
@@ -371,10 +416,9 @@ public class PersonalFragment extends BaseFrament {
 				openActivity(WebShareAct.class, bundle);
 			}
 		});
-		
+
 		getInitData(ARTICLE, "3", TABARTICLE);
 	}
-	
 
 	/**
 	 * 初始化点评
@@ -393,6 +437,32 @@ public class PersonalFragment extends BaseFrament {
 		});
 
 		getInitData(NOTE, "3", TABNOTE);
+	}
+
+	/**
+	 * 初始化鉴权媒体认证用户
+	 */
+	private void initUserAuthon() {
+		listUserAuthon = (ScrollViewWithListView) contentView.findViewById(R.id.listView_article);
+		articlesAuthonAdapter = new ArticlesCategoryAdapter(getActivity());
+		listUserAuthon.setAdapter(articlesAdapter);
+		listUserAuthon.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				// TODO Auto-generated method stub
+
+				Bundle bundle = new Bundle();
+				Sharebean sharebean = new Sharebean();
+				sharebean.setTitle(articlesAdapter.getList().get(arg2).getTitle());
+				sharebean.setContext(articlesAdapter.getList().get(arg2).getContent().substring(0, 50));
+				sharebean.setAricleUrl(articlesAdapter.getList().get(arg2).getUrl());
+				sharebean.setImgUrl(articlesAdapter.getList().get(arg2).getCover());
+				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
+
+				openActivity(WebShareAct.class, bundle);
+			}
+		});
 	}
 
 	/**
@@ -420,7 +490,7 @@ public class PersonalFragment extends BaseFrament {
 			}
 		}
 	}
-	
+
 	@OnClick(R.id.psrson_iv_pic)
 	public void onHeadImg(View v) {
 		Bundle bundle = new Bundle();
@@ -443,7 +513,10 @@ public class PersonalFragment extends BaseFrament {
 
 	@OnClick(R.id.psrson_ll_btn)
 	public void psrson_ll_btn(View v) {
-		if (isUser) {
+		if (userType == 0) {
+			Intent intent = new Intent(context, UserInfoAct.class);
+			startActivityForResult(intent, RESULT_CODE);
+		} else {
 			if (uBean.getRelation().equals("0") || uBean.getRelation().equals("2")) {
 				sendConnectionPost(Constant.FOLLOW + uBean.getUser_id() + "/follow/1/", new String[] {},
 						new String[] {}, FOLLOW1, false);
@@ -453,9 +526,6 @@ public class PersonalFragment extends BaseFrament {
 						new String[] {}, FOLLOW0, false);
 				uBean.setRelation("0");
 			}
-		} else {
-			Intent intent = new Intent(context, UserInfoAct.class);
-			startActivityForResult(intent, RESULT_CODE);
 		}
 	}
 
@@ -646,10 +716,10 @@ public class PersonalFragment extends BaseFrament {
 	private void setUserTab() {
 
 		String tempStr;
-		if (isUser) {
-			tempStr = getActivity().getResources().getString(R.string.tv_user_he);
-		} else {
+		if (userType == 0) {
 			tempStr = getActivity().getResources().getString(R.string.tv_user_my);
+		} else {
+			tempStr = getActivity().getResources().getString(R.string.tv_user_he);
 		}
 
 		userLike.tv1.setText(tempStr + getActivity().getResources().getString(R.string.tv_user_like));
@@ -677,22 +747,27 @@ public class PersonalFragment extends BaseFrament {
 	}
 
 	private void refreshUI() {
-
 		psrson_tv_guanzhu.setText(uBean.getFollowing_count());
 
-		if (isUnZero(uBean.getLike_count())) {
-			userLike.tv2.setText(uBean.getLike_count());
+		if (userType != 2) {
+			if (isUnZero(uBean.getLike_count())) {
+				userLike.tv2.setText(uBean.getLike_count());
+			}
+			if (isUnZero(uBean.getEntity_note_count())) {
+				userComment.tv2.setText(uBean.getEntity_note_count());
+			}
+			if (isUnZero(uBean.getArticle_count())) {
+				userArticle.tv2.setText(uBean.getArticle_count());
+			}
+			if (isUnZero(uBean.getTag_count())) {
+				userTag.tv2.setText(uBean.getTag_count());
+			}
+			userArticleZan.tv2.setText("555");
 		}
-		if (isUnZero(uBean.getEntity_note_count())) {
-			userComment.tv2.setText(uBean.getEntity_note_count());
+
+		if (userType != 0) {
+			setConcem();
 		}
-		if (isUnZero(uBean.getArticle_count())) {
-			userArticle.tv2.setText(uBean.getArticle_count());
-		}
-		if (isUnZero(uBean.getTag_count())) {
-			userTag.tv2.setText(uBean.getTag_count());
-		}
-		userArticleZan.tv2.setText("555");
 	}
 
 	/************** 阿里openIM ****************/
@@ -729,69 +804,72 @@ public class PersonalFragment extends BaseFrament {
 		IYWLoginService loginService = GuokuApplication.getInstance().getIMKit().getLoginService();
 		YWLoginParam loginParam = YWLoginParam.createLoginParam(userid, password);
 		loginService.login(loginParam, new IWxCallback() {
-		 
-		    @Override
-		    public void onSuccess(Object... arg0) {
-		    	ToastUtil.show(getActivity(), "IM登录成功");
+
+			@Override
+			public void onSuccess(Object... arg0) {
+				ToastUtil.show(getActivity(), "IM登录成功");
 				LogGK.d("***********IM登录成功");
-		    }
-		 
-		    @Override
-		    public void onProgress(int arg0) {
-		        // TODO Auto-generated method stub
-		    	ToastUtil.show(getActivity(), "正在登录");
-		    }
-		 
-		    @Override
-		    public void onError(int errCode, String description) {
-		        //如果登录失败，errCode为错误码,description是错误的具体描述信息
-		    	ToastUtil.show(getActivity(), "登录失败");
+			}
+
+			@Override
+			public void onProgress(int arg0) {
+				// TODO Auto-generated method stub
+				ToastUtil.show(getActivity(), "正在登录");
+			}
+
+			@Override
+			public void onError(int errCode, String description) {
+				// 如果登录失败，errCode为错误码,description是错误的具体描述信息
+				ToastUtil.show(getActivity(), "登录失败");
 				LogGK.d("***********IM登录失败:" + description + errCode);
-		    }
+			}
 		});
-		
-//		LoginService loginService = AlibabaSDK.getService(LoginService.class);
-//		loginService.showLogin(getActivity(), new LoginCallback() {
-//
-//			@Override
-//			public void onSuccess(Session session) {
-//
-//				ToastUtil.show(getActivity(), "鉴权成功");
-//				LogGK.d("***********鉴权成功");
-//
-//				GuokuApplication.getInstance().initIMKit(session.getUser().nick, AlibabaConfig.APP_KEY);
-//				IYWLoginService loginService = GuokuApplication.getInstance().getIMKit().getLoginService();
-//
-//				loginService.login(null, new IWxCallback() {
-//
-//					@Override
-//					public void onSuccess(Object... arg0) {
-//						// TODO Auto-generated method stub
-//						ToastUtil.show(getActivity(), "IM登录成功");
-//						LogGK.d("***********IM登录成功");
-//					}
-//
-//					@Override
-//					public void onProgress(int arg0) {
-//						// TODO Auto-generated method stub
-//
-//					}
-//
-//					@Override
-//					public void onError(int arg0, String arg1) {
-//						// TODO Auto-generated method stub
-//						ToastUtil.show(getActivity(), "IM登录失败" + arg0 + arg1);
-//						LogGK.d("***********IM登录失败" + arg0 + arg1);
-//					}
-//				});
-//			}
-//
-//			@Override
-//			public void onFailure(int code, String message) {
-//				ToastUtil.show(getActivity(), "授权取消");
-//				LogGK.d("***********授权取消");
-//			}
-//		});
+
+		// LoginService loginService =
+		// AlibabaSDK.getService(LoginService.class);
+		// loginService.showLogin(getActivity(), new LoginCallback() {
+		//
+		// @Override
+		// public void onSuccess(Session session) {
+		//
+		// ToastUtil.show(getActivity(), "鉴权成功");
+		// LogGK.d("***********鉴权成功");
+		//
+		// GuokuApplication.getInstance().initIMKit(session.getUser().nick,
+		// AlibabaConfig.APP_KEY);
+		// IYWLoginService loginService =
+		// GuokuApplication.getInstance().getIMKit().getLoginService();
+		//
+		// loginService.login(null, new IWxCallback() {
+		//
+		// @Override
+		// public void onSuccess(Object... arg0) {
+		// // TODO Auto-generated method stub
+		// ToastUtil.show(getActivity(), "IM登录成功");
+		// LogGK.d("***********IM登录成功");
+		// }
+		//
+		// @Override
+		// public void onProgress(int arg0) {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		//
+		// @Override
+		// public void onError(int arg0, String arg1) {
+		// // TODO Auto-generated method stub
+		// ToastUtil.show(getActivity(), "IM登录失败" + arg0 + arg1);
+		// LogGK.d("***********IM登录失败" + arg0 + arg1);
+		// }
+		// });
+		// }
+		//
+		// @Override
+		// public void onFailure(int code, String message) {
+		// ToastUtil.show(getActivity(), "授权取消");
+		// LogGK.d("***********授权取消");
+		// }
+		// });
 	}
 
 	private void loginOutAli() {
@@ -833,7 +911,7 @@ public class PersonalFragment extends BaseFrament {
 		getInitData(LIKE, "4", TABLIKE);
 		getUserInfo();
 	}
-	
+
 	public void onEventMainThread(CommentsBean commentsBean) {
 		getUserInfo();
 		getInitData(NOTE, "3", TABNOTE);

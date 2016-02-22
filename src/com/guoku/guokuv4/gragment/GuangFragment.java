@@ -20,7 +20,6 @@ import com.guoku.guokuv4.act.WebShareAct;
 import com.guoku.guokuv4.act.seach.SearchAct;
 import com.guoku.guokuv4.adapter.GuangArticlesAdapter;
 import com.guoku.guokuv4.adapter.GuangShopAdapter;
-import com.guoku.guokuv4.adapter.RecommendUserAdapter;
 import com.guoku.guokuv4.adapter.SearchLogAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
 import com.guoku.guokuv4.base.UserBaseFrament;
@@ -43,7 +42,6 @@ import com.guoku.guokuv4.utils.SharePrenceUtil;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.guoku.guokuv4.view.EditTextWithDel;
-import com.guoku.guokuv4.view.HorizontalListView;
 import com.guoku.guokuv4.view.ImageAddTextLayout;
 import com.guoku.guokuv4.view.LayoutSearchBar;
 import com.guoku.guokuv4.view.ScrollViewWithListView;
@@ -60,7 +58,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -109,8 +106,8 @@ public class GuangFragment extends BaseFrament {
 	@ViewInject(R.id.faxian_sv)
 	private ScrollView sv;
 
-	@ViewInject(R.id.listview_user)
-	private HorizontalListView  listViewUser;// 推荐用户
+	@ViewInject(R.id.gallery_recommend_user)
+	private LinearLayout  layoutUser;// 推荐用户
 	
 	@ViewInject(R.id.gallery_recommend_sort)
 	private LinearLayout vpRecommendSort;// 推荐品类
@@ -120,8 +117,6 @@ public class GuangFragment extends BaseFrament {
 
 	GuangArticlesAdapter articlesAdapter;// 热门图文
 	
-	RecommendUserAdapter rUserAdapter;
-
 	private ScheduledExecutorService scheduledExecutorService;
 	private boolean onTouchTrue;
 	private MyViewPagerAdapter adapter;
@@ -400,8 +395,6 @@ public class GuangFragment extends BaseFrament {
 
 			initSearchLog();
 			
-			initReUser();
-
 		} catch (Exception e) {
 		}
 
@@ -428,21 +421,6 @@ public class GuangFragment extends BaseFrament {
 			}
 		});
 	}
-	
-	private void initReUser(){
-		
-		rUserAdapter = new RecommendUserAdapter(context);
-		listViewUser.setAdapter(rUserAdapter);
-		listViewUser.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(context, UserBaseFrament.class);
-				intent.putExtra("data", rUserAdapter.getList().get(position).getUser());
-				startActivity(intent);
-			}
-		});
-	}
 
 	@Override
 	protected void setData() {
@@ -452,9 +430,27 @@ public class GuangFragment extends BaseFrament {
 	}
 	
 	/******** 推荐用户 *********/
-	private void setRecommendUser(ArrayList<AuthorizeduserBean> authorizeduserBeans){
+	private void setRecommendUser(final ArrayList<AuthorizeduserBean> authorizeduserBeans){
 		
-		rUserAdapter.setList(authorizeduserBeans);
+		
+		for (int i = 0; i < authorizeduserBeans.size(); i++) {
+			View view =  View.inflate(getActivity(), R.layout.item_recommend_user, null);
+			SimpleDraweeView sView = (SimpleDraweeView) view.findViewById(R.id.psrson_iv_pic);
+			sView.setImageURI(Uri.parse(authorizeduserBeans.get(i).getUser().get50()));
+			sView.setTag(authorizeduserBeans.get(i));
+			layoutUser.addView(view);
+			
+			sView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					AuthorizeduserBean aBean = (AuthorizeduserBean) v.getTag();
+					Intent intent = new Intent(context, UserBaseFrament.class);
+					intent.putExtra("data", aBean.getUser());
+					startActivity(intent);
+				}
+			});
+		}
 	}
 
 	@OnClick(R.id.ed_search)
@@ -469,6 +465,15 @@ public class GuangFragment extends BaseFrament {
 		if (viewLog.getVisibility() == View.VISIBLE) {
 			hideSearchWhat();
 		}
+	}
+	
+	/**
+	 * 更多推荐用户
+	 * @param view
+	 */
+	@OnClick(R.id.tv_user_more)
+	private void userMore(View view){
+		
 	}
 
 	public class MyViewPagerAdapter extends PagerAdapter {

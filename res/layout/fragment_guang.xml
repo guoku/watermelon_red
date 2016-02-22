@@ -58,18 +58,30 @@
                     android:background="@color/white"
                     android:orientation="vertical" >
 
-                    <TextView
-                        style="@style/gray_bg_text"
-                        android:text="推荐用户" />
+                    <com.guoku.guokuv4.view.LayoutItemView
+                        android:id="@+id/tv_user_more"
+                        style="@style/therm_tab_title_style"
+                        layoutview:textColorLeft="@color/black_body"
+                        layoutview:textLeft="推荐用户" >
+                    </com.guoku.guokuv4.view.LayoutItemView>
 
-                    <com.guoku.guokuv4.view.HorizontalListView
-                        android:id="@+id/listview_user"
+                    <HorizontalScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="72dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
-                        >
-                    </com.guoku.guokuv4.view.HorizontalListView>
+                        android:layout_marginRight="10dp"
+                        android:fadingEdge="none"
+                        android:overScrollMode="never"
+                        android:scrollbars="none" >
+
+                        <LinearLayout
+                            android:id="@+id/gallery_recommend_user"
+                            android:layout_width="match_parent"
+                            android:layout_height="72dp"
+                            android:gravity="center"
+                            android:orientation="horizontal" />
+                    </HorizontalScrollView>
 
                     <include
                         layout="@layout/line_gray"

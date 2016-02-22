@@ -67,10 +67,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="12dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:gravity="center_horizontal"
-                android:singleLine="true"
                 android:text="个性"
-                android:textColor="@color/black_body" />
+                android:textColor="@color/black_body" 
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:lineSpacingMultiplier="1.5"
+                />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -170,114 +175,18 @@
                     android:text="编辑个人资料"
                     android:textColor="@color/g_blue" />
             </LinearLayout>
-
-            <com.guoku.guokuv4.view.LayoutItemView
-                android:id="@+id/tv_user_like"
-                style="@style/therm_tab_title_style"
-                android:layout_marginTop="12dp"
-                layoutview:textColorLeft="@color/black_body"
-                layoutview:textLeft="我的喜爱" >
-            </com.guoku.guokuv4.view.LayoutItemView>
-
-            <com.guoku.guokuv4.view.ScrollViewWithGridView
-                android:id="@+id/gridview_like"
+            
+            <include 
+                layout="@layout/layout_user_data"
+                />
+            
+            <ViewStub 
+                android:id="@+id/view_stub_user_authen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:cacheColorHint="#00000000"
-                android:gravity="center"
-                android:horizontalSpacing="4dp"
-                android:listSelector="#00000000"
-                android:numColumns="4"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:paddingBottom="4dp"
-                android:scrollbars="none"
-                android:verticalSpacing="4px" />
-            
-            <include
-                layout="@layout/line_gray"
-                android:background="@color/text_bg_box" />
-
-            <com.guoku.guokuv4.view.LayoutItemView
-                android:id="@+id/tv_user_article"
-                style="@style/therm_tab_title_style"
-                android:layout_marginTop="10dp"
-                layoutview:textColorLeft="@color/black_body"
-                layoutview:textLeft="我的图文" 
-                >
-            </com.guoku.guokuv4.view.LayoutItemView>
-            
-            <com.guoku.guokuv4.view.ScrollViewWithListView
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/listview_user_article"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#ffffffff"
-                android:divider="@color/g_line"
-                android:dividerHeight="1px"
-                android:listSelector="@android:color/transparent" >
-            </com.guoku.guokuv4.view.ScrollViewWithListView>
-
-            <include
-                layout="@layout/line_gray"
-                android:background="@color/text_bg_box" />
-
-            <com.guoku.guokuv4.view.LayoutItemView
-                android:id="@+id/tv_user_comment"
-                style="@style/therm_tab_title_style"
-                android:layout_marginTop="10dp"
-                layoutview:textColorLeft="@color/black_body"
-                layoutview:textLeft="我的点评" >
-            </com.guoku.guokuv4.view.LayoutItemView>
-
-            <com.guoku.guokuv4.view.ScrollViewWithListView
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/listview_commit"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#ffffffff"
-                android:divider="@color/g_line"
-                android:dividerHeight="1px"
-                android:listSelector="@android:color/transparent" >
-            </com.guoku.guokuv4.view.ScrollViewWithListView>
-
-            <include
-                layout="@layout/line_gray"
-                android:background="@color/text_bg_box" 
+                android:layout="@layout/item_article_list"
                 />
-
-            <com.guoku.guokuv4.view.LayoutItemView
-                android:id="@+id/tv_user_tag"
-                style="@style/therm_tab_title_style"
-                android:layout_marginTop="10dp"
-                layoutview:textColorLeft="@color/black_body"
-                layoutview:textLeft="我参与的标签" >
-            </com.guoku.guokuv4.view.LayoutItemView>
-
-            <include
-                layout="@layout/line_gray"
-                android:background="@color/text_bg_box" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
-
-            <!-- 由于后台接口未完成，所以暂不做此功能 -->
-
-            <com.guoku.guokuv4.view.LayoutItemView
-                android:id="@+id/tv_user_article_zan"
-                style="@style/therm_tab_title_style"
-                android:layout_marginTop="10dp"
-                android:visibility="gone"
-                layoutview:textColorLeft="@color/black_body"
-                layoutview:textLeft="我赞过的图文" >
-            </com.guoku.guokuv4.view.LayoutItemView>
-
-            <include
-                layout="@layout/line_gray"
-                android:background="@color/text_bg_box"
-                android:visibility="gone" />
+            
         </LinearLayout>
         
     </com.guoku.guokuv4.view.ReboundScrollView>
