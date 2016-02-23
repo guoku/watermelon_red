@@ -5,19 +5,15 @@ package com.guoku.guokuv4.gragment;
 
 import java.util.ArrayList;
 
-import android.content.Intent;
-import android.support.v4.app.Fragment;
-import android.widget.TextView;
-import de.greenrobot.event.EventBus;
-
 import com.guoku.R;
 import com.guoku.guokuv4.base.BasePageFragment;
 import com.guoku.guokuv4.bean.LikesBean;
-import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.homepage.ArticleFragment;
 import com.guoku.guokuv4.homepage.GoodTwoFragmnet;
-import com.guoku.guokuv4.utils.BroadUtil;
-import com.guoku.guokuv4.utils.StringUtils;
+
+import android.support.v4.app.Fragment;
+import android.widget.TextView;
+import de.greenrobot.event.EventBus;
 
 /**
  * @zhangyao

@@ -98,6 +98,8 @@ public class Constant {
 	public static final String EMAIL_VERIFIED = URL + "/mobile/v4/user/email/verified/";
 	/** 一级品类中的图文 */
 	public static final String CATEGORY_FIRST = URL + "/mobile/v4/category/";
+	/** 推荐全部用户 */
+	public static final String AUTHORIZED_USERS = URL + "/mobile/v4/authorized/users/";
 	
 	public static final String DESCRIPTOR = "1";
 	public static final String WX_APPID = "wx59118ccde8270caa";
@@ -110,7 +112,7 @@ public class Constant {
 	public static final String INTENT_ACTION = Constant.class.getName();
 	public static final String INTENT_ACTION_KEY = Constant.class.getName()
 			+ "_KEY";
-	public static final int INTENT_ACTION_VALUE_FOLLOW = 2;// 关注
+//	public static final int INTENT_ACTION_VALUE_FOLLOW = 2;// 关注
 
 	public static void init(GuokuApplication lezyoApplication) {
 		if (lezyoApplication != null) {

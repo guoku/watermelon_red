@@ -14,6 +14,7 @@ import com.avos.avoscloud.AVAnalytics;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.act.FansAct;
 import com.guoku.guokuv4.act.FirstCategoryAct;
 import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.act.WebShareAct;
@@ -473,7 +474,11 @@ public class GuangFragment extends BaseFrament {
 	 */
 	@OnClick(R.id.tv_user_more)
 	private void userMore(View view){
-		
+		Intent intent = new Intent(context, FansAct.class);
+		intent.putExtra("url", Constant.AUTHORIZED_USERS);
+		intent.putExtra("name", "推荐用户");
+		intent.putExtra(PersonalFragment.class.getName(), true);
+		startActivity(intent);
 	}
 
 	public class MyViewPagerAdapter extends PagerAdapter {

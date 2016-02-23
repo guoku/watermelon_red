@@ -7,10 +7,8 @@ import org.json.JSONObject;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.mobileim.IYWLoginService;
-import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWLoginParam;
 import com.alibaba.mobileim.channel.event.IWxCallback;
-import com.alibaba.mobileim.ui.multi.common.YWPopupWindow.ViewInit;
 import com.alibaba.sdk.android.AlibabaSDK;
 import com.alibaba.sdk.android.login.LoginService;
 import com.alibaba.sdk.android.login.callback.LogoutCallback;
@@ -42,8 +40,8 @@ import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.AccountBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.UserBean;
+import com.guoku.guokuv4.eventbus.FollowEB;
 import com.guoku.guokuv4.parse.ParseUtil;
-import com.guoku.guokuv4.utils.BroadUtil;
 import com.guoku.guokuv4.utils.LogGK;
 import com.guoku.guokuv4.utils.SharePrenceUtil;
 import com.guoku.guokuv4.utils.StringUtils;
@@ -54,15 +52,11 @@ import com.guoku.guokuv4.view.ScrollViewWithListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewStub;
@@ -189,8 +183,6 @@ public class PersonalFragment extends BaseFrament {
 
 	public UserBean uBean;
 
-	private BroadcastReceiver receiveBroadCast; // 用来处理其它ui操作的关注、喜欢等，保证数据急时同步
-
 	private int temp;
 
 	@Override
@@ -252,24 +244,19 @@ public class PersonalFragment extends BaseFrament {
 			}
 			break;
 		case USERINFO:
-			// if (userType == 0) {
-			// refreshUserInfo(result);
-			// }
-			refreshUserInfo(result);
+//			 if (userType == 0) {
+			 refreshUserInfo(result);
+//			 }
 			break;
 		case FOLLOW0:
-			setConcem();
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_FOLLOW);
+			FollowEB fEb = new FollowEB();
+			fEb.setFollow(false);
+			EventBus.getDefault().post(fEb);
 			break;
 		case FOLLOW1:
-			ToastUtil.show(context, "关注成功");
-			try {
-				setConcem();
-				BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_FOLLOW);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			FollowEB fEb2 = new FollowEB();
+			fEb2.setFollow(true);
+			EventBus.getDefault().post(fEb2);
 			break;
 		case TABLIKE:
 			gvAdapter.setList(ParseUtil.getTabLikeList(result));
@@ -368,7 +355,6 @@ public class PersonalFragment extends BaseFrament {
 			setTextRightImg(psrson_iv_sex, R.drawable.female);
 		}
 		setUserTab();
-		initReceiver();
 		initLike();
 		initArticle();
 		initConmment();
@@ -532,8 +518,7 @@ public class PersonalFragment extends BaseFrament {
 	@OnClick(R.id.psrson_ll_follow)
 	public void psrson_ll_follow(View v) {
 		Intent intent = new Intent(context, FansAct.class);
-		intent.putExtra("data", uBean.getUser_id());
-		intent.putExtra("url", "/following/");
+		intent.putExtra("url", Constant.GETFANSLIST  + uBean.getUser_id() + "/following/");
 		intent.putExtra("name", "关注");
 		startActivity(intent);
 	}
@@ -541,8 +526,7 @@ public class PersonalFragment extends BaseFrament {
 	@OnClick(R.id.psrson_ll_fans)
 	public void psrson_ll_fans(View v) {
 		Intent intent = new Intent(context, FansAct.class);
-		intent.putExtra("data", uBean.getUser_id());
-		intent.putExtra("url", "/fan/");
+		intent.putExtra("url", Constant.GETFANSLIST  + uBean.getUser_id() + "/fan/");
 		intent.putExtra("name", "粉丝");
 		startActivity(intent);
 	}
@@ -603,40 +587,6 @@ public class PersonalFragment extends BaseFrament {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		register();
-	}
-
-	/**
-	 * 喜欢收到的广播
-	 */
-	private void initReceiver() {
-		receiveBroadCast = new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-
-				if (uBean != null) {
-
-					Bundle bundle = intent.getExtras();
-					if (bundle != null) {
-						switch (bundle.getInt(Constant.INTENT_ACTION_KEY)) {
-						case Constant.INTENT_ACTION_VALUE_FOLLOW:
-							getUserInfo();
-							break;
-						default:
-							break;
-						}
-					}
-				}
-			}
-		};
-	}
-
-	private void register() {
-
-		IntentFilter filter = new IntentFilter();
-		filter.addAction(Constant.INTENT_ACTION);
-		filter.setPriority(Integer.MAX_VALUE);
-		context.registerReceiver(receiveBroadCast, filter);
 	}
 
 	/**
@@ -649,13 +599,14 @@ public class PersonalFragment extends BaseFrament {
 			root = new JSONObject(result);
 
 			uBean = (UserBean) JSON.parseObject(root.getString("user"), UserBean.class);
-			AccountBean userAccountBean = new AccountBean();
-			userAccountBean.setUser(uBean);
-			if (!StringUtils.isEmpty(GuokuApplication.getInstance().getBean().getSession())) {
-				userAccountBean.setSession(GuokuApplication.getInstance().getBean().getSession());
+			if(userType == 0){
+				AccountBean userAccountBean = new AccountBean();
+				userAccountBean.setUser(uBean);
+				if (!StringUtils.isEmpty(GuokuApplication.getInstance().getBean().getSession())) {
+					userAccountBean.setSession(GuokuApplication.getInstance().getBean().getSession());
+				}
+				SharePrenceUtil.setUserBean(context, userAccountBean);
 			}
-			SharePrenceUtil.setUserBean(context, userAccountBean);
-
 			refreshUI();
 
 		} catch (JSONException e) {
@@ -668,13 +619,6 @@ public class PersonalFragment extends BaseFrament {
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		if (receiveBroadCast != null) {
-			try {
-				context.unregisterReceiver(receiveBroadCast);
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-		}
 	}
 
 	private void setTextRightImg(TextView view, int id) {
@@ -915,6 +859,15 @@ public class PersonalFragment extends BaseFrament {
 	public void onEventMainThread(CommentsBean commentsBean) {
 		getUserInfo();
 		getInitData(NOTE, "3", TABNOTE);
+	}
+	
+	public void onEventMainThread(FollowEB fEb) {
+		if (uBean != null) {
+			setConcem();
+			if(userType == 0){
+				getUserInfo();
+			}
+		}
 	}
 
 }

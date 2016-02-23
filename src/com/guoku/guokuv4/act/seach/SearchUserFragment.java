@@ -12,7 +12,7 @@ import com.guoku.guokuv4.base.BaseFrament;
 import com.guoku.guokuv4.base.UserBaseFrament;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.UserBean;
-import com.guoku.guokuv4.utils.BroadUtil;
+import com.guoku.guokuv4.eventbus.FollowEB;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -27,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import de.greenrobot.event.EventBus;
 
 /**
  * @zhangyao
@@ -54,7 +55,8 @@ public class SearchUserFragment extends BaseFrament implements OnClickListener {
 	@Override
 	protected void init() {
 		// TODO Auto-generated method stub
-
+		EventBus.getDefault().register(this);
+		
 		fansAdapter = new FansAdapter(context, this);
 
 		listView.setMode(Mode.PULL_FROM_END);
@@ -122,14 +124,18 @@ public class SearchUserFragment extends BaseFrament implements OnClickListener {
 			}
 			break;
 		case FOLLOW0:
-			ToastUtil.show(context, "取消关注成功");
 			fansAdapter.setStatus(imgFowllow, beanFowllow);
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_FOLLOW);
+			
+			FollowEB fEb = new FollowEB();
+			fEb.setFollow(false);
+			EventBus.getDefault().post(fEb);
 			break;
 		case FOLLOW1:
-			ToastUtil.show(context, "关注成功");
 			fansAdapter.setStatus(imgFowllow, beanFowllow);
-			BroadUtil.setBroadcastInt(context, Constant.INTENT_ACTION_KEY, Constant.INTENT_ACTION_VALUE_FOLLOW);
+			
+			FollowEB fEb2 = new FollowEB();
+			fEb2.setFollow(true);
+			EventBus.getDefault().post(fEb2);
 			break;
 		default:
 			break;
@@ -183,5 +189,16 @@ public class SearchUserFragment extends BaseFrament implements OnClickListener {
 	public void getData(String str, boolean isShowDialog, int off) {
 		sendConnection(Constant.SEARCH + "user/search/", new String[] { "count", "offset", "q", "type" },
 				new String[] { "30", off + "", str, "all" }, off == 0 ? SEARCH : SEARCHADD, isShowDialog);
+	}
+	
+	public void onEventMainThread(FollowEB fEb) {
+		
+	}
+	
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		EventBus.getDefault().unregister(this);
 	}
 }
