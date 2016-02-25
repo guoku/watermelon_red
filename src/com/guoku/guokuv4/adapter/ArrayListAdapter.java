@@ -146,7 +146,6 @@ public abstract class ArrayListAdapter<T> extends BaseAdapter {
 			list = new ArrayList<T>();
 		}
 		this.mList = list;
-		Logger.e("ALA", mList.toString());
 		this.notifyDataSetChanged();
 	}
 

@@ -1,6 +1,7 @@
 package com.guoku.guokuv4.gragment;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,7 +86,7 @@ public class PersonalFragment extends BaseFrament {
 
 	private final String LIKE = "like";
 	private final String NOTE = "entity/note";
-	private final String ARTICLE = "last_post_article";
+	private final String ARTICLE = "articles";
 
 	public int userType;// 0=本人（默认）1=普通用户 2=认证用户
 
@@ -280,13 +281,6 @@ public class PersonalFragment extends BaseFrament {
 	}
 
 	@Override
-	public void onLowMemory() {
-		// TODO Auto-generated method stub
-		super.onLowMemory();
-		imageLoader.clearMemoryCache();
-	}
-
-	@Override
 	protected void init() {
 
 		switch (userType) {
@@ -311,7 +305,6 @@ public class PersonalFragment extends BaseFrament {
 		case 2:
 			viewUserList.setVisibility(View.GONE);
 			initUnUser();
-			viewArticleList.inflate();
 			setTextRightImg(psrson_iv_sex, R.drawable.official);
 			initUserAuthon();
 			break;
@@ -325,6 +318,7 @@ public class PersonalFragment extends BaseFrament {
 		psrson_tv_sign.setText(uBean.getBio());
 		psrson_iv_pic.setImageURI(Uri.parse(uBean.get240()));
 
+		setConcem();
 		getUserInfo();
 	}
 
@@ -429,9 +423,12 @@ public class PersonalFragment extends BaseFrament {
 	 * 初始化鉴权媒体认证用户
 	 */
 	private void initUserAuthon() {
+		
+		viewArticleList.inflate();
 		listUserAuthon = (ScrollViewWithListView) contentView.findViewById(R.id.listView_article);
+		listUserAuthon.setVisibility(View.VISIBLE);
 		articlesAuthonAdapter = new ArticlesCategoryAdapter(getActivity());
-		listUserAuthon.setAdapter(articlesAdapter);
+		listUserAuthon.setAdapter(articlesAuthonAdapter);
 		listUserAuthon.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -440,10 +437,14 @@ public class PersonalFragment extends BaseFrament {
 
 				Bundle bundle = new Bundle();
 				Sharebean sharebean = new Sharebean();
-				sharebean.setTitle(articlesAdapter.getList().get(arg2).getTitle());
-				sharebean.setContext(articlesAdapter.getList().get(arg2).getContent().substring(0, 50));
-				sharebean.setAricleUrl(articlesAdapter.getList().get(arg2).getUrl());
-				sharebean.setImgUrl(articlesAdapter.getList().get(arg2).getCover());
+				sharebean.setTitle(articlesAuthonAdapter.getList().get(arg2).getTitle());
+				if(articlesAuthonAdapter.getList().get(arg2).getContent().length() > 50){
+					sharebean.setContext(articlesAuthonAdapter.getList().get(arg2).getContent().substring(0, 50));
+				}else{
+					sharebean.setContext(articlesAuthonAdapter.getList().get(arg2).getContent());
+				}
+				sharebean.setAricleUrl(articlesAuthonAdapter.getList().get(arg2).getUrl());
+				sharebean.setImgUrl(articlesAuthonAdapter.getList().get(arg2).getCover());
 				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
 
 				openActivity(WebShareAct.class, bundle);
@@ -607,6 +608,14 @@ public class PersonalFragment extends BaseFrament {
 				}
 				SharePrenceUtil.setUserBean(context, userAccountBean);
 			}
+			
+			if(userType == 2){
+				ArrayList<Articles> arrayList = (ArrayList<Articles>) JSON.parseArray(root.getString("last_post_article"), Articles.class);
+				if(arrayList != null){
+					articlesAuthonAdapter.setList(arrayList);
+				}
+			}
+			
 			refreshUI();
 
 		} catch (JSONException e) {

@@ -28,7 +28,16 @@ public class UserBean implements Serializable {
     private String article_count;
     private String nickname;
     private String email;
-    private boolean mail_verified;
+    private boolean mail_verified;//是否验证邮箱
+    private boolean authorized_author;//是否是第三方鉴权媒体用户
+
+	public boolean isAuthorized_author() {
+		return authorized_author;
+	}
+
+	public void setAuthorized_author(boolean authorized_author) {
+		this.authorized_author = authorized_author;
+	}
 
 	public boolean isMail_verified() {
 		return mail_verified;

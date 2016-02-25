@@ -7,19 +7,17 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#fafafa"
-    android:orientation="vertical" 
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
-    >
+    android:orientation="vertical" >
 
     <include layout="@layout/title" />
 
     <com.guoku.guokuv4.view.ReboundScrollView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" 
-        android:scrollbars="@null"
+        android:layout_height="fill_parent"
         android:overScrollMode="never"
-        >
+        android:scrollbars="@null" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,8 +33,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 fresco:placeholderImage="@drawable/item240"
-                fresco:roundWithOverlayColor="@android:color/transparent"
-                fresco:roundAsCircle="true" />
+                fresco:roundAsCircle="true"
+                fresco:roundWithOverlayColor="@android:color/transparent" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -66,16 +64,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:gravity="center_horizontal"
-                android:text="个性"
-                android:textColor="@color/black_body" 
-                android:maxLines="3"
+                android:layout_marginTop="12dp"
                 android:ellipsize="end"
+                android:gravity="center_horizontal"
                 android:lineSpacingMultiplier="1.5"
-                />
+                android:maxLines="3"
+                android:text="个性"
+                android:textColor="@color/black_body" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -107,8 +104,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="4dp"
                         android:text="个性"
-                        android:textColor="@color/gray_fzxx"
-                        />
+                        android:textColor="@color/gray_fzxx" />
                 </LinearLayout>
 
                 <ImageView
@@ -140,8 +136,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="4dp"
                         android:text="个性"
-                        android:textColor="@color/gray_fzxx"
-                        />
+                        android:textColor="@color/gray_fzxx" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -175,22 +170,18 @@
                     android:text="编辑个人资料"
                     android:textColor="@color/g_blue" />
             </LinearLayout>
-            
-            <include 
-                layout="@layout/layout_user_data"
-                />
-            
-            <ViewStub 
+
+            <include layout="@layout/layout_user_data" />
+
+            <ViewStub
                 android:id="@+id/view_stub_user_authen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout="@layout/item_article_list"
-                />
-            
+                android:layout_marginTop="12dp"
+                android:layout="@layout/item_article_list" />
         </LinearLayout>
-        
     </com.guoku.guokuv4.view.ReboundScrollView>
-    
-    <include layout="@layout/view_page_footer"/>
+
+    <include layout="@layout/view_page_footer" />
 
 </LinearLayout>
