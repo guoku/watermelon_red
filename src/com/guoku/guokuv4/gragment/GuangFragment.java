@@ -110,6 +110,9 @@ public class GuangFragment extends BaseFrament {
 	@ViewInject(R.id.gallery_recommend_user)
 	private LinearLayout  layoutUser;// 推荐用户
 	
+	@ViewInject(R.id.layout_user_recommend)
+	private LinearLayout  viewUser;// 推荐用户layout
+	
 	@ViewInject(R.id.gallery_recommend_sort)
 	private LinearLayout vpRecommendSort;// 推荐品类
 
@@ -313,6 +316,7 @@ public class GuangFragment extends BaseFrament {
 					// TODO: handle exception
 				}
 				
+				/******** 推荐用户 *********/
 				setRecommendUser(discover.getAuthorizeduser());
 
 				sv.scrollTo(0, 0);
@@ -432,26 +436,30 @@ public class GuangFragment extends BaseFrament {
 	
 	/******** 推荐用户 *********/
 	private void setRecommendUser(final ArrayList<AuthorizeduserBean> authorizeduserBeans){
-		
-		
-		for (int i = 0; i < authorizeduserBeans.size(); i++) {
-			View view =  View.inflate(getActivity(), R.layout.item_recommend_user, null);
-			SimpleDraweeView sView = (SimpleDraweeView) view.findViewById(R.id.psrson_iv_pic);
-			sView.setImageURI(Uri.parse(authorizeduserBeans.get(i).getUser().get50()));
-			sView.setTag(authorizeduserBeans.get(i));
-			layoutUser.addView(view);
-			
-			sView.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					AuthorizeduserBean aBean = (AuthorizeduserBean) v.getTag();
-					Intent intent = new Intent(context, UserBaseFrament.class);
-					intent.putExtra("data", aBean.getUser());
-					startActivity(intent);
-				}
-			});
+		if(authorizeduserBeans.size() > 0){
+			viewUser.setVisibility(View.VISIBLE);
+			for (int i = 0; i < authorizeduserBeans.size(); i++) {
+				View view =  View.inflate(getActivity(), R.layout.item_recommend_user, null);
+				SimpleDraweeView sView = (SimpleDraweeView) view.findViewById(R.id.psrson_iv_pic);
+				sView.setImageURI(Uri.parse(authorizeduserBeans.get(i).getUser().get50()));
+				sView.setTag(authorizeduserBeans.get(i));
+				layoutUser.addView(view);
+				
+				sView.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						AuthorizeduserBean aBean = (AuthorizeduserBean) v.getTag();
+						Intent intent = new Intent(context, UserBaseFrament.class);
+						intent.putExtra("data", aBean.getUser());
+						startActivity(intent);
+					}
+				});
+			}
+		}else{
+			viewUser.setVisibility(View.GONE);
 		}
+		
 	}
 
 	@OnClick(R.id.ed_search)

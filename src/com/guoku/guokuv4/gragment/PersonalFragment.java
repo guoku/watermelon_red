@@ -1,8 +1,5 @@
 package com.guoku.guokuv4.gragment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,7 +30,7 @@ import com.guoku.guokuv4.adapter.ArticlesCategoryAdapter;
 import com.guoku.guokuv4.adapter.GridViewAdapter;
 import com.guoku.guokuv4.adapter.ListImgLeftAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
-import com.guoku.guokuv4.bean.Articles;
+import com.guoku.guokuv4.bean.ArticlesUserBean;
 import com.guoku.guokuv4.bean.CommentsBean;
 import com.guoku.guokuv4.bean.LikesBean;
 import com.guoku.guokuv4.bean.Sharebean;
@@ -50,6 +47,10 @@ import com.guoku.guokuv4.utils.ToastUtil;
 import com.guoku.guokuv4.view.LayoutItemView;
 import com.guoku.guokuv4.view.ScrollViewWithGridView;
 import com.guoku.guokuv4.view.ScrollViewWithListView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
@@ -65,6 +66,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import de.greenrobot.event.EventBus;
 
@@ -167,13 +169,16 @@ public class PersonalFragment extends BaseFrament {
 
 	ScrollViewWithListView listUserAuthon;// 鉴权媒体认证用户图文list
 
+	@ViewInject(R.id.pull_listview)
+	PullToRefreshScrollView articlesAuthonRefresh;
+
 	ArticlesCategoryAdapter articlesAuthonAdapter;// 鉴权媒体认证用户图文adapter
 
 	private GridViewAdapter gvAdapter;
 
 	private ListImgLeftAdapter listImgLeftAdapter;// 左侧图片
 
-	private ArticlesCategoryAdapter articlesAdapter;// 图文adapter
+	private ArticlesCategoryAdapter articlesAdapter;// 普通用户图文adapter
 
 	@ViewInject(R.id.psrson_tv_name)
 	private TextView psrson_tv_name;
@@ -245,9 +250,9 @@ public class PersonalFragment extends BaseFrament {
 			}
 			break;
 		case USERINFO:
-//			 if (userType == 0) {
-			 refreshUserInfo(result);
-//			 }
+			// if (userType == 0) {
+			refreshUserInfo(result);
+			// }
 			break;
 		case FOLLOW0:
 			FollowEB fEb = new FollowEB();
@@ -264,8 +269,15 @@ public class PersonalFragment extends BaseFrament {
 			// userLike.tv2.setText(uBean.getLike_count());
 			break;
 		case TABARTICLE:
-			ArrayList<Articles> arrayList = (ArrayList<Articles>) JSON.parseArray(result, Articles.class);
-			articlesAdapter.setList(arrayList);
+			articlesAuthonRefresh.onRefreshComplete();
+			ArticlesUserBean articlesUserBean = JSON.parseObject(result, ArticlesUserBean.class);
+			if (userType == 2) {
+				if (articlesUserBean != null) {
+					articlesAuthonAdapter.setList(articlesUserBean.getArticles());
+				}
+			} else {
+				articlesAdapter.setList(articlesUserBean.getArticles());
+			}
 			break;
 		case TABNOTE:
 			listImgLeftAdapter.setList(ParseUtil.getTabNoteList(result));
@@ -277,7 +289,14 @@ public class PersonalFragment extends BaseFrament {
 
 	@Override
 	protected void onFailure(String result, int where) {
+		switch (where) {
+		case TABARTICLE:
+			articlesAuthonRefresh.onRefreshComplete();
+			break;
 
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -303,6 +322,8 @@ public class PersonalFragment extends BaseFrament {
 			initUnUserAuthon();
 			break;
 		case 2:
+			articlesAuthonRefresh.getLoadingLayoutProxy()
+			.setLoadingDrawable(getResources().getDrawable(R.drawable.default_ptr_rotate));
 			viewUserList.setVisibility(View.GONE);
 			initUnUser();
 			setTextRightImg(psrson_iv_sex, R.drawable.official);
@@ -312,6 +333,8 @@ public class PersonalFragment extends BaseFrament {
 		default:
 			break;
 		}
+		articlesAuthonRefresh.setMode(Mode.BOTH);
+		
 		psrson_tv_fans.setText(uBean.getFan_count());
 		psrson_tv_guanzhu.setText(uBean.getFollowing_count());
 		psrson_tv_name.setText(uBean.getNickname());
@@ -341,6 +364,7 @@ public class PersonalFragment extends BaseFrament {
 	 */
 	private void initUnUserAuthon() {
 
+		// articlesAuthonRefresh.setMode(Mode.DISABLED);
 		if (uBean.getGender().equals("男")) {
 			psrson_iv_sex.setTextColor(Color.rgb(19, 143, 215));
 			setTextRightImg(psrson_iv_sex, R.drawable.male);
@@ -423,8 +447,24 @@ public class PersonalFragment extends BaseFrament {
 	 * 初始化鉴权媒体认证用户
 	 */
 	private void initUserAuthon() {
-		
+
 		viewArticleList.inflate();
+		
+//		articlesAuthonRefresh.getLoadingLayoutProxy(false, true);
+		articlesAuthonRefresh.setOnRefreshListener(new OnRefreshListener2<ScrollView>() {
+			@Override
+			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+				// TODO Auto-generated method stub
+				 getInitData(ARTICLE, "1", TABARTICLE);
+			}
+
+			@Override
+			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+				// TODO Auto-generated method stub
+				getInitData(ARTICLE, "3", TABARTICLE);
+			}
+		});
+
 		listUserAuthon = (ScrollViewWithListView) contentView.findViewById(R.id.listView_article);
 		listUserAuthon.setVisibility(View.VISIBLE);
 		articlesAuthonAdapter = new ArticlesCategoryAdapter(getActivity());
@@ -438,9 +478,9 @@ public class PersonalFragment extends BaseFrament {
 				Bundle bundle = new Bundle();
 				Sharebean sharebean = new Sharebean();
 				sharebean.setTitle(articlesAuthonAdapter.getList().get(arg2).getTitle());
-				if(articlesAuthonAdapter.getList().get(arg2).getContent().length() > 50){
+				if (articlesAuthonAdapter.getList().get(arg2).getContent().length() > 50) {
 					sharebean.setContext(articlesAuthonAdapter.getList().get(arg2).getContent().substring(0, 50));
-				}else{
+				} else {
 					sharebean.setContext(articlesAuthonAdapter.getList().get(arg2).getContent());
 				}
 				sharebean.setAricleUrl(articlesAuthonAdapter.getList().get(arg2).getUrl());
@@ -450,6 +490,7 @@ public class PersonalFragment extends BaseFrament {
 				openActivity(WebShareAct.class, bundle);
 			}
 		});
+		getInitData(ARTICLE, "30", TABARTICLE);
 	}
 
 	/**
@@ -519,7 +560,7 @@ public class PersonalFragment extends BaseFrament {
 	@OnClick(R.id.psrson_ll_follow)
 	public void psrson_ll_follow(View v) {
 		Intent intent = new Intent(context, FansAct.class);
-		intent.putExtra("url", Constant.GETFANSLIST  + uBean.getUser_id() + "/following/");
+		intent.putExtra("url", Constant.GETFANSLIST + uBean.getUser_id() + "/following/");
 		intent.putExtra("name", "关注");
 		startActivity(intent);
 	}
@@ -527,7 +568,7 @@ public class PersonalFragment extends BaseFrament {
 	@OnClick(R.id.psrson_ll_fans)
 	public void psrson_ll_fans(View v) {
 		Intent intent = new Intent(context, FansAct.class);
-		intent.putExtra("url", Constant.GETFANSLIST  + uBean.getUser_id() + "/fan/");
+		intent.putExtra("url", Constant.GETFANSLIST + uBean.getUser_id() + "/fan/");
 		intent.putExtra("name", "粉丝");
 		startActivity(intent);
 	}
@@ -600,7 +641,7 @@ public class PersonalFragment extends BaseFrament {
 			root = new JSONObject(result);
 
 			uBean = (UserBean) JSON.parseObject(root.getString("user"), UserBean.class);
-			if(userType == 0){
+			if (userType == 0) {
 				AccountBean userAccountBean = new AccountBean();
 				userAccountBean.setUser(uBean);
 				if (!StringUtils.isEmpty(GuokuApplication.getInstance().getBean().getSession())) {
@@ -608,14 +649,6 @@ public class PersonalFragment extends BaseFrament {
 				}
 				SharePrenceUtil.setUserBean(context, userAccountBean);
 			}
-			
-			if(userType == 2){
-				ArrayList<Articles> arrayList = (ArrayList<Articles>) JSON.parseArray(root.getString("last_post_article"), Articles.class);
-				if(arrayList != null){
-					articlesAuthonAdapter.setList(arrayList);
-				}
-			}
-			
 			refreshUI();
 
 		} catch (JSONException e) {
@@ -661,9 +694,15 @@ public class PersonalFragment extends BaseFrament {
 	}
 
 	private void getInitData(String value, String countValue, int net_tag) {
-		sendConnection(Constant.TAB_USER + uBean.getUser_id() + "/" + value + "/",
-				new String[] { "count", "timestamp" },
-				new String[] { countValue, System.currentTimeMillis() / 1000 + "" }, net_tag, false);
+		if (net_tag == TABARTICLE) {
+			sendConnection(Constant.TAB_USER + uBean.getUser_id() + "/" + value + "/",
+					new String[] { "size", "timestamp" },
+					new String[] { countValue, System.currentTimeMillis() / 1000 + "" }, net_tag, false);
+		} else {
+			sendConnection(Constant.TAB_USER + uBean.getUser_id() + "/" + value + "/",
+					new String[] { "count", "timestamp" },
+					new String[] { countValue, System.currentTimeMillis() / 1000 + "" }, net_tag, false);
+		}
 	}
 
 	private void setUserTab() {
@@ -869,11 +908,11 @@ public class PersonalFragment extends BaseFrament {
 		getUserInfo();
 		getInitData(NOTE, "3", TABNOTE);
 	}
-	
+
 	public void onEventMainThread(FollowEB fEb) {
 		if (uBean != null) {
 			setConcem();
-			if(userType == 0){
+			if (userType == 0) {
 				getUserInfo();
 			}
 		}

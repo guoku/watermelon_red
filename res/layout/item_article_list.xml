@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.guoku.guokuv4.view.ScrollViewWithListView xmlns:android="http://schemas.android.com/apk/res/android"
+
+     <com.guoku.guokuv4.view.ScrollViewWithListView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/listView_article"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:listSelector="@android:color/transparent" 
     />
+
+
+<!-- <com.handmark.pulltorefresh.library.PullToRefreshScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sv"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginTop="2dp" >
+
+    <com.guoku.guokuv4.view.ScrollViewWithListView
+        android:id="@+id/listView_article"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:listSelector="@android:color/transparent" />
+
+</com.handmark.pulltorefresh.library.PullToRefreshScrollView> -->
