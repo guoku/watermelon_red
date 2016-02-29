@@ -19,7 +19,7 @@
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
         android:smoothScrollbar="true"
-        ptr:ptrAnimationStyle="flip"
+        ptr:ptrAnimationStyle="rotate"
         ptr:ptrListViewExtrasEnabled="true" 
         />
     

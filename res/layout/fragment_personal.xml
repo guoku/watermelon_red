@@ -21,6 +21,7 @@
         android:overScrollMode="never"
         android:scrollbars="@null" 
         ptr:ptrDrawable="@color/white"  
+        ptr:ptrScrollingWhileRefreshingEnabled="true" 
         >
 
         <LinearLayout

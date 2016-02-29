@@ -47,6 +47,7 @@ import com.guoku.guokuv4.utils.ToastUtil;
 import com.guoku.guokuv4.view.LayoutItemView;
 import com.guoku.guokuv4.view.ScrollViewWithGridView;
 import com.guoku.guokuv4.view.ScrollViewWithListView;
+import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -88,7 +89,7 @@ public class PersonalFragment extends BaseFrament {
 
 	private final String LIKE = "like";
 	private final String NOTE = "entity/note";
-	private final String ARTICLE = "articles";
+	private final String ARTICLE = "articles/published";
 
 	public int userType;// 0=本人（默认）1=普通用户 2=认证用户
 
@@ -190,6 +191,8 @@ public class PersonalFragment extends BaseFrament {
 	public UserBean uBean;
 
 	private int temp;
+
+	private int pageArticle = 1;// 认证用户图文页数
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -323,7 +326,7 @@ public class PersonalFragment extends BaseFrament {
 			break;
 		case 2:
 			articlesAuthonRefresh.getLoadingLayoutProxy()
-			.setLoadingDrawable(getResources().getDrawable(R.drawable.default_ptr_rotate));
+					.setLoadingDrawable(getResources().getDrawable(R.drawable.default_ptr_rotate));
 			viewUserList.setVisibility(View.GONE);
 			initUnUser();
 			setTextRightImg(psrson_iv_sex, R.drawable.official);
@@ -334,7 +337,7 @@ public class PersonalFragment extends BaseFrament {
 			break;
 		}
 		articlesAuthonRefresh.setMode(Mode.BOTH);
-		
+
 		psrson_tv_fans.setText(uBean.getFan_count());
 		psrson_tv_guanzhu.setText(uBean.getFollowing_count());
 		psrson_tv_name.setText(uBean.getNickname());
@@ -449,19 +452,35 @@ public class PersonalFragment extends BaseFrament {
 	private void initUserAuthon() {
 
 		viewArticleList.inflate();
-		
-//		articlesAuthonRefresh.getLoadingLayoutProxy(false, true);
+
+		// articlesAuthonRefresh.getLoadingLayoutProxy(false, true);
+		ILoadingLayout startLabels = articlesAuthonRefresh    
+		         .getLoadingLayoutProxy(true, false);  
+		 startLabels.setPullLabel("111...");// 刚下拉时，显示的提示    
+		 startLabels.setRefreshingLabel("222...");// 刷新时    
+		 startLabels.setReleaseLabel("333...");// 下来达到一定距离时，显示的提示 
+		 
+		 
+		 ILoadingLayout endLabels = articlesAuthonRefresh.getLoadingLayoutProxy(    
+		         false, true);    
+		 endLabels.setPullLabel("444...");// 刚下拉时，显示的提示    
+		 endLabels.setRefreshingLabel("555...");// 刷新时    
+		 endLabels.setReleaseLabel("666...");// 下来达到一定距离时，显示的提示    
+		 
+		 
 		articlesAuthonRefresh.setOnRefreshListener(new OnRefreshListener2<ScrollView>() {
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 				// TODO Auto-generated method stub
-				 getInitData(ARTICLE, "1", TABARTICLE);
+				pageArticle = 1;
+				getInitData(ARTICLE, "30", TABARTICLE);
 			}
 
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
 				// TODO Auto-generated method stub
-				getInitData(ARTICLE, "3", TABARTICLE);
+				pageArticle ++;
+				getInitData(ARTICLE, "30", TABARTICLE);
 			}
 		});
 
@@ -695,9 +714,8 @@ public class PersonalFragment extends BaseFrament {
 
 	private void getInitData(String value, String countValue, int net_tag) {
 		if (net_tag == TABARTICLE) {
-			sendConnection(Constant.TAB_USER + uBean.getUser_id() + "/" + value + "/",
-					new String[] { "size", "timestamp" },
-					new String[] { countValue, System.currentTimeMillis() / 1000 + "" }, net_tag, false);
+			sendConnection(Constant.TAB_USER + uBean.getUser_id() + "/" + value + "/", new String[] { "size", "page" },
+					new String[] { countValue, pageArticle + "" }, net_tag, false);
 		} else {
 			sendConnection(Constant.TAB_USER + uBean.getUser_id() + "/" + value + "/",
 					new String[] { "count", "timestamp" },

@@ -477,12 +477,18 @@
         <item name="android:gravity">center</item>
         <item name="android:padding">12dp</item>
     </style>
-    
-    <!-- gridview item  -->
+
+    <!-- gridview item -->
     <style name="gridview_count_2">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/g_main</item>
         <item name="android:ellipsize">end</item>
     </style>
+
+    <!-- 上拉刷新 下拉加载更多 progressbar动画 -->
+    <style name="pullProgressBarStyleLarge">
+        <item name="android:indeterminateDrawable">@anim/pull_to_refresh_progressbar</item>
+    </style>
+
 </resources>

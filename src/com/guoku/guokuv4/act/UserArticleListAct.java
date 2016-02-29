@@ -72,7 +72,11 @@ public class UserArticleListAct extends NetWorkActivity {
 				Bundle bundle = new Bundle();
 				Sharebean sharebean = new Sharebean();
 				sharebean.setTitle(adapter.getList().get(arg2 - 1).getTitle());
-				sharebean.setContext(adapter.getList().get(arg2 - 1).getContent().substring(0, 50));
+				if(adapter.getList().get(arg2 - 1).getContent().length() > 0){
+					sharebean.setContext(adapter.getList().get(arg2 - 1).getContent());
+				}else{
+					sharebean.setContext(adapter.getList().get(arg2 - 1).getContent().substring(0, 50));
+				}
 				sharebean.setAricleUrl(adapter.getList().get(arg2 - 1).getUrl());
 				sharebean.setImgUrl(adapter.getList().get(arg2 - 1).getCover());
 				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
