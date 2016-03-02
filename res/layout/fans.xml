@@ -3,10 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
-    android:orientation="vertical" 
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
-    >
+    android:orientation="vertical" >
 
     <include layout="@layout/title" />
 
@@ -24,7 +23,7 @@
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
         android:smoothScrollbar="true"
-        ptr:ptrAnimationStyle="flip"
+        ptr:ptrAnimationStyle="rotate"
         ptr:ptrListViewExtrasEnabled="true" />
 
 </LinearLayout>

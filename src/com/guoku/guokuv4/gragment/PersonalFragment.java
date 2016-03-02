@@ -85,11 +85,12 @@ public class PersonalFragment extends BaseFrament {
 	private final int TABLIKE = 1002;// 喜欢
 	private final int TABNOTE = 1003;// 点评
 	private final int TABARTICLE = 1004;// 图文
+	private final int TABARTICLE_ADD = 1005;// 更多图文
 	public static final String IS_EMPTY = "IS_EMPTY";// //判断喜爱、点评、图文、标签等个数，来传给下一个act
 
 	private final String LIKE = "like";
 	private final String NOTE = "entity/note";
-	private final String ARTICLE = "articles/published";
+	private final String ARTICLE = "articles";
 
 	public int userType;// 0=本人（默认）1=普通用户 2=认证用户
 
@@ -282,6 +283,13 @@ public class PersonalFragment extends BaseFrament {
 				articlesAdapter.setList(articlesUserBean.getArticles());
 			}
 			break;
+		case TABARTICLE_ADD:
+			articlesAuthonRefresh.onRefreshComplete();
+			if (userType == 2) {
+				ArticlesUserBean articlesUserBeanAdd = JSON.parseObject(result, ArticlesUserBean.class);
+				articlesAuthonAdapter.addListsLast(articlesUserBeanAdd.getArticles());
+			} 
+			break;
 		case TABNOTE:
 			listImgLeftAdapter.setList(ParseUtil.getTabNoteList(result));
 			break;
@@ -294,6 +302,9 @@ public class PersonalFragment extends BaseFrament {
 	protected void onFailure(String result, int where) {
 		switch (where) {
 		case TABARTICLE:
+			articlesAuthonRefresh.onRefreshComplete();
+			break;
+		case TABARTICLE_ADD:
 			articlesAuthonRefresh.onRefreshComplete();
 			break;
 
@@ -325,8 +336,9 @@ public class PersonalFragment extends BaseFrament {
 			initUnUserAuthon();
 			break;
 		case 2:
+			articlesAuthonRefresh.setMode(Mode.BOTH);
 			articlesAuthonRefresh.getLoadingLayoutProxy()
-					.setLoadingDrawable(getResources().getDrawable(R.drawable.default_ptr_rotate));
+					.setLoadingDrawable(getResources().getDrawable(R.drawable.pull_refresh_progress_bar17));
 			viewUserList.setVisibility(View.GONE);
 			initUnUser();
 			setTextRightImg(psrson_iv_sex, R.drawable.official);
@@ -452,22 +464,6 @@ public class PersonalFragment extends BaseFrament {
 	private void initUserAuthon() {
 
 		viewArticleList.inflate();
-
-		// articlesAuthonRefresh.getLoadingLayoutProxy(false, true);
-		ILoadingLayout startLabels = articlesAuthonRefresh    
-		         .getLoadingLayoutProxy(true, false);  
-		 startLabels.setPullLabel("111...");// 刚下拉时，显示的提示    
-		 startLabels.setRefreshingLabel("222...");// 刷新时    
-		 startLabels.setReleaseLabel("333...");// 下来达到一定距离时，显示的提示 
-		 
-		 
-		 ILoadingLayout endLabels = articlesAuthonRefresh.getLoadingLayoutProxy(    
-		         false, true);    
-		 endLabels.setPullLabel("444...");// 刚下拉时，显示的提示    
-		 endLabels.setRefreshingLabel("555...");// 刷新时    
-		 endLabels.setReleaseLabel("666...");// 下来达到一定距离时，显示的提示    
-		 
-		 
 		articlesAuthonRefresh.setOnRefreshListener(new OnRefreshListener2<ScrollView>() {
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
@@ -480,7 +476,7 @@ public class PersonalFragment extends BaseFrament {
 			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
 				// TODO Auto-generated method stub
 				pageArticle ++;
-				getInitData(ARTICLE, "30", TABARTICLE);
+				getInitData(ARTICLE, "30", TABARTICLE_ADD);
 			}
 		});
 

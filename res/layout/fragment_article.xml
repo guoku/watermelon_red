@@ -2,10 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    >
+    android:orientation="vertical" >
 
-    
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         xmlns:ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/list_article"
@@ -20,10 +18,9 @@
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
         android:smoothScrollbar="true"
-        ptr:ptrAnimationStyle="flip"
-        ptr:ptrListViewExtrasEnabled="true" 
-        />
-    
-    <include layout="@layout/empty_data_layout"/>
+        ptr:ptrAnimationStyle="rotate"
+        ptr:ptrListViewExtrasEnabled="true" />
+
+    <include layout="@layout/empty_data_layout" />
 
 </LinearLayout>

@@ -81,7 +81,7 @@
         android:headerDividersEnabled="false"
         android:listSelector="@android:color/transparent"
         android:smoothScrollbar="true"
-        ptr:ptrAnimationStyle="flip"
+        ptr:ptrAnimationStyle="rotate"
         ptr:ptrListViewExtrasEnabled="true" />
 
 </LinearLayout>

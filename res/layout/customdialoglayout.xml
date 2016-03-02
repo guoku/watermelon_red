@@ -4,13 +4,16 @@
     android:layout_height="wrap_content"
     android:background="@drawable/progress_bg"
     android:orientation="vertical"
-    android:padding="24dp" >
+    android:padding="24dp" 
+    >
 
     <ProgressBar
         android:id="@+id/loadingImageView"
-        android:layout_width="32.0dip"
-        android:layout_height="32.0dip"
-        android:layout_gravity="center_horizontal" />
+        android:layout_width="29dp"
+        android:layout_height="29dp"
+        android:layout_gravity="center_horizontal" 
+        style="@style/pullProgressBarStyleLarge"
+        />
 
     <TextView
         android:id="@+id/id_tv_loadingmsg"
@@ -22,6 +25,8 @@
         android:shadowDy="3.0"
         android:shadowRadius="3.0"
         android:textColor="#ffffffff"
-        android:textSize="16.0sp" />
+        android:textSize="16.0sp" 
+        android:visibility="gone"
+        />
 
 </LinearLayout>
