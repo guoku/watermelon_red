@@ -59,6 +59,11 @@ public class FansAdapter extends ArrayListAdapter<UserBean> {
 			holder.fans_item_iv_status
 					.setBackgroundResource(R.drawable.ttz_shap);
 		}
+		if(bean.isAuthorized_author()){
+			holder.imgAutuon.setVisibility(View.VISIBLE);
+		}else{
+			holder.imgAutuon.setVisibility(View.GONE);
+		}
 		holder.fans_item_iv_status.setTag(bean);
 		holder.fans_item_iv_status.setOnClickListener(listener);
 		return convertView;
@@ -81,25 +86,25 @@ public class FansAdapter extends ArrayListAdapter<UserBean> {
 			holder.fans_item_iv_pic.setImageURI(Uri.parse(bean.get50()));
 			// BitmapUtil.setRoundImage(loader, bean.getAvatar_small(), options,
 			// holder.fans_item_iv_pic);
-			holder.fans_item_tv_fans.setText("关注  " + bean.getFollowing_count()
-					+ "    粉丝 " + bean.getFan_count());
+			holder.fans_item_tv_fans.setText("关注  " + bean.getFollowing_count() + "    粉丝 " + bean.getFan_count());
 			holder.fans_item_tv_name.setText(bean.getNickname());
 			if (bean.getRelation().equals("0")) {
 				holder.fans_item_iv_status.setImageResource(R.drawable.add);
-				holder.fans_item_iv_status
-						.setBackgroundResource(R.drawable.blue_shap);
+				holder.fans_item_iv_status.setBackgroundResource(R.drawable.blue_shap);
 			} else if (bean.getRelation().equals("2")) {
 				holder.fans_item_iv_status.setImageResource(R.drawable.add);
-				holder.fans_item_iv_status
-						.setBackgroundResource(R.drawable.blue_shap);
+				holder.fans_item_iv_status.setBackgroundResource(R.drawable.blue_shap);
 			} else if (bean.getRelation().equals("1")) {
 				holder.fans_item_iv_status.setImageResource(R.drawable.has);
-				holder.fans_item_iv_status
-						.setBackgroundResource(R.drawable.ttz_shap);
+				holder.fans_item_iv_status.setBackgroundResource(R.drawable.ttz_shap);
 			} else if (bean.getRelation().equals("3")) {
 				holder.fans_item_iv_status.setImageResource(R.drawable.double1);
-				holder.fans_item_iv_status
-						.setBackgroundResource(R.drawable.ttz_shap);
+				holder.fans_item_iv_status.setBackgroundResource(R.drawable.ttz_shap);
+			}
+			if(bean.isAuthorized_author()){
+				holder.imgAutuon.setVisibility(View.VISIBLE);
+			}else{
+				holder.imgAutuon.setVisibility(View.GONE);
 			}
 			holder.fans_item_iv_status.setTag(bean);
 			holder.fans_item_iv_status.setOnClickListener(listener);
@@ -132,6 +137,8 @@ public class FansAdapter extends ArrayListAdapter<UserBean> {
 		TextView fans_item_tv_fans;
 		@ViewInject(R.id.fans_item_tv_name)
 		TextView fans_item_tv_name;
+		@ViewInject(R.id.img_authon)
+		ImageView imgAutuon;
 	}
 
 }

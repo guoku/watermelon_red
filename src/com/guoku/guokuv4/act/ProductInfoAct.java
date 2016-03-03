@@ -758,7 +758,7 @@ public class ProductInfoAct extends NetWorkActivity
 	public void onEventMainThread(CommentsBean commentsBean) {
 		try {
 			myNoteBean = JSON.parseObject(commentsBean.getData(), NoteBean.class);
-			if(commentsBean.isAdd){
+			if(!commentsBean.isAdd){
 				for (int i = 0; i < productBean.getNote_list().size(); i++) {
 					if (myNoteBean.getNote_id().equals(productBean.getNote_list().get(i).getNote_id())) {
 						productBean.getNote_list().set(i, myNoteBean);

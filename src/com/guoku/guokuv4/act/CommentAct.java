@@ -48,7 +48,7 @@ public class CommentAct extends NetWorkActivity {
 	public static final String KEY_DATA = "KEY_DATA";
 
 	String strContent = "";
-	private boolean isUpData;
+//	private boolean isUpData;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,47 +80,43 @@ public class CommentAct extends NetWorkActivity {
 		this.getWindow().setLayout(dm.widthPixels, this.getWindow().getAttributes().height);
 	}
 
-	private void init() {
-		text.addTextChangedListener(new TextWatcher() {
-
-			@Override
-			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void afterTextChanged(Editable arg0) {
-				// TODO Auto-generated method stub
-				if (arg0.length() > 0) {
-					if (arg0.toString().equals(strContent)) {
-						isUpData = false;
-					} else {
-						isUpData = true;
-					}
-				} else {
-					isUpData = false;
-				}
-			}
-		});
-	}
+//	private void init() {
+//		text.addTextChangedListener(new TextWatcher() {
+//
+//			@Override
+//			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+//				// TODO Auto-generated method stub
+//
+//			}
+//
+//			@Override
+//			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+//				// TODO Auto-generated method stub
+//
+//			}
+//
+//			@Override
+//			public void afterTextChanged(Editable arg0) {
+//				// TODO Auto-generated method stub
+//				if (arg0.length() > 0) {
+//					if (arg0.toString().equals(strContent)) {
+//						isUpData = false;
+//					} else {
+//						isUpData = true;
+//					}
+//				} else {
+//					isUpData = false;
+//				}
+//			}
+//		});
+//	}
 
 	@OnClick(R.id.title_bar_right)
 	public void Push(View v) {
 		if (!StringUtils.isEmpty(text.getText().toString())) {
 			if (up) {
-				if (isUpData) {
-					sendConnectionPOST(Constant.COMMENTLIST + noteid + "/update/", new String[] { "note" },
-							new String[] { text.getText().toString() }, COMMENTNOTE, true);
-				} else {
-					finish();
-				}
+				sendConnectionPOST(Constant.COMMENTLIST + noteid + "/update/", new String[] { "note" },
+						new String[] { text.getText().toString() }, COMMENTNOTE, true);
 			} else
 				sendConnectionPOST(Constant.COMMENTNOTE + productBean.getEntity().getEntity_id() + "/add/note/",
 						new String[] { "note" }, new String[] { text.getText().toString() }, COMMENTNOTE, true);
@@ -141,7 +137,7 @@ public class CommentAct extends NetWorkActivity {
 			AVAnalytics.onEvent(mContext, "success");
 			
 			CommentsBean commentsBean = new CommentsBean();
-			if(isUpData){
+			if(up){
 				commentsBean.setAdd(false);
 			}else{
 				commentsBean.setAdd(true);
