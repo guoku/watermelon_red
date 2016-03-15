@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.guoku"
     android:installLocation="auto"
-    android:versionCode="417"
-    android:versionName="1024.0" >
+    android:versionCode="418"
+    android:versionName="1024.1" >
 
     <!-- 正式版本号 -->
     <!--

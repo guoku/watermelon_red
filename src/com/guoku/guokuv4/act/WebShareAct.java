@@ -8,11 +8,11 @@ import org.json.JSONObject;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.sdk.android.AlibabaSDK;
-import com.alibaba.sdk.android.ResultCode;
 import com.alibaba.sdk.android.trade.ItemService;
 import com.alibaba.sdk.android.trade.callback.TradeProcessCallback;
 import com.alibaba.sdk.android.trade.model.TradeResult;
 import com.guoku.R;
+import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.base.NetWorkActivity;
 import com.guoku.guokuv4.base.UserBaseFrament;
 import com.guoku.guokuv4.bean.Sharebean;
@@ -38,8 +38,9 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.PopupWindow.OnDismissListener;
-import android.widget.Toast;
 
 /**
  * @zhangyao
@@ -51,6 +52,7 @@ public class WebShareAct extends NetWorkActivity {
 	private static final int INFO_GOOD = 1001;// 商品
 	private static final int INFO_USER = 1002;// 用户
 
+	String IF_ARTICLES = "/articles/";
 	String IF_ENTITY = "guoku://entity/";
 	String IF_USER = "guoku://user/";
 	String IF_TMALL = "detail.tmall.com";
@@ -88,6 +90,12 @@ public class WebShareAct extends NetWorkActivity {
 			view.loadUrl(sharebean.getAricleUrl());
 		} else {
 			view.loadUrl(Constant.URL_ARTICLES + sharebean.getAricleUrl());
+			//如果是图文
+			if(sharebean.getAricleUrl().contains(IF_ARTICLES)){
+				if(GuokuApplication.getInstance().getBean() != null){
+					initTitleZan();
+				}
+			}
 		}
 		view.getSettings().setJavaScriptEnabled(true);
 		view.getSettings().setUseWideViewPort(true);
@@ -165,11 +173,27 @@ public class WebShareAct extends NetWorkActivity {
 		});
 
 	}
+	
+	private void initTitleZan(){
+		setTitleZan().setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				// TODO Auto-generated method stub
+				if(isChecked){
+		        	ToastUtil.show(mContext, "赞");
+		        }else{
+		        	ToastUtil.show(mContext, "取消赞");
+		        }
+			}
+		});
+	}
 
 	@OnClick(R.id.title_bar_rigth_iv)
 	public void right(View v) {
 		postShare();
 	}
+	
 
 	private void postShare() {
 		CustomShareBoard shareBoard = new CustomShareBoard(this);

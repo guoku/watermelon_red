@@ -23,7 +23,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp" 
-        android:src="@drawable/zhihuiyun_logo"
+        android:src="@drawable/taobao_channel"
         android:visibility="gone"
         />
 

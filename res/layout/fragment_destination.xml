@@ -4,13 +4,17 @@
     android:layout_height="fill_parent"
     android:background="#ffffffff"
     android:orientation="vertical" >
+    
+    <FrameLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
     <com.handmark.pulltorefresh.library.PullToRefreshListView
         xmlns:ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/jingxuan_lv_1"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:cacheColorHint="#00000000"
         android:divider="@color/press"
         android:dividerHeight="10dp"
@@ -22,6 +26,10 @@
         ptr:ptrAnimationStyle="rotate"
         ptr:ptrListViewExtrasEnabled="true" 
         />
+    
+    <include layout="@layout/layout_updata_hint" />
+    
+    </FrameLayout>
     
     <include layout="@layout/empty_data_layout"/>
 

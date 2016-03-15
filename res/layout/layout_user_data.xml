@@ -93,17 +93,12 @@
         layout="@layout/line_gray"
         android:background="@color/text_bg_box" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp" />
-
     <!-- 由于后台接口未完成，所以暂不做此功能 -->
 
     <com.guoku.guokuv4.view.LayoutItemView
         android:id="@+id/tv_user_article_zan"
         style="@style/therm_tab_title_style"
         android:layout_marginTop="10dp"
-        android:visibility="gone"
         layoutview:textColorLeft="@color/black_body"
         layoutview:textLeft="我赞过的图文" >
     </com.guoku.guokuv4.view.LayoutItemView>
@@ -111,6 +106,10 @@
     <include
         layout="@layout/line_gray"
         android:background="@color/text_bg_box"
-        android:visibility="gone" />
+        />
+    
+        <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
 
 </LinearLayout>

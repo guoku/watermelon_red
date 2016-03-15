@@ -44,6 +44,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewParent;
+import android.view.ViewStub;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -51,6 +52,9 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.TranslateAnimation;
 import android.webkit.WebView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -247,6 +251,13 @@ public abstract class BaseActivity extends FragmentActivity {
 			view.setVisibility(View.GONE);
 		}
 	}
+	
+	 public CheckBox setTitleZan(){
+		 ViewStub viewStub = (ViewStub) findViewById(R.id.view_stub_zan);
+		 viewStub.inflate();
+		 CheckBox checkBoxZan = (CheckBox) findViewById(R.id.check_zan);
+		 return checkBoxZan;
+	 }
 
 	protected void rightTextOnClick() {
 
@@ -430,7 +441,9 @@ public abstract class BaseActivity extends FragmentActivity {
 	}
 
 	public void showSearchWhat() {
-		showBackBlack();
+		if(backView != null){
+			showBackBlack();
+		}
 		if (animationllShow == null) {
 			animationllShow = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
 					Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
@@ -440,7 +453,9 @@ public abstract class BaseActivity extends FragmentActivity {
 	}
 
 	public void hideSearchWhat() {
-		hideBackBlack();
+		if(backView != null){
+			hideBackBlack();
+		}
 		if (animationllHide == null) {
 			animationllHide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
 					Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f);

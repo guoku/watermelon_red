@@ -14,9 +14,8 @@
             android:id="@+id/layout_ra"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/walkthrough_bg"
             android:layout_margin="14dp"
-            >
+            android:background="@drawable/walkthrough_bg" >
 
             <TextView
                 android:id="@+id/text1"
@@ -54,8 +53,10 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 fresco:placeholderImage="@color/gray_bg"
-                fresco:roundedCornerRadius="5dp" 
-                />
+                fresco:roundTopLeft="false"
+                fresco:roundTopRight="false"
+                fresco:retryImageScaleType="centerInside"
+                fresco:roundedCornerRadius="5dp" />
         </RelativeLayout>
 
         <RelativeLayout

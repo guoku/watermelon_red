@@ -15,6 +15,8 @@ import com.guoku.guokuv4.entity.test.PBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.GuokuUtil;
+import com.guoku.guokuv4.utils.SharePrenceUtil;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -28,11 +30,20 @@ import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.view.animation.Animation.AnimationListener;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import de.greenrobot.event.EventBus;
+import tyrantgit.explosionfield.ExplosionField;
 
 public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
@@ -40,15 +51,18 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 	private static final int PROINFO = 12;
 	private static final int LIKE1 = 13;
 	private static final int LIKE0 = 14;
-	private static final int TYPE = 15;
+	private static final int JINGXUAN_DOWN = 15;
 	// public static final int UPDATA_LIKE = 16;
 	public static final String INTNT_KEY = GoodTwoFragmnet.class.getName();
 	// private static final int UPDATA_LIKE_UN = 17;
 	@ViewInject(R.id.jingxuan_lv_1)
 	public PullToRefreshListView jingxuan_lv_1;
-
 	@ViewInject(R.id.tv_check_net)
 	ImageView tvCheckNet;
+	@ViewInject(R.id.re_head_view)
+	RelativeLayout re_head_view;
+	@ViewInject(R.id.tv_count)
+	TextView tvShopCount;//更新商品数量
 
 	public JingXuanAdapter adapter;
 	private ArrayList<PBean> list;
@@ -56,11 +70,21 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
 	private int cur;
 	public View layoutView;// 刷新喜欢img
-
 	public int pos;// 记录点击的哪个商品
+	int indexList;
+	private ExplosionField mExplosionField;
+
+	private boolean scrollFlag = false;// 标记是否滑动
+	private boolean isUnRead;
+	
+	public Animation animationllShow;
+	public Animation animationllHide;
+	public final int animTime = 200;
+	public boolean animIsRunning = false;
 
 	@Override
 	protected void init() {
+		mExplosionField = ExplosionField.attach2Window(getActivity());
 		DisplayMetrics metrics = new DisplayMetrics();
 		context.getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		GuokuApplication.screenW = metrics.widthPixels;
@@ -71,6 +95,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
 		jingxuan_lv_1.setMode(Mode.BOTH);
 		jingxuan_lv_1.setAdapter(adapter);
+		jingxuan_lv_1.getRefreshableView().setOnScrollListener(onScrollListener);
 
 		jingxuan_lv_1.setOnRefreshListener(new OnRefreshListener2<ListView>() {
 
@@ -78,6 +103,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 				if (list != null) {
 					if (list.size() > 0) {
+						closeHeadView();
 						getJingXuan(System.currentTimeMillis() / 1000 + "", false);
 					}
 				}
@@ -100,11 +126,11 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				layoutView = arg1;
 				pos = arg2 - 1;
-				sendConnection(Constant.PROINFO + list.get(pos).getContent().getEntity().getEntity_id() + "/",
-						new String[] { "entity_id" },
-						new String[] { list.get(pos).getContent().getEntity().getEntity_id() }, PROINFO, true);
+				getShopInfo();
 			}
 		});
+
+		initUnRead();
 	}
 
 	@Override
@@ -112,17 +138,23 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 		if (adapter.getCount() > 0) {
 			return;
 		}
-		getJingXuan(System.currentTimeMillis() / 1000 + "", true);
+
 	}
 
 	private void getJingXuan(String time, boolean isShowDialog) {
 		sendConnection(Constant.JINGXUAN, new String[] { "count", "timestamp", "rcat" },
-				new String[] { "30", time, cur + "" }, TYPE, isShowDialog);
+				new String[] { "30", time, cur + "" }, JINGXUAN_DOWN, isShowDialog);
 	}
 
 	private void getJingXuanDown(String time) {
 		sendConnection(Constant.JINGXUAN, new String[] { "count", "timestamp", "rcat" },
 				new String[] { "30", time, cur + "" }, JINGXUANUP, false);
+	}
+
+	private void getShopInfo() {
+		sendConnection(Constant.PROINFO + list.get(pos).getContent().getEntity().getEntity_id() + "/",
+				new String[] { "entity_id" }, new String[] { list.get(pos).getContent().getEntity().getEntity_id() },
+				PROINFO, true);
 	}
 
 	@Override
@@ -138,7 +170,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 		}
 		jingxuan_lv_1.onRefreshComplete();
 		switch (where) {
-		case TYPE:
+		case JINGXUAN_DOWN:
 			list = ParseUtil.getJingXuanList(result);
 			adapter.setList(list);
 			break;
@@ -178,7 +210,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 		case LIKE1:
 			ToastUtil.show(context, "喜爱失败");
 			break;
-		case TYPE:
+		case JINGXUAN_DOWN:
 			if (list == null) {
 				tvCheckNet.setVisibility(View.VISIBLE);
 				jingxuan_lv_1.setVisibility(View.GONE);
@@ -220,6 +252,17 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 		getJingXuan(System.currentTimeMillis() / 1000 + "", true);
 	}
 
+	@OnClick(R.id.re_head_view)
+	private void onCheckUpdata(View view) {
+//		closeHeadView();
+		ToastUtil.show(getActivity(), "close");
+	}
+
+	@OnClick(R.id.img_close)
+	private void onCheckClose(View view) {
+		closeHeadView();
+	}
+
 	public void onEventMainThread(LikesBean likesBean) {
 		if (likesBean.isLike()) {
 			AVAnalytics.onEvent(context, "like_click", pBean.getContent().getEntity().getTitle());
@@ -241,5 +284,129 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
 			adapter.setStatus(layoutView, pBean);
 		}
+	}
+
+	OnScrollListener onScrollListener = new OnScrollListener() {
+
+		@Override
+		public void onScrollStateChanged(AbsListView view, int scrollState) {
+			// TODO Auto-generated method stub
+			// 不滚动时保存当前滚动到的位置
+			if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
+				if (adapter != null) {
+//					indexList = jingxuan_lv_1.getRefreshableView().getFirstVisiblePosition();
+				}
+			}
+
+			// 判断状态
+			switch (scrollState) {
+			// 当不滚动时
+			case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:// 是当屏幕停止滚动时
+				scrollFlag = false;
+				// 判断滚动到底部 、position是从0开始算起的
+				if (jingxuan_lv_1.getRefreshableView()
+						.getLastVisiblePosition() == (jingxuan_lv_1.getRefreshableView().getCount() - 1)) {
+
+					// TODO
+
+				}
+				// 判断滚动到顶部
+				if (jingxuan_lv_1.getRefreshableView().getFirstVisiblePosition() == 0) {
+
+					// TODO
+				}
+
+				break;
+			case AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:// 滚动时
+				scrollFlag = true;
+				break;
+			case AbsListView.OnScrollListener.SCROLL_STATE_FLING:
+				// 当用户由于之前划动屏幕并抬起手指，屏幕产生惯性滑动时，即滚动时
+				scrollFlag = true;
+				break;
+			}
+		}
+
+		@Override
+		public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+			// TODO Auto-generated method stub
+			// 当滑动时
+			if(isUnRead){
+				if (scrollFlag) {
+					
+					if (firstVisibleItem < indexList) {
+						// 下滑
+						if (re_head_view.getVisibility() == View.GONE) {
+							showSearchWhat();
+							re_head_view.setVisibility(View.VISIBLE);
+						}
+					} else if (firstVisibleItem > indexList) {
+						// 上滑
+						if (re_head_view.getVisibility() == View.VISIBLE) {
+							hideSearchWhat();
+							re_head_view.setVisibility(View.GONE);
+						}
+					} else {
+						return;
+					}
+					indexList = firstVisibleItem;// 更新位置
+				}
+			}
+		}
+	};
+
+	private void initUnRead() {
+
+		String unReadData = SharePrenceUtil.getShopUnRead(getActivity());
+
+		if (!StringUtils.isEmpty(unReadData)) {
+			list = new ArrayList<PBean>();
+			list.addAll(ParseUtil.getJingXuanList(unReadData));
+			adapter.setList(list);
+		} else {
+			getJingXuan(System.currentTimeMillis() / 1000 + "", true);
+		}
+		
+		if(GuokuApplication.getInstance().getUnReadData().getUnread_selection_count() > 0){
+			isUnRead = true;
+			tvShopCount.setText(getActivity().getResources().getString(R.string.tv_shop_unread, GuokuApplication.getInstance().getUnReadData().getUnread_selection_count() + ""));
+			showSearchWhat();
+			re_head_view.setVisibility(View.VISIBLE);
+		}
+	}
+
+	private void closeHeadView() {
+		if(isUnRead){
+			isUnRead = false;
+			hideSearchWhat();
+			re_head_view.setVisibility(View.GONE);
+		}
+	}
+
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		if (indexList != 0) {
+			SharePrenceUtil.setShopUnRead(getActivity(), list.subList(indexList, list.size()));
+		}
+	}
+	
+	public void showSearchWhat() {
+		if (animationllShow == null) {
+			animationllShow = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
+					Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+		}
+		animationllShow.setDuration(animTime);
+		re_head_view.startAnimation(animationllShow);
+	}
+
+	public void hideSearchWhat() {
+		if (animationllHide == null) {
+			animationllHide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
+					Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f);
+		}
+		animationllHide.setDuration(animTime);
+		re_head_view.startAnimation(animationllHide);
 	}
 }

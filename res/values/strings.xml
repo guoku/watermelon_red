@@ -68,6 +68,7 @@
     <string name="tv_tab_recommend">推荐</string>
     <string name="tv_tab_commodity">商品</string>
     <string name="tv_tab_image_text">图文</string>
+    <string name="tv_shop_unread" formatted="false">查看%s个更新</string>
 
     <!-- user页  包括账号本人和其它用户 -->
     <string name="tv_user_my">我</string>

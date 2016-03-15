@@ -55,7 +55,9 @@ public class SearchUserFragment extends BaseFrament implements OnClickListener {
 	@Override
 	protected void init() {
 		// TODO Auto-generated method stub
-		EventBus.getDefault().register(this);
+		if(!EventBus.getDefault().isRegistered(this)){
+			EventBus.getDefault().register(this);
+		}
 		
 		fansAdapter = new FansAdapter(context, this);
 

@@ -48,6 +48,8 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 	ArticleAdapter articleAdapter;
 
 	int page = 1;
+	
+	boolean isLoad;
 
 	@Override
 	protected void init() {
@@ -92,6 +94,7 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 		listViewArtivle.onRefreshComplete();
 		switch (where) {
 		case TAG_ARTICLE:
+			isLoad = true;
 			setResult(result, TAG_ARTICLE);
 			break;
 		case TAG_ARTICLE_ADD:
@@ -123,10 +126,10 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 	@Override
 	protected void setData() {
 		// TODO Auto-generated method stub
-		sentRequest(true);
+//		sentRequest(true);
 	}
 
-	private void sentRequest(boolean isShow) {
+	public void sentRequest(boolean isShow) {
 
 		sendConnection(Constant.ARTICLES, new String[] { "page", "size" },
 				new String[] { String.valueOf(page), "20"}, TAG_ARTICLE, isShow);
@@ -175,5 +178,16 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 	@OnClick(R.id.tv_check_net)
 	private void onCheckNetClick(View view){
 		sentRequest(true);
+	}
+	
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		// TODO Auto-generated method stub
+		super.setUserVisibleHint(isVisibleToUser);
+		if(isVisibleToUser){
+			if(isLoad == false){
+				sentRequest(true);
+			}
+		}
 	}
 }

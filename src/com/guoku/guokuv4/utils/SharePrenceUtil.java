@@ -1,17 +1,17 @@
 package com.guoku.guokuv4.utils;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 import com.alibaba.fastjson.JSON;
-import com.guoku.guokuv4.bean.CategoryBean;
 import com.guoku.guokuv4.bean.LoginInfo;
 import com.guoku.guokuv4.bean.SearchLogBean;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.config.Logger;
 import com.guoku.guokuv4.entity.test.AccountBean;
-import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.entity.test.PBean;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -23,6 +23,7 @@ public class SharePrenceUtil {
 
 	public static String KEY_SEARCH = "KEY_SEARCH";
 	public static String KEY_LAUNCH = "KEY_LAUNCH";
+	public static String KEY_SHOP_UNREAD = "KEY_SHOP_UNREAD";//商品阅读记录
 
 	public static boolean isLogin(Context context) {
 		return context.getSharedPreferences(Constant.EKWING_LOGIN, 0).getBoolean(Constant.SP_HAS_LOGIN, false);
@@ -207,5 +208,19 @@ public class SharePrenceUtil {
 	 */
 	public static boolean getLaunch(Context context) {
 		return context.getSharedPreferences(Constant.GUOKU_TAB, 0).getBoolean(KEY_LAUNCH, false);
+	}
+	
+	/**
+	 * 记录上次浏览精选list的位置功能（存储未浏览的）
+	 */
+	public static void setShopUnRead(Context context, List<PBean> list){
+		context.getSharedPreferences(Constant.GUOKU_TAB, 0).edit().putString(KEY_SHOP_UNREAD, JSON.toJSONString(list)).commit();
+	}
+	
+	/**
+	 * 获取未读商品记录数据
+	 */
+	public static String getShopUnRead(Context context){
+		return context.getSharedPreferences(Constant.GUOKU_TAB, 0).getString(KEY_SHOP_UNREAD, null);
 	}
 }

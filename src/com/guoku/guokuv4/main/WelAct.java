@@ -1,8 +1,21 @@
 package com.guoku.guokuv4.main;
 
+import com.alibaba.fastjson.JSON;
+import com.guoku.R;
+import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.bean.LaunchBean;
+import com.guoku.guokuv4.bean.UnReadData;
+import com.guoku.guokuv4.config.ConfigGK;
+import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.utils.LogGK;
+import com.guoku.guokuv4.utils.SharePrenceUtil;
+import com.guoku.guokuv4.utils.StringUtils;
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+import com.umeng.analytics.MobclickAgent;
+
 import android.content.Intent;
-import android.graphics.drawable.Animatable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -11,31 +24,11 @@ import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.alibaba.fastjson.JSON;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.drawee.controller.ControllerListener;
-import com.facebook.drawee.interfaces.DraweeController;
-import com.guoku.R;
-import com.guoku.app.GuokuApplication;
-import com.guoku.guokuv4.act.IntroAct;
-import com.guoku.guokuv4.base.NetWorkActivity;
-import com.guoku.guokuv4.bean.LaunchBean;
-import com.guoku.guokuv4.config.ConfigGK;
-import com.guoku.guokuv4.config.Constant;
-import com.guoku.guokuv4.service.DownLoadService;
-import com.guoku.guokuv4.utils.LogGK;
-import com.guoku.guokuv4.utils.SharePrenceUtil;
-import com.guoku.guokuv4.utils.StringUtils;
-import com.guoku.guokuv4.utils.ToastUtil;
-import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
-import com.umeng.analytics.MobclickAgent;
-
 public class WelAct extends NetWorkActivity {
 
 	private static final int TAG_CATEGORY = 1001;// 分类
 	private static final int LAUNCH = 1002;// 引导页图片
+	private static final int SHOP_COUNT = 1003;// 有多少个更新商品
 
 	@ViewInject(R.id.wecome)
 	private RelativeLayout wecome;
@@ -50,7 +43,6 @@ public class WelAct extends NetWorkActivity {
 		super.onCreate(savedInstanceState);
 		
 		mTintManager.setStatusBarTintEnabled(false);
-		
 		setContentView(R.layout.welact);
 		ViewUtils.inject(this);
 		MobclickAgent.updateOnlineConfig(this);
@@ -138,6 +130,11 @@ public class WelAct extends NetWorkActivity {
 				}
 			}
 			break;
+		case SHOP_COUNT:
+			UnReadData unReadData = JSON.parseObject(result, UnReadData.class);
+			unReadData.setUnread_selection_count(3);
+			GuokuApplication.getInstance().setUnReadData(unReadData);
+			break;
 		default:
 			break;
 		}
@@ -162,5 +159,8 @@ public class WelAct extends NetWorkActivity {
 		sendConnection(Constant.CATAB, new String[] {}, new String[] {}, TAG_CATEGORY, false);
 
 		sendConnection(Constant.LAUNCH, new String[] {}, new String[] {}, LAUNCH, false);
+		
+		sendConnection(Constant.SHOP_UNREAD, new String[] {}, new String[] {}, SHOP_COUNT, false);
+		
 	}
 }

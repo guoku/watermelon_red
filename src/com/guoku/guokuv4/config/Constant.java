@@ -43,7 +43,7 @@ public class Constant {
 	public static final String URL_ARTICLES_SHARE = "http://www.guoku.com";// 分享果库文章前缀
 	public static final String URL_IMG = "http://imgcdn.guoku.com/";// 图片前缀
 	public static final String URL = "http://api.guoku.com";// 生产环境地址
-	// public static final String URL = "http://10.0.0.101:8000";//测试环境地址
+//	 public static final String URL = "http://10.0.0.101:8000";//测试环境地址
 //	 public static final String URL = "http://test.guoku.com";//测试环境地址
 
 	public static final String JINGXUAN = URL + "/mobile/v4/selection/";
@@ -100,6 +100,8 @@ public class Constant {
 	public static final String CATEGORY_FIRST = URL + "/mobile/v4/category/";
 	/** 推荐全部用户 */
 	public static final String AUTHORIZED_USERS = URL + "/mobile/v4/authorized/users/";
+	/** 查看有多少个更新精选商品数量 */
+	public static final String SHOP_UNREAD = URL + "/mobile/v4/unread/";
 	
 	public static final String DESCRIPTOR = "1";
 	public static final String WX_APPID = "wx59118ccde8270caa";
