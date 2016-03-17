@@ -102,6 +102,10 @@ public class Constant {
 	public static final String AUTHORIZED_USERS = URL + "/mobile/v4/authorized/users/";
 	/** 查看有多少个更新精选商品数量 */
 	public static final String SHOP_UNREAD = URL + "/mobile/v4/unread/";
+	/** 图文点赞 */
+	public static final String ARTICLES_DIG = URL + "/mobile/v4/articles/dig/";
+	/** 图文取消点赞 */
+	public static final String ARTICLES_UNDIG = URL + "/mobile/v4/articles/undig/";
 	
 	public static final String DESCRIPTOR = "1";
 	public static final String WX_APPID = "wx59118ccde8270caa";

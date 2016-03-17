@@ -38,7 +38,7 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 
 	private static final int TAG_ARTICLE = 1003;// 文章
 	private static final int TAG_ARTICLE_ADD = 1004;// 上拉更多
-
+	
 	@ViewInject(R.id.list_article)
 	public PullToRefreshListView listViewArtivle;
 	
@@ -170,6 +170,7 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 				.substring(0, 50));
 		sharebean.setAricleUrl(articleAdapter.getList().get(arg2).getUrl());
 		sharebean.setImgUrl(articleAdapter.getList().get(arg2).getCover());
+		sharebean.setAricleId(String.valueOf(articleAdapter.getList().get(arg2).getArticle_id()));
 		bundle.putSerializable(WebShareAct.class.getName(), sharebean);
 
 		openActivity(WebShareAct.class, bundle);

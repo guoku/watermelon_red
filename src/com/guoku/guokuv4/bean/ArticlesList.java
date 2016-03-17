@@ -1,9 +1,11 @@
 package com.guoku.guokuv4.bean;
 
+import java.io.Serializable;
+
 /**
  * zhangyao zhangyao@guoku.com 15/9/15 13:26
  */
-public class ArticlesList {
+public class ArticlesList implements Serializable{
 
 	/**
 	 * read_count : 11 pub_time : 1.44228973E9 showcover : False title :
@@ -163,7 +165,7 @@ public class ArticlesList {
 		return article_id;
 	}
 
-	public static class CreatorEntity {
+	public static class CreatorEntity  implements Serializable{
 		/**
 		 * is_censor : false bio : 写不完了写不完了写不完了 avatar_large :
 		 * http://imgcdn.guoku.com/avatar/1c4c5f8b1a9e892cc46b0a00913be6cd.jpg

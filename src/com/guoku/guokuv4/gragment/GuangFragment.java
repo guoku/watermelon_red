@@ -36,6 +36,7 @@ import com.guoku.guokuv4.entity.test.Categories.Category;
 import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.UserBean;
+import com.guoku.guokuv4.homepage.ArticleFragment;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.GuokuUtil;
 import com.guoku.guokuv4.utils.ImgUtils;
@@ -421,7 +422,7 @@ public class GuangFragment extends BaseFrament {
 				sharebean.setAricleUrl(articlesAdapter.getList().get(arg2).getArticle().getUrl());
 				sharebean.setImgUrl(articlesAdapter.getList().get(arg2).getArticle().getCover());
 				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
-
+				sharebean.setAricleId(String.valueOf(articlesAdapter.getList().get(arg2).getArticle().getArticle_id()));
 				openActivity(WebShareAct.class, bundle);
 			}
 		});

@@ -32,7 +32,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.view.animation.Animation.AnimationListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
@@ -41,9 +40,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import de.greenrobot.event.EventBus;
-import tyrantgit.explosionfield.ExplosionField;
 
 public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
@@ -72,7 +69,6 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 	public View layoutView;// 刷新喜欢img
 	public int pos;// 记录点击的哪个商品
 	int indexList;
-	private ExplosionField mExplosionField;
 
 	private boolean scrollFlag = false;// 标记是否滑动
 	private boolean isUnRead;
@@ -84,7 +80,6 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
 	@Override
 	protected void init() {
-		mExplosionField = ExplosionField.attach2Window(getActivity());
 		DisplayMetrics metrics = new DisplayMetrics();
 		context.getWindowManager().getDefaultDisplay().getMetrics(metrics);
 		GuokuApplication.screenW = metrics.widthPixels;

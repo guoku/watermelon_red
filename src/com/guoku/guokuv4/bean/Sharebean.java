@@ -21,6 +21,16 @@ public class Sharebean implements Serializable {
 	String aricleUrl;// 文章url
 
 	String imgUrl;// 图片url
+	
+	String aricleId;//文章id
+
+	public String getAricleId() {
+		return aricleId;
+	}
+
+	public void setAricleId(String aricleId) {
+		this.aricleId = aricleId;
+	}
 
 	public String getTitle() {
 		return title;

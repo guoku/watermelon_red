@@ -15,10 +15,12 @@ import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.base.NetWorkActivity;
 import com.guoku.guokuv4.base.UserBaseFrament;
+import com.guoku.guokuv4.bean.ArticlesList;
 import com.guoku.guokuv4.bean.Sharebean;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.UserBean;
+import com.guoku.guokuv4.homepage.ArticleFragment;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.share.CustomShareBoard;
 import com.guoku.guokuv4.utils.StringUtils;
@@ -51,6 +53,8 @@ public class WebShareAct extends NetWorkActivity {
 
 	private static final int INFO_GOOD = 1001;// 商品
 	private static final int INFO_USER = 1002;// 用户
+	private static final int DIG = 1003;// 赞
+	private static final int UN_DIG = 1004;// 取消赞
 
 	String IF_ARTICLES = "/articles/";
 	String IF_ENTITY = "guoku://entity/";
@@ -61,7 +65,6 @@ public class WebShareAct extends NetWorkActivity {
 	@ViewInject(R.id.webview)
 	private WebView view;
 	Sharebean sharebean = new Sharebean();
-	
 	String urls; 
 
 	@Override
@@ -181,9 +184,15 @@ public class WebShareAct extends NetWorkActivity {
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				// TODO Auto-generated method stub
 				if(isChecked){
-		        	ToastUtil.show(mContext, "赞");
+		        	if(!StringUtils.isEmpty(sharebean.getAricleId())){
+		        		sendConnectionPOST(Constant.ARTICLES_DIG , new String[] { "entity_id" }, new String[] {sharebean.getAricleId()},
+			    				DIG, true);
+		        	}
 		        }else{
-		        	ToastUtil.show(mContext, "取消赞");
+		        	if(!StringUtils.isEmpty(sharebean.getAricleId())){
+			        	sendConnectionPOST(Constant.ARTICLES_DIG , new String[] { "entity_id" }, new String[] {sharebean.getAricleId()},
+			    				UN_DIG, true);	
+		        	}
 		        }
 			}
 		});
@@ -250,6 +259,14 @@ public class WebShareAct extends NetWorkActivity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			break;
+		case DIG:
+			ToastUtil.show(mContext, "赞");
+			setTitleZan().setEnabled(true);
+			break;
+		case UN_DIG:
+			ToastUtil.show(mContext, "取消赞");
+			setTitleZan().setEnabled(false);
 			break;
 
 		default:

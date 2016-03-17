@@ -74,7 +74,7 @@ public class SearchArticleFragment extends BaseFrament {
 				sharebean.setAricleUrl(adapter.getList().get(arg2).getUrl());
 				sharebean.setImgUrl(adapter.getList().get(arg2).getCover());
 				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
-
+				sharebean.setAricleId(adapter.getList().get(arg2).getId());
 				openActivity(WebShareAct.class, bundle);
 			}
 		});

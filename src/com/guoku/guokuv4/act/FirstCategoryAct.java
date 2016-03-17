@@ -296,11 +296,15 @@ public class FirstCategoryAct extends NetWorkActivity {
 				Bundle bundle = new Bundle();
 				Sharebean sharebean = new Sharebean();
 				sharebean.setTitle(articlesAdapter.getList().get(arg2).getTitle());
-				sharebean.setContext(articlesAdapter.getList().get(arg2).getContent().substring(0, 50));
+				if(articlesAdapter.getList().get(arg2).getContent().length() > 50){
+					sharebean.setContext(articlesAdapter.getList().get(arg2).getContent().substring(0, 50));	
+				}else{
+					sharebean.setContext(articlesAdapter.getList().get(arg2).getContent());	
+				}
 				sharebean.setAricleUrl(articlesAdapter.getList().get(arg2).getUrl());
 				sharebean.setImgUrl(articlesAdapter.getList().get(arg2).getCover());
 				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
-
+				sharebean.setAricleId(articlesAdapter.getList().get(arg2).getId());
 				openActivity(WebShareAct.class, bundle);
 			}
 		});

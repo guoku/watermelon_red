@@ -132,7 +132,7 @@ public class WelAct extends NetWorkActivity {
 			break;
 		case SHOP_COUNT:
 			UnReadData unReadData = JSON.parseObject(result, UnReadData.class);
-			unReadData.setUnread_selection_count(3);
+			unReadData.setUnread_selection_count(12);
 			GuokuApplication.getInstance().setUnReadData(unReadData);
 			break;
 		default:
