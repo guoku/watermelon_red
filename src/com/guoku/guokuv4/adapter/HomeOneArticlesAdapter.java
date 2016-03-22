@@ -3,25 +3,25 @@
  */
 package com.guoku.guokuv4.adapter;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.guoku.R;
+import com.guoku.guokuv4.bean.ArticlesList;
+import com.guoku.guokuv4.config.Constant;
+import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.view.annotation.ViewInject;
+
 import android.content.Context;
 import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.guoku.R;
-import com.guoku.guokuv4.bean.Articles;
-import com.guoku.guokuv4.config.Constant;
-import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
-
 /**
  * @zhangyao
  * @Description: TODO
  * @date 2015-9-11 下午3:36:50 首页流文章adapter
  */
-public class HomeOneArticlesAdapter extends ArrayListAdapter<Articles> {
+public class HomeOneArticlesAdapter extends ArrayListAdapter<ArticlesList> {
 
 	public HomeOneArticlesAdapter(Context context) {
 		super(context);
@@ -43,7 +43,7 @@ public class HomeOneArticlesAdapter extends ArrayListAdapter<Articles> {
 			holder = (ViewHold) convertView.getTag();
 		}
 
-		Articles articles = mList.get(position);
+		ArticlesList articles = mList.get(position);
 		holder.tvName.setText(articles.getTitle());
 		holder.tvBelow.setText(articles.getTitle());
 		holder.imgIcon.setImageURI(Uri.parse(Constant.URL_IMG

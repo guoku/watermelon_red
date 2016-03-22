@@ -22,7 +22,7 @@ public class UserBean {
 	
 	UserBean user;//基本信息
 	
-	ArrayList<Articles> last_post_article;//图文
+	ArrayList<ArticlesList> last_post_article;//图文
 
 	public ArrayList<EntityBean> getLast_user_like() {
 		return last_user_like;
@@ -48,11 +48,11 @@ public class UserBean {
 		this.user = user;
 	}
 
-	public ArrayList<Articles> getLast_post_article() {
+	public ArrayList<ArticlesList> getLast_post_article() {
 		return last_post_article;
 	}
 
-	public void setLast_post_article(ArrayList<Articles> last_post_article) {
+	public void setLast_post_article(ArrayList<ArticlesList> last_post_article) {
 		this.last_post_article = last_post_article;
 	}
 	

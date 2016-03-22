@@ -77,6 +77,24 @@ public class ArticlesList implements Serializable{
 	private String publish;
 	private String content;
 	private int article_id;
+	private boolean is_dig;//是否赞过
+	private int dig_count;//赞的数量
+
+	public int getDig_count() {
+		return dig_count;
+	}
+
+	public void setDig_count(int dig_count) {
+		this.dig_count = dig_count;
+	}
+
+	public boolean isIs_dig() {
+		return is_dig;
+	}
+
+	public void setIs_dig(boolean is_dig) {
+		this.is_dig = is_dig;
+	}
 
 	public void setRead_count(String read_count) {
 		this.read_count = read_count;
@@ -143,6 +161,13 @@ public class ArticlesList implements Serializable{
 	}
 
 	public String getCover() {
+		return cover;
+	}
+	
+	public String get240() {
+		if (cover.contains("images")) {
+			return cover.replaceFirst("images", "images/240");
+		}
 		return cover;
 	}
 

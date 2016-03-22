@@ -21,6 +21,7 @@ import com.guoku.guokuv4.act.WebAct;
 import com.guoku.guokuv4.config.AlibabaConfig;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;
+import com.guoku.guokuv4.utils.BitmapUtil;
 import com.guoku.guokuv4.utils.MyPreferences;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.lidroid.xutils.ViewUtils;
@@ -42,7 +43,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.view.ViewParent;
 import android.view.ViewStub;
 import android.view.Window;
@@ -53,11 +53,10 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.TranslateAnimation;
 import android.webkit.WebView;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 /**
@@ -96,21 +95,22 @@ public abstract class BaseActivity extends FragmentActivity {
 
 	public View listView;
 	public View backView;
-	
+	public View webView;//webview的引导帮助
+
 	protected SystemBarTintManager mTintManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
+
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
-        }
-        mTintManager = new SystemBarTintManager(this);
-        mTintManager.setStatusBarTintEnabled(true);
-        mTintManager.setStatusBarTintResource(R.color.black_bar);
+			setTranslucentStatus(true);
+		}
+		mTintManager = new SystemBarTintManager(this);
+		mTintManager.setStatusBarTintEnabled(true);
+		mTintManager.setStatusBarTintResource(R.color.black_bar);
 
 		GuokuApplication.getInstance().addActivity(this);
 		mContext = this;
@@ -120,19 +120,19 @@ public abstract class BaseActivity extends FragmentActivity {
 		mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 	}
 
-    @TargetApi(19)
-    protected void setTranslucentStatus(boolean on) {
-        Window win = getWindow();
-        WindowManager.LayoutParams winParams = win.getAttributes();
-        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-        if (on) {
-            winParams.flags |= bits;
-        } else {
-            winParams.flags &= ~bits;
-        }
-        win.setAttributes(winParams);
-    }
-	
+	@TargetApi(19)
+	protected void setTranslucentStatus(boolean on) {
+		Window win = getWindow();
+		WindowManager.LayoutParams winParams = win.getAttributes();
+		final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+		if (on) {
+			winParams.flags |= bits;
+		} else {
+			winParams.flags &= ~bits;
+		}
+		win.setAttributes(winParams);
+	}
+
 	@Override
 	public void setContentView(int layoutResID) {
 		super.setContentView(layoutResID);
@@ -251,13 +251,13 @@ public abstract class BaseActivity extends FragmentActivity {
 			view.setVisibility(View.GONE);
 		}
 	}
-	
-	 public CheckBox setTitleZan(){
-		 ViewStub viewStub = (ViewStub) findViewById(R.id.view_stub_zan);
-		 viewStub.inflate();
-		 CheckBox checkBoxZan = (CheckBox) findViewById(R.id.check_zan);
-		 return checkBoxZan;
-	 }
+
+	public CheckBox setTitleZan() {
+		ViewStub viewStub = (ViewStub) findViewById(R.id.view_stub_zan);
+		viewStub.inflate();
+		CheckBox checkBoxZan = (CheckBox) findViewById(R.id.check_zan);
+		return checkBoxZan;
+	}
 
 	protected void rightTextOnClick() {
 
@@ -266,7 +266,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	protected void openActivity(Class<?> pClass) {
 		openActivity(pClass, null);
 	}
-	
+
 	protected void openActivity(Class<?> pClass, int flags) {
 		Intent intent = new Intent(this, pClass);
 		intent.setFlags(flags);
@@ -334,6 +334,37 @@ public abstract class BaseActivity extends FragmentActivity {
 		// TODO Auto-generated method stub
 		super.onStart();
 		// addGuideImage();// 添加引导页
+	}
+
+	public void addActGuide(int layoutParent, int top, final String key) {
+
+		View view = findViewById(layoutParent);// 查找通过setContentView上的根布局
+		if (view == null)
+			return;
+		if (!MyPreferences.activityIsGuided(this, key)) {
+			ViewParent viewParent = view.getParent();
+			if (viewParent instanceof FrameLayout) {
+				LayoutInflater lInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				frameLayout = (FrameLayout) viewParent;
+				webView = lInflater.inflate(R.layout.view_walkthrough_webview, null);
+				frameLayout.addView(webView);
+				webView.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						removeFrameActGuide(key);
+					}
+				});
+			}
+		}
+	}
+
+	// 删除引导页
+	public void removeFrameActGuide(String key) {
+		if (frameLayout != null) {
+			frameLayout.removeView(webView);
+			MyPreferences.setIsGuided(getApplicationContext(), key);// 设为已引导
+		}
 	}
 
 	/**
@@ -441,7 +472,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	}
 
 	public void showSearchWhat() {
-		if(backView != null){
+		if (backView != null) {
 			showBackBlack();
 		}
 		if (animationllShow == null) {
@@ -453,7 +484,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	}
 
 	public void hideSearchWhat() {
-		if(backView != null){
+		if (backView != null) {
 			hideBackBlack();
 		}
 		if (animationllHide == null) {
@@ -548,18 +579,18 @@ public abstract class BaseActivity extends FragmentActivity {
 	/**
 	 * 跳到淘宝商品详情页
 	 */
-	
+
 	public void gotoTaoBao(PInfoBean productBean, long origin_id) {
 		AVAnalytics.onEvent(this, "buy");
 		MobclickAgent.onEvent(this, "buy");
 
 		try {
-			
-			if(productBean != null){
+
+			if (productBean != null) {
 				JSONArray array;
 				array = new JSONArray(productBean.getEntity().getItem_list());
 				origin_id = array.getJSONObject(0).getLong("origin_id");
-				
+
 				if (!(array.getJSONObject(0).getString("origin_source").contains("taobao")
 						|| array.getJSONObject(0).getString("origin_source").contains("tmall"))) {
 					Intent intent = new Intent(mContext, WebAct.class);
@@ -570,7 +601,7 @@ public abstract class BaseActivity extends FragmentActivity {
 					return;
 				}
 			}
-			
+
 			TaeWebViewUiSettings taeWebViewUiSettings = new TaeWebViewUiSettings();
 			TaokeParams taokeParams = new TaokeParams();
 			taokeParams.pid = AlibabaConfig.PID;
@@ -582,7 +613,7 @@ public abstract class BaseActivity extends FragmentActivity {
 
 					@Override
 					public void onPaySuccess(TradeResult tradeResult) {
-//						ToastUtil.show(mContext, "支付成功");
+						// ToastUtil.show(mContext, "支付成功");
 					}
 
 					@Override

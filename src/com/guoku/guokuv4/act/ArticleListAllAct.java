@@ -71,8 +71,9 @@ public class ArticleListAllAct extends NetWorkActivity {
 				sharebean.setContext(adapter.getList().get(arg2 - 1).getContent().substring(0, 50));
 				sharebean.setAricleUrl(adapter.getList().get(arg2 - 1).getUrl());
 				sharebean.setImgUrl(adapter.getList().get(arg2 - 1).getCover());
+				sharebean.setIs_dig(adapter.getList().get(arg2).isIs_dig());
 				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
-				sharebean.setAricleId(adapter.getList().get(arg2 - 1).getId());
+				sharebean.setAricleId(String.valueOf(adapter.getList().get(arg2 - 1).getArticle_id()));
 				openActivity(WebShareAct.class, bundle);
 			}
 		});

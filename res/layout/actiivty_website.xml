@@ -6,6 +6,7 @@
     android:orientation="vertical" 
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
+    android:id="@+id/layout_webview"
     >
 
     <include

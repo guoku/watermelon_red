@@ -6,13 +6,16 @@ package com.guoku.guokuv4.homepage;
 import java.util.ArrayList;
 
 import com.alibaba.fastjson.JSON;
+import com.avos.avoscloud.AVAnalytics;
 import com.guoku.R;
 import com.guoku.guokuv4.act.WebShareAct;
 import com.guoku.guokuv4.adapter.ArticleAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
 import com.guoku.guokuv4.bean.ArticlesList;
+import com.guoku.guokuv4.bean.LikesBean;
 import com.guoku.guokuv4.bean.Sharebean;
 import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.eventbus.ZanEB;
 import com.guoku.guokuv4.utils.GuokuUtil;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -21,11 +24,13 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+import com.umeng.analytics.MobclickAgent;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import de.greenrobot.event.EventBus;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -50,10 +55,17 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 	int page = 1;
 	
 	boolean isLoad;
+	
+	int tempItem;
 
 	@Override
 	protected void init() {
 		// TODO Auto-generated method stub
+		
+		if (!EventBus.getDefault().isRegistered(this)) {
+			EventBus.getDefault().register(this);
+		}
+		
 		articleAdapter = new ArticleAdapter(getActivity());
 
 		listViewArtivle.setMode(Mode.BOTH);
@@ -109,6 +121,7 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 	@Override
 	protected void onFailure(String result, int where) {
 		// TODO Auto-generated method stub
+		listViewArtivle.onRefreshComplete();
 		GuokuUtil.closeListViewHeader(listViewArtivle);
 		switch (where) {
 		case TAG_ARTICLE:
@@ -162,15 +175,17 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-		arg2 -= 1;
+		
+		tempItem = arg2 -= 1;
 		Bundle bundle = new Bundle();
 		Sharebean sharebean = new Sharebean();
-		sharebean.setTitle(articleAdapter.getList().get(arg2).getTitle());
-		sharebean.setContext(articleAdapter.getList().get(arg2).getContent()
+		sharebean.setTitle(articleAdapter.getList().get(tempItem).getTitle());
+		sharebean.setContext(articleAdapter.getList().get(tempItem).getContent()
 				.substring(0, 50));
-		sharebean.setAricleUrl(articleAdapter.getList().get(arg2).getUrl());
-		sharebean.setImgUrl(articleAdapter.getList().get(arg2).getCover());
-		sharebean.setAricleId(String.valueOf(articleAdapter.getList().get(arg2).getArticle_id()));
+		sharebean.setAricleUrl(articleAdapter.getList().get(tempItem).getUrl());
+		sharebean.setImgUrl(articleAdapter.getList().get(tempItem).getCover());
+		sharebean.setAricleId(String.valueOf(articleAdapter.getList().get(tempItem).getArticle_id()));
+		sharebean.setIs_dig(articleAdapter.getList().get(arg2).isIs_dig());
 		bundle.putSerializable(WebShareAct.class.getName(), sharebean);
 
 		openActivity(WebShareAct.class, bundle);
@@ -187,8 +202,26 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 		super.setUserVisibleHint(isVisibleToUser);
 		if(isVisibleToUser){
 			if(isLoad == false){
-				sentRequest(true);
+				listViewArtivle.setRefreshing();
+				sentRequest(false);
 			}
+		}
+	}
+	
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		if (!EventBus.getDefault().isRegistered(this)) {
+			EventBus.getDefault().unregister(this);
+		}
+	}
+	
+	public void onEventMainThread(ZanEB zEb) {
+		if(zEb.isZan()){
+			articleAdapter.getList().get(tempItem).setIs_dig(true);
+		}else{
+			articleAdapter.getList().get(tempItem).setIs_dig(false);
 		}
 	}
 }

@@ -23,6 +23,16 @@ public class Sharebean implements Serializable {
 	String imgUrl;// 图片url
 	
 	String aricleId;//文章id
+	
+	private boolean is_dig;//是否赞过
+	
+	public boolean isIs_dig() {
+		return is_dig;
+	}
+
+	public void setIs_dig(boolean is_dig) {
+		this.is_dig = is_dig;
+	}
 
 	public String getAricleId() {
 		return aricleId;

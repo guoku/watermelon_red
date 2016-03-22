@@ -12,15 +12,15 @@ import java.util.ArrayList;
  */
 public class ArticlesSearch {
 
-	ArrayList<Articles> articles;
+	ArrayList<ArticlesList> articles;
 
 	Stat stat;
 
-	public ArrayList<Articles> getArticles() {
+	public ArrayList<ArticlesList> getArticles() {
 		return articles;
 	}
 
-	public void setArticles(ArrayList<Articles> articles) {
+	public void setArticles(ArrayList<ArticlesList> articles) {
 		this.articles = articles;
 	}
 

@@ -79,8 +79,9 @@ public class UserArticleListAct extends NetWorkActivity {
 				}
 				sharebean.setAricleUrl(adapter.getList().get(arg2 - 1).getUrl());
 				sharebean.setImgUrl(adapter.getList().get(arg2 - 1).getCover());
+				sharebean.setIs_dig(adapter.getList().get(arg2).isIs_dig());
 				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
-				sharebean.setAricleId(adapter.getList().get(arg2 - 1).getId());
+				sharebean.setAricleId(String.valueOf(adapter.getList().get(arg2 - 1).getArticle_id()));
 				openActivity(WebShareAct.class, bundle);
 			}
 		});
@@ -146,9 +147,9 @@ public class UserArticleListAct extends NetWorkActivity {
 	}
 
 	private void getData(int page, int netTag, boolean isDialog) {
-		sendConnection(Constant.TAB_USER + uBean.getUser_id() + "/articles" + "/",
-				new String[] { "page", "size", "timestamp" },
-				new String[] { page + "", String.valueOf(countValue), System.currentTimeMillis() / 1000 + "" }, netTag,
+		sendConnection(Constant.USERINFO + uBean.getUser_id() + "/dig/articles/",
+				new String[] { "page", "size"},
+				new String[] { page + "", String.valueOf(countValue)}, netTag,
 				isDialog);
 	}
 }

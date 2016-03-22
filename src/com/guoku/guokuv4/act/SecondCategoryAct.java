@@ -245,8 +245,9 @@ public class SecondCategoryAct extends NetWorkActivity {
 				}
 				sharebean.setAricleUrl(articlesAdapter.getList().get(arg2).getUrl());
 				sharebean.setImgUrl(articlesAdapter.getList().get(arg2).getCover());
+				sharebean.setIs_dig(articlesAdapter.getList().get(arg2).isIs_dig());
 				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
-				sharebean.setAricleId(articlesAdapter.getList().get(arg2).getId());
+				sharebean.setAricleId(String.valueOf(articlesAdapter.getList().get(arg2).getArticle_id()));
 				openActivity(WebShareAct.class, bundle);
 			}
 		});

@@ -15,12 +15,11 @@ import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.base.NetWorkActivity;
 import com.guoku.guokuv4.base.UserBaseFrament;
-import com.guoku.guokuv4.bean.ArticlesList;
 import com.guoku.guokuv4.bean.Sharebean;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.UserBean;
-import com.guoku.guokuv4.homepage.ArticleFragment;
+import com.guoku.guokuv4.eventbus.ZanEB;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.share.CustomShareBoard;
 import com.guoku.guokuv4.utils.StringUtils;
@@ -33,6 +32,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -40,9 +40,11 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.PopupWindow.OnDismissListener;
+import de.greenrobot.event.EventBus;
 
 /**
  * @zhangyao
@@ -65,11 +67,18 @@ public class WebShareAct extends NetWorkActivity {
 	@ViewInject(R.id.webview)
 	private WebView view;
 	Sharebean sharebean = new Sharebean();
-	String urls; 
+	String urls;
+
+	CheckBox checkZan;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		if (!EventBus.getDefault().isRegistered(this)) {
+			EventBus.getDefault().register(this);
+		}
+
 		setContentView(R.layout.actiivty_website);
 
 		if (getIntent().getExtras() != null) {
@@ -93,9 +102,9 @@ public class WebShareAct extends NetWorkActivity {
 			view.loadUrl(sharebean.getAricleUrl());
 		} else {
 			view.loadUrl(Constant.URL_ARTICLES + sharebean.getAricleUrl());
-			//如果是图文
-			if(sharebean.getAricleUrl().contains(IF_ARTICLES)){
-				if(GuokuApplication.getInstance().getBean() != null){
+			// 如果是图文
+			if (sharebean.getAricleUrl().contains(IF_ARTICLES)) {
+				if (GuokuApplication.getInstance().getBean() != null) {
 					initTitleZan();
 				}
 			}
@@ -127,7 +136,7 @@ public class WebShareAct extends NetWorkActivity {
 				}
 				if (url.contains(IF_TMALL) || url.contains(IF_TAOBAO)) {// 如果是淘宝商品
 					urls = url;
-					if(!StringUtils.isEmpty(urls)){
+					if (!StringUtils.isEmpty(urls)) {
 						showPage(null);
 					}
 					return true;
@@ -176,24 +185,35 @@ public class WebShareAct extends NetWorkActivity {
 		});
 
 	}
-	
-	private void initTitleZan(){
-		setTitleZan().setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
+
+	private void initTitleZan() {
+
+		checkZan = setTitleZan();
+
+		if (sharebean.isIs_dig()) {
+			checkZan.setChecked(true);
+		} else {
+			checkZan.setChecked(false);
+		}
+
+		checkZan.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				// TODO Auto-generated method stub
-				if(isChecked){
-		        	if(!StringUtils.isEmpty(sharebean.getAricleId())){
-		        		sendConnectionPOST(Constant.ARTICLES_DIG , new String[] { "entity_id" }, new String[] {sharebean.getAricleId()},
-			    				DIG, true);
-		        	}
-		        }else{
-		        	if(!StringUtils.isEmpty(sharebean.getAricleId())){
-			        	sendConnectionPOST(Constant.ARTICLES_DIG , new String[] { "entity_id" }, new String[] {sharebean.getAricleId()},
-			    				UN_DIG, true);	
-		        	}
-		        }
+				if (isChecked) {
+					if (!StringUtils.isEmpty(sharebean.getAricleId())) {
+						sendConnectionPOST(Constant.ARTICLES_DIG, new String[] { "aid" },
+								new String[] { sharebean.getAricleId() }, DIG, false);
+						checkZan.setChecked(true);
+					}
+				} else {
+					if (!StringUtils.isEmpty(sharebean.getAricleId())) {
+						sendConnectionPOST(Constant.ARTICLES_DIG, new String[] { "aid" },
+								new String[] { sharebean.getAricleId() }, UN_DIG, false);
+						checkZan.setChecked(false);
+					}
+				}
 			}
 		});
 	}
@@ -202,7 +222,6 @@ public class WebShareAct extends NetWorkActivity {
 	public void right(View v) {
 		postShare();
 	}
-	
 
 	private void postShare() {
 		CustomShareBoard shareBoard = new CustomShareBoard(this);
@@ -239,6 +258,7 @@ public class WebShareAct extends NetWorkActivity {
 	protected void onSuccess(String result, int where) {
 		// TODO Auto-generated method stub
 		Intent intent;
+		ZanEB zanEB = new ZanEB();
 		switch (where) {
 		case INFO_GOOD:
 			PInfoBean bean = ParseUtil.getPI(result);
@@ -261,12 +281,14 @@ public class WebShareAct extends NetWorkActivity {
 			}
 			break;
 		case DIG:
-			ToastUtil.show(mContext, "赞");
-			setTitleZan().setEnabled(true);
+			checkZan.setChecked(true);
+			zanEB.setZan(true);
+			EventBus.getDefault().post(zanEB);
 			break;
 		case UN_DIG:
-			ToastUtil.show(mContext, "取消赞");
-			setTitleZan().setEnabled(false);
+			checkZan.setChecked(false);
+			zanEB.setZan(false);
+			EventBus.getDefault().post(zanEB);
 			break;
 
 		default:
@@ -292,6 +314,9 @@ public class WebShareAct extends NetWorkActivity {
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		webViewTitle.clear();
+		if (!EventBus.getDefault().isRegistered(this)) {
+			EventBus.getDefault().unregister(this);
+		}
 	}
 
 	public void showPage(View view) {
@@ -305,13 +330,26 @@ public class WebShareAct extends NetWorkActivity {
 
 			@Override
 			public void onFailure(int code, String msg) {
-//				if (code == ResultCode.QUERY_ORDER_RESULT_EXCEPTION.code) {
-//					Toast.makeText(MainActivity.this, "确认交易订单失败", Toast.LENGTH_SHORT).show();
-//				} else {
-//					Toast.makeText(MainActivity.this, "交易异常", Toast.LENGTH_SHORT).show();
-//				}
+				// if (code == ResultCode.QUERY_ORDER_RESULT_EXCEPTION.code) {
+				// Toast.makeText(MainActivity.this, "确认交易订单失败",
+				// Toast.LENGTH_SHORT).show();
+				// } else {
+				// Toast.makeText(MainActivity.this, "交易异常",
+				// Toast.LENGTH_SHORT).show();
+				// }
 			}
 		}, null, urls);
+	}
+
+	public void onEventMainThread(ZanEB zEb) {
+
+	}
+	
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		addActGuide(R.id.layout_webview, 48, WebShareAct.class.getName());
 	}
 
 }

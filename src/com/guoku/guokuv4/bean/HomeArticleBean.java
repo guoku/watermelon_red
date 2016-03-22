@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class HomeArticleBean {
 
-	ArrayList<Articles> articles;
+	ArrayList<ArticlesList> articles;
 
 	ArrayList<Banner> banner;
 
@@ -20,11 +20,11 @@ public class HomeArticleBean {
 
 	ArrayList<Categories> categories;
 
-	public ArrayList<Articles> getArticles() {
+	public ArrayList<ArticlesList> getArticles() {
 		return articles;
 	}
 
-	public void setArticles(ArrayList<Articles> articles) {
+	public void setArticles(ArrayList<ArticlesList> articles) {
 		this.articles = articles;
 	}
 

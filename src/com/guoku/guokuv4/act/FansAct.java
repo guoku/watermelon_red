@@ -58,7 +58,8 @@ public class FansAct extends NetWorkActivity implements OnClickListener {
 		setContentView(R.layout.fans);
 		setGCenter(true, getIntent().getStringExtra("name"));
 		setGLeft(true, R.drawable.back_selector);
-		getFans(FANS, true, 0);
+		lv.setRefreshing();
+		getFans(FANS, false, 0);
 	}
 
 	@Override

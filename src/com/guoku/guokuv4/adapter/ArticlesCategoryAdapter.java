@@ -5,7 +5,7 @@ package com.guoku.guokuv4.adapter;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
-import com.guoku.guokuv4.bean.Articles;
+import com.guoku.guokuv4.bean.ArticlesList;
 import com.guoku.guokuv4.config.Constant;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -22,7 +22,7 @@ import android.widget.TextView;
  * @date 2016年1月29日 下午5:01:54 
  * 一级品类中的图文
  */
-public class ArticlesCategoryAdapter extends ArrayListAdapter<Articles> {
+public class ArticlesCategoryAdapter extends ArrayListAdapter<ArticlesList> {
 
 	public ArticlesCategoryAdapter(Context context) {
 		super(context);
@@ -44,7 +44,7 @@ public class ArticlesCategoryAdapter extends ArrayListAdapter<Articles> {
 			holder = (ViewHold) convertView.getTag();
 		}
 
-		Articles articles = mList.get(position);
+		ArticlesList articles = mList.get(position);
 		holder.tvName.setText(articles.getTitle());
 //		holder.tvBelow.setText(articles.getContent());
 		holder.imgIcon.setImageURI(Uri.parse(Constant.URL_IMG

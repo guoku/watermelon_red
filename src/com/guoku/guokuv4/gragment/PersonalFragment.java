@@ -39,6 +39,7 @@ import com.guoku.guokuv4.entity.test.AccountBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.eventbus.FollowEB;
+import com.guoku.guokuv4.eventbus.ZanEB;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.LogGK;
 import com.guoku.guokuv4.utils.SharePrenceUtil;
@@ -60,6 +61,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewStub;
@@ -288,7 +290,7 @@ public class PersonalFragment extends BaseFrament {
 			if (userType == 2) {
 				ArticlesUserBean articlesUserBeanAdd = JSON.parseObject(result, ArticlesUserBean.class);
 				articlesAuthonAdapter.addListsLast(articlesUserBeanAdd.getArticles());
-			} 
+			}
 			break;
 		case TABNOTE:
 			listImgLeftAdapter.setList(ParseUtil.getTabNoteList(result));
@@ -427,15 +429,16 @@ public class PersonalFragment extends BaseFrament {
 				Bundle bundle = new Bundle();
 				Sharebean sharebean = new Sharebean();
 				sharebean.setTitle(articlesAdapter.getList().get(arg2).getTitle());
-				if(articlesAdapter.getList().get(arg2).getContent().length() > 50){
-					sharebean.setContext(articlesAdapter.getList().get(arg2).getContent().substring(0, 50));	
-				}else{
-					sharebean.setContext(articlesAdapter.getList().get(arg2).getContent());	
+				if (articlesAdapter.getList().get(arg2).getContent().length() > 50) {
+					sharebean.setContext(articlesAdapter.getList().get(arg2).getContent().substring(0, 50));
+				} else {
+					sharebean.setContext(articlesAdapter.getList().get(arg2).getContent());
 				}
 				sharebean.setAricleUrl(articlesAdapter.getList().get(arg2).getUrl());
 				sharebean.setImgUrl(articlesAdapter.getList().get(arg2).getCover());
+				sharebean.setIs_dig(articlesAdapter.getList().get(arg2).isIs_dig());
 				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
-				sharebean.setAricleId(articlesAdapter.getList().get(arg2).getId());
+				sharebean.setAricleId(String.valueOf(articlesAdapter.getList().get(arg2).getArticle_id()));
 				openActivity(WebShareAct.class, bundle);
 			}
 		});
@@ -479,7 +482,7 @@ public class PersonalFragment extends BaseFrament {
 			@Override
 			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
 				// TODO Auto-generated method stub
-				pageArticle ++;
+				pageArticle++;
 				getInitData(ARTICLE, "30", TABARTICLE_ADD);
 			}
 		});
@@ -504,8 +507,9 @@ public class PersonalFragment extends BaseFrament {
 				}
 				sharebean.setAricleUrl(articlesAuthonAdapter.getList().get(arg2).getUrl());
 				sharebean.setImgUrl(articlesAuthonAdapter.getList().get(arg2).getCover());
+				sharebean.setIs_dig(articlesAuthonAdapter.getList().get(arg2).isIs_dig());
 				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
-				sharebean.setAricleId(articlesAdapter.getList().get(arg2).getId());
+				sharebean.setAricleId(String.valueOf(articlesAuthonAdapter.getList().get(arg2).getArticle_id()));
 				openActivity(WebShareAct.class, bundle);
 			}
 		});
@@ -623,6 +627,12 @@ public class PersonalFragment extends BaseFrament {
 	@OnClick(R.id.tv_user_tag)
 	private void userTagClick(View v) {
 		onStartAct(UserTagListAct.class, userTag.tv1.getText().toString(), userTag.tv2.getText().toString());
+	}
+
+	@OnClick(R.id.tv_user_article_zan)
+	private void userArticleZan(View v) {
+		onStartAct(UserArticleListAct.class, userArticleZan.tv1.getText().toString(),
+				userArticleZan.tv2.getText().toString());
 	}
 
 	private void getUserInfo() {
@@ -772,7 +782,9 @@ public class PersonalFragment extends BaseFrament {
 			if (isUnZero(uBean.getTag_count())) {
 				userTag.tv2.setText(uBean.getTag_count());
 			}
-			userArticleZan.tv2.setText("555");
+			if (isUnZero(uBean.getDig_count())) {
+				userArticleZan.tv2.setText(uBean.getDig_count());
+			}
 		}
 
 		if (userType != 0) {
@@ -934,6 +946,10 @@ public class PersonalFragment extends BaseFrament {
 				getUserInfo();
 			}
 		}
+	}
+
+	public void onEventMainThread(ZanEB zEb) {
+		// 更新赞过的图文个数
 	}
 
 }

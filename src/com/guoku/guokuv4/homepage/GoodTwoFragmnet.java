@@ -197,6 +197,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 	@Override
 	protected void onFailure(String result, int where) {
 		// TODO Auto-generated method stub
+		jingxuan_lv_1.onRefreshComplete();
 		GuokuUtil.closeListViewHeader(jingxuan_lv_1);
 		switch (where) {
 		case LIKE0:
@@ -249,8 +250,9 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
 	@OnClick(R.id.re_head_view)
 	private void onCheckUpdata(View view) {
-//		closeHeadView();
-		ToastUtil.show(getActivity(), "close");
+		jingxuan_lv_1.setRefreshing();
+		closeHeadView();
+		getJingXuan(System.currentTimeMillis() / 1000 + "", false);
 	}
 
 	@OnClick(R.id.img_close)
