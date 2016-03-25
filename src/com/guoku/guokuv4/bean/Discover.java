@@ -75,369 +75,14 @@ public class Discover {
          * article : {"article_id":820,"content":"醒来听见鸟啭，一天都是快活的。走到街上，看到草上的露珠还没有干，砖缝里被蚯蚓盗出一堆一堆的沙土，男的女的担着新鲜肥美的蔬菜走进城来，马路上有戴草帽的老朽的女清道夫，还有无数的男女青年穿着熨平的布衣精神抖擞的携带着「便当」骑着脚踏车去上班，\u2014\u2014这时候我衷心充满了喜悦！这是梁实秋 1950 年代所作散文《早起》中的一段，「便当」被打上了引号。那时候初到台湾的他，大概还不怎么习惯将盒饭成为便当。「便当」一词是日本人的创造，最早见于 1597 年的日本文献《易林本节用集》。也有日本学者考证后认为，这个词汇发明在织田信长生活的年代前后，即 1534 至 1582 年。据说，早期的便当是个有盖的篮子，里面装着吃食，后来才逐渐演变成现在的盒状。在江户时代，便当是贵族土豪中产阶级才能享受的高级品，平民有个饭团子吃就不错了。当然贵族也不会天天吃它，便当是出门旅行、赏花、探病、祝贺新生儿的出生、问候时的携带品。果库君觉得，也许那时候的便当和我国文人最喜欢的点心盒子感觉差不多吧。尽管有些人带饭是为了省午饭钱，不过，原来便当曾经是身份的象征啊！看来，如果决定要带饭，那么便当盒的选择可马虎不得。说到便当盒，你听说过几个品牌？象印、膳魔师的便当盒虽然保温性能很好，可是看起来却有点太朴素。如果给住院病人送饭用倒是还好，拿去上班上学什么的话就有点\u2026\u2026既然做了盒饭，当然希望从外表到内涵都美美的，对吧。今天果库君特别做了功课，列出了最受便当之国日本欢迎的高颜值便当盒品牌。这些简约而设计感十足的便当盒，会让你的午餐看起来更美味；即使随便把饭菜塞进去，感觉气氛也错不了呢。Bento&co日本高逼格便当盒品牌 Bento&co，从便当盒选货店起家，到推出自己的原创产品，在以法国为中心的欧洲各地引发了便当盒的热潮。现在在欧洲人心中，这个品牌已经成为了日本便当盒的代表。Bento&co 成立于京都，兼具贵族的优雅气质和设计感。虽然有些设计色彩鲜艳，却纤细可爱。最近在日本也逐渐成为了品位的象征。日本传统工艺「曲げわっぱ」制成的便当盒SeagullSeagull 品牌便当盒，来自泰国不锈钢餐具系列，在日本市场连续热销 30 余年，至今依然经常登上生活杂志。它的便当盒设计非常简约，让人百看不厌。盒体以 18-10 不锈钢制造，耐腐性性能很高，也不容易沾上食物的味道。户外旅行时完全可以带上它，运动型的设计很帅气。密封性好，防止汤汁外漏。直接架在炉火上加热也没问题。METAPHYS设计品牌 METAPHYS 出品的 ojue 便当盒，具有文件箱似的外观，简约时尚。便当盒的设计中，横向排列的较多。不过这款产品采用了崭新的纵向设计。这种设计不仅让它看起来更个性，也更便携，连狭窄的公文包也能放得下。便当盒分为三层，让你能够更加注意午餐的量和食物营养搭配的平衡。兼具实用性和设计感，确实是一款不错的产品。Sugar Land怀旧氛围与亮丽的糖果色互相搭配，给人留下很深刻的印象。便当盒的容量很大，不仅适用于男士的午餐，也适用于野餐、户外活动等。Sugar Land是一个日本的品牌，不过这种可爱的设计让它看起来有点北欧杂货的风格。在细节的设计上非常体贴，用起来很顺手。品牌中人气最高的是多层构造的便当盒，不过基本款也很惹人注目。价格也非常亲民。monbento受日本影响，便当文化在法国也引起了热潮。monbento 品牌来自法国，由理疗师 Emilie 创立，集高效、健康、环保于一体。这款便当盒受日本影响而诞生，却反而在日本引发了关注。目前，monbento 是知名度最高的法国便当盒品牌之一，极简的设计非常时尚。\n    \n    \n    \n            \n            Monbento \n            \n    \n    \n        多彩双层便当盒\n    \n    \n            \n            ￥298.00\n            \n    \n    \n    \n    查看详情\n    \n\nAfternoonTea有调性的生活杂货品牌 AfternoonTea，当然做起便当盒来也非常有范。适合日常午餐使用的基本款，到户外活动时用的多层款，便当盒的种类很丰富。除了便当盒，硅胶保护套、冷却剂等便当盒配件也个个都设计得颜值很高。\n    \n    \n    \n            \n            afternoon tea\n            \n    \n    \n        原木便当饭盒\n    \n    \n            \n            ￥169.00\n            \n    \n    \n    \n    查看详情\n    \n\nTIME & STYLETIME & STYLE以充满设计感的家具及生活杂货而知名。这款多层组合便当盒，充满日式的传统风味，同时又具有现代感。在出游赏花，或中秋团圆时用起来应该很搭调。传统印花纹样优雅而华丽，基本款则低调奢华。平时带饭使用的话多少有点太过隆重，不过野餐或者家庭聚会时拿出它来真是别有风趣。share with Kurihara harumi果库君之前的写过栗原晴美用 30 年教会了我们很多很多幸福的事，这个 share with Kurihara harumi 正是日本料理研究家栗原晴美出品的杂货品牌。从怀旧的铝制圆形便当盒，到现代的树脂便当盒，还有大容量的多层便当盒，这个品牌的产品线非常丰富，而且每一款都很可爱。作为料理研究家，栗原晴美想着「要是有这种便当盒就好了」，于是就把这些好主意做成了产品。不仅样子好看，使用起来也非常顺手，只有亲身用过才知道。HAKOYAHAKOYA，日本便当盒品牌，位于加贺市。1945 年作为漆器企业创立，1990 年日本泡沫经济崩溃之后，转型设计便当盒。从传统到现代，设计风格非常多样化，在世界多个国家受到人们的追捧。当然，在各种设计中，还是漆器质地的便当盒最传统。\n    \n    \n    \n            \n            HAKOYA\n            \n    \n    \n        漆器便当盒\n    \n    \n            \n            ￥380.00\n            \n    \n    \n    \n    查看详情\n    \n\n","cover":"images/49dc753381aa771a391dd9bb9fb2c97a.jpeg","creator":{"avatar_large":"http://imgcdn.guoku.com/avatar/e867f69864264d7cee8cc440bffc0cc1.jpg","avatar_small":"http://imgcdn.guoku.com/avatar/e867f69864264d7cee8cc440bffc0cc1.jpg","bio":"昭和下町少年。","city":"朝阳","email":"hehe@guoku.com","entity_note_count":151,"fan_count":17,"following_count":11,"gender":"M","is_active":"2","is_censor":false,"like_count":12,"location":"北京","nickname":"田呵呵","relation":0,"tag_count":109,"user_id":1948619,"website":""},"publish":"2","read_count":"451","showcover":"False","tags":["日本","便当","饮食"],"title":"最受日本欢迎的高颜值便当盒品牌，你知道几个？","url":"/articles/820/"}
          */
 
-        private ArticleEntity article;
+        private ArticlesList article;
 
-        public void setArticle(ArticleEntity article) {
+        public void setArticle(ArticlesList article) {
             this.article = article;
         }
 
-        public ArticleEntity getArticle() {
+        public ArticlesList getArticle() {
             return article;
-        }
-
-        public static class ArticleEntity {
-            /**
-             * article_id : 820
-             * content : 醒来听见鸟啭，一天都是快活的。走到街上，看到草上的露珠还没有干，砖缝里被蚯蚓盗出一堆一堆的沙土，男的女的担着新鲜肥美的蔬菜走进城来，马路上有戴草帽的老朽的女清道夫，还有无数的男女青年穿着熨平的布衣精神抖擞的携带着「便当」骑着脚踏车去上班，——这时候我衷心充满了喜悦！这是梁实秋 1950 年代所作散文《早起》中的一段，「便当」被打上了引号。那时候初到台湾的他，大概还不怎么习惯将盒饭成为便当。「便当」一词是日本人的创造，最早见于 1597 年的日本文献《易林本节用集》。也有日本学者考证后认为，这个词汇发明在织田信长生活的年代前后，即 1534 至 1582 年。据说，早期的便当是个有盖的篮子，里面装着吃食，后来才逐渐演变成现在的盒状。在江户时代，便当是贵族土豪中产阶级才能享受的高级品，平民有个饭团子吃就不错了。当然贵族也不会天天吃它，便当是出门旅行、赏花、探病、祝贺新生儿的出生、问候时的携带品。果库君觉得，也许那时候的便当和我国文人最喜欢的点心盒子感觉差不多吧。尽管有些人带饭是为了省午饭钱，不过，原来便当曾经是身份的象征啊！看来，如果决定要带饭，那么便当盒的选择可马虎不得。说到便当盒，你听说过几个品牌？象印、膳魔师的便当盒虽然保温性能很好，可是看起来却有点太朴素。如果给住院病人送饭用倒是还好，拿去上班上学什么的话就有点……既然做了盒饭，当然希望从外表到内涵都美美的，对吧。今天果库君特别做了功课，列出了最受便当之国日本欢迎的高颜值便当盒品牌。这些简约而设计感十足的便当盒，会让你的午餐看起来更美味；即使随便把饭菜塞进去，感觉气氛也错不了呢。Bento&co日本高逼格便当盒品牌 Bento&co，从便当盒选货店起家，到推出自己的原创产品，在以法国为中心的欧洲各地引发了便当盒的热潮。现在在欧洲人心中，这个品牌已经成为了日本便当盒的代表。Bento&co 成立于京都，兼具贵族的优雅气质和设计感。虽然有些设计色彩鲜艳，却纤细可爱。最近在日本也逐渐成为了品位的象征。日本传统工艺「曲げわっぱ」制成的便当盒SeagullSeagull 品牌便当盒，来自泰国不锈钢餐具系列，在日本市场连续热销 30 余年，至今依然经常登上生活杂志。它的便当盒设计非常简约，让人百看不厌。盒体以 18-10 不锈钢制造，耐腐性性能很高，也不容易沾上食物的味道。户外旅行时完全可以带上它，运动型的设计很帅气。密封性好，防止汤汁外漏。直接架在炉火上加热也没问题。METAPHYS设计品牌 METAPHYS 出品的 ojue 便当盒，具有文件箱似的外观，简约时尚。便当盒的设计中，横向排列的较多。不过这款产品采用了崭新的纵向设计。这种设计不仅让它看起来更个性，也更便携，连狭窄的公文包也能放得下。便当盒分为三层，让你能够更加注意午餐的量和食物营养搭配的平衡。兼具实用性和设计感，确实是一款不错的产品。Sugar Land怀旧氛围与亮丽的糖果色互相搭配，给人留下很深刻的印象。便当盒的容量很大，不仅适用于男士的午餐，也适用于野餐、户外活动等。Sugar Land是一个日本的品牌，不过这种可爱的设计让它看起来有点北欧杂货的风格。在细节的设计上非常体贴，用起来很顺手。品牌中人气最高的是多层构造的便当盒，不过基本款也很惹人注目。价格也非常亲民。monbento受日本影响，便当文化在法国也引起了热潮。monbento 品牌来自法国，由理疗师 Emilie 创立，集高效、健康、环保于一体。这款便当盒受日本影响而诞生，却反而在日本引发了关注。目前，monbento 是知名度最高的法国便当盒品牌之一，极简的设计非常时尚。
-
-
-
-
-             Monbento
-
-
-
-             多彩双层便当盒
-
-
-
-             ￥298.00
-
-
-
-
-             查看详情
-
-
-             AfternoonTea有调性的生活杂货品牌 AfternoonTea，当然做起便当盒来也非常有范。适合日常午餐使用的基本款，到户外活动时用的多层款，便当盒的种类很丰富。除了便当盒，硅胶保护套、冷却剂等便当盒配件也个个都设计得颜值很高。
-
-
-
-
-             afternoon tea
-
-
-
-             原木便当饭盒
-
-
-
-             ￥169.00
-
-
-
-
-             查看详情
-
-
-             TIME & STYLETIME & STYLE以充满设计感的家具及生活杂货而知名。这款多层组合便当盒，充满日式的传统风味，同时又具有现代感。在出游赏花，或中秋团圆时用起来应该很搭调。传统印花纹样优雅而华丽，基本款则低调奢华。平时带饭使用的话多少有点太过隆重，不过野餐或者家庭聚会时拿出它来真是别有风趣。share with Kurihara harumi果库君之前的写过栗原晴美用 30 年教会了我们很多很多幸福的事，这个 share with Kurihara harumi 正是日本料理研究家栗原晴美出品的杂货品牌。从怀旧的铝制圆形便当盒，到现代的树脂便当盒，还有大容量的多层便当盒，这个品牌的产品线非常丰富，而且每一款都很可爱。作为料理研究家，栗原晴美想着「要是有这种便当盒就好了」，于是就把这些好主意做成了产品。不仅样子好看，使用起来也非常顺手，只有亲身用过才知道。HAKOYAHAKOYA，日本便当盒品牌，位于加贺市。1945 年作为漆器企业创立，1990 年日本泡沫经济崩溃之后，转型设计便当盒。从传统到现代，设计风格非常多样化，在世界多个国家受到人们的追捧。当然，在各种设计中，还是漆器质地的便当盒最传统。
-
-
-
-
-             HAKOYA
-
-
-
-             漆器便当盒
-
-
-
-             ￥380.00
-
-
-
-
-             查看详情
-
-
-
-             * cover : images/49dc753381aa771a391dd9bb9fb2c97a.jpeg
-             * creator : {"avatar_large":"http://imgcdn.guoku.com/avatar/e867f69864264d7cee8cc440bffc0cc1.jpg","avatar_small":"http://imgcdn.guoku.com/avatar/e867f69864264d7cee8cc440bffc0cc1.jpg","bio":"昭和下町少年。","city":"朝阳","email":"hehe@guoku.com","entity_note_count":151,"fan_count":17,"following_count":11,"gender":"M","is_active":"2","is_censor":false,"like_count":12,"location":"北京","nickname":"田呵呵","relation":0,"tag_count":109,"user_id":1948619,"website":""}
-             * publish : 2
-             * read_count : 451
-             * showcover : False
-             * tags : ["日本","便当","饮食"]
-             * title : 最受日本欢迎的高颜值便当盒品牌，你知道几个？
-             * url : /articles/820/
-             */
-
-            private int article_id;
-            private String content;
-            private String cover;
-            private CreatorEntity creator;
-            private String publish;
-            private String read_count;
-            private String showcover;
-            private String title;
-            private String url;
-            private List<String> tags;
-
-            public void setArticle_id(int article_id) {
-                this.article_id = article_id;
-            }
-
-            public void setContent(String content) {
-                this.content = content;
-            }
-
-            public void setCover(String cover) {
-                this.cover = cover;
-            }
-
-            public void setCreator(CreatorEntity creator) {
-                this.creator = creator;
-            }
-
-            public void setPublish(String publish) {
-                this.publish = publish;
-            }
-
-            public void setRead_count(String read_count) {
-                this.read_count = read_count;
-            }
-
-            public void setShowcover(String showcover) {
-                this.showcover = showcover;
-            }
-
-            public void setTitle(String title) {
-                this.title = title;
-            }
-
-            public void setUrl(String url) {
-                this.url = url;
-            }
-
-            public void setTags(List<String> tags) {
-                this.tags = tags;
-            }
-
-            public int getArticle_id() {
-                return article_id;
-            }
-
-            public String getContent() {
-                return content;
-            }
-
-            public String getCover() {
-                return cover;
-            }
-
-            public CreatorEntity getCreator() {
-                return creator;
-            }
-
-            public String getPublish() {
-                return publish;
-            }
-
-            public String getRead_count() {
-                return read_count;
-            }
-
-            public String getShowcover() {
-                return showcover;
-            }
-
-            public String getTitle() {
-                return title;
-            }
-
-            public String getUrl() {
-                return url;
-            }
-
-            public List<String> getTags() {
-                return tags;
-            }
-
-            public static class CreatorEntity {
-                /**
-                 * avatar_large : http://imgcdn.guoku.com/avatar/e867f69864264d7cee8cc440bffc0cc1.jpg
-                 * avatar_small : http://imgcdn.guoku.com/avatar/e867f69864264d7cee8cc440bffc0cc1.jpg
-                 * bio : 昭和下町少年。
-                 * city : 朝阳
-                 * email : hehe@guoku.com
-                 * entity_note_count : 151
-                 * fan_count : 17
-                 * following_count : 11
-                 * gender : M
-                 * is_active : 2
-                 * is_censor : false
-                 * like_count : 12
-                 * location : 北京
-                 * nickname : 田呵呵
-                 * relation : 0
-                 * tag_count : 109
-                 * user_id : 1948619
-                 * website :
-                 */
-
-                private String avatar_large;
-                private String avatar_small;
-                private String bio;
-                private String city;
-                private String email;
-                private int entity_note_count;
-                private int fan_count;
-                private int following_count;
-                private String gender;
-                private String is_active;
-                private boolean is_censor;
-                private int like_count;
-                private String location;
-                private String nickname;
-                private int relation;
-                private int tag_count;
-                private int user_id;
-                private String website;
-
-                public void setAvatar_large(String avatar_large) {
-                    this.avatar_large = avatar_large;
-                }
-
-                public void setAvatar_small(String avatar_small) {
-                    this.avatar_small = avatar_small;
-                }
-
-                public void setBio(String bio) {
-                    this.bio = bio;
-                }
-
-                public void setCity(String city) {
-                    this.city = city;
-                }
-
-                public void setEmail(String email) {
-                    this.email = email;
-                }
-
-                public void setEntity_note_count(int entity_note_count) {
-                    this.entity_note_count = entity_note_count;
-                }
-
-                public void setFan_count(int fan_count) {
-                    this.fan_count = fan_count;
-                }
-
-                public void setFollowing_count(int following_count) {
-                    this.following_count = following_count;
-                }
-
-                public void setGender(String gender) {
-                    this.gender = gender;
-                }
-
-                public void setIs_active(String is_active) {
-                    this.is_active = is_active;
-                }
-
-                public void setIs_censor(boolean is_censor) {
-                    this.is_censor = is_censor;
-                }
-
-                public void setLike_count(int like_count) {
-                    this.like_count = like_count;
-                }
-
-                public void setLocation(String location) {
-                    this.location = location;
-                }
-
-                public void setNickname(String nickname) {
-                    this.nickname = nickname;
-                }
-
-                public void setRelation(int relation) {
-                    this.relation = relation;
-                }
-
-                public void setTag_count(int tag_count) {
-                    this.tag_count = tag_count;
-                }
-
-                public void setUser_id(int user_id) {
-                    this.user_id = user_id;
-                }
-
-                public void setWebsite(String website) {
-                    this.website = website;
-                }
-
-                public String getAvatar_large() {
-                    return avatar_large;
-                }
-
-                public String getAvatar_small() {
-                    return avatar_small;
-                }
-
-                public String getBio() {
-                    return bio;
-                }
-
-                public String getCity() {
-                    return city;
-                }
-
-                public String getEmail() {
-                    return email;
-                }
-
-                public int getEntity_note_count() {
-                    return entity_note_count;
-                }
-
-                public int getFan_count() {
-                    return fan_count;
-                }
-
-                public int getFollowing_count() {
-                    return following_count;
-                }
-
-                public String getGender() {
-                    return gender;
-                }
-
-                public String getIs_active() {
-                    return is_active;
-                }
-
-                public boolean getIs_censor() {
-                    return is_censor;
-                }
-
-                public int getLike_count() {
-                    return like_count;
-                }
-
-                public String getLocation() {
-                    return location;
-                }
-
-                public String getNickname() {
-                    return nickname;
-                }
-
-                public int getRelation() {
-                    return relation;
-                }
-
-                public int getTag_count() {
-                    return tag_count;
-                }
-
-                public int getUser_id() {
-                    return user_id;
-                }
-
-                public String getWebsite() {
-                    return website;
-                }
-            }
         }
     }
 
@@ -449,6 +94,16 @@ public class Discover {
 
         private String img;
         private String url;
+        
+        ArticlesList article;
+        
+    	public ArticlesList getArticle() {
+    		return article;
+    	}
+
+    	public void setArticle(ArticlesList article) {
+    		this.article = article;
+    	}
 
         public void setImg(String img) {
             this.img = img;
@@ -465,6 +120,13 @@ public class Discover {
         public String getUrl() {
             return url;
         }
+        
+    	public String getUrlLast() {
+    		if (url.contains("/")) {
+    			return url.substring(url.lastIndexOf("/") + 1, url.length());
+    		}
+    		return url;
+    	}
     }
 
     public static class CategoriesEntity {

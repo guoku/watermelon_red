@@ -81,6 +81,7 @@ public class ArticleListAllAct extends NetWorkActivity {
 		listView.setPullToRefreshOverScrollEnabled(false);
 		listView.setScrollingWhileRefreshingEnabled(false);
 		listView.setMode(Mode.BOTH);
+		listView.setRefreshing();
 		listView.setOnRefreshListener(new OnRefreshListener2<ListView>() {
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -135,7 +136,7 @@ public class ArticleListAllAct extends NetWorkActivity {
 		setGCenter(true, title);
 		setGLeft(true, R.drawable.back_selector);
 
-		getData(NET_ARTICLE, true);
+		getData(NET_ARTICLE, false);
 	}
 
 	private void getData(int netTag, boolean isDialog) {

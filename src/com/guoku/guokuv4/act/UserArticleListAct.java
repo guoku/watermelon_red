@@ -89,6 +89,7 @@ public class UserArticleListAct extends NetWorkActivity {
 		listView.setPullToRefreshOverScrollEnabled(false);
 		listView.setScrollingWhileRefreshingEnabled(false);
 		listView.setMode(Mode.BOTH);
+		listView.setRefreshing();
 		listView.setOnRefreshListener(new OnRefreshListener2<ListView>() {
 			@Override
 			public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -139,7 +140,7 @@ public class UserArticleListAct extends NetWorkActivity {
 			tvEmpty.setText(getResources().getString(R.string.tv_empty_other,
 					StringUtils.setSubstring(title, title.length() - 2, title.length())));
 		} else {
-			getData(page, DATA, true);
+			getData(page, DATA, false);
 		}
 
 		setGCenter(true, title);

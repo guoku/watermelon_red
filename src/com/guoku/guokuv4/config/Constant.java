@@ -61,7 +61,6 @@ public class Constant {
 	public static final String TAB_USER = URL + "/mobile/v4/user/";
 	public static final String POINTLIST = URL + "/mobile/v4/feed/";
 	public static final String MESSAGELIST = URL + "/mobile/v4/message/";
-	public static final String FAXIANHOME = URL + "/mobile/v4/homepage/";
 	public static final String SEARCH = URL + "/mobile/v4/";
 	public static final String CATAB = URL + "/mobile/v4/category/";
 	public static final String FOLLOW = URL + "/mobile/v4/user/";

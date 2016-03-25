@@ -218,10 +218,12 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 	}
 	
 	public void onEventMainThread(ZanEB zEb) {
-		if(zEb.isZan()){
-			articleAdapter.getList().get(tempItem).setIs_dig(true);
-		}else{
-			articleAdapter.getList().get(tempItem).setIs_dig(false);
+		if(articleAdapter.getList() != null){
+			if(zEb.isZan()){
+				articleAdapter.getList().get(tempItem).setIs_dig(true);
+			}else{
+				articleAdapter.getList().get(tempItem).setIs_dig(false);
+			}
 		}
 	}
 }

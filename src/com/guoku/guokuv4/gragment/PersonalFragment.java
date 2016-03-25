@@ -196,6 +196,8 @@ public class PersonalFragment extends BaseFrament {
 	private int temp;
 
 	private int pageArticle = 1;// 认证用户图文页数
+	
+	private int tempAuthonArticles;//鉴权用户图文记录
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -496,7 +498,7 @@ public class PersonalFragment extends BaseFrament {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				// TODO Auto-generated method stub
-
+				tempAuthonArticles = arg2;
 				Bundle bundle = new Bundle();
 				Sharebean sharebean = new Sharebean();
 				sharebean.setTitle(articlesAuthonAdapter.getList().get(arg2).getTitle());
@@ -950,6 +952,10 @@ public class PersonalFragment extends BaseFrament {
 
 	public void onEventMainThread(ZanEB zEb) {
 		// 更新赞过的图文个数
+		getUserInfo();
+		if(userType == 2){
+			articlesAuthonAdapter.getList().get(tempAuthonArticles).setIs_dig(zEb.isZan());
+		}
 	}
 
 }

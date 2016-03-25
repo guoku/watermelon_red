@@ -102,12 +102,10 @@ public class WebShareAct extends NetWorkActivity {
 			view.loadUrl(sharebean.getAricleUrl());
 		} else {
 			view.loadUrl(Constant.URL_ARTICLES + sharebean.getAricleUrl());
-			// 如果是图文
-			if (sharebean.getAricleUrl().contains(IF_ARTICLES)) {
-				if (GuokuApplication.getInstance().getBean() != null) {
-					initTitleZan();
-				}
-			}
+		}
+		// 如果是图文
+		if (sharebean.getAricleUrl().contains(IF_ARTICLES)) {
+			initTitleZan();
 		}
 		view.getSettings().setJavaScriptEnabled(true);
 		view.getSettings().setUseWideViewPort(true);
@@ -201,17 +199,22 @@ public class WebShareAct extends NetWorkActivity {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				// TODO Auto-generated method stub
-				if (isChecked) {
-					if (!StringUtils.isEmpty(sharebean.getAricleId())) {
-						sendConnectionPOST(Constant.ARTICLES_DIG, new String[] { "aid" },
-								new String[] { sharebean.getAricleId() }, DIG, false);
-						checkZan.setChecked(true);
-					}
+				if (GuokuApplication.getInstance().getBean() == null) {
+					buttonView.setChecked(false);
+					openActivity(LoginAct.class);
 				} else {
-					if (!StringUtils.isEmpty(sharebean.getAricleId())) {
-						sendConnectionPOST(Constant.ARTICLES_DIG, new String[] { "aid" },
-								new String[] { sharebean.getAricleId() }, UN_DIG, false);
-						checkZan.setChecked(false);
+					if (isChecked) {
+						if (!StringUtils.isEmpty(sharebean.getAricleId())) {
+							sendConnectionPOST(Constant.ARTICLES_DIG, new String[] { "aid" },
+									new String[] { sharebean.getAricleId() }, DIG, false);
+							checkZan.setChecked(true);
+						}
+					} else {
+						if (!StringUtils.isEmpty(sharebean.getAricleId())) {
+							sendConnectionPOST(Constant.ARTICLES_UNDIG, new String[] { "aid" },
+									new String[] { sharebean.getAricleId() }, UN_DIG, false);
+							checkZan.setChecked(false);
+						}
 					}
 				}
 			}
@@ -344,7 +347,7 @@ public class WebShareAct extends NetWorkActivity {
 	public void onEventMainThread(ZanEB zEb) {
 
 	}
-	
+
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub

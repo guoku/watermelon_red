@@ -346,9 +346,9 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 					} else {
 						return;
 					}
-					indexList = firstVisibleItem;// 更新位置
 				}
 			}
+			indexList = firstVisibleItem;// 更新位置
 		}
 	};
 
@@ -361,14 +361,17 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 			list.addAll(ParseUtil.getJingXuanList(unReadData));
 			adapter.setList(list);
 		} else {
-			getJingXuan(System.currentTimeMillis() / 1000 + "", true);
+			jingxuan_lv_1.setRefreshing();
+			getJingXuan(System.currentTimeMillis() / 1000 + "", false);
 		}
 		
-		if(GuokuApplication.getInstance().getUnReadData().getUnread_selection_count() > 0){
-			isUnRead = true;
-			tvShopCount.setText(getActivity().getResources().getString(R.string.tv_shop_unread, GuokuApplication.getInstance().getUnReadData().getUnread_selection_count() + ""));
-			showSearchWhat();
-			re_head_view.setVisibility(View.VISIBLE);
+		if(GuokuApplication.getInstance().getUnReadData() != null){
+			if(GuokuApplication.getInstance().getUnReadData().getUnread_selection_count() > 0){
+				isUnRead = true;
+				tvShopCount.setText(getActivity().getResources().getString(R.string.tv_shop_unread, GuokuApplication.getInstance().getUnReadData().getUnread_selection_count() + ""));
+				showSearchWhat();
+				re_head_view.setVisibility(View.VISIBLE);
+			}
 		}
 	}
 
