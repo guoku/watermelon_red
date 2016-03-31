@@ -1,6 +1,8 @@
 package com.guoku.guokuv4.main;
 
 import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
@@ -36,6 +38,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListener {
 
@@ -69,6 +72,8 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 	private GuangFragment qunaerFragment;
 	private PersonalFragment personalFragment;
 	private OrderFragment orderFragment;
+
+	private static Boolean isExit = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -267,7 +272,10 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
-		return super.onKeyDown(keyCode, event);
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			exitBy2Click(); // 调用双击退出函数
+		}
+		return false;
 	}
 
 	@Override
@@ -366,8 +374,7 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 	}
 
 	/**
-	 * 启动引导页
-	 * versioncode大于才接口version才启动
+	 * 启动引导页 versioncode大于才接口version才启动
 	 */
 	private void startLaunch() {
 
@@ -393,6 +400,25 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+	}
+
+	private void exitBy2Click() {
+		Timer tExit = null;
+		if (isExit == false) {
+			isExit = true; // 准备退出
+			ToastUtil.show(mContext, mContent.getString(R.string.tv_exit_tose));
+			tExit = new Timer();
+			tExit.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					isExit = false; // 取消退出
+				}
+			}, 1000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
+
+		} else {
+			finish();
+			System.exit(0);
 		}
 	}
 

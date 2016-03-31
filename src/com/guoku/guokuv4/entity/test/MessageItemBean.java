@@ -1,10 +1,29 @@
 package com.guoku.guokuv4.entity.test;
 
+import com.guoku.guokuv4.bean.ArticlesList;
+
 public class MessageItemBean {
 	private NoteBean note;
 	private EntityBean entity;
-	private UserBean follower, poker, comment_user, liker;
+	private UserBean follower, poker, comment_user, liker, digger;
 	private CommentBean comment;
+	private ArticlesList article;
+
+	public UserBean getDigger() {
+		return digger;
+	}
+
+	public void setDigger(UserBean digger) {
+		this.digger = digger;
+	}
+
+	public ArticlesList getArticle() {
+		return article;
+	}
+
+	public void setArticle(ArticlesList article) {
+		this.article = article;
+	}
 
 	public UserBean getLiker() {
 		return liker;

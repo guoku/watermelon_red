@@ -94,6 +94,6 @@
 
     <!-- 设置 -->
     <string name="tv_set_version_code" formatted="false">version %s</string>
-    
+    <string name="tv_exit_tose">再次点击退出果库</string>
 
 </resources>

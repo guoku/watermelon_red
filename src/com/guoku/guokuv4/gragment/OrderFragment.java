@@ -6,9 +6,11 @@ import com.alibaba.fastjson.JSON;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
 import com.guoku.guokuv4.act.ProductInfoAct;
+import com.guoku.guokuv4.act.WebShareAct;
 import com.guoku.guokuv4.adapter.ArrayListAdapter;
 import com.guoku.guokuv4.base.BaseFrament;
 import com.guoku.guokuv4.base.UserBaseFrament;
+import com.guoku.guokuv4.bean.Sharebean;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.MessageBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
@@ -35,6 +37,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -135,7 +138,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 	@Override
 	protected void onFailure(String result, int where) {
 		// TODO Auto-generated method stub
-
+		tongzhi_lv.onRefreshComplete();
 	}
 
 	@Override
@@ -190,15 +193,16 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 					holder.tongzhi_item_iv_pimg.setVisibility(View.INVISIBLE);
 					openNickName(bean.getContent().getUser(), bean.getContent().getUser().getNickname() + " 开始关注  ",
 							bean.getContent().getUser().getNickname().length(), holder.tv_context);
-					
 					holder.tv_context2.setVisibility(View.VISIBLE);
-					
-//					
 					openNickName(bean.getContent().getTarget(), bean.getContent().getTarget().getNickname(),
 							bean.getContent().getTarget().getNickname().length(), holder.tv_context2);
-					
-//					bean
-//					.getContent().getTarget().getNickname()
+				} else if (bean.getType().equals("article_dig")) {
+					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getDigger().get50()));
+					openNickName(bean.getContent().getDigger(),
+							bean.getContent().getDigger().getNickname() + " 赞了 1 篇图文  ",
+							bean.getContent().getDigger().getNickname().length(), holder.tv_context);
+
+					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(Constant.URL_IMG + bean.getContent().getArticle().get240()));
 				}
 				return convertView;
 			}
@@ -228,8 +232,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
 					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getComment_user().get50()));
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
-					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getNote()
-							.get50()));
+					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getNote().get50()));
 					openNickName(bean.getContent().getComment_user(),
 							bean.getContent().getComment_user().getNickname() + " 评论了你撰写的点评  ",
 							bean.getContent().getComment_user().getNickname().length(), holder.tv_context);
@@ -239,13 +242,13 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
 					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getNote().get50()));
 
-					openNickName(bean.getContent().getPoker(),
-							bean.getContent().getPoker().getNickname() + " 赞了你的点评  ",
+					openNickName(bean.getContent().getPoker(), bean.getContent().getPoker().getNickname() + " 赞了你的点评  ",
 							bean.getContent().getPoker().getNickname().length(), holder.tv_context);
 				} else if (bean.getType().equals("entity_note_message")) {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
-					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getNote().getCreator().get50()));
+					holder.tongzhi_item_iv_userpic
+							.setImageURI(Uri.parse(bean.getContent().getNote().getCreator().get50()));
 					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getEntity().get50()));
 
 					openNickName(bean.getContent().getNote().getCreator(),
@@ -259,7 +262,8 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 
 					holder.tongzhi_item_iv_pimg.setVisibility(View.INVISIBLE);
 
-					openNickName(bean.getContent().getFollower(), bean.getContent().getFollower().getNickname() + " 开始关注你  ",
+					openNickName(bean.getContent().getFollower(),
+							bean.getContent().getFollower().getNickname() + " 开始关注你  ",
 							bean.getContent().getFollower().getNickname().length(), holder.tv_context);
 
 				} else if (bean.getType().equals("note_comment_reply_message")) {
@@ -288,6 +292,17 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 					openNickName(bean.getContent().getLiker(),
 							bean.getContent().getLiker().getNickname() + " 喜爱了你添加的商品  ",
 							bean.getContent().getLiker().getNickname().length(), holder.tv_context);
+				} else if (bean.getType().equals("dig_article_message")) {
+					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
+					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
+					holder.tongzhi_item_iv_userpic
+							.setImageURI(Uri.parse(bean.getContent().getDigger().get50()));
+					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(Constant.URL_IMG + bean.getContent().getArticle().get240()));
+
+					openNickName(bean.getContent().getDigger(),
+							bean.getContent().getDigger().getNickname() + " 赞了你写的图文  ",
+							bean.getContent().getDigger().getNickname().length(), holder.tv_context);
+
 				}
 
 				return convertView;
@@ -339,6 +354,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 
 		pointList = new ArrayList<PointBean>();
 		messageList = new ArrayList<MessageBean>();
+		tongzhi_lv.setRefreshing();
 		getPointList(System.currentTimeMillis() / 1000 + "");
 	}
 
@@ -353,6 +369,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 	}
 
 	private void getMessageList(String time) {
+		tongzhi_lv.setRefreshing();
 		sendConnection(Constant.MESSAGELIST, new String[] { "count", "timestamp" }, new String[] { "30", time + "" },
 				MESSAGELIST, false);
 	}
@@ -402,7 +419,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 
 		@ViewInject(R.id.tongzhi_item_tv_context)
 		private TextView tv_context;
-		
+
 		@ViewInject(R.id.tongzhi_item_tv_context2)
 		private TextView tv_context2;
 	}
@@ -419,10 +436,36 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 		case R.id.tongzhi_item_iv_pimg:
 			if (curTab == 1) {
 				PointBean bean = (PointBean) arg0.getTag();
-				openUserAct(bean.getContent().getEntity().getEntity_id());
+				if(bean.getContent().getDigger() != null){
+					Bundle bundle = new Bundle();
+					Sharebean sharebean = new Sharebean();
+					sharebean.setTitle(bean.getContent().getArticle().getTitle());
+					sharebean.setContext(bean.getContent().getArticle().getContent().substring(0, 50));
+					sharebean.setAricleUrl(bean.getContent().getArticle().getUrl());
+					sharebean.setImgUrl(bean.getContent().getArticle().getCover());
+					sharebean.setIs_dig(bean.getContent().getArticle().isIs_dig());
+					bundle.putSerializable(WebShareAct.class.getName(), sharebean);
+					sharebean.setAricleId(String.valueOf(bean.getContent().getArticle().getArticle_id()));
+					openActivity(WebShareAct.class, bundle);
+				}else{
+					openUserAct(bean.getContent().getEntity().getEntity_id());
+				}
 			} else {
 				MessageBean bean = (MessageBean) arg0.getTag();
-				openUserAct(bean.getEntity_id());
+				if(bean.getContent().getArticle() != null){
+					Bundle bundle = new Bundle();
+					Sharebean sharebean = new Sharebean();
+					sharebean.setTitle(bean.getContent().getArticle().getTitle());
+					sharebean.setContext(bean.getContent().getArticle().getContent().substring(0, 50));
+					sharebean.setAricleUrl(bean.getContent().getArticle().getUrl());
+					sharebean.setImgUrl(bean.getContent().getArticle().getCover());
+					sharebean.setIs_dig(bean.getContent().getArticle().isIs_dig());
+					bundle.putSerializable(WebShareAct.class.getName(), sharebean);
+					sharebean.setAricleId(String.valueOf(bean.getContent().getArticle().getArticle_id()));
+					openActivity(WebShareAct.class, bundle);
+				}else{
+					openUserAct(bean.getEntity_id());
+				}
 			}
 			break;
 
@@ -436,6 +479,8 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 					intent.putExtra("data", bean.getContent().getNote().getCreator());
 				} else if (bean.getType().equals("user_follow")) {
 					intent.putExtra("data", bean.getContent().getUser());
+				} else if (bean.getType().equals("article_dig")) {
+					intent.putExtra("data", bean.getContent().getDigger());
 				}
 				startActivity(intent);
 			} else {

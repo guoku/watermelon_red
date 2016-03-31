@@ -170,6 +170,13 @@ public class ArticlesList implements Serializable{
 		}
 		return cover;
 	}
+	
+	public String get50() {
+		if (cover.contains("images")) {
+			return cover.replaceFirst("images", "images/50");
+		}
+		return cover;
+	}
 
 	public String getPublish() {
 		return publish;

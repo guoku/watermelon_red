@@ -223,4 +223,11 @@ public class SharePrenceUtil {
 	public static String getShopUnRead(Context context){
 		return context.getSharedPreferences(Constant.GUOKU_TAB, 0).getString(KEY_SHOP_UNREAD, null);
 	}
+	
+	/**
+	 * 删除未读商品记录数据
+	 */
+	public static void delShopUnRead(Context context){
+		context.getSharedPreferences(Constant.GUOKU_TAB, 0).edit().clear().commit();
+	}
 }
