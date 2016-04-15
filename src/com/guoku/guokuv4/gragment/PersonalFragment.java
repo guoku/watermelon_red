@@ -513,6 +513,8 @@ public class PersonalFragment extends BaseFrament {
 				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
 				sharebean.setAricleId(String.valueOf(articlesAuthonAdapter.getList().get(arg2).getArticle_id()));
 				openActivity(WebShareAct.class, bundle);
+				
+				umStatistics(Constant.UM_USER_AUTHO_ARTICLE_ITEM, String.valueOf(articlesAuthonAdapter.getList().get(arg2).getArticle_id()), articlesAuthonAdapter.getList().get(arg2).getTitle());
 			}
 		});
 		getInitData(ARTICLE, "30", TABARTICLE);
@@ -574,10 +576,12 @@ public class PersonalFragment extends BaseFrament {
 				sendConnectionPost(Constant.FOLLOW + uBean.getUser_id() + "/follow/1/", new String[] {},
 						new String[] {}, FOLLOW1, false);
 				uBean.setRelation("1");
+				umStatistics(Constant.UM_USER_FOLLOW, uBean.getUser_id(), uBean.getNickname());
 			} else {
 				sendConnectionPost(Constant.FOLLOW + uBean.getUser_id() + "/follow/0/", new String[] {},
 						new String[] {}, FOLLOW0, false);
 				uBean.setRelation("0");
+				umStatistics(Constant.UM_USER_FOLLOW_UN, uBean.getUser_id(), uBean.getNickname());
 			}
 		}
 	}
@@ -612,29 +616,39 @@ public class PersonalFragment extends BaseFrament {
 	@OnClick(R.id.tv_user_like)
 	private void userLikeClick(View v) {
 		onStartAct(UserLikeListAct.class, userLike.tv1.getText().toString(), userLike.tv2.getText().toString());
+		
+		umStatistics(Constant.UM_USER_LIKE_LIST, uBean.getUser_id(), uBean.getNickname());
 	}
 
 	@OnClick(R.id.tv_user_comment)
 	private void userCommentClick(View v) {
 		onStartAct(UserCommentListAct.class, userComment.tv1.getText().toString(),
 				userComment.tv2.getText().toString());
+		
+		umStatistics(Constant.UM_USER_COMMENTS_LIST, uBean.getUser_id(), uBean.getNickname());
 	}
 
 	@OnClick(R.id.tv_user_article)
 	private void userArticleClick(View v) {
 		onStartAct(UserArticleListAct.class, userArticle.tv1.getText().toString(),
 				userArticle.tv2.getText().toString());
+		
+		umStatistics(Constant.UM_USER_ARTICLE_LIST, uBean.getUser_id(), uBean.getNickname());
 	}
 
 	@OnClick(R.id.tv_user_tag)
 	private void userTagClick(View v) {
 		onStartAct(UserTagListAct.class, userTag.tv1.getText().toString(), userTag.tv2.getText().toString());
+		
+		umStatistics(Constant.UM_USER_TAG_LIST, uBean.getUser_id(), uBean.getNickname());
 	}
 
 	@OnClick(R.id.tv_user_article_zan)
 	private void userArticleZan(View v) {
 		onStartAct(UserArticleListAct.class, userArticleZan.tv1.getText().toString(),
 				userArticleZan.tv2.getText().toString());
+		
+		umStatistics(Constant.UM_USER_ARTICLE_ZAN_LIST, uBean.getUser_id(), uBean.getNickname());
 	}
 
 	private void getUserInfo() {

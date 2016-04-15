@@ -99,10 +99,12 @@ public class UserBean implements Serializable {
 	}
 
 	public String get50() {
-		if (avatar_large.contains("images")
-				&& !avatar_large.contains("woman.png")
-				&& !avatar_large.contains("man.png")) {
-			return avatar_large.replaceFirst("images", "images/50");
+		if(!StringUtils.isEmpty(avatar_large)){
+			if (avatar_large.contains("images")
+					&& !avatar_large.contains("woman.png")
+					&& !avatar_large.contains("man.png")) {
+				return avatar_large.replaceFirst("images", "images/50");
+			}
 		}
 		return avatar_large;
 	}

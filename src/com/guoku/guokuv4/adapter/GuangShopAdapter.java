@@ -6,6 +6,7 @@ package com.guoku.guokuv4.adapter;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.adapter.GridViewAdapter.ViewHold;
 import com.guoku.guokuv4.bean.Discover;
 import com.guoku.guokuv4.utils.LogGK;
 import com.guoku.guokuv4.utils.StringUtils;
@@ -17,6 +18,7 @@ import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * @zhangyao
@@ -26,9 +28,14 @@ import android.widget.LinearLayout;
  */
 public class GuangShopAdapter extends ArrayListAdapter<Discover.EntitiesEntity> {
 
-	public GuangShopAdapter(Context context) {
+	int count;
+	Context mContext;
+	
+	public GuangShopAdapter(Context context, int counts) {
 		super(context);
 		// TODO Auto-generated constructor stub
+		this.count = counts;
+		this.mContext = context;
 	}
 
 	@Override
@@ -37,27 +44,38 @@ public class GuangShopAdapter extends ArrayListAdapter<Discover.EntitiesEntity> 
 
 		ViewHold holder = null;
 		if (convertView == null) {
-			try {
+			if(count == 2){
+				convertView = View.inflate(mContext, R.layout.grid2_view_img_item,
+						null);
+			}else{
 				convertView = View.inflate(mContext, R.layout.grid_view_img_item,
 						null);
-				holder = new ViewHold();
-				ViewUtils.inject(holder, convertView);
-				convertView.setTag(holder);
-			} catch (Exception e) {
-				// TODO: handle exception
 			}
+			holder = new ViewHold();
+			ViewUtils.inject(holder, convertView);
+			convertView.setTag(holder);
 		} else {
 			holder = (ViewHold) convertView.getTag();
 		}
-		
-		if(!StringUtils.isEmpty(mList.get(position).getEntity().getChief_image())){
-			holder.imgIcon.setImageURI(Uri.parse(mList.get(position).getEntity().get240()));
-		}
 
+		holder.imgIcon.setImageURI(Uri.parse(mList.get(position).getEntity().get240()));
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-				GuokuApplication.screenW / 3 - 10,
-				GuokuApplication.screenW / 3 - 10);
+				GuokuApplication.screenW / count - 10,
+				GuokuApplication.screenW / count - 10);
+//		params.setMargins(0, 10, 0, 0);
 		holder.imgIcon.setLayoutParams(params);
+		
+		if(count == 2){
+//			if(StringUtils.isEmpty(mList.get(position).getBrand())){
+//				holder.title.setVisibility(View.GONE);
+//			}else{
+//				holder.title.setVisibility(View.VISIBLE);
+//				holder.title.setText(mList.get(position).getBrand());
+//			}
+			holder.title.setText(mList.get(position).getEntity().getBrand());
+			holder.context.setText(mList.get(position).getEntity().getTitle());
+			holder.money.setText(mContext.getResources().getString(R.string.tv_rmb, mList.get(position).getEntity().getPrice()));
+		}
 
 		return convertView;
 	}
@@ -65,5 +83,11 @@ public class GuangShopAdapter extends ArrayListAdapter<Discover.EntitiesEntity> 
 	class ViewHold {
 		@ViewInject(R.id.img)
 		SimpleDraweeView imgIcon;
+		@ViewInject(R.id.title)
+		TextView title;
+		@ViewInject(R.id.context)
+		TextView context;
+		@ViewInject(R.id.money)
+		TextView money;
 	}
 }

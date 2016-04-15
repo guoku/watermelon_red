@@ -373,7 +373,7 @@
         <item name="android:paddingLeft">10dp</item>
     </style>
 
-    <!-- top bar由上角文本按钮 -->
+    <!-- top bar右上角文本按钮 -->
     <style name="right_top_bar_tv">
         <item name="android:textSize">17sp</item>
         <item name="android:textColor">@color/title_bar_gray</item>

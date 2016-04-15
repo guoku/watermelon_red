@@ -14,6 +14,7 @@ import com.guoku.R;
 import com.guoku.guokuv4.adapter.CategoryListAdapter;
 import com.guoku.guokuv4.base.BaseActivity;
 import com.guoku.guokuv4.bean.TagBean;
+import com.guoku.guokuv4.config.Constant;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 /**
@@ -55,6 +56,8 @@ public class CategoryListAct extends BaseActivity implements
 		Bundle bundle = new Bundle();
 		bundle.putSerializable(TabAct.SECOND_ACT_ONTENT, cAdapter.getItem(arg2));
 		openActivity(SecondCategoryAct.class, bundle);
+		
+		umStatistics(Constant.UM_SUGGESTED_SEC_CLICK, String.valueOf(cAdapter.getItem(arg2).getCategory_id()), cAdapter.getItem(arg2).getCategory_title());
 	}
 
 }

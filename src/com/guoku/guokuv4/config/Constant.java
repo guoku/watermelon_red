@@ -12,6 +12,55 @@ import android.os.Bundle;
 import android.os.Environment;
 
 public class Constant {
+	
+	//友盟自定义统计
+	public static final String UM_SHOP_LIKE = "good_like";//商品喜爱
+	public static final String UM_SHOP_LIKE_UN = "good_like_un";//取消商品喜爱
+	public static final String UM_SHOP_INFO = "good_info";//查看商品详情
+	public static final String UM_SHOP_DOWN = "good_down";//精选流下拉刷新
+	public static final String UM_SHOP_UP = "good_up";//精选流上拉加载更多
+	public static final String UM_ARTICLE_ZAN = "article_zan";//图文点赞
+	public static final String UM_ARTICLE_ZAN_UN = "article_zan_un";//取消图文点赞
+	public static final String UM_ARTICLE_INFO = "article_info";//图文详情
+	public static final String UM_ARTICLE_DOWN = "article_down";//图文精选流下拉刷新
+	public static final String UM_ARTICLE_UP = "article_up";//图文精选流上拉加载更多
+	public static final String UM_SHOP_BUY = "good_buy";//商品购买按钮
+	public static final String UM_BANNER = "banner";//banner
+	public static final String UM_INTRO = "intro";//intro
+	public static final String UM_USER_SUGGESTED = "user_suggested_click";//点击推荐用户
+	public static final String UM_SORT_SUGGESTED = "sort_suggested_click";//点击推荐品类
+	public static final String UM_ARTICLE_HOT = "article_hot_click";//点击热门图文
+	public static final String UM_SHOP_HOT = "good_hot_click";//点击热门商品
+	public static final String UM_ARTICLE_TO_GOOD = "article_to_good";//图文详情页进入商品
+	public static final String UM_ARTICLE_TO_USER = "article_to_user";//图文详情页进入用户
+	public static final String UM_ARTICLE_TO_TAOBAO = "article_to_taobao";//图文详情页进入淘宝
+	public static final String UM_SUGGESTED_FIRSE_TO_SEC = "suggested_first_to_sec";//一级品类中点击二级品类标签
+	public static final String UM_SUGGESTED_FIRSE_MORE_TAG = "suggested_first_more";//一级品类中点击更多进入二级品类
+	public static final String UM_SUGGESTED_FIRSE_TO_ARICLE_MORE = "suggested_first_to_article_more";//一级品类中点击图文更多
+	public static final String UM_SUGGESTED_FIRSE_TO_ARICLE = "suggested_first_to_article";//一级品类中点击图文
+	public static final String UM_SUGGESTED_FIRSE_TO_GOOD = "suggested_first_to_good";//一级品类中点击商品
+	public static final String UM_SUGGESTED_FIRSE_DOWN = "suggested_first_down";//一级品类中下拉刷新
+	public static final String UM_SUGGESTED_FIRSE_UP = "suggested_first_up";//一级品类中上拉加载更多
+	public static final String UM_SUGGESTED_SEC_CLICK = "suggested_sec_click";//二级品类item
+	public static final String UM_SUGGESTED_SEC_TO_ARICLE = "suggested_sec_to_aricle";//二级品类页点击图文
+	public static final String UM_SUGGESTED_SEC_TO_GOOD = "suggested_sec_to_good";//二级品类页点击商品
+	public static final String UM_SUGGESTED_SEC_DOWN = "suggested_sec_down";//二级品类页下拉刷新
+	public static final String UM_SUGGESTED_SEC_UP = "suggested_sec_up";//二级品类页上拉加载更多
+	public static final String UM_USER_FOLLOW = "user_follow";//个人页用户点击关注按钮
+	public static final String UM_USER_FOLLOW_UN = "user_follow_un";//个人页用户点击取消关注按钮
+	public static final String UM_USER_LIKE_LIST = "user_like_list";//个人页用户页用户的喜爱按钮
+	public static final String UM_USER_ARTICLE_LIST = "user_articlle_list";//个人页用户页用户的图文按钮
+	public static final String UM_USER_COMMENTS_LIST = "user_comments_list";//个人页用户页用户的点评按钮
+	public static final String UM_USER_TAG_LIST = "user_tag_list";//个人页用户页用户的标签按钮
+	public static final String UM_USER_ARTICLE_ZAN_LIST  = "user_articlle_zan_list";//个人页用户页用户赞的标签按钮
+	public static final String UM_USER_AUTHO_ARTICLE_ITEM = "user_autho_articlle_item";//个人页授权用户点击图文item
+	public static final String UM_TAB_FEED_BT = "tab_feed_bt";//点击动态消息页中的动态
+	public static final String UM_TAB_MESSAGE_BT = "tab_message_bt";//点击动态消息页中的消息
+	public static final String UM_TAB_FEED_DOWN = "tab_feed_down";//动态消息页中的动态下拉刷新
+	public static final String UM_TAB_FEED_UP = "tab_feed_up";//动态消息页中的动态上拉加载更多
+	public static final String UM_TAB_MESSAGE_DOWN  = "tab_message_down";//动态消息页中的消息下拉刷新
+	public static final String UM_TAB_MESSAGE_UP = "tab_message_up";//动态消息页中的消息上拉加载更多
+	
 	// 再次登录记录tab
 	public static final String SP_STUDENT_TAB = "sptab";
 	public static final String STUDENT_TAB = "tab";
@@ -39,12 +88,13 @@ public class Constant {
 	public static final String GUOKU_TAB = "GUOKU_TAB";
 	public static final String GUOKU_TAB_LIST = "GUOKU_TAB_LIST";
 
-	public static final String URL_ARTICLES = "http://m.guoku.com";// 文章、商品前缀
+	public static final String URL_ARTICLES = "http://m.guoku.com";// 文章前缀
 	public static final String URL_ARTICLES_SHARE = "http://www.guoku.com";// 分享果库文章前缀
 	public static final String URL_IMG = "http://imgcdn.guoku.com/";// 图片前缀
-	public static final String URL = "http://api.guoku.com";// 生产环境地址
+//	public static final String URL = "http://api.guoku.com";// 生产环境地址
 //	 public static final String URL = "http://10.0.0.101:8000";//测试环境地址
-//	 public static final String URL = "http://test.guoku.com";//测试环境地址
+	 public static final String URL = "http://test.guoku.com";//测试环境地址
+//	 public static final String URL = "http://192.168.1.112:9200";// 赵旭
 
 	public static final String JINGXUAN = URL + "/mobile/v4/selection/";
 	public static final String PROINFO = URL + "/mobile/v4/entity/";

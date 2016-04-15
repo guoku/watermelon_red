@@ -123,25 +123,31 @@ public class WebShareAct extends NetWorkActivity {
 					url = StringUtils.isStringId(url, IF_ENTITY);
 					sendConnection(Constant.PROINFO + url + "/", new String[] { "entity_id" }, new String[] { url },
 							INFO_GOOD, true);
-
+					umStatistics(Constant.UM_ARTICLE_TO_GOOD, url, IF_ENTITY);
 					return true;
 				}
 				if (url.contains(IF_USER)) {// 如果是用户
 					url = StringUtils.isStringId(url, IF_USER);
 					sendConnection(Constant.USERINFO + url + "/", new String[] {}, new String[] {}, INFO_USER, true);
-
+					umStatistics(Constant.UM_ARTICLE_TO_USER, url, IF_USER);
 					return true;
 				}
 				if (url.contains(IF_TMALL) || url.contains(IF_TAOBAO)) {// 如果是淘宝商品
 					urls = url;
 					if (!StringUtils.isEmpty(urls)) {
 						showPage(null);
+						umStatistics(Constant.UM_ARTICLE_TO_TAOBAO, urls, IF_TAOBAO);
 					}
 					return true;
 				}
 
 				setGCenter(true, view.getTitle());
 
+				// 如果是外链
+//				if (sharebean.getAricleUrl().contains(IF_ARTICLES)) {
+					checkZan.setVisibility(View.GONE);
+//				}
+				
 				return super.shouldOverrideUrlLoading(view, url);
 			}
 
@@ -166,9 +172,19 @@ public class WebShareAct extends NetWorkActivity {
 				if (event.getAction() == KeyEvent.ACTION_DOWN) {
 					if (keyCode == KeyEvent.KEYCODE_BACK && view.canGoBack()) {
 						setGCenter(true, goBack(view));
+						
+//						
+//						if(view.getUrl().contains(IF_ARTICLES)){
+//							checkZan.setVisibility(View.VISIBLE);
+//						}else{
+//							checkZan.setVisibility(View.GONE);
+//						}
+//						
 						return true; // 已处理
 					}
 				}
+				
+				checkZan.setVisibility(View.VISIBLE);
 				return false;
 			}
 		});
@@ -205,12 +221,18 @@ public class WebShareAct extends NetWorkActivity {
 				} else {
 					if (isChecked) {
 						if (!StringUtils.isEmpty(sharebean.getAricleId())) {
+							
+							umStatistics(Constant.UM_ARTICLE_ZAN, sharebean.getAricleId(), sharebean.getTitle());
+							
 							sendConnectionPOST(Constant.ARTICLES_DIG, new String[] { "aid" },
 									new String[] { sharebean.getAricleId() }, DIG, false);
 							checkZan.setChecked(true);
 						}
 					} else {
 						if (!StringUtils.isEmpty(sharebean.getAricleId())) {
+							
+							umStatistics(Constant.UM_ARTICLE_ZAN_UN, sharebean.getAricleId(), sharebean.getTitle());
+							
 							sendConnectionPOST(Constant.ARTICLES_UNDIG, new String[] { "aid" },
 									new String[] { sharebean.getAricleId() }, UN_DIG, false);
 							checkZan.setChecked(false);

@@ -697,10 +697,14 @@ public class ProductInfoAct extends NetWorkActivity
 	private void likeClick() {
 
 		if (productBean.getEntity().getLike_already().equals("0")) {
+			
+			umStatistics(Constant.UM_SHOP_LIKE, productBean.getEntity().getEntity_id(), productBean.getEntity().getTitle());
 			sendConnectionPOST(Constant.TOLIKE + productBean.getEntity().getEntity_id() + "/like/1/", new String[] {},
 					new String[] {}, LIKE1, false);
 
 		} else {
+			
+			umStatistics(Constant.UM_SHOP_LIKE_UN, productBean.getEntity().getEntity_id(), productBean.getEntity().getTitle());
 			sendConnectionPOST(Constant.TOLIKE + productBean.getEntity().getEntity_id() + "/like/0/", new String[] {},
 					new String[] {}, LIKE0, false);
 		}

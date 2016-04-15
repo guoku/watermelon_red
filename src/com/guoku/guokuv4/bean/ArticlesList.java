@@ -79,6 +79,15 @@ public class ArticlesList implements Serializable{
 	private int article_id;
 	private boolean is_dig;//是否赞过
 	private int dig_count;//赞的数量
+	private String digest;//图文内容简介
+	
+	public String getDigest() {
+		return digest;
+	}
+
+	public void setDigest(String digest) {
+		this.digest = digest;
+	}
 
 	public int getDig_count() {
 		return dig_count;

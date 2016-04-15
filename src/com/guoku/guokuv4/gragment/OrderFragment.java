@@ -320,8 +320,10 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 				if (curTab == 1) {
 					getPointList1(System.currentTimeMillis() / 1000 + "");
+					umStatistics(Constant.UM_TAB_FEED_DOWN);
 				} else {
 					getMessageList1(System.currentTimeMillis() / 1000 + "");
+					umStatistics(Constant.UM_TAB_MESSAGE_DOWN);
 				}
 			}
 
@@ -338,11 +340,15 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 						}
 					} else
 						tongzhi_lv.onRefreshComplete();
+					
+					umStatistics(Constant.UM_TAB_FEED_UP);
 				} else {
 					if (messageList != null && messageList.size() - 1 > 0) {
 						getMessageList(messageList.get(messageList.size() - 1).getCreated_time());
 					} else
 						tongzhi_lv.onRefreshComplete();
+					
+					umStatistics(Constant.UM_TAB_MESSAGE_UP);
 				}
 			}
 		});
@@ -392,6 +398,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 		tongzhi_tv_tab1.setTextColor(Color.rgb(65, 66, 67));
 		tongzhi_tv_tab2.setTextColor(Color.rgb(157, 158, 159));
 
+		umStatistics(Constant.UM_TAB_FEED_BT);
 	}
 
 	@OnClick(R.id.tongzhi_ll_tab2)
@@ -407,6 +414,7 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 		tongzhi_tv_tab2.setTextColor(Color.rgb(65, 66, 67));
 		tongzhi_tv_tab1.setTextColor(Color.rgb(157, 158, 159));
 
+		umStatistics(Constant.UM_TAB_MESSAGE_BT);
 	}
 
 	private class ViewHolder {

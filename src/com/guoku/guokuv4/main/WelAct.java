@@ -160,7 +160,8 @@ public class WelAct extends NetWorkActivity {
 
 		sendConnection(Constant.LAUNCH, new String[] {}, new String[] {}, LAUNCH, false);
 		
-		sendConnection(Constant.SHOP_UNREAD, new String[] {}, new String[] {}, SHOP_COUNT, false);
+		//暂时先屏蔽浏览位置记录相关功能
+//		sendConnection(Constant.SHOP_UNREAD, new String[] {}, new String[] {}, SHOP_COUNT, false);
 		
 	}
 }

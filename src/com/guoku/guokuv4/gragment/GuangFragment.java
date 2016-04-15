@@ -19,6 +19,7 @@ import com.guoku.guokuv4.act.FirstCategoryAct;
 import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.act.WebShareAct;
 import com.guoku.guokuv4.act.seach.SearchAct;
+import com.guoku.guokuv4.adapter.GridViewAdapter;
 import com.guoku.guokuv4.adapter.GuangArticlesAdapter;
 import com.guoku.guokuv4.adapter.GuangShopAdapter;
 import com.guoku.guokuv4.adapter.SearchLogAdapter;
@@ -46,10 +47,10 @@ import com.guoku.guokuv4.utils.ToastUtil;
 import com.guoku.guokuv4.view.EditTextWithDel;
 import com.guoku.guokuv4.view.ImageAddTextLayout;
 import com.guoku.guokuv4.view.LayoutSearchBar;
+import com.guoku.guokuv4.view.ScrollViewWithGridView;
 import com.guoku.guokuv4.view.ScrollViewWithListView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
-import com.umeng.analytics.MobclickAgent;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -73,13 +74,13 @@ import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.FrameLayout;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import de.greenrobot.event.EventBus;
 
 public class GuangFragment extends BaseFrament {
@@ -127,8 +128,8 @@ public class GuangFragment extends BaseFrament {
 	private boolean onTouchTrue;
 	private MyViewPagerAdapter adapter;
 
-	@ViewInject(R.id.faxian_gv)
-	private GridView faxian_gv;
+	@ViewInject(R.id.tab_gv)
+	private ScrollViewWithGridView tab_gv;
 
 	private GuangShopAdapter gvAdapter;
 
@@ -288,7 +289,7 @@ public class GuangFragment extends BaseFrament {
 					String url = beannerList.get(beannerIndex).getUrl();
 					String last = beannerList.get(beannerIndex).getUrlLast();
 					AVAnalytics.onEvent(getActivity(), "banner");
-					MobclickAgent.onEvent(getActivity(), "banner");
+					umStatistics(Constant.UM_BANNER, url, beannerList.get(beannerIndex).getImg());
 
 					if (url.contains("http")) {
 						Bundle bundle = new Bundle();
@@ -356,6 +357,8 @@ public class GuangFragment extends BaseFrament {
 					intent.putExtra("data", category.getId());
 					intent.putExtra("name", category.getTitle());
 					getActivity().startActivity(intent);
+					
+					umStatistics(Constant.UM_SORT_SUGGESTED, category.getId(), category.getTitle());
 				}
 			});
 		}
@@ -370,18 +373,20 @@ public class GuangFragment extends BaseFrament {
 	@Override
 	protected void init() {
 
-		gvAdapter = new GuangShopAdapter(getActivity());
+		gvAdapter = new GuangShopAdapter(getActivity(), 2);
+		
+		tab_gv.setNumColumns(2);
+		
+		tab_gv.setAdapter(gvAdapter);
 
-		faxian_gv.setAdapter(gvAdapter);
-
-		faxian_gv.setOnItemClickListener(new OnItemClickListener() {
+		tab_gv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				String id = String.valueOf(gvAdapter.getList().get(arg2).getEntity().getEntity_id());
 				sendConnection(Constant.PROINFO + gvAdapter.getList().get(arg2).getEntity().getEntity_id() + "/",
 						new String[] { "entity_id" }, new String[] { id }, PROINFO, true);
-
+				umStatistics(Constant.UM_SHOP_HOT, id, gvAdapter.getList().get(arg2).getEntity().getTitle());
 			}
 		});
 
@@ -452,6 +457,8 @@ public class GuangFragment extends BaseFrament {
 				sharebean.setAricleId(String.valueOf(articlesAdapter.getList().get(arg2).getArticle().getArticle_id()));
 				sharebean.setIs_dig(articlesAdapter.getList().get(arg2).getArticle().isIs_dig());
 				openActivity(WebShareAct.class, bundle);
+				
+				umStatistics(Constant.UM_ARTICLE_HOT, String.valueOf(articlesAdapter.getList().get(arg2).getArticle().getArticle_id()), articlesAdapter.getList().get(arg2).getArticle().getTitle());
 			}
 		});
 	}
@@ -472,10 +479,14 @@ public class GuangFragment extends BaseFrament {
 				View view = View.inflate(getActivity(), R.layout.item_recommend_user, null);
 				SimpleDraweeView sView = (SimpleDraweeView) view.findViewById(R.id.psrson_iv_pic);
 				sView.setImageURI(Uri.parse(authorizeduserBeans.get(i).getUser().get50()));
-				sView.setTag(authorizeduserBeans.get(i));
+				
+				TextView nickName = (TextView)view.findViewById(R.id.tv_psrson);
+				nickName.setText(authorizeduserBeans.get(i).getUser().getNickname());
+				
+				view.setTag(authorizeduserBeans.get(i));
 				layoutUser.addView(view);
 
-				sView.setOnClickListener(new OnClickListener() {
+				view.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
@@ -483,6 +494,8 @@ public class GuangFragment extends BaseFrament {
 						Intent intent = new Intent(context, UserBaseFrament.class);
 						intent.putExtra("data", aBean.getUser());
 						startActivity(intent);
+						
+						umStatistics(Constant.UM_USER_SUGGESTED, aBean.getUser().getUser_id(), aBean.getUser().getNickname());
 					}
 				});
 			}

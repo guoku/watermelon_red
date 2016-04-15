@@ -79,6 +79,7 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 							PullToRefreshBase<ListView> refreshView) {
 						page = 1;
 						sentRequest(false);
+						umStatistics(Constant.UM_ARTICLE_DOWN, "page = 1", "下拉刷新");
 					}
 
 					@Override
@@ -86,6 +87,7 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 							PullToRefreshBase<ListView> refreshView) {
 						page++;
 						sentRequestAdd();
+						umStatistics(Constant.UM_ARTICLE_UP, "page = " + page, "上拉加载更多");
 					}
 				});
 	}
@@ -189,6 +191,8 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 		bundle.putSerializable(WebShareAct.class.getName(), sharebean);
 
 		openActivity(WebShareAct.class, bundle);
+		
+		umStatistics(Constant.UM_ARTICLE_INFO, String.valueOf(articleAdapter.getList().get(tempItem).getArticle_id()), articleAdapter.getList().get(tempItem).getTitle());
 	}
 	
 	@OnClick(R.id.tv_check_net)
@@ -203,7 +207,6 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 		if(isVisibleToUser){
 			if(isLoad == false){
 				listViewArtivle.setRefreshing();
-				sentRequest(false);
 			}
 		}
 	}

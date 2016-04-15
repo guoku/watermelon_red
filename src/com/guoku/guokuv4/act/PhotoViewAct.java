@@ -252,10 +252,14 @@ public class PhotoViewAct extends NetWorkActivity implements OnPageChangeListene
 
 		if (pInfoBean != null) {
 			if (pInfoBean.getEntity().getLike_already().equals("0")) {
+				
+				umStatistics(Constant.UM_SHOP_LIKE, pInfoBean.getEntity().getEntity_id(), pInfoBean.getEntity().getTitle());
 				sendConnectionPOST(Constant.TOLIKE + pInfoBean.getEntity().getEntity_id() + "/like/1/", new String[] {},
 						new String[] {}, LIKE1, false);
 
 			} else {
+				
+				umStatistics(Constant.UM_SHOP_LIKE_UN, pInfoBean.getEntity().getEntity_id(), pInfoBean.getEntity().getTitle());
 				sendConnectionPOST(Constant.TOLIKE + pInfoBean.getEntity().getEntity_id() + "/like/0/", new String[] {},
 						new String[] {}, LIKE0, false);
 			}

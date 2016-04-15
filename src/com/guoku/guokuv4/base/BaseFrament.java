@@ -1,6 +1,7 @@
 package com.guoku.guokuv4.base;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -508,5 +509,23 @@ public abstract class BaseFrament extends Fragment {
 	public void onEventMainThread(LikesBean likesBean) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	/**
+	 * 友盟自定义统计
+	 */
+	public void umStatistics(String clickName, String id, String name){
+		
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put(clickName + "_id",id);
+		map.put(clickName + "_name",name); 
+		MobclickAgent.onEvent(context, clickName, map);
+	}
+	
+	/**
+	 * 友盟自定义统计
+	 */
+	public void umStatistics(String clickName){
+		MobclickAgent.onEvent(context, clickName);
 	}
 }

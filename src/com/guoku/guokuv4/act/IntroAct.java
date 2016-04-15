@@ -122,22 +122,27 @@ public class IntroAct extends NetWorkActivity {
 	private void onViewClick(View view) {
 
 		if (lBean.getAction().contains(ACTION_START) || lBean.getAction().contains(ACTION_CLOSE)) {
+			umStatistics(Constant.UM_INTRO, ACTION_CLOSE, lBean.getAction());
 			finishAct();
 		} else if (lBean.getAction().contains(ACTION_ENTITY)) {
 			String id = lBean.getAction().replace(ACTION_ENTITY, "");
 			sendConnection(Constant.PROINFO + id, new String[] { "entity_id" }, new String[] { id }, PROINFO, true);
+			umStatistics(Constant.UM_INTRO, id, lBean.getAction());
 		} else if (lBean.getAction().contains(ACTION_HTTP)) {
-
 			Bundle bundle = new Bundle();
 			Sharebean sharebean = new Sharebean();
 			sharebean.setAricleUrl(lBean.getAction());
 			bundle.putSerializable(WebShareAct.class.getName(), sharebean);
 			openActivity(WebShareAct.class, bundle);
 			finishAct();
+			
+			umStatistics(Constant.UM_INTRO, ACTION_HTTP, lBean.getAction());
 
 		} else if (lBean.getAction().contains(ACTION_USER)) {
 			sendConnection(Constant.USERINFO + lBean.getAction().replace(ACTION_USER, ""), new String[] { "timestamp" },
 					new String[] { System.currentTimeMillis() / 1000 + "" }, USERINFO, false);
+			
+			umStatistics(Constant.UM_INTRO, ACTION_USER, lBean.getAction());
 		} else if (lBean.getAction().contains(ACTION_TAG)) {
 			if (GuokuApplication.getInstance().getBean() == null) {
 				openLogin();
@@ -149,6 +154,7 @@ public class IntroAct extends NetWorkActivity {
 				startActivity(intent);
 			}
 			finishAct();
+			umStatistics(Constant.UM_INTRO,  ACTION_TAG, lBean.getAction());
 		} else if (lBean.getAction().contains(ACTION_CATEGORY)) {
 			// String categoryId = lBean.getAction().replace(ACTION_CATEGORY,
 			// "");
@@ -156,6 +162,7 @@ public class IntroAct extends NetWorkActivity {
 			// new String[] { "entity_id" }, new String[] { categoryId },
 			// TAG_PROINFO, true);
 			finishAct();
+			umStatistics(Constant.UM_INTRO, ACTION_CATEGORY, lBean.getAction());
 		} else if (lBean.getAction().contains(ACTION_ARTICLE)) {
 			Bundle bundle = new Bundle();
 			Sharebean sharebean = new Sharebean();
@@ -163,8 +170,10 @@ public class IntroAct extends NetWorkActivity {
 			bundle.putSerializable(WebShareAct.class.getName(), sharebean);
 			openActivity(WebShareAct.class, bundle);
 			finishAct();
+			umStatistics(Constant.UM_INTRO, ACTION_ARTICLE, lBean.getAction());
 		} else {
 			finishAct();
+			umStatistics(Constant.UM_INTRO, "0", "finishAct");
 		}
 	}
 

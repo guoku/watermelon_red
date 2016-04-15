@@ -10,6 +10,7 @@ import com.guoku.guokuv4.bean.ArticlesList;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.utils.BitmapUtil;
 import com.guoku.guokuv4.utils.DateUtils;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -54,7 +55,10 @@ public class ArticleAdapter extends ArrayListAdapter<ArticlesList> {
 
 		ArticlesList articles = mList.get(position);
 		holder.tvName.setText(articles.getTitle());
-		holder.tvContext.setText(articles.getContent50());
+//		holder.tvContext.setText(articles.getContent50());
+		if(!StringUtils.isEmpty(articles.getDigest())){
+			holder.tvContext.setText(articles.getDigest());
+		}
 		holder.imgIcon.setImageURI(Uri.parse(Constant.URL_IMG
 				+ articles.getCover().replace("images", "images/750")));
 

@@ -28,6 +28,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.decode.BaseImageDecoder;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import android.app.Activity;
 import android.app.Application;
@@ -140,6 +141,8 @@ public class GuokuApplication extends Application {
 		
 		initOpenIM();
 		initTaoBao();
+		
+		MobclickAgent.setDebugMode( true );//测试版
 	}
 	
 	private void initTaoBao(){

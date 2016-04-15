@@ -1,7 +1,7 @@
 package com.guoku.guokuv4.homepage;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.AVAnalytics;
@@ -101,6 +101,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 					if (list.size() > 0) {
 						closeHeadView();
 						getJingXuan(System.currentTimeMillis() / 1000 + "", false);
+						umStatistics(Constant.UM_SHOP_DOWN, "timestamp=" + System.currentTimeMillis() / 1000 , "下拉刷新");
 					}
 				}
 			}
@@ -111,6 +112,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 				if (list != null) {
 					if (list.size() > 0) {
 						getJingXuanDown(list.get(list.size() - 1).getPost_time());
+						umStatistics(Constant.UM_SHOP_UP, "timestamp=" + list.get(list.size() - 1).getPost_time(), "上拉加载更多");
 					}
 				}
 			}
@@ -122,6 +124,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				layoutView = arg1;
 				pos = arg2 - 1;
+				umStatistics(Constant.UM_SHOP_INFO, list.get(pos).getContent().getEntity().getEntity_id(), list.get(pos).getContent().getEntity().getTitle());
 				getShopInfo();
 			}
 		});
@@ -228,11 +231,13 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 			pos = pBean.getPosition();
 			layoutView = arg0;
 			if (pBean.getContent().getEntity().getLike_already().equals("0")) {
-
+				
+				umStatistics(Constant.UM_SHOP_LIKE, pBean.getContent().getEntity().getEntity_id(), pBean.getContent().getEntity().getTitle());
 				sendConnectionPost(Constant.TOLIKE + pBean.getContent().getEntity().getEntity_id() + "/like/1/",
 						new String[] {}, new String[] {}, LIKE1, false);
 			} else {
-
+				
+				umStatistics(Constant.UM_SHOP_LIKE_UN, pBean.getContent().getEntity().getEntity_id(), pBean.getContent().getEntity().getTitle());
 				sendConnectionPost(Constant.TOLIKE + pBean.getContent().getEntity().getEntity_id() + "/like/0/",
 						new String[] {}, new String[] {}, LIKE0, false);
 			}
@@ -264,9 +269,8 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
 	public void onEventMainThread(LikesBean likesBean) {
 		if (likesBean.isLike()) {
-			AVAnalytics.onEvent(context, "like_click", pBean.getContent().getEntity().getTitle());
+			AVAnalytics.onEvent(context, "like_click", pBean.getContent().getEntity().getTitle() + "/" + pBean.getContent().getEntity().getEntity_id());
 			AVAnalytics.onEvent(context, "like");
-			MobclickAgent.onEvent(context, "like");
 
 			if (pBean == null) {
 				return;
@@ -356,16 +360,18 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
 	private void initUnRead() {
 
-		String unReadData = SharePrenceUtil.getShopUnRead(getActivity());
-
-		if (!StringUtils.isEmpty(unReadData)) {
-			list = new ArrayList<PBean>();
-			list.addAll(ParseUtil.getJingXuanList(unReadData));
-			adapter.setList(list);
-		} else {
+		//暂时先屏蔽浏览位置记录相关功能
+		
+//		String unReadData = SharePrenceUtil.getShopUnRead(getActivity());
+//
+//		if (!StringUtils.isEmpty(unReadData)) {
+//			list = new ArrayList<PBean>();
+//			list.addAll(ParseUtil.getJingXuanList(unReadData));
+//			adapter.setList(list);
+//		} else {
 			jingxuan_lv_1.setRefreshing();
 			getJingXuan(System.currentTimeMillis() / 1000 + "", false);
-		}
+//		}
 		
 		if(GuokuApplication.getInstance().getUnReadData() != null){
 			if(GuokuApplication.getInstance().getUnReadData().getUnread_selection_count() > 0){
@@ -389,9 +395,10 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		if (indexList != 0) {
-			SharePrenceUtil.setShopUnRead(getActivity(), list.subList(indexList, list.size()));
-		}
+		//暂时先屏蔽浏览位置记录相关功能
+//		if (indexList != 0) {
+//			SharePrenceUtil.setShopUnRead(getActivity(), list.subList(indexList, list.size()));
+//		}
 	}
 	
 	public void showSearchWhat() {

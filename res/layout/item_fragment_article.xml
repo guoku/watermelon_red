@@ -22,6 +22,7 @@
         android:text="wwwwww33333333333dssd" 
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:maxLines="1"
         />
     
     <TextView

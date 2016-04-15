@@ -51,16 +51,15 @@ public class SecondCategoryAct extends NetWorkActivity {
 
 	public static final String SECOND_ACT_ONTENT = "SECOND_ACT_ONTENT";// 二级分类ACT
 
-	
 	@ViewInject(R.id.view_tw)
 	View view;
-	
+
 	@ViewInject(R.id.view_line)
 	View viewLine;
-	
+
 	@ViewInject(R.id.view_bg)
 	View viewBg;
-	
+
 	@ViewInject(R.id.tv_more_articles)
 	TextView tvMoreArticles;// 更多图文
 
@@ -88,7 +87,7 @@ public class SecondCategoryAct extends NetWorkActivity {
 	CategoryBean.ContentEntity tab2Bean;// 从品类搜索页过来的
 	String title;// 标题
 	String id;// 分类id
-	
+
 	ArticlesCategoryFirst aFirst;
 
 	@Override
@@ -106,7 +105,7 @@ public class SecondCategoryAct extends NetWorkActivity {
 		case NET_FIRST_ARTICLES:
 			try {
 				aFirst = JSON.parseObject(result, ArticlesCategoryFirst.class);
-				if(aFirst.getArticles().size() > 0){
+				if (aFirst.getArticles().size() > 0) {
 					articlesAdapter.setList(aFirst.getArticles());
 					if (aFirst.getStat().getAll_count() > 3) {
 						tvMoreArticles.setVisibility(View.VISIBLE);
@@ -114,10 +113,10 @@ public class SecondCategoryAct extends NetWorkActivity {
 						tvMoreArticles.setVisibility(View.GONE);
 					}
 					hideView(false);
-				}else{
+				} else {
 					hideView(true);
 				}
-				
+
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -198,6 +197,8 @@ public class SecondCategoryAct extends NetWorkActivity {
 				offset = 0;
 				sendDataAricles(NET_FIRST_ARTICLES, false);
 				sendData(CATABLIST, false);
+
+				umStatistics(Constant.UM_SUGGESTED_SEC_DOWN, "page = " + page, "down");
 			}
 
 			@Override
@@ -206,6 +207,8 @@ public class SecondCategoryAct extends NetWorkActivity {
 				page++;
 				offset += 30;
 				sendData(CATABLIST_UP, false);
+
+				umStatistics(Constant.UM_SUGGESTED_SEC_UP, "page = " + page, "up");
 			}
 		});
 	}
@@ -222,6 +225,9 @@ public class SecondCategoryAct extends NetWorkActivity {
 				sendConnection(Constant.PROINFO + gvAdapter.getList().get(arg2).getEntity_id() + "/",
 						new String[] { "entity_id" }, new String[] { gvAdapter.getList().get(arg2).getEntity_id() },
 						PROINFO, true);
+
+				umStatistics(Constant.UM_SUGGESTED_SEC_TO_GOOD, gvAdapter.getList().get(arg2).getEntity_id(),
+						gvAdapter.getList().get(arg2).getTitle());
 			}
 		});
 	}
@@ -238,10 +244,10 @@ public class SecondCategoryAct extends NetWorkActivity {
 				Bundle bundle = new Bundle();
 				Sharebean sharebean = new Sharebean();
 				sharebean.setTitle(articlesAdapter.getList().get(arg2).getTitle());
-				if(articlesAdapter.getList().get(arg2).getContent().length() > 50){
-					sharebean.setContext(articlesAdapter.getList().get(arg2).getContent().substring(0, 50));	
-				}else{
-					sharebean.setContext(articlesAdapter.getList().get(arg2).getContent());	
+				if (articlesAdapter.getList().get(arg2).getContent().length() > 50) {
+					sharebean.setContext(articlesAdapter.getList().get(arg2).getContent().substring(0, 50));
+				} else {
+					sharebean.setContext(articlesAdapter.getList().get(arg2).getContent());
 				}
 				sharebean.setAricleUrl(articlesAdapter.getList().get(arg2).getUrl());
 				sharebean.setImgUrl(articlesAdapter.getList().get(arg2).getCover());
@@ -249,6 +255,10 @@ public class SecondCategoryAct extends NetWorkActivity {
 				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
 				sharebean.setAricleId(String.valueOf(articlesAdapter.getList().get(arg2).getArticle_id()));
 				openActivity(WebShareAct.class, bundle);
+
+				umStatistics(Constant.UM_SUGGESTED_SEC_TO_ARICLE,
+						String.valueOf(articlesAdapter.getList().get(arg2).getArticle_id()),
+						articlesAdapter.getList().get(arg2).getTitle());
 			}
 		});
 	}
@@ -256,8 +266,8 @@ public class SecondCategoryAct extends NetWorkActivity {
 	@OnClick(R.id.tv_more_articles)
 	private void onClickMoreArticles(View v) {
 
-		if(aFirst != null){
-			if(aFirst.getStat().isIs_sub()){
+		if (aFirst != null) {
+			if (aFirst.getStat().isIs_sub()) {
 				Bundle bundle = new Bundle();
 				bundle.putString(FirstCategoryAct.class.getName(), String.valueOf(id));
 				openActivity(ArticleListAllAct.class, bundle);
@@ -277,13 +287,13 @@ public class SecondCategoryAct extends NetWorkActivity {
 				new String[] { "1", "3" }, tag, isLoding);
 
 	}
-	
-	private void hideView(boolean isShow){
-		if(isShow){
+
+	private void hideView(boolean isShow) {
+		if (isShow) {
 			view.setVisibility(View.GONE);
 			viewLine.setVisibility(View.GONE);
 			viewBg.setVisibility(View.GONE);
-		}else{
+		} else {
 			view.setVisibility(View.VISIBLE);
 			viewLine.setVisibility(View.VISIBLE);
 			viewBg.setVisibility(View.VISIBLE);

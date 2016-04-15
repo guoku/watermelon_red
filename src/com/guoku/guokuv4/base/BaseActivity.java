@@ -1,6 +1,7 @@
 package com.guoku.guokuv4.base;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,6 +20,7 @@ import com.guoku.guokuv4.act.LoginAct;
 import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.act.WebAct;
 import com.guoku.guokuv4.config.AlibabaConfig;
+import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.BitmapUtil;
@@ -582,8 +584,8 @@ public abstract class BaseActivity extends FragmentActivity {
 
 	public void gotoTaoBao(PInfoBean productBean, long origin_id) {
 		AVAnalytics.onEvent(this, "buy");
-		MobclickAgent.onEvent(this, "buy");
-
+		umStatistics(Constant.UM_SHOP_BUY, productBean.getEntity().getEntity_id(), productBean.getEntity().getTitle());
+		
 		try {
 
 			if (productBean != null) {
@@ -636,6 +638,24 @@ public abstract class BaseActivity extends FragmentActivity {
 			e.printStackTrace();
 		}
 
+	}
+	
+	/**
+	 * 友盟自定义统计
+	 */
+	public void umStatistics(String clickName, String id, String name){
+		
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put(clickName + "_id",id);
+		map.put(clickName + "_name",name); 
+		MobclickAgent.onEvent(mContext, clickName, map);
+	}
+	
+	/**
+	 * 友盟自定义统计
+	 */
+	public void umStatistics(String clickName){
+		MobclickAgent.onEvent(mContext, clickName);
 	}
 
 }

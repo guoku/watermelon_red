@@ -59,7 +59,6 @@ public class FansAct extends NetWorkActivity implements OnClickListener {
 		setGCenter(true, getIntent().getStringExtra("name"));
 		setGLeft(true, R.drawable.back_selector);
 		lv.setRefreshing();
-		getFans(FANS, false, 0);
 	}
 
 	@Override
@@ -174,7 +173,7 @@ public class FansAct extends NetWorkActivity implements OnClickListener {
 			public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 				if (adapter.getCount() > 0) {
 					page++;
-					getFans(LIST_UP, false, adapter.getCount());
+					getFans(LIST_UP, false, 30 * (page - 1));
 				}
 			}
 		});

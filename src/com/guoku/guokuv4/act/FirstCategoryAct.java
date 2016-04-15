@@ -192,6 +192,7 @@ public class FirstCategoryAct extends NetWorkActivity {
 
 				sendDataAricles(NET_FIRST_ARTICLES, false, "");
 				sendData(CATABLIST, false);
+				umStatistics(Constant.UM_SUGGESTED_FIRSE_DOWN, "page = " + page , "");
 			}
 
 			@Override
@@ -199,6 +200,7 @@ public class FirstCategoryAct extends NetWorkActivity {
 				// TODO Auto-generated method stub
 				page++;
 				sendData(CATABLIST_UP, false);
+				umStatistics(Constant.UM_SUGGESTED_FIRSE_UP, "page = " + page , "");
 			}
 		});
 	}
@@ -216,6 +218,8 @@ public class FirstCategoryAct extends NetWorkActivity {
 				sendConnection(Constant.PROINFO + gvAdapter.getList().get(arg2).getEntity_id() + "/",
 						new String[] { "entity_id" }, new String[] { gvAdapter.getList().get(arg2).getEntity_id() },
 						PROINFO, true);
+				
+				umStatistics(Constant.UM_SUGGESTED_FIRSE_TO_GOOD, gvAdapter.getList().get(arg2).getEntity_id() , gvAdapter.getList().get(arg2).getTitle());
 			}
 		});
 	}
@@ -270,6 +274,7 @@ public class FirstCategoryAct extends NetWorkActivity {
 									// bundle);
 									openActivity(SecondCategoryAct.class, bundle);
 
+									umStatistics(Constant.UM_SUGGESTED_FIRSE_TO_SEC, String.valueOf(tagtwo.getCategory_id()), tagtwo.getCategory_title());
 								}
 							});
 							layoutAddTag.addView(textView);
@@ -307,6 +312,8 @@ public class FirstCategoryAct extends NetWorkActivity {
 				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
 				sharebean.setAricleId(String.valueOf(articlesAdapter.getList().get(arg2).getArticle_id()));
 				openActivity(WebShareAct.class, bundle);
+				
+				umStatistics(Constant.UM_SUGGESTED_FIRSE_TO_ARICLE, String.valueOf(articlesAdapter.getList().get(arg2).getArticle_id()), articlesAdapter.getList().get(arg2).getTitle());
 			}
 		});
 	}
@@ -318,6 +325,8 @@ public class FirstCategoryAct extends NetWorkActivity {
 			Bundle bundle = new Bundle();
 			bundle.putSerializable(TabAct.class.getName(), tagBean);
 			openActivity(CategoryListAct.class, bundle);
+			
+			umStatistics(Constant.UM_SUGGESTED_FIRSE_MORE_TAG);
 		}
 	}
 
@@ -330,6 +339,8 @@ public class FirstCategoryAct extends NetWorkActivity {
 			bundle.putString("TITLE_BAR", getIntent().getStringExtra("name"));
 			bundle.putBoolean("IS_FIRST", true);
 			openActivity(ArticleListAllAct.class, bundle);
+			
+			umStatistics(Constant.UM_SUGGESTED_FIRSE_TO_ARICLE_MORE);
 		}
 	}
 

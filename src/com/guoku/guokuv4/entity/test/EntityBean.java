@@ -2,6 +2,8 @@ package com.guoku.guokuv4.entity.test;
 
 import java.io.Serializable;
 
+import com.guoku.guokuv4.utils.StringUtils;
+
 public class EntityBean implements Serializable {
 	private String entity_id, weight, note_count, price, intro, created_time,
 			old_category_id, chief_image, entity_hash, score_count, novus_time,
@@ -16,8 +18,10 @@ public class EntityBean implements Serializable {
 	}
 
 	public String get240() {
-		if (chief_image.contains("images")) {
-			return chief_image.replaceFirst("images", "images/240");
+		if(!StringUtils.isEmpty(chief_image)){
+			if (chief_image.contains("images")) {
+				return chief_image.replaceFirst("images", "images/240");
+			}
 		}
 		return chief_image;
 	}

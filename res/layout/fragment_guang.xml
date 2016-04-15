@@ -79,7 +79,7 @@
                         <LinearLayout
                             android:id="@+id/gallery_recommend_user"
                             android:layout_width="match_parent"
-                            android:layout_height="72dp"
+                            android:layout_height="94dp"
                             android:gravity="center"
                             android:orientation="horizontal" />
                     </HorizontalScrollView>
@@ -151,26 +151,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:background="@color/white"
                     android:orientation="vertical" >
 
                     <TextView
                         style="@style/gray_bg_text"
-                        android:text="热门商品" />
+                        android:text="热门商品" 
+                        />
 
-                    <com.guoku.guokuv4.view.ScrollViewWithGridView
-                        android:id="@+id/faxian_gv"
+                    <include
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="#f8f8f8"
-                        android:cacheColorHint="#00000000"
-                        android:gravity="center"
-                        android:horizontalSpacing="4dp"
-                        android:listSelector="#00000000"
-                        android:numColumns="3"
-                        android:scrollbars="none"
-                        android:verticalSpacing="4dp" >
-                    </com.guoku.guokuv4.view.ScrollViewWithGridView>
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        layout="@layout/grid_view_count3" />
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
