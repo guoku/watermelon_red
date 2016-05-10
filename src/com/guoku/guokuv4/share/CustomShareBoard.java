@@ -135,6 +135,7 @@ public class CustomShareBoard extends PopupWindow implements OnClickListener {
 		weixinContent.setTargetUrl(url);
 		weixinContent.setShareContent(title + context);
 		weixinContent.setShareImage(new UMImage(mContext, imgUrl));
+		weixinContent.setTitle(title);
 		mController.setShareMedia(weixinContent);
 
 		CircleShareContent circleMedia = new CircleShareContent();

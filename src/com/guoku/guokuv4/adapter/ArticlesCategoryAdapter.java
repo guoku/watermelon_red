@@ -46,7 +46,7 @@ public class ArticlesCategoryAdapter extends ArrayListAdapter<ArticlesList> {
 
 		ArticlesList articles = mList.get(position);
 		holder.tvName.setText(articles.getTitle());
-//		holder.tvBelow.setText(articles.getContent());
+		holder.tvBelow.setText(articles.getDigest());
 		holder.imgIcon.setImageURI(Uri.parse(Constant.URL_IMG
 				+ articles.get240()));
 

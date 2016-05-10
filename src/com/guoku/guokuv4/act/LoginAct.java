@@ -239,8 +239,8 @@ public class LoginAct extends NetWorkActivity {
 		
 		setContentView(R.layout.login_act);
 		
-//		ed_name.setText("455350733@qq.com");
-//		ed_pass.setText("11111111");
+		ed_name.setText("455350722@qq.com");
+		ed_pass.setText("11111111");
 	}
 
 	@OnClick(R.id.login_btn_login)

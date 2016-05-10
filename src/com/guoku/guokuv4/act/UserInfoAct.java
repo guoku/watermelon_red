@@ -122,7 +122,7 @@ public class UserInfoAct extends NetWorkActivity {
 	@OnClick(R.id.user_info_ll_name)
 	public void name(View v) {
 		final EditText text = new EditText(mContext);
-		text.setText(bean.getUser().getNickname());
+		text.setText(bean.getUser().getNick());
 		DialogUtils.getEDialog(mContext, new OnClickListener() {
 
 			@Override
@@ -247,7 +247,7 @@ public class UserInfoAct extends NetWorkActivity {
 
 		bean = GuokuApplication.getInstance().getBean();
 		tv_add.setText(bean.getUser().getLocation());
-		tv_name.setText(bean.getUser().getNickname());
+		tv_name.setText(bean.getUser().getNick());
 		tv_sign.setText(bean.getUser().getBio());
 		tv_sex.setText(bean.getUser().getGender());
 		// BitmapUtil.setRoundImage(imageLoader,

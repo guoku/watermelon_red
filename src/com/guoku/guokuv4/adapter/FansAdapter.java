@@ -41,7 +41,7 @@ public class FansAdapter extends ArrayListAdapter<UserBean> {
 		holder.fans_item_iv_pic.setImageURI(Uri.parse(bean.get50()));
 		holder.fans_item_tv_fans.setText("关注  " + bean.getFollowing_count()
 				+ "    粉丝 " + bean.getFan_count());
-		holder.fans_item_tv_name.setText(bean.getNickname());
+		holder.fans_item_tv_name.setText(bean.getNick());
 		if (bean.getRelation().equals("0")) {
 			holder.fans_item_iv_status.setImageResource(R.drawable.add);
 			holder.fans_item_iv_status
@@ -87,7 +87,7 @@ public class FansAdapter extends ArrayListAdapter<UserBean> {
 			// BitmapUtil.setRoundImage(loader, bean.getAvatar_small(), options,
 			// holder.fans_item_iv_pic);
 			holder.fans_item_tv_fans.setText("关注  " + bean.getFollowing_count() + "    粉丝 " + bean.getFan_count());
-			holder.fans_item_tv_name.setText(bean.getNickname());
+			holder.fans_item_tv_name.setText(bean.getNick());
 			if (bean.getRelation().equals("0")) {
 				holder.fans_item_iv_status.setImageResource(R.drawable.add);
 				holder.fans_item_iv_status.setBackgroundResource(R.drawable.blue_shap);

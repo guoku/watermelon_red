@@ -551,7 +551,7 @@ public class ProductInfoAct extends NetWorkActivity
 					holder.comment_item_iv_status.setVisibility(View.VISIBLE);
 				}
 
-				holder.comment_item_tv_name.setText(bean.getCreator().getNickname());
+				holder.comment_item_tv_name.setText(bean.getCreator().getNick());
 				holder.comment_item_tv_context.setText(bean.getContent());
 				holder.comment_item_tv_likes.setText(bean.getPoke_count());
 				holder.comment_item_tv_coms.setText(bean.getComment_count());

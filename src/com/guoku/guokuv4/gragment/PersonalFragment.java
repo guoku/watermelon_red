@@ -55,7 +55,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -356,9 +356,9 @@ public class PersonalFragment extends BaseFrament {
 
 		psrson_tv_fans.setText(uBean.getFan_count());
 		psrson_tv_guanzhu.setText(uBean.getFollowing_count());
-		psrson_tv_name.setText(uBean.getNickname());
-		psrson_tv_sign.setText(uBean.getBio());
+		psrson_tv_name.setText(uBean.getNick());
 		psrson_iv_pic.setImageURI(Uri.parse(uBean.get240()));
+		setBio();
 
 		setConcem();
 		getUserInfo();
@@ -373,7 +373,7 @@ public class PersonalFragment extends BaseFrament {
 		iv_set.setVisibility(View.GONE);
 		tabLeftImg.setImageResource(R.drawable.back);
 		tabLeftImgLine.setVisibility(View.VISIBLE);
-		title.setText(uBean.getNickname());
+		title.setText(uBean.getNick());
 		redRound.setVisibility(View.GONE);
 		setConcem();
 	}
@@ -527,21 +527,24 @@ public class PersonalFragment extends BaseFrament {
 
 		if (!StringUtils.isEmpty(uBean.getRelation())) {
 			if (uBean.getRelation().equals("0")) {
-				layout_edit.setBackgroundResource(R.drawable.blue_shap);
+				layout_edit.setBackgroundResource(R.drawable.tfz_shap);
 				psrson_tv_btn.setText("关注");
 				psrson_iv_btn.setImageResource(R.drawable.add_to);
-				psrson_tv_btn.setTextColor(Color.WHITE);
+				psrson_tv_btn.setTextColor(getResources().getColor(R.color.like_buy_blue));
+				psrson_iv_btn.setVisibility(View.VISIBLE);
 			}
 			if (uBean.getRelation().equals("1")) {
-				layout_edit.setBackgroundResource(R.drawable.tfz_shap);
+				layout_edit.setBackgroundResource(R.drawable.bt_blue_bg);
 				psrson_tv_btn.setText("已关注");
 				psrson_iv_btn.setImageResource(R.drawable.hai_to);
-				psrson_tv_btn.setTextColor(Color.argb(255, 19, 143, 215));
+				psrson_tv_btn.setTextColor(getResources().getColor(R.color.white));
+				psrson_iv_btn.setVisibility(View.VISIBLE);
 			} else if (uBean.getRelation().equals("3")) {
-				layout_edit.setBackgroundResource(R.drawable.tfz_shap);
+				layout_edit.setBackgroundResource(R.drawable.bt_blue_bg);
 				psrson_tv_btn.setText("互相关注");
 				psrson_iv_btn.setImageResource(R.drawable.to);
-				psrson_tv_btn.setTextColor(Color.argb(255, 19, 143, 215));
+				psrson_tv_btn.setTextColor(getResources().getColor(R.color.white));
+				psrson_iv_btn.setVisibility(View.VISIBLE);
 			}
 		}
 	}
@@ -576,12 +579,12 @@ public class PersonalFragment extends BaseFrament {
 				sendConnectionPost(Constant.FOLLOW + uBean.getUser_id() + "/follow/1/", new String[] {},
 						new String[] {}, FOLLOW1, false);
 				uBean.setRelation("1");
-				umStatistics(Constant.UM_USER_FOLLOW, uBean.getUser_id(), uBean.getNickname());
+				umStatistics(Constant.UM_USER_FOLLOW, uBean.getUser_id(), uBean.getNick());
 			} else {
 				sendConnectionPost(Constant.FOLLOW + uBean.getUser_id() + "/follow/0/", new String[] {},
 						new String[] {}, FOLLOW0, false);
 				uBean.setRelation("0");
-				umStatistics(Constant.UM_USER_FOLLOW_UN, uBean.getUser_id(), uBean.getNickname());
+				umStatistics(Constant.UM_USER_FOLLOW_UN, uBean.getUser_id(), uBean.getNick());
 			}
 		}
 	}
@@ -617,7 +620,7 @@ public class PersonalFragment extends BaseFrament {
 	private void userLikeClick(View v) {
 		onStartAct(UserLikeListAct.class, userLike.tv1.getText().toString(), userLike.tv2.getText().toString());
 		
-		umStatistics(Constant.UM_USER_LIKE_LIST, uBean.getUser_id(), uBean.getNickname());
+		umStatistics(Constant.UM_USER_LIKE_LIST, uBean.getUser_id(), uBean.getNick());
 	}
 
 	@OnClick(R.id.tv_user_comment)
@@ -625,7 +628,7 @@ public class PersonalFragment extends BaseFrament {
 		onStartAct(UserCommentListAct.class, userComment.tv1.getText().toString(),
 				userComment.tv2.getText().toString());
 		
-		umStatistics(Constant.UM_USER_COMMENTS_LIST, uBean.getUser_id(), uBean.getNickname());
+		umStatistics(Constant.UM_USER_COMMENTS_LIST, uBean.getUser_id(), uBean.getNick());
 	}
 
 	@OnClick(R.id.tv_user_article)
@@ -633,14 +636,14 @@ public class PersonalFragment extends BaseFrament {
 		onStartAct(UserArticleListAct.class, userArticle.tv1.getText().toString(),
 				userArticle.tv2.getText().toString());
 		
-		umStatistics(Constant.UM_USER_ARTICLE_LIST, uBean.getUser_id(), uBean.getNickname());
+		umStatistics(Constant.UM_USER_ARTICLE_LIST, uBean.getUser_id(), uBean.getNick());
 	}
 
 	@OnClick(R.id.tv_user_tag)
 	private void userTagClick(View v) {
 		onStartAct(UserTagListAct.class, userTag.tv1.getText().toString(), userTag.tv2.getText().toString());
 		
-		umStatistics(Constant.UM_USER_TAG_LIST, uBean.getUser_id(), uBean.getNickname());
+		umStatistics(Constant.UM_USER_TAG_LIST, uBean.getUser_id(), uBean.getNick());
 	}
 
 	@OnClick(R.id.tv_user_article_zan)
@@ -648,7 +651,7 @@ public class PersonalFragment extends BaseFrament {
 		onStartAct(UserArticleListAct.class, userArticleZan.tv1.getText().toString(),
 				userArticleZan.tv2.getText().toString());
 		
-		umStatistics(Constant.UM_USER_ARTICLE_ZAN_LIST, uBean.getUser_id(), uBean.getNickname());
+		umStatistics(Constant.UM_USER_ARTICLE_ZAN_LIST, uBean.getUser_id(), uBean.getNick());
 	}
 
 	private void getUserInfo() {
@@ -722,8 +725,7 @@ public class PersonalFragment extends BaseFrament {
 
 			uBean = GuokuApplication.getInstance().getBean().getUser();
 
-			psrson_tv_name.setText(uBean.getNickname());
-			psrson_tv_sign.setText(uBean.getBio());
+			psrson_tv_name.setText(uBean.getNick());
 
 			psrson_iv_pic.setImageURI(Uri.parse(uBean.get240()));
 
@@ -734,6 +736,8 @@ public class PersonalFragment extends BaseFrament {
 				psrson_iv_sex.setTextColor(Color.rgb(253, 189, 217));
 				setTextRightImg(psrson_iv_sex, R.drawable.female);
 			}
+			
+			setBio();
 
 		}
 	}
@@ -782,6 +786,7 @@ public class PersonalFragment extends BaseFrament {
 		sendConnection(Constant.PROINFO + id + "/", new String[] { "entity_id" }, new String[] { id }, PROINFO, true);
 	}
 
+	@SuppressLint("ResourceAsColor")
 	private void refreshUI() {
 		psrson_tv_guanzhu.setText(uBean.getFollowing_count());
 
@@ -803,8 +808,15 @@ public class PersonalFragment extends BaseFrament {
 			}
 		}
 
+		layout_edit.setVisibility(View.VISIBLE);
 		if (userType != 0) {
 			setConcem();
+		}else{
+			layout_edit.setBackgroundResource(R.drawable.tfz_shap);
+			psrson_tv_btn.setText("编辑个人资料");
+			psrson_tv_btn.setTextColor(getResources().getColor(R.color.like_buy_blue));
+			psrson_iv_btn.setVisibility(View.GONE);
+			uBean.setRelation("4");
 		}
 	}
 
@@ -972,4 +984,16 @@ public class PersonalFragment extends BaseFrament {
 		}
 	}
 
+	/**
+	 * 处理签名
+	 */
+	private void setBio(){
+		if(StringUtils.isEmpty(uBean.getBio())){
+			psrson_tv_sign.setVisibility(View.GONE);
+		}else{
+			psrson_tv_sign.setVisibility(View.VISIBLE);
+			psrson_tv_sign.setText(uBean.getBio());
+		}
+		
+	}
 }

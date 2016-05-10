@@ -103,7 +103,7 @@ public class WebShareAct extends NetWorkActivity {
 		} else {
 			view.loadUrl(Constant.URL_ARTICLES + sharebean.getAricleUrl());
 		}
-		// 如果是图文
+//		 如果是图文  4.1.8不加赞的功能，下一版与图文评论一起增加
 		if (sharebean.getAricleUrl().contains(IF_ARTICLES)) {
 			initTitleZan();
 		}
@@ -145,7 +145,7 @@ public class WebShareAct extends NetWorkActivity {
 
 				// 如果是外链
 //				if (sharebean.getAricleUrl().contains(IF_ARTICLES)) {
-					checkZan.setVisibility(View.GONE);
+//					checkZan.setVisibility(View.GONE);
 //				}
 				
 				return super.shouldOverrideUrlLoading(view, url);
@@ -184,7 +184,7 @@ public class WebShareAct extends NetWorkActivity {
 					}
 				}
 				
-				checkZan.setVisibility(View.VISIBLE);
+//				checkZan.setVisibility(View.VISIBLE);
 				return false;
 			}
 		});

@@ -46,7 +46,7 @@ public class GuangArticlesAdapter extends ArrayListAdapter<Discover.ArticlesEnti
 
 		Discover.ArticlesEntity articles = mList.get(position);
 		holder.tvName.setText(articles.getArticle().getTitle());
-		holder.tvBelow.setText(articles.getArticle().getContent());
+		holder.tvBelow.setText(articles.getArticle().getDigest());
 		holder.imgIcon.setImageURI(Uri.parse(Constant.URL_IMG
 				+ articles.getArticle().getCover()));
 

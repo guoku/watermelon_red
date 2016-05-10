@@ -173,8 +173,8 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getLiker().get50()));
 
 					openNickName(bean.getContent().getLiker(),
-							bean.getContent().getLiker().getNickname() + " 喜爱了 1 件商品  ",
-							bean.getContent().getLiker().getNickname().length(), holder.tv_context);
+							bean.getContent().getLiker().getNick() + " 喜爱了 1 件商品  ",
+							bean.getContent().getLiker().getNick().length(), holder.tv_context);
 
 					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getEntity().get50()));
 				} else if (bean.getType().equals("entity")) {
@@ -184,23 +184,23 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getEntity().get50()));
 
 					openNickName(bean.getContent().getNote().getCreator(),
-							bean.getContent().getNote().getCreator().getNickname() + " 点评了 1 件商品  ",
-							bean.getContent().getNote().getCreator().getNickname().length(), holder.tv_context);
+							bean.getContent().getNote().getCreator().getNick() + " 点评了 1 件商品  ",
+							bean.getContent().getNote().getCreator().getNick().length(), holder.tv_context);
 
 				} else if (bean.getType().equals("user_follow")) {
 
 					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getUser().get50()));
 					holder.tongzhi_item_iv_pimg.setVisibility(View.INVISIBLE);
-					openNickName(bean.getContent().getUser(), bean.getContent().getUser().getNickname() + " 开始关注  ",
-							bean.getContent().getUser().getNickname().length(), holder.tv_context);
+					openNickName(bean.getContent().getUser(), bean.getContent().getUser().getNick() + " 开始关注  ",
+							bean.getContent().getUser().getNick().length(), holder.tv_context);
 					holder.tv_context2.setVisibility(View.VISIBLE);
-					openNickName(bean.getContent().getTarget(), bean.getContent().getTarget().getNickname(),
-							bean.getContent().getTarget().getNickname().length(), holder.tv_context2);
+					openNickName(bean.getContent().getTarget(), bean.getContent().getTarget().getNick(),
+							bean.getContent().getTarget().getNick().length(), holder.tv_context2);
 				} else if (bean.getType().equals("article_dig")) {
 					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getDigger().get50()));
 					openNickName(bean.getContent().getDigger(),
-							bean.getContent().getDigger().getNickname() + " 赞了 1 篇图文  ",
-							bean.getContent().getDigger().getNickname().length(), holder.tv_context);
+							bean.getContent().getDigger().getNick() + " 赞了 1 篇图文  ",
+							bean.getContent().getDigger().getNick().length(), holder.tv_context);
 
 					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(Constant.URL_IMG + bean.getContent().getArticle().get240()));
 				}
@@ -234,16 +234,16 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
 					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getNote().get50()));
 					openNickName(bean.getContent().getComment_user(),
-							bean.getContent().getComment_user().getNickname() + " 评论了你撰写的点评  ",
-							bean.getContent().getComment_user().getNickname().length(), holder.tv_context);
+							bean.getContent().getComment_user().getNick() + " 评论了你撰写的点评  ",
+							bean.getContent().getComment_user().getNick().length(), holder.tv_context);
 				} else if (bean.getType().equals("note_poke_message")) {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
 					holder.tongzhi_item_iv_userpic.setImageURI(Uri.parse(bean.getContent().getPoker().get50()));
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
 					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getNote().get50()));
 
-					openNickName(bean.getContent().getPoker(), bean.getContent().getPoker().getNickname() + " 赞了你的点评  ",
-							bean.getContent().getPoker().getNickname().length(), holder.tv_context);
+					openNickName(bean.getContent().getPoker(), bean.getContent().getPoker().getNick() + " 赞了你的点评  ",
+							bean.getContent().getPoker().getNick().length(), holder.tv_context);
 				} else if (bean.getType().equals("entity_note_message")) {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
@@ -252,8 +252,8 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getEntity().get50()));
 
 					openNickName(bean.getContent().getNote().getCreator(),
-							bean.getContent().getNote().getCreator().getNickname() + " 点评了你添加的商品  ",
-							bean.getContent().getNote().getCreator().getNickname().length(), holder.tv_context);
+							bean.getContent().getNote().getCreator().getNick() + " 点评了你添加的商品  ",
+							bean.getContent().getNote().getCreator().getNick().length(), holder.tv_context);
 
 				} else if (bean.getType().equals("user_follow")) {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
@@ -263,8 +263,8 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 					holder.tongzhi_item_iv_pimg.setVisibility(View.INVISIBLE);
 
 					openNickName(bean.getContent().getFollower(),
-							bean.getContent().getFollower().getNickname() + " 开始关注你  ",
-							bean.getContent().getFollower().getNickname().length(), holder.tv_context);
+							bean.getContent().getFollower().getNick() + " 开始关注你  ",
+							bean.getContent().getFollower().getNick().length(), holder.tv_context);
 
 				} else if (bean.getType().equals("note_comment_reply_message")) {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
@@ -272,8 +272,8 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 					holder.tongzhi_item_iv_pimg.setVisibility(View.INVISIBLE);
 
 					openNickName(bean.getContent().getFollower(),
-							bean.getContent().getFollower().getNickname() + " 回复了你的评论  ",
-							bean.getContent().getFollower().getNickname().length(), holder.tv_context);
+							bean.getContent().getFollower().getNick() + " 回复了你的评论  ",
+							bean.getContent().getFollower().getNick().length(), holder.tv_context);
 
 				} else if (bean.getType().equals("note_selection_message")) {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
@@ -290,8 +290,8 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(bean.getContent().getEntity().get50()));
 
 					openNickName(bean.getContent().getLiker(),
-							bean.getContent().getLiker().getNickname() + " 喜爱了你添加的商品  ",
-							bean.getContent().getLiker().getNickname().length(), holder.tv_context);
+							bean.getContent().getLiker().getNick() + " 喜爱了你添加的商品  ",
+							bean.getContent().getLiker().getNick().length(), holder.tv_context);
 				} else if (bean.getType().equals("dig_article_message")) {
 					holder.tongzhi_item_iv_userpic.setVisibility(View.VISIBLE);
 					holder.tongzhi_item_iv_pimg.setVisibility(View.VISIBLE);
@@ -300,8 +300,8 @@ public class OrderFragment extends BaseFrament implements OnClickListener {
 					holder.tongzhi_item_iv_pimg.setImageURI(Uri.parse(Constant.URL_IMG + bean.getContent().getArticle().get240()));
 
 					openNickName(bean.getContent().getDigger(),
-							bean.getContent().getDigger().getNickname() + " 赞了你写的图文  ",
-							bean.getContent().getDigger().getNickname().length(), holder.tv_context);
+							bean.getContent().getDigger().getNick() + " 赞了你写的图文  ",
+							bean.getContent().getDigger().getNick().length(), holder.tv_context);
 
 				}
 

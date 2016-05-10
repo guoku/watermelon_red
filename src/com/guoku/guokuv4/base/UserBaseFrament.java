@@ -36,7 +36,7 @@ public class UserBaseFrament extends BaseActivity{
 		fm = getSupportFragmentManager();
 		fm.beginTransaction().add(R.id.fl_content, pFragment).commit();
 		
-		setGCenter(true, pFragment.uBean.getNickname());
+		setGCenter(true, pFragment.uBean.getNick());
 		setGLeft(true, R.drawable.back_selector);
 	}
 }

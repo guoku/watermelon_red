@@ -45,7 +45,7 @@ public class HomeOneArticlesAdapter extends ArrayListAdapter<ArticlesList> {
 
 		ArticlesList articles = mList.get(position);
 		holder.tvName.setText(articles.getTitle());
-		holder.tvBelow.setText(articles.getTitle());
+		holder.tvBelow.setText(articles.getTitle().trim());
 		holder.imgIcon.setImageURI(Uri.parse(Constant.URL_IMG
 				+ articles.getCover()));
 

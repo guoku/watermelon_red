@@ -244,7 +244,7 @@ public class CommentTalkAct extends NetWorkActivity implements OnClickListener {
 				// holder.comment_item_iv_pic);
 
 				holder.comment_item_tv_name.setText(bean.getCreator()
-						.getNickname());
+						.getNick());
 				holder.comment_item_tv_context.setText(bean.getContent());
 				holder.comment_item_tv_time.setText(DateUtils
 						.getStandardDate(bean.getCreated_time()));
@@ -263,7 +263,7 @@ public class CommentTalkAct extends NetWorkActivity implements OnClickListener {
 				reply_to_comment = list.get(arg2).getComment_id();
 				reply_to_user = list.get(arg2).getCreator().getUser_id();
 				ed_text.setHint("回复 "
-						+ list.get(arg2).getCreator().getNickname());
+						+ list.get(arg2).getCreator().getNick());
 			}
 		});
 

@@ -91,10 +91,11 @@ public class Constant {
 	public static final String URL_ARTICLES = "http://m.guoku.com";// 文章前缀
 	public static final String URL_ARTICLES_SHARE = "http://www.guoku.com";// 分享果库文章前缀
 	public static final String URL_IMG = "http://imgcdn.guoku.com/";// 图片前缀
-//	public static final String URL = "http://api.guoku.com";// 生产环境地址
+	public static final String URL = "http://api.guoku.com";// 生产环境地址
 //	 public static final String URL = "http://10.0.0.101:8000";//测试环境地址
-	 public static final String URL = "http://test.guoku.com";//测试环境地址
+//	 public static final String URL = "http://test.guoku.com";//测试环境地址
 //	 public static final String URL = "http://192.168.1.112:9200";// 赵旭
+//	public static final String URL = "http://192.168.1.117:8000";//贾帅龙
 
 	public static final String JINGXUAN = URL + "/mobile/v4/selection/";
 	public static final String PROINFO = URL + "/mobile/v4/entity/";

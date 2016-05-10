@@ -31,6 +31,15 @@ public class UserBean implements Serializable {
     private boolean mail_verified;//是否验证邮箱
     private boolean authorized_author;//是否是第三方鉴权媒体用户
     private String dig_count;//赞过的图文个数
+    private String nick;
+
+	public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
 
 	public String getDig_count() {
 		return dig_count;

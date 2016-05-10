@@ -2,14 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.guoku"
     android:installLocation="auto"
-    android:versionCode="418"
-    android:versionName="1024.1" >
+    android:versionCode="419"
+    android:versionName="4.1.8" >
 
     <!-- 正式版本号 -->
     <!--
-    android:versionCode="417"
-    android:versionName="4.1.6"
-    -->
+    android:versionCode="419"
+    android:versionName="4.1.8"    -->
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.GET_TASKS" />
@@ -32,8 +31,7 @@
     <uses-permission android:name="android.permission.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS" />
     <uses-permission android:name="android.permission.AREQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
-    <uses-sdk
-        android:minSdkVersion="14"/>
+    <uses-sdk android:minSdkVersion="14" />
 
     <application
         android:name="com.guoku.app.GuokuApplication"
@@ -42,14 +40,14 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:theme="@style/AppTheme"
-        android:uiOptions="splitActionBarWhenNarrow" 
-        >
+        android:uiOptions="splitActionBarWhenNarrow" >
         <activity
             android:name="com.umeng.fb.ConversationActivity"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity
             android:name="com.umeng.fb.ContactActivity"
             android:theme="@android:style/Theme.NoTitleBar" />
+
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="channel" />
@@ -58,6 +56,7 @@
             android:value="main" />
 
         <!-- 正式 -->
+
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5279bf3656240b8271004a8a" />
@@ -66,7 +65,8 @@
         <!--
              <meta-data
             android:name="UMENG_APPKEY"
-            android:value="55d5453567e58ed077000332" />        -->
+            android:value="55d5453567e58ed077000332" />
+        -->
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
@@ -91,7 +91,8 @@
             android:name="UMENG"
             android:value="yes" />
 
-<!--         <receiver
+        <!--
+             <receiver
             android:name="com.baidu.autoupdatesdk.receiver.BDBroadcastReceiver"
             android:exported="false" >
             <intent-filter>
@@ -100,7 +101,8 @@
                 <action android:name="com.baidu.autoupdatesdk.ACTION_NEW_AS" />
                 <action android:name="com.baidu.autoupdatesdk.ACTION_AS_DOWNLOAD_COMPLETE" />
             </intent-filter>
-        </receiver> -->
+        </receiver>
+        -->
 
         <activity
             android:name="com.guoku.guokuv4.main.WelAct"
@@ -181,9 +183,8 @@
         </activity>
         <activity
             android:name="com.guoku.guokuv4.act.CommentAct"
-            android:windowSoftInputMode="stateVisible"
             android:theme="@style/dialog"
-            >
+            android:windowSoftInputMode="stateVisible" >
         </activity>
         <activity
             android:name="com.guoku.guokuv4.act.SettingAct"
@@ -273,14 +274,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
-        
         <activity
             android:name="com.guoku.guokuv4.act.IntroAct"
             android:configChanges="keyboardHidden"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" 
             android:theme="@style/dialog"
-            >
+            android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
             android:name=".guokuv4.act.PhotoViewAct"
@@ -312,10 +311,10 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" >
         </activity>
-        
-        
-        <service android:name="com.guoku.guokuv4.service.DownLoadService"></service>
-         <service
+
+        <service android:name="com.guoku.guokuv4.service.DownLoadService" >
+        </service>
+        <service
             android:name="com.umeng.update.net.DownloadingService"
             android:process=":DownloadingService" >
         </service>

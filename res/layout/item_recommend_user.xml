@@ -14,8 +14,12 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black_body"
         android:textSize="12sp"
-        android:maxLines="1"
-        android:maxLength="5"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="ss"
+        android:ellipsize="end"
+        android:maxEms="5"
+        android:singleLine="true"
         />
 
 </LinearLayout>

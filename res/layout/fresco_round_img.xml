@@ -9,7 +9,8 @@
     fresco:placeholderImage="@drawable/item240"
     fresco:roundAsCircle="true"
     fresco:roundWithOverlayColor="@android:color/transparent" 
-    android:paddingRight="10dp"
+    android:paddingRight="5dp"
+    android:paddingLeft="5dp"
     >
 
 </com.facebook.drawee.view.SimpleDraweeView>
