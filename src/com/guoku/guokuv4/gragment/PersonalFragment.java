@@ -14,6 +14,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.act.CommentTalkAct;
+import com.guoku.guokuv4.act.EditUserInfoAct;
 import com.guoku.guokuv4.act.FansAct;
 import com.guoku.guokuv4.act.LoginAct;
 import com.guoku.guokuv4.act.PhotoCheckAct;
@@ -48,20 +49,20 @@ import com.guoku.guokuv4.utils.ToastUtil;
 import com.guoku.guokuv4.view.LayoutItemView;
 import com.guoku.guokuv4.view.ScrollViewWithGridView;
 import com.guoku.guokuv4.view.ScrollViewWithListView;
-import com.handmark.pulltorefresh.library.ILoadingLayout;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewStub;
@@ -82,7 +83,7 @@ public class PersonalFragment extends BaseFrament {
 	private static final int COMMENTLIST = 14;
 	private static final int PROINFO = 13;
 	private static final int USERINFO = 18;
-	public static final int RESULT_CODE = 1001;
+	// public static final int RESULT_CODE = 1001;
 
 	private final int TABLIKE = 1002;// 喜欢
 	private final int TABNOTE = 1003;// 点评
@@ -190,14 +191,20 @@ public class PersonalFragment extends BaseFrament {
 	private TextView psrson_tv_sign;
 	@ViewInject(R.id.psrson_tv_guanzhu)
 	private TextView psrson_tv_guanzhu;
+	@ViewInject(R.id.layout_sign)
+	private View layout_sign;
+	@ViewInject(R.id.tv_open)
+	private TextView tvOpen;// 展开签名
+	@ViewInject(R.id.tv_close)
+	private TextView tvClose;// 收起签名
 
 	public UserBean uBean;
 
-	private int temp;
-
 	private int pageArticle = 1;// 认证用户图文页数
+
+	private int tempAuthonArticles;// 鉴权用户图文记录
 	
-	private int tempAuthonArticles;//鉴权用户图文记录
+	public boolean isUserList;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -332,6 +339,12 @@ public class PersonalFragment extends BaseFrament {
 			} else {
 				redRound.setVisibility(View.VISIBLE);
 			}
+//			if(GuokuApplication.getInstance().getBean() != null){
+//				if(isUserList){
+//					initUnUser();
+//					isUserList = false;
+//				}
+//			}
 			initUnUserAuthon();
 			break;
 		case 1:
@@ -513,8 +526,10 @@ public class PersonalFragment extends BaseFrament {
 				bundle.putSerializable(WebShareAct.class.getName(), sharebean);
 				sharebean.setAricleId(String.valueOf(articlesAuthonAdapter.getList().get(arg2).getArticle_id()));
 				openActivity(WebShareAct.class, bundle);
-				
-				umStatistics(Constant.UM_USER_AUTHO_ARTICLE_ITEM, String.valueOf(articlesAuthonAdapter.getList().get(arg2).getArticle_id()), articlesAuthonAdapter.getList().get(arg2).getTitle());
+
+				umStatistics(Constant.UM_USER_AUTHO_ARTICLE_ITEM,
+						String.valueOf(articlesAuthonAdapter.getList().get(arg2).getArticle_id()),
+						articlesAuthonAdapter.getList().get(arg2).getTitle());
 			}
 		});
 		getInitData(ARTICLE, "30", TABARTICLE);
@@ -572,8 +587,7 @@ public class PersonalFragment extends BaseFrament {
 	@OnClick(R.id.psrson_ll_btn)
 	public void psrson_ll_btn(View v) {
 		if (userType == 0) {
-			Intent intent = new Intent(context, UserInfoAct.class);
-			startActivityForResult(intent, RESULT_CODE);
+			openActivity(EditUserInfoAct.class);
 		} else {
 			if (uBean.getRelation().equals("0") || uBean.getRelation().equals("2")) {
 				sendConnectionPost(Constant.FOLLOW + uBean.getUser_id() + "/follow/1/", new String[] {},
@@ -619,7 +633,7 @@ public class PersonalFragment extends BaseFrament {
 	@OnClick(R.id.tv_user_like)
 	private void userLikeClick(View v) {
 		onStartAct(UserLikeListAct.class, userLike.tv1.getText().toString(), userLike.tv2.getText().toString());
-		
+
 		umStatistics(Constant.UM_USER_LIKE_LIST, uBean.getUser_id(), uBean.getNick());
 	}
 
@@ -627,7 +641,7 @@ public class PersonalFragment extends BaseFrament {
 	private void userCommentClick(View v) {
 		onStartAct(UserCommentListAct.class, userComment.tv1.getText().toString(),
 				userComment.tv2.getText().toString());
-		
+
 		umStatistics(Constant.UM_USER_COMMENTS_LIST, uBean.getUser_id(), uBean.getNick());
 	}
 
@@ -635,14 +649,14 @@ public class PersonalFragment extends BaseFrament {
 	private void userArticleClick(View v) {
 		onStartAct(UserArticleListAct.class, userArticle.tv1.getText().toString(),
 				userArticle.tv2.getText().toString());
-		
+
 		umStatistics(Constant.UM_USER_ARTICLE_LIST, uBean.getUser_id(), uBean.getNick());
 	}
 
 	@OnClick(R.id.tv_user_tag)
 	private void userTagClick(View v) {
 		onStartAct(UserTagListAct.class, userTag.tv1.getText().toString(), userTag.tv2.getText().toString());
-		
+
 		umStatistics(Constant.UM_USER_TAG_LIST, uBean.getUser_id(), uBean.getNick());
 	}
 
@@ -650,7 +664,7 @@ public class PersonalFragment extends BaseFrament {
 	private void userArticleZan(View v) {
 		onStartAct(UserArticleListAct.class, userArticleZan.tv1.getText().toString(),
 				userArticleZan.tv2.getText().toString());
-		
+
 		umStatistics(Constant.UM_USER_ARTICLE_ZAN_LIST, uBean.getUser_id(), uBean.getNick());
 	}
 
@@ -718,32 +732,8 @@ public class PersonalFragment extends BaseFrament {
 		view.setCompoundDrawables(null, null, drawable, null);
 	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		if (resultCode == RESULT_CODE) {
-
-			uBean = GuokuApplication.getInstance().getBean().getUser();
-
-			psrson_tv_name.setText(uBean.getNick());
-
-			psrson_iv_pic.setImageURI(Uri.parse(uBean.get240()));
-
-			if (uBean.getGender().equals("男")) {
-				psrson_iv_sex.setTextColor(Color.rgb(19, 143, 215));
-				setTextRightImg(psrson_iv_sex, R.drawable.male);
-			} else {
-				psrson_iv_sex.setTextColor(Color.rgb(253, 189, 217));
-				setTextRightImg(psrson_iv_sex, R.drawable.female);
-			}
-			
-			setBio();
-
-		}
-	}
-
 	private void getInitData(String value, String countValue, int net_tag) {
-		if (net_tag == TABARTICLE) {
+		if (net_tag == TABARTICLE || net_tag == TABARTICLE_ADD) {
 			sendConnection(Constant.TAB_USER + uBean.getUser_id() + "/" + value + "/", new String[] { "size", "page" },
 					new String[] { countValue, pageArticle + "" }, net_tag, false);
 		} else {
@@ -811,7 +801,7 @@ public class PersonalFragment extends BaseFrament {
 		layout_edit.setVisibility(View.VISIBLE);
 		if (userType != 0) {
 			setConcem();
-		}else{
+		} else {
 			layout_edit.setBackgroundResource(R.drawable.tfz_shap);
 			psrson_tv_btn.setText("编辑个人资料");
 			psrson_tv_btn.setTextColor(getResources().getColor(R.color.like_buy_blue));
@@ -979,21 +969,61 @@ public class PersonalFragment extends BaseFrament {
 	public void onEventMainThread(ZanEB zEb) {
 		// 更新赞过的图文个数
 		getUserInfo();
-		if(userType == 2){
+		if (userType == 2) {
 			articlesAuthonAdapter.getList().get(tempAuthonArticles).setIs_dig(zEb.isZan());
 		}
+	}
+
+	public void onEventMainThread(UserBean uBeans) {
+		uBean = GuokuApplication.getInstance().getBean().getUser();
+
+		psrson_tv_name.setText(uBean.getNick());
+
+		psrson_iv_pic.setImageURI(Uri.parse(uBean.get240()));
+
+		if (uBean.getGender().equals("男")) {
+			psrson_iv_sex.setTextColor(Color.rgb(19, 143, 215));
+			setTextRightImg(psrson_iv_sex, R.drawable.male);
+		} else {
+			psrson_iv_sex.setTextColor(Color.rgb(253, 189, 217));
+			setTextRightImg(psrson_iv_sex, R.drawable.female);
+		}
+
+		setBio();
+
+		ToastUtil.show(getActivity(), "头像修改成功");
 	}
 
 	/**
 	 * 处理签名
 	 */
-	private void setBio(){
-		if(StringUtils.isEmpty(uBean.getBio())){
-			psrson_tv_sign.setVisibility(View.GONE);
-		}else{
-			psrson_tv_sign.setVisibility(View.VISIBLE);
+	private void setBio() {
+		if (StringUtils.isEmpty(uBean.getBio())) {
+			layout_sign.setVisibility(View.GONE);
+		} else {
+			layout_sign.setVisibility(View.VISIBLE);
 			psrson_tv_sign.setText(uBean.getBio());
 		}
-		
+
+	}
+
+	/**
+	 * 签名的展开收起效果
+	 */
+
+	@OnClick(R.id.tv_open)
+	private void openSign(View v) {
+		psrson_tv_sign.setMaxLines(3);
+		psrson_tv_sign.requestLayout();
+		tvOpen.setVisibility(View.GONE);
+		tvClose.setVisibility(View.VISIBLE);
+	}
+
+	@OnClick(R.id.tv_close)
+	private void closeSign(View v) {
+		psrson_tv_sign.setMaxLines(1);
+		psrson_tv_sign.requestLayout();
+		tvOpen.setVisibility(View.VISIBLE);
+		tvClose.setVisibility(View.GONE);
 	}
 }

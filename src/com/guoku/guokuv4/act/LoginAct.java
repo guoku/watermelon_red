@@ -22,6 +22,7 @@ import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.utils.DialogUtils;
 import com.guoku.guokuv4.utils.GuokuUtil;
 import com.guoku.guokuv4.utils.SharePrenceUtil;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
@@ -86,9 +87,12 @@ public class LoginAct extends NetWorkActivity {
 
 			@Override
 			public void onClick(DialogInterface arg0, int arg1) {
-				sendConnectionPOST(Constant.FORGET, new String[] { "email" },
-						new String[] { editText.getText().toString() }, FORGET, true);
-
+				if(StringUtils.checkEmail(editText.getText().toString())){
+					sendConnectionPOST(Constant.FORGET, new String[] { "email" },
+							new String[] { editText.getText().toString() }, FORGET, true);
+				}else{
+					ToastUtil.show(mContext, getResources().getString(R.string.tv_email_input_email_error));
+				}
 			}
 		}, "忘记密码", "输入注册时的邮箱", editText).show();
 	}

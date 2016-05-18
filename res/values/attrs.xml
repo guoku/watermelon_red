@@ -36,5 +36,12 @@
     <declare-styleable name="LayoutSearch">
         <attr name="textRight" format="boolean" />
     </declare-styleable>
+    
+    <declare-styleable name="LayoutEditItemView">
+        <attr name="text_lefts" format="string" />
+        <attr name="edit_visibility" format="boolean" />
+        <attr name="img_visibility" format="boolean" />
+        <attr name="edit_focusable" format="boolean" />
+    </declare-styleable>
 
 </resources>

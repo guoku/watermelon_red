@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:layoutview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <include layout="@layout/title" />
+
+    <com.guoku.guokuv4.view.LayoutEditItemView
+        android:id="@+id/img_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layoutview:edit_visibility="false"
+        layoutview:img_visibility="true"
+        layoutview:text_lefts="@string/tv_edit_user_head" >
+    </com.guoku.guokuv4.view.LayoutEditItemView>
+
+    <include layout="@layout/line_gray" />
+
+    <com.guoku.guokuv4.view.LayoutEditItemView
+        android:id="@+id/tv_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layoutview:edit_visibility="true"
+        layoutview:text_lefts="@string/tv_edit_user_nickname" >
+    </com.guoku.guokuv4.view.LayoutEditItemView>
+
+    <include layout="@layout/line_gray" />
+
+    <com.guoku.guokuv4.view.LayoutEditItemView
+        android:id="@+id/tv_sex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layoutview:edit_visibility="true"
+        layoutview:text_lefts="@string/tv_edit_user_sex" 
+        layoutview:edit_focusable="false"
+        >
+    </com.guoku.guokuv4.view.LayoutEditItemView>
+
+    <include layout="@layout/line_gray" />
+
+    <com.guoku.guokuv4.view.LayoutEditItemView
+        android:id="@+id/tv_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layoutview:edit_visibility="true"
+        layoutview:text_lefts="@string/tv_edit_user_address" 
+        layoutview:edit_focusable="false"
+        >
+    </com.guoku.guokuv4.view.LayoutEditItemView>
+
+    <include layout="@layout/line_gray" />
+
+    <com.guoku.guokuv4.view.LayoutEditItemView
+        android:id="@+id/tv_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layoutview:edit_visibility="true"
+        layoutview:text_lefts="@string/tv_edit_user_profile" >
+    </com.guoku.guokuv4.view.LayoutEditItemView>
+
+</LinearLayout>

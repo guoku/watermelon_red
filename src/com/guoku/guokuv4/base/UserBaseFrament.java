@@ -4,6 +4,7 @@
 package com.guoku.guokuv4.base;
 
 import com.guoku.R;
+import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.gragment.PersonalFragment;
 
@@ -33,6 +34,14 @@ public class UserBaseFrament extends BaseActivity{
 		}else{
 			pFragment.userType = 1;
 		}
+		if(GuokuApplication.getInstance().getBean() != null){
+			if(pFragment.uBean.getUser_id().equals(GuokuApplication.getInstance().getBean().getUser().getUser_id())){
+				pFragment.userType = 0;
+				pFragment.isUserList = true;
+			}
+		}
+		
+		
 		fm = getSupportFragmentManager();
 		fm.beginTransaction().add(R.id.fl_content, pFragment).commit();
 		

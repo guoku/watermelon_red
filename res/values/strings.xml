@@ -80,6 +80,8 @@
     <string name="tv_user_article_zan">赞过的图文</string>
     <string name="tv_all">所有</string>
     <string name="tv_empty_other" formatted="false">暂无%s</string>
+    <string name="tv_open">展开</string>
+    <string name="tv_close">收起</string>
 
     <!-- 分享popwindos -->
     <string name="tv_share">分享</string>
@@ -95,5 +97,12 @@
     <!-- 设置 -->
     <string name="tv_set_version_code" formatted="false">version %s</string>
     <string name="tv_exit_tose">再次点击退出果库</string>
-
+    
+    <!-- 编辑个人资料 -->
+    <string name="tv_edit_user_title">编辑个人资料</string>
+    <string name="tv_edit_user_head">头像</string>
+    <string name="tv_edit_user_nickname">昵称</string>
+    <string name="tv_edit_user_sex">性别</string>
+    <string name="tv_edit_user_address">所在地</string>
+    <string name="tv_edit_user_profile">简介</string>
 </resources>

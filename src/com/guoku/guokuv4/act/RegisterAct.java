@@ -46,7 +46,7 @@ public class RegisterAct extends NetWorkActivity {
 	@OnClick(R.id.com)
 	public void com(View v) {
 		Intent intent = new Intent(mContext, WebAct.class);
-		intent.putExtra("data", "http://www.guoku.com/agreement/");
+		intent.putExtra("data", "http://m.guoku.com/agreement/");
 		startActivity(intent);
 	}
 
@@ -104,10 +104,10 @@ public class RegisterAct extends NetWorkActivity {
 						ToastUtil.show(mContext, "请输入3位以上－30位以下的文字或字母");
 					}
 				} else {
-					ToastUtil.show(mContext, "密码必须为6-16位");
+					ToastUtil.show(mContext, "密码必须为8-16位");
 				}
 			} else {
-				ToastUtil.show(mContext, "请输入有效的邮件");
+				ToastUtil.show(mContext, "请输入有效的邮箱");
 			}
 		} else {
 			ToastUtil.show(mContext, "输入内容不能为空");

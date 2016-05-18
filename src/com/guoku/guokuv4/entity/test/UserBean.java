@@ -5,33 +5,33 @@ import java.io.Serializable;
 import com.guoku.guokuv4.utils.StringUtils;
 
 public class UserBean implements Serializable {
-//	private String is_censor, bio, avatar_large, user_id, following_count,
-//			fan_count, city, gender, avatar_small, is_active,
-//			entity_note_count, tag_count, website, like_count, relation,
-//			location, nickname, email;
-//	
-    private String website;
-    private String bio;
-    private String avatar_large;
-    private String user_id;
-    private String following_count;
-    private String fan_count;
-    private String city;
-    private String gender;
-    private String avatar_small;
-    private String is_active;
-    private String entity_note_count;
-    private String tag_count;
-    private String like_count;
-    private String relation;
-    private String location;
-    private String article_count;
-    private String nickname;
-    private String email;
-    private boolean mail_verified;//是否验证邮箱
-    private boolean authorized_author;//是否是第三方鉴权媒体用户
-    private String dig_count;//赞过的图文个数
-    private String nick;
+	// private String is_censor, bio, avatar_large, user_id, following_count,
+	// fan_count, city, gender, avatar_small, is_active,
+	// entity_note_count, tag_count, website, like_count, relation,
+	// location, nickname, email;
+	//
+	private String website;
+	private String bio;
+	private String avatar_large;
+	private String user_id;
+	private String following_count;
+	private String fan_count;
+	private String city;
+	private String gender;
+	private String avatar_small;
+	private String is_active;
+	private String entity_note_count;
+	private String tag_count;
+	private String like_count;
+	private String relation;
+	private String location;
+	private String article_count;
+	private String nickname;
+	private String email;
+	private boolean mail_verified;// 是否验证邮箱
+	private boolean authorized_author;// 是否是第三方鉴权媒体用户
+	private String dig_count;// 赞过的图文个数
+	private String nick;
 
 	public String getNick() {
 		return nick;
@@ -86,20 +86,18 @@ public class UserBean implements Serializable {
 	}
 
 	public String get240() {
-		if(!StringUtils.isEmpty(avatar_large)){
-			if (avatar_large.contains("images")
-					&& !avatar_large.contains("woman.png")
+		if (!StringUtils.isEmpty(avatar_large)) {
+			if (avatar_large.contains("images") && !avatar_large.contains("woman.png")
 					&& !avatar_large.contains("man.png")) {
 				return avatar_large.replaceFirst("images", "images/240");
 			}
 		}
 		return avatar_large;
 	}
-	
+
 	public String get800() {
-		if(!StringUtils.isEmpty(avatar_large)){
-			if (avatar_large.contains("images")
-					&& !avatar_large.contains("woman.png")
+		if (!StringUtils.isEmpty(avatar_large)) {
+			if (avatar_large.contains("images") && !avatar_large.contains("woman.png")
 					&& !avatar_large.contains("man.png")) {
 				return avatar_large.replaceFirst("images", "images/800");
 			}
@@ -108,9 +106,8 @@ public class UserBean implements Serializable {
 	}
 
 	public String get50() {
-		if(!StringUtils.isEmpty(avatar_large)){
-			if (avatar_large.contains("images")
-					&& !avatar_large.contains("woman.png")
+		if (!StringUtils.isEmpty(avatar_large)) {
+			if (avatar_large.contains("images") && !avatar_large.contains("woman.png")
 					&& !avatar_large.contains("man.png")) {
 				return avatar_large.replaceFirst("images", "images/50");
 			}
@@ -139,7 +136,7 @@ public class UserBean implements Serializable {
 	}
 
 	public String getFan_count() {
-		if(StringUtils.isEmpty(fan_count)){
+		if (StringUtils.isEmpty(fan_count)) {
 			return "0";
 		}
 		return fan_count;
@@ -158,15 +155,15 @@ public class UserBean implements Serializable {
 	}
 
 	public String getGender() {
+		String temp = "";
 		if (!StringUtils.isEmpty(gender)) {
-			if (gender.equals("F")) {
-				return "女";
+			if (gender.equals("F") || gender.equals("女")) {
+				temp = "女";
 			} else {
-				return "男";
+				temp = "男";
 			}
 		}
-		return "男";
-
+		return temp;
 	}
 
 	public void setGender(String gender) {

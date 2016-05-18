@@ -14,14 +14,14 @@
 
     <include layout="@layout/title" />
 
-    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+     <com.handmark.pulltorefresh.library.PullToRefreshScrollView
         android:id="@+id/pull_listview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:overScrollMode="never"
         android:scrollbars="@null"
         ptr:ptrDrawable="@color/white"
-        ptr:ptrScrollingWhileRefreshingEnabled="true" >
+        ptr:ptrScrollingWhileRefreshingEnabled="true" > 
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,7 +76,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp" 
-                            android:visibility="gone"
                             />
                     </LinearLayout>
 
@@ -168,15 +167,49 @@
                 </LinearLayout>
             </RelativeLayout>
 
-            <TextView
+            <RelativeLayout 
+                android:id="@+id/layout_sign"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                >
+                
+                <TextView
                 android:id="@+id/psrson_tv_sign"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:textColor="@color/black_body" 
-                android:layout_marginTop="12dp"
-                android:layout_marginLeft="12dp"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/tv_open"
                 />
+                
+                <TextView
+                android:id="@+id/tv_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_open"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/g_blue"
+                android:visibility="gone"
+                />
+                
+                <TextView
+                android:id="@+id/tv_close"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_close"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/psrson_tv_sign"
+                android:gravity="right"
+                android:layout_alignParentBottom="true"
+                android:textColor="@color/g_blue"
+                android:visibility="gone"
+                />
+                
+            </RelativeLayout>
 
             <include layout="@layout/layout_user_data" />
 
@@ -187,7 +220,7 @@
                 android:layout_marginTop="12dp"
                 android:layout="@layout/item_article_list" />
         </LinearLayout>
-    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+     </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
     <include layout="@layout/view_page_footer" />
 

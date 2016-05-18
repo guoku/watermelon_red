@@ -335,9 +335,9 @@ public class UserInfoAct extends NetWorkActivity {
 
 	private void requestIntent() {
 
-		Intent intent = new Intent();
-		setResult(PersonalFragment.RESULT_CODE, intent);
-		finish();
+//		Intent intent = new Intent();
+//		setResult(PersonalFragment.RESULT_CODE, intent);
+//		finish();
 	}
 
 }
