@@ -38,6 +38,7 @@ import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.eventbus.ZanEB;
+import com.guoku.guokuv4.main.WelAct;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.GuokuUtil;
 import com.guoku.guokuv4.utils.ImgUtils;
@@ -232,31 +233,7 @@ public class GuangFragment extends BaseFrament {
 			break;
 		case DISCOVER:
 			try {
-
-				Discover discover = JSON.parseObject(result, Discover.class);
-
-				/******** banner *********/
-				setBeannerData(discover.getBanner());
-
-				/******** 品类 *********/
-				setCategoriesData(discover.getCategories());
-
-				/******** 热门图文 *********/
-				articlesAdapter.setList(discover.getArticles());
-
-				/******** 热门商品 *********/
-				try {
-					gvAdapter.setList(discover.getEntities());
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-
-				/******** 推荐用户 *********/
-				setRecommendUser(discover.getAuthorizeduser());
-
-				sv.scrollTo(0, 0);
-				sv.smoothScrollTo(0, 0);
-
+				refresh(result);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -268,6 +245,33 @@ public class GuangFragment extends BaseFrament {
 			break;
 		}
 
+	}
+
+	private void refresh(String result) {
+
+		Discover discover = JSON.parseObject(result, Discover.class);
+
+		/******** banner *********/
+		setBeannerData(discover.getBanner());
+
+		/******** 品类 *********/
+		setCategoriesData(discover.getCategories());
+
+		/******** 热门图文 *********/
+		articlesAdapter.setList(discover.getArticles());
+
+		/******** 热门商品 *********/
+		try {
+			gvAdapter.setList(discover.getEntities());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		/******** 推荐用户 *********/
+		setRecommendUser(discover.getAuthorizeduser());
+
+		sv.scrollTo(0, 0);
+		sv.smoothScrollTo(0, 0);
 	}
 
 	private void setBeannerData(final ArrayList<BannerEntity> listData) {
@@ -357,7 +361,7 @@ public class GuangFragment extends BaseFrament {
 					intent.putExtra("data", category.getId());
 					intent.putExtra("name", category.getTitle());
 					getActivity().startActivity(intent);
-					
+
 					umStatistics(Constant.UM_SORT_SUGGESTED, category.getId(), category.getTitle());
 				}
 			});
@@ -374,9 +378,9 @@ public class GuangFragment extends BaseFrament {
 	protected void init() {
 
 		gvAdapter = new GuangShopAdapter(getActivity(), 2);
-		
+
 		tab_gv.setNumColumns(2);
-		
+
 		tab_gv.setAdapter(gvAdapter);
 
 		tab_gv.setOnItemClickListener(new OnItemClickListener() {
@@ -457,8 +461,10 @@ public class GuangFragment extends BaseFrament {
 				sharebean.setAricleId(String.valueOf(articlesAdapter.getList().get(arg2).getArticle().getArticle_id()));
 				sharebean.setIs_dig(articlesAdapter.getList().get(arg2).getArticle().isIs_dig());
 				openActivity(WebShareAct.class, bundle);
-				
-				umStatistics(Constant.UM_ARTICLE_HOT, String.valueOf(articlesAdapter.getList().get(arg2).getArticle().getArticle_id()), articlesAdapter.getList().get(arg2).getArticle().getTitle());
+
+				umStatistics(Constant.UM_ARTICLE_HOT,
+						String.valueOf(articlesAdapter.getList().get(arg2).getArticle().getArticle_id()),
+						articlesAdapter.getList().get(arg2).getArticle().getTitle());
 			}
 		});
 	}
@@ -468,7 +474,11 @@ public class GuangFragment extends BaseFrament {
 		list_cid = ParseUtil.getTab2List(context);
 		// sendConnection(Constant.FAXIANHOME, new String[] {}, new String[] {},
 		// FAXIANHOME, false);
-		sendConnection(Constant.DISCOVER, new String[] {}, new String[] {}, DISCOVER, false);
+		if(StringUtils.isEmpty(WelAct.tempDiscover)){
+			sendConnection(Constant.DISCOVER, new String[] {}, new String[] {}, DISCOVER, false);
+		}else{
+			refresh(WelAct.tempDiscover);
+		}
 	}
 
 	/******** 推荐用户 *********/
@@ -479,10 +489,10 @@ public class GuangFragment extends BaseFrament {
 				View view = View.inflate(getActivity(), R.layout.item_recommend_user, null);
 				SimpleDraweeView sView = (SimpleDraweeView) view.findViewById(R.id.psrson_iv_pic);
 				sView.setImageURI(Uri.parse(authorizeduserBeans.get(i).getUser().get50()));
-				
-				TextView nickName = (TextView)view.findViewById(R.id.tv_psrson);
+
+				TextView nickName = (TextView) view.findViewById(R.id.tv_psrson);
 				nickName.setText(authorizeduserBeans.get(i).getUser().getNickname());
-				
+
 				view.setTag(authorizeduserBeans.get(i));
 				layoutUser.addView(view);
 
@@ -494,8 +504,9 @@ public class GuangFragment extends BaseFrament {
 						Intent intent = new Intent(context, UserBaseFrament.class);
 						intent.putExtra("data", aBean.getUser());
 						startActivity(intent);
-						
-						umStatistics(Constant.UM_USER_SUGGESTED, aBean.getUser().getUser_id(), aBean.getUser().getNickname());
+
+						umStatistics(Constant.UM_USER_SUGGESTED, aBean.getUser().getUser_id(),
+								aBean.getUser().getNickname());
 					}
 				});
 			}

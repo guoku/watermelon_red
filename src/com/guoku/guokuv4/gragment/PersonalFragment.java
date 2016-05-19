@@ -339,12 +339,12 @@ public class PersonalFragment extends BaseFrament {
 			} else {
 				redRound.setVisibility(View.VISIBLE);
 			}
-//			if(GuokuApplication.getInstance().getBean() != null){
-//				if(isUserList){
-//					initUnUser();
-//					isUserList = false;
-//				}
-//			}
+			if(GuokuApplication.getInstance().getBean() != null){
+				if(isUserList){
+					initUnUser();
+					isUserList = false;
+				}
+			}
 			initUnUserAuthon();
 			break;
 		case 1:

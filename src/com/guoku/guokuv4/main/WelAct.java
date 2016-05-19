@@ -12,6 +12,7 @@ import com.guoku.guokuv4.utils.LogGK;
 import com.guoku.guokuv4.utils.SharePrenceUtil;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.lidroid.xutils.ViewUtils;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.umeng.analytics.MobclickAgent;
 
@@ -29,6 +30,10 @@ public class WelAct extends NetWorkActivity {
 	private static final int TAG_CATEGORY = 1001;// 分类
 	private static final int LAUNCH = 1002;// 引导页图片
 	private static final int SHOP_COUNT = 1003;// 有多少个更新商品
+	private static final int TAG_ARTICLE = 1004;// 精选图文
+	private static final int JINGXUAN_DOWN = 1005;// 精选商品
+	private static final int DISCOVER = 1006;// 发现页
+	
 
 	@ViewInject(R.id.wecome)
 	private RelativeLayout wecome;
@@ -38,10 +43,14 @@ public class WelAct extends NetWorkActivity {
 	private ImageView imgBaidu;// 百度首发icon
 	String channel;
 
+	public static String tempArticle;// 预加载精选图文
+	public static String tempGood;// 预加载精选商品
+	public static String tempDiscover;// 预加载发现
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		mTintManager.setStatusBarTintEnabled(false);
 		setContentView(R.layout.welact);
 		ViewUtils.inject(this);
@@ -57,7 +66,7 @@ public class WelAct extends NetWorkActivity {
 		// startActivity(new Intent(WelAct.this, NavigationActivity.class));
 		// finish();
 		// }
-//		init();
+		// init();
 	}
 
 	private void init() {
@@ -66,7 +75,7 @@ public class WelAct extends NetWorkActivity {
 		if (!StringUtils.isEmpty(channel)) {
 			if (channel.equals(ConfigGK.CHANNEL_ZHIHUIYUN)) {
 				imgBaidu.setVisibility(View.VISIBLE);
-			}else{
+			} else {
 				imgBaidu.setVisibility(View.GONE);
 			}
 		}
@@ -132,8 +141,17 @@ public class WelAct extends NetWorkActivity {
 			break;
 		case SHOP_COUNT:
 			UnReadData unReadData = JSON.parseObject(result, UnReadData.class);
-//			unReadData.setUnread_selection_count(12);
+			// unReadData.setUnread_selection_count(12);
 			GuokuApplication.getInstance().setUnReadData(unReadData);
+			break;
+		case TAG_ARTICLE:
+			tempArticle = result;
+			break;
+		case JINGXUAN_DOWN:
+			tempGood = result;
+			break;
+		case DISCOVER:
+			tempDiscover = result;
 			break;
 		default:
 			break;
@@ -145,7 +163,7 @@ public class WelAct extends NetWorkActivity {
 		// TODO Auto-generated method stub
 		switch (where) {
 		case LAUNCH:
-//			ToastUtil.show(this, "引导页加载失败");
+			// ToastUtil.show(this, "引导页加载失败");
 			break;
 
 		default:
@@ -159,9 +177,18 @@ public class WelAct extends NetWorkActivity {
 		sendConnection(Constant.CATAB, new String[] {}, new String[] {}, TAG_CATEGORY, false);
 
 		sendConnection(Constant.LAUNCH, new String[] {}, new String[] {}, LAUNCH, false);
+
+		sendConnection(Constant.ARTICLES, new String[] { "page", "size" }, new String[] { "1", "20" }, TAG_ARTICLE,
+				false);
+
+		sendConnection(Constant.JINGXUAN, new String[] { "count", "timestamp", "rcat" },
+				new String[] { "30", System.currentTimeMillis() / 1000 + "", "" }, JINGXUAN_DOWN, false);
 		
-		//暂时先屏蔽浏览位置记录相关功能
-//		sendConnection(Constant.SHOP_UNREAD, new String[] {}, new String[] {}, SHOP_COUNT, false);
-		
+		sendConnection(Constant.DISCOVER, new String[] {}, new String[] {}, DISCOVER, false);
+
+		// 暂时先屏蔽浏览位置记录相关功能
+		// sendConnection(Constant.SHOP_UNREAD, new String[] {}, new String[]
+		// {}, SHOP_COUNT, false);
+
 	}
 }

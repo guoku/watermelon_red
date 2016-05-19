@@ -16,7 +16,9 @@ import com.guoku.guokuv4.bean.LikesBean;
 import com.guoku.guokuv4.bean.Sharebean;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.eventbus.ZanEB;
+import com.guoku.guokuv4.main.WelAct;
 import com.guoku.guokuv4.utils.GuokuUtil;
+import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
@@ -206,7 +208,12 @@ public class ArticleFragment extends BaseFrament implements OnItemClickListener 
 		super.setUserVisibleHint(isVisibleToUser);
 		if(isVisibleToUser){
 			if(isLoad == false){
-				listViewArtivle.setRefreshing();
+				if(StringUtils.isEmpty(WelAct.tempArticle)){
+					listViewArtivle.setRefreshing();
+				}else{
+					setResult(WelAct.tempArticle, TAG_ARTICLE);
+				}
+				
 			}
 		}
 	}

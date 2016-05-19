@@ -14,6 +14,7 @@ import com.guoku.guokuv4.bean.LikesBean;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.PBean;
 import com.guoku.guokuv4.entity.test.PInfoBean;
+import com.guoku.guokuv4.main.WelAct;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.utils.GuokuUtil;
 import com.guoku.guokuv4.utils.SharePrenceUtil;
@@ -60,7 +61,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 	@ViewInject(R.id.re_head_view)
 	RelativeLayout re_head_view;
 	@ViewInject(R.id.tv_count)
-	TextView tvShopCount;//更新商品数量
+	TextView tvShopCount;// 更新商品数量
 
 	public JingXuanAdapter adapter;
 	private ArrayList<PBean> list;
@@ -73,7 +74,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
 	private boolean scrollFlag = false;// 标记是否滑动
 	private boolean isUnRead;
-	
+
 	public Animation animationllShow;
 	public Animation animationllHide;
 	public final int animTime = 200;
@@ -101,7 +102,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 					if (list.size() > 0) {
 						closeHeadView();
 						getJingXuan(System.currentTimeMillis() / 1000 + "", false);
-						umStatistics(Constant.UM_SHOP_DOWN, "timestamp=" + System.currentTimeMillis() / 1000 , "下拉刷新");
+						umStatistics(Constant.UM_SHOP_DOWN, "timestamp=" + System.currentTimeMillis() / 1000, "下拉刷新");
 					}
 				}
 			}
@@ -112,7 +113,8 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 				if (list != null) {
 					if (list.size() > 0) {
 						getJingXuanDown(list.get(list.size() - 1).getPost_time());
-						umStatistics(Constant.UM_SHOP_UP, "timestamp=" + list.get(list.size() - 1).getPost_time(), "上拉加载更多");
+						umStatistics(Constant.UM_SHOP_UP, "timestamp=" + list.get(list.size() - 1).getPost_time(),
+								"上拉加载更多");
 					}
 				}
 			}
@@ -124,7 +126,8 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				layoutView = arg1;
 				pos = arg2 - 1;
-				umStatistics(Constant.UM_SHOP_INFO, list.get(pos).getContent().getEntity().getEntity_id(), list.get(pos).getContent().getEntity().getTitle());
+				umStatistics(Constant.UM_SHOP_INFO, list.get(pos).getContent().getEntity().getEntity_id(),
+						list.get(pos).getContent().getEntity().getTitle());
 				getShopInfo();
 			}
 		});
@@ -231,13 +234,15 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 			pos = pBean.getPosition();
 			layoutView = arg0;
 			if (pBean.getContent().getEntity().getLike_already().equals("0")) {
-				
-				umStatistics(Constant.UM_SHOP_LIKE, pBean.getContent().getEntity().getEntity_id(), pBean.getContent().getEntity().getTitle());
+
+				umStatistics(Constant.UM_SHOP_LIKE, pBean.getContent().getEntity().getEntity_id(),
+						pBean.getContent().getEntity().getTitle());
 				sendConnectionPost(Constant.TOLIKE + pBean.getContent().getEntity().getEntity_id() + "/like/1/",
 						new String[] {}, new String[] {}, LIKE1, false);
 			} else {
-				
-				umStatistics(Constant.UM_SHOP_LIKE_UN, pBean.getContent().getEntity().getEntity_id(), pBean.getContent().getEntity().getTitle());
+
+				umStatistics(Constant.UM_SHOP_LIKE_UN, pBean.getContent().getEntity().getEntity_id(),
+						pBean.getContent().getEntity().getTitle());
 				sendConnectionPost(Constant.TOLIKE + pBean.getContent().getEntity().getEntity_id() + "/like/0/",
 						new String[] {}, new String[] {}, LIKE0, false);
 			}
@@ -269,7 +274,8 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
 	public void onEventMainThread(LikesBean likesBean) {
 		if (likesBean.isLike()) {
-			AVAnalytics.onEvent(context, "like_click", pBean.getContent().getEntity().getTitle() + "/" + pBean.getContent().getEntity().getEntity_id());
+			AVAnalytics.onEvent(context, "like_click",
+					pBean.getContent().getEntity().getTitle() + "/" + pBean.getContent().getEntity().getEntity_id());
 			AVAnalytics.onEvent(context, "like");
 
 			if (pBean == null) {
@@ -297,7 +303,8 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 			// 不滚动时保存当前滚动到的位置
 			if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
 				if (adapter != null) {
-//					indexList = jingxuan_lv_1.getRefreshableView().getFirstVisiblePosition();
+					// indexList =
+					// jingxuan_lv_1.getRefreshableView().getFirstVisiblePosition();
 				}
 			}
 
@@ -334,9 +341,9 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 		public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 			// TODO Auto-generated method stub
 			// 当滑动时
-			if(isUnRead){
+			if (isUnRead) {
 				if (scrollFlag) {
-					
+
 					if (firstVisibleItem < indexList) {
 						// 下滑
 						if (re_head_view.getVisibility() == View.GONE) {
@@ -360,23 +367,30 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 
 	private void initUnRead() {
 
-		//暂时先屏蔽浏览位置记录相关功能
-		
-//		String unReadData = SharePrenceUtil.getShopUnRead(getActivity());
-//
-//		if (!StringUtils.isEmpty(unReadData)) {
-//			list = new ArrayList<PBean>();
-//			list.addAll(ParseUtil.getJingXuanList(unReadData));
-//			adapter.setList(list);
-//		} else {
+		// 暂时先屏蔽浏览位置记录相关功能
+
+		// String unReadData = SharePrenceUtil.getShopUnRead(getActivity());
+		//
+		// if (!StringUtils.isEmpty(unReadData)) {
+		// list = new ArrayList<PBean>();
+		// list.addAll(ParseUtil.getJingXuanList(unReadData));
+		// adapter.setList(list);
+		// } else {
+		if (StringUtils.isEmpty(WelAct.tempGood)) {
 			jingxuan_lv_1.setRefreshing();
 			getJingXuan(System.currentTimeMillis() / 1000 + "", false);
-//		}
-		
-		if(GuokuApplication.getInstance().getUnReadData() != null){
-			if(GuokuApplication.getInstance().getUnReadData().getUnread_selection_count() > 0){
+		} else {
+			list = ParseUtil.getJingXuanList(WelAct.tempGood);
+			adapter.setList(list);
+		}
+
+		// }
+
+		if (GuokuApplication.getInstance().getUnReadData() != null) {
+			if (GuokuApplication.getInstance().getUnReadData().getUnread_selection_count() > 0) {
 				isUnRead = true;
-				tvShopCount.setText(getActivity().getResources().getString(R.string.tv_shop_unread, GuokuApplication.getInstance().getUnReadData().getUnread_selection_count() + ""));
+				tvShopCount.setText(getActivity().getResources().getString(R.string.tv_shop_unread,
+						GuokuApplication.getInstance().getUnReadData().getUnread_selection_count() + ""));
 				showSearchWhat();
 				re_head_view.setVisibility(View.VISIBLE);
 			}
@@ -384,7 +398,7 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 	}
 
 	private void closeHeadView() {
-		if(isUnRead){
+		if (isUnRead) {
 			isUnRead = false;
 			hideSearchWhat();
 			re_head_view.setVisibility(View.GONE);
@@ -395,12 +409,13 @@ public class GoodTwoFragmnet extends BaseFrament implements OnClickListener {
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		//暂时先屏蔽浏览位置记录相关功能
-//		if (indexList != 0) {
-//			SharePrenceUtil.setShopUnRead(getActivity(), list.subList(indexList, list.size()));
-//		}
+		// 暂时先屏蔽浏览位置记录相关功能
+		// if (indexList != 0) {
+		// SharePrenceUtil.setShopUnRead(getActivity(), list.subList(indexList,
+		// list.size()));
+		// }
 	}
-	
+
 	public void showSearchWhat() {
 		if (animationllShow == null) {
 			animationllShow = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0, Animation.RELATIVE_TO_SELF, 0,
