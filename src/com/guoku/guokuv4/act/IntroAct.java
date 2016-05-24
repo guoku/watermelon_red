@@ -10,8 +10,6 @@ import org.json.JSONObject;
 
 import com.alibaba.fastjson.JSON;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.generic.GenericDraweeHierarchy;
-import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.guoku.R;
@@ -34,12 +32,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.RelativeLayout.LayoutParams;
 
 /**
  * @zhangyao
@@ -61,14 +59,17 @@ public class IntroAct extends NetWorkActivity {
 	private final String ACTION_ARTICLE = "guoku://article/";// 跳到图文
 	private final String ACTION_CLOSE = "guoku://close";// 关闭引导页
 
-	@ViewInject(R.id.text1)
-	TextView tvTitle;// 标题
-
-	@ViewInject(R.id.text2)
-	TextView tvContext;// 说明内容
+//	@ViewInject(R.id.text1)
+//	TextView tvTitle;// 标题
+//
+//	@ViewInject(R.id.text2)
+//	TextView tvContext;// 说明内容
 
 	@ViewInject(R.id.img_launch)
 	SimpleDraweeView simpleDraweeView;
+	
+	@ViewInject(R.id.close_launch)
+	ImageView imgClose;
 
 	@ViewInject(R.id.layout_ra)
 	RelativeLayout reLayout;
@@ -103,17 +104,26 @@ public class IntroAct extends NetWorkActivity {
 		if (file.exists()) {
 			// simpleDraweeView.setImageURI(Uri.parse("file://" + path));
 			ViewGroup.LayoutParams params = simpleDraweeView.getLayoutParams();
-			params.width = GuokuApplication.screenW - 28;
-			params.height = params.width;
+			params.width = (GuokuApplication.screenW - 36) / 4  * 3;
+			params.height = GuokuApplication.screenW - 36;
 			simpleDraweeView.setLayoutParams(params);
 			DraweeController controller = Fresco.newDraweeControllerBuilder().setAutoPlayAnimations(true)
 					.setUri(Uri.parse("file://" + path)).build();
 			simpleDraweeView.setController(controller);
+			
+			
+			
+			RelativeLayout.LayoutParams lp = (LayoutParams) imgClose.getLayoutParams(); 
+//			params2.width = (GuokuApplication.screenW - 36) / 4  * 3 - 30;
+//			params2.height = GuokuApplication.screenW - 36 - 30;
+			lp.setMargins(0, 0,44, 44);
+			imgClose.setLayoutParams(lp);
+			
 		}
 
-		tvTitle.setText(Html.fromHtml(lBean.getTitle()));
-
-		tvContext.setText(Html.fromHtml(lBean.getDescription()));
+//		tvTitle.setText(Html.fromHtml(lBean.getTitle()));
+//
+//		tvContext.setText(Html.fromHtml(lBean.getDescription()));
 
 		// tvButton.setText(Html.fromHtml(lBean.getAction_title()));
 	}

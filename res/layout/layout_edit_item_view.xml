@@ -22,7 +22,7 @@
 
     <EditText
         android:id="@+id/editText"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
@@ -30,7 +30,11 @@
         android:background="@android:color/transparent"
         android:text="sss"
         android:textColor="@color/gray_fzxx"
-        android:textSize="15sp" />
+        android:textSize="15sp" 
+        android:layout_toRightOf="@+id/textView1"
+        android:layout_marginLeft="10dp"
+        android:gravity="right"
+        />
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/imageView1"
@@ -43,6 +47,7 @@
         android:layout_marginBottom="20dp"
         fresco:placeholderImage="@drawable/item240"
         fresco:roundAsCircle="true"
-        fresco:roundWithOverlayColor="@android:color/transparent" />
+        fresco:roundWithOverlayColor="@android:color/transparent" 
+        />
 
 </RelativeLayout>

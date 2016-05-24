@@ -82,7 +82,7 @@ public class ArticlesList implements Serializable{
 	private String digest;//图文内容简介
 	
 	public String getDigest() {
-		return digest;
+		return digest.trim();
 	}
 
 	public void setDigest(String digest) {

@@ -33,6 +33,7 @@ import com.umeng.analytics.MobclickAgent;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import cn.jpush.android.api.JPushInterface;
 
 public class GuokuApplication extends Application {
 	private static GuokuApplication instance;
@@ -143,6 +144,8 @@ public class GuokuApplication extends Application {
 		initTaoBao();
 		
 		MobclickAgent.setDebugMode( true );//测试版
+		
+		initJPush();
 	}
 	
 	private void initTaoBao(){
@@ -277,5 +280,11 @@ public class GuokuApplication extends Application {
 				.defaultDisplayImageOptions(DisplayImageOptions.createSimple()) // default
 				.writeDebugLogs().build();
 		ImageLoader.getInstance().init(config);
+	}
+	
+	private void initJPush(){
+		
+		JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);     		// 初始化 JPush
 	}
 }
