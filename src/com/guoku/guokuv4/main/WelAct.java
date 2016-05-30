@@ -8,22 +8,24 @@ import com.guoku.guokuv4.bean.LaunchBean;
 import com.guoku.guokuv4.bean.UnReadData;
 import com.guoku.guokuv4.config.ConfigGK;
 import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.utils.GuokuUtil;
 import com.guoku.guokuv4.utils.LogGK;
 import com.guoku.guokuv4.utils.SharePrenceUtil;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.umeng.analytics.MobclickAgent;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import cn.jpush.android.api.JPushInterface;
 
 public class WelAct extends NetWorkActivity {
 
@@ -33,7 +35,7 @@ public class WelAct extends NetWorkActivity {
 	private static final int TAG_ARTICLE = 1004;// 精选图文
 	private static final int JINGXUAN_DOWN = 1005;// 精选商品
 	private static final int DISCOVER = 1006;// 发现页
-	
+	private static final int APNS = 1007;// 发现页
 
 	@ViewInject(R.id.wecome)
 	private RelativeLayout wecome;
@@ -153,6 +155,10 @@ public class WelAct extends NetWorkActivity {
 		case DISCOVER:
 			tempDiscover = result;
 			break;
+		case APNS:
+			LogGK.d("发送apns成功");
+			break;
+			
 		default:
 			break;
 		}
@@ -165,7 +171,9 @@ public class WelAct extends NetWorkActivity {
 		case LAUNCH:
 			// ToastUtil.show(this, "引导页加载失败");
 			break;
-
+		case APNS:
+			LogGK.d("发送apns失败");
+			break;
 		default:
 			break;
 		}
@@ -183,12 +191,21 @@ public class WelAct extends NetWorkActivity {
 
 		sendConnection(Constant.JINGXUAN, new String[] { "count", "timestamp", "rcat" },
 				new String[] { "30", System.currentTimeMillis() / 1000 + "", "" }, JINGXUAN_DOWN, false);
-		
+
 		sendConnection(Constant.DISCOVER, new String[] {}, new String[] {}, DISCOVER, false);
 
 		// 暂时先屏蔽浏览位置记录相关功能
 		// sendConnection(Constant.SHOP_UNREAD, new String[] {}, new String[]
 		// {}, SHOP_COUNT, false);
+
+		if (!StringUtils.isEmpty(JPushInterface.getRegistrationID(getApplicationContext()))) {
+
+			sendConnectionPOST(Constant.APNS_TOKEN, new String[] { "rid", "model", "version", "session" },
+					new String[] { JPushInterface.getRegistrationID(getApplicationContext()), "Android",
+							GuokuUtil.getVersionName(mContext),
+							GuokuApplication.getInstance().getSession()},
+					APNS, false);
+		}
 
 	}
 }

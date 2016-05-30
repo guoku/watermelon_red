@@ -50,14 +50,6 @@ public class IntroAct extends NetWorkActivity {
 	private final int USERINFO = 1002;
 	private final int TAG_PROINFO = 1003;
 
-	private final String ACTION_START = "guoku://start";// 什么都不做，只关闭dialog
-	private final String ACTION_ENTITY = "guoku://entity/";// 跳到商品
-	private final String ACTION_HTTP = "http://";// 跳到webview
-	private final String ACTION_USER = "guoku://user/";// 跳到某个用户
-	private final String ACTION_TAG = "guoku://tag/";// 跳到某个标签页
-	private final String ACTION_CATEGORY = "guoku://category/";// 跳到品类
-	private final String ACTION_ARTICLE = "guoku://article/";// 跳到图文
-	private final String ACTION_CLOSE = "guoku://close";// 关闭引导页
 
 //	@ViewInject(R.id.text1)
 //	TextView tvTitle;// 标题
@@ -131,14 +123,14 @@ public class IntroAct extends NetWorkActivity {
 	@OnClick(R.id.img_launch)
 	private void onViewClick(View view) {
 
-		if (lBean.getAction().contains(ACTION_START) || lBean.getAction().contains(ACTION_CLOSE)) {
-			umStatistics(Constant.UM_INTRO, ACTION_CLOSE, lBean.getAction());
+		if (lBean.getAction().contains(Constant.ACTION_START) || lBean.getAction().contains(Constant.ACTION_CLOSE)) {
+			umStatistics(Constant.UM_INTRO, Constant.ACTION_CLOSE, lBean.getAction());
 			finishAct();
-		} else if (lBean.getAction().contains(ACTION_ENTITY)) {
-			String id = lBean.getAction().replace(ACTION_ENTITY, "");
+		} else if (lBean.getAction().contains(Constant.ACTION_ENTITY)) {
+			String id = lBean.getAction().replace(Constant.ACTION_ENTITY, "");
 			sendConnection(Constant.PROINFO + id, new String[] { "entity_id" }, new String[] { id }, PROINFO, true);
 			umStatistics(Constant.UM_INTRO, id, lBean.getAction());
-		} else if (lBean.getAction().contains(ACTION_HTTP)) {
+		} else if (lBean.getAction().contains(Constant.ACTION_HTTP)) {
 			Bundle bundle = new Bundle();
 			Sharebean sharebean = new Sharebean();
 			sharebean.setAricleUrl(lBean.getAction());
@@ -146,41 +138,41 @@ public class IntroAct extends NetWorkActivity {
 			openActivity(WebShareAct.class, bundle);
 			finishAct();
 			
-			umStatistics(Constant.UM_INTRO, ACTION_HTTP, lBean.getAction());
+			umStatistics(Constant.UM_INTRO, Constant.ACTION_HTTP, lBean.getAction());
 
-		} else if (lBean.getAction().contains(ACTION_USER)) {
-			sendConnection(Constant.USERINFO + lBean.getAction().replace(ACTION_USER, ""), new String[] { "timestamp" },
+		} else if (lBean.getAction().contains(Constant.ACTION_USER)) {
+			sendConnection(Constant.USERINFO + lBean.getAction().replace(Constant.ACTION_USER, ""), new String[] { "timestamp" },
 					new String[] { System.currentTimeMillis() / 1000 + "" }, USERINFO, false);
 			
-			umStatistics(Constant.UM_INTRO, ACTION_USER, lBean.getAction());
-		} else if (lBean.getAction().contains(ACTION_TAG)) {
+			umStatistics(Constant.UM_INTRO, Constant.ACTION_USER, lBean.getAction());
+		} else if (lBean.getAction().contains(Constant.ACTION_TAG)) {
 			if (GuokuApplication.getInstance().getBean() == null) {
 				openLogin();
 			} else {
-				String tagStr = lBean.getAction().replace(ACTION_TAG, "").trim().replace("#", "");
+				String tagStr = lBean.getAction().replace(Constant.ACTION_TAG, "").trim().replace("#", "");
 				Intent intent = new Intent(this, EntityAct.class);
 				intent.putExtra("data", GuokuApplication.getInstance().getBean().getUser().getUser_id());
 				intent.putExtra("name", tagStr);
 				startActivity(intent);
 			}
 			finishAct();
-			umStatistics(Constant.UM_INTRO,  ACTION_TAG, lBean.getAction());
-		} else if (lBean.getAction().contains(ACTION_CATEGORY)) {
+			umStatistics(Constant.UM_INTRO,  Constant.ACTION_TAG, lBean.getAction());
+		} else if (lBean.getAction().contains(Constant.ACTION_CATEGORY)) {
 			// String categoryId = lBean.getAction().replace(ACTION_CATEGORY,
 			// "");
 			// sendConnection(Constant.PROINFO + categoryId,
 			// new String[] { "entity_id" }, new String[] { categoryId },
 			// TAG_PROINFO, true);
 			finishAct();
-			umStatistics(Constant.UM_INTRO, ACTION_CATEGORY, lBean.getAction());
-		} else if (lBean.getAction().contains(ACTION_ARTICLE)) {
+			umStatistics(Constant.UM_INTRO, Constant.ACTION_CATEGORY, lBean.getAction());
+		} else if (lBean.getAction().contains(Constant.ACTION_ARTICLE)) {
 			Bundle bundle = new Bundle();
 			Sharebean sharebean = new Sharebean();
-			sharebean.setAricleUrl(lBean.getAction().replace(ACTION_ARTICLE, ""));
+			sharebean.setAricleUrl(lBean.getAction().replace(Constant.ACTION_ARTICLE, ""));
 			bundle.putSerializable(WebShareAct.class.getName(), sharebean);
 			openActivity(WebShareAct.class, bundle);
 			finishAct();
-			umStatistics(Constant.UM_INTRO, ACTION_ARTICLE, lBean.getAction());
+			umStatistics(Constant.UM_INTRO, Constant.ACTION_ARTICLE, lBean.getAction());
 		} else {
 			finishAct();
 			umStatistics(Constant.UM_INTRO, "0", "finishAct");

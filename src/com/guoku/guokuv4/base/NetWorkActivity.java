@@ -19,6 +19,7 @@ import com.guoku.guokuv4.config.Logger;
 import com.guoku.guokuv4.net.HttputilHelp;
 import com.guoku.guokuv4.net.NetConfig;
 import com.guoku.guokuv4.net.NetUtil;
+import com.guoku.guokuv4.utils.LogGK;
 import com.guoku.guokuv4.utils.StringUtils;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.guoku.guokuv4.view.CustomProgressDialog;
@@ -155,7 +156,8 @@ public abstract class NetWorkActivity extends BaseActivity {
 	private void sendConnectionPost(HttpMethod method, String url, String[] argsKeys, String[] argsValues, int where,
 			boolean showDialog) {
 		if (argsKeys.length != argsValues.length) {
-			throw new IllegalArgumentException("check your Params key or value length!");
+			throw new IllegalArgumentException(
+					"check your Params key or value length!");
 		}
 		if (showDialog) {
 			vector.add(where);
@@ -164,16 +166,16 @@ public abstract class NetWorkActivity extends BaseActivity {
 		RequestParams params = new RequestParams();
 		Map<String, String> paramsMap = new TreeMap<String, String>();
 		for (int i = 0; i < argsKeys.length; i++) {
-			if (argsValues[i] != null) {
-				params.addBodyParameter(argsKeys[i], argsValues[i]);
-				Logger.e("params", "params----->" + argsKeys[i] + ":" + argsValues[i]);
-				paramsMap.put(argsKeys[i], argsValues[i]);
-			}
+			params.addBodyParameter(argsKeys[i], argsValues[i]);
+			LogGK.e("params----->" + argsKeys[i] + ":" + argsValues[i]);
+			paramsMap.put(argsKeys[i], argsValues[i]);
 		}
 		if (GuokuApplication.getInstance().getBean() != null) {
-			params.addBodyParameter("session", GuokuApplication.getInstance().getBean().getSession());
-			paramsMap.put("session", GuokuApplication.getInstance().getBean().getSession());
-		} else if (Constant.NeedLogin(url)) {
+			params.addBodyParameter("session", GuokuApplication.getInstance()
+					.getBean().getSession());
+			paramsMap.put("session", GuokuApplication.getInstance().getBean()
+					.getSession());
+		} else if (Constant.LOGIN.equals(url) || Constant.REGISTER.equals(url)) {
 
 		} else {
 			Intent intent = new Intent(this, LoginAct.class);
@@ -183,14 +185,8 @@ public abstract class NetWorkActivity extends BaseActivity {
 		params.addBodyParameter("sign", genSign(paramsMap));
 		params.addBodyParameter("api_key", "0b19c2b93687347e95c6b6f5cc91bb87");
 
-		Logger.e("params", "sign----->" + ":" + genSign(paramsMap));
-		Logger.e("params", "api_key----->" + ":0b19c2b93687347e95c6b6f5cc91bb87");
-		Logger.e("params", "params----->" + ":" + params.toString());
-		Logger.e("params", "url----->" + ":" + url);
-		// Logger.e("params", "session----->" + ":" +
-		// GuokuApplication.getInstance()
-		// .getBean().getSession());
-		if (showDialog && !isFinishing()) {
+		LogGK.e("params----->" + ":" + params.toString());
+		if (showDialog && !this.isFinishing()) {
 			showDialog();
 		}
 		httpUtils.send(method, url, params, httpCallback);

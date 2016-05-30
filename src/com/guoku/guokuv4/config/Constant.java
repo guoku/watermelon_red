@@ -156,6 +156,9 @@ public class Constant {
 	public static final String ARTICLES_DIG = URL + "/mobile/v4/articles/dig/";
 	/** 图文取消点赞 */
 	public static final String ARTICLES_UNDIG = URL + "/mobile/v4/articles/undig/";
+	/** 设备信息&极光推送rid */
+	public static final String APNS_TOKEN = URL + "/mobile/v4/apns/token/";
+	
 	
 	public static final String DESCRIPTOR = "1";
 	public static final String WX_APPID = "wx59118ccde8270caa";
@@ -221,4 +224,13 @@ public class Constant {
 		LogUtils.allowW = false;
 		LogUtils.allowWtf = false;
 	}
+	
+	public static final String ACTION_START = "guoku://start";// 什么都不做，只关闭dialog
+	public static final String ACTION_ENTITY = "guoku://entity/";// 跳到商品
+	public static final String ACTION_HTTP = "http://";// 跳到webview
+	public static final String ACTION_USER = "guoku://user/";// 跳到某个用户
+	public static final String ACTION_TAG = "guoku://tag/";// 跳到某个标签页
+	public static final String ACTION_CATEGORY = "guoku://category/";// 跳到品类
+	public static final String ACTION_ARTICLE = "guoku://article/";// 跳到图文
+	public static final String ACTION_CLOSE = "guoku://close";// 关闭引导页
 }

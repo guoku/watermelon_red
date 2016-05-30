@@ -203,7 +203,7 @@ public class PersonalFragment extends BaseFrament {
 	private int pageArticle = 1;// 认证用户图文页数
 
 	private int tempAuthonArticles;// 鉴权用户图文记录
-	
+
 	public boolean isUserList;
 
 	@Override
@@ -270,11 +270,13 @@ public class PersonalFragment extends BaseFrament {
 			// }
 			break;
 		case FOLLOW0:
+			getUserInfo();
 			FollowEB fEb = new FollowEB();
 			fEb.setFollow(false);
 			EventBus.getDefault().post(fEb);
 			break;
 		case FOLLOW1:
+			getUserInfo();
 			FollowEB fEb2 = new FollowEB();
 			fEb2.setFollow(true);
 			EventBus.getDefault().post(fEb2);
@@ -318,7 +320,11 @@ public class PersonalFragment extends BaseFrament {
 		case TABARTICLE_ADD:
 			articlesAuthonRefresh.onRefreshComplete();
 			break;
-
+		case FOLLOW0:
+			ToastUtil.show(getActivity(), "取消关注失败");
+			break;
+		case FOLLOW1:
+			break;
 		default:
 			break;
 		}
@@ -339,8 +345,8 @@ public class PersonalFragment extends BaseFrament {
 			} else {
 				redRound.setVisibility(View.VISIBLE);
 			}
-			if(GuokuApplication.getInstance().getBean() != null){
-				if(isUserList){
+			if (GuokuApplication.getInstance().getBean() != null) {
+				if (isUserList) {
 					initUnUser();
 					isUserList = false;
 				}
@@ -541,7 +547,7 @@ public class PersonalFragment extends BaseFrament {
 	private void setConcem() {
 
 		if (!StringUtils.isEmpty(uBean.getRelation())) {
-			if (uBean.getRelation().equals("0")) {
+			if (uBean.getRelation().equals("0") || uBean.getRelation().equals("2")) {
 				layout_edit.setBackgroundResource(R.drawable.tfz_shap);
 				psrson_tv_btn.setText("关注");
 				psrson_iv_btn.setImageResource(R.drawable.add_to);
@@ -554,13 +560,23 @@ public class PersonalFragment extends BaseFrament {
 				psrson_iv_btn.setImageResource(R.drawable.hai_to);
 				psrson_tv_btn.setTextColor(getResources().getColor(R.color.white));
 				psrson_iv_btn.setVisibility(View.VISIBLE);
-			} else if (uBean.getRelation().equals("3")) {
+			}
+			if (uBean.getRelation().equals("3")) {
 				layout_edit.setBackgroundResource(R.drawable.bt_blue_bg);
 				psrson_tv_btn.setText("互相关注");
 				psrson_iv_btn.setImageResource(R.drawable.to);
 				psrson_tv_btn.setTextColor(getResources().getColor(R.color.white));
 				psrson_iv_btn.setVisibility(View.VISIBLE);
 			}
+			if (uBean.getRelation().equals("4")) {
+				layout_edit.setBackgroundResource(R.drawable.tfz_shap);
+				psrson_tv_btn.setText("编辑个人资料");
+				psrson_tv_btn.setTextColor(getResources().getColor(R.color.like_buy_blue));
+				psrson_iv_btn.setVisibility(View.GONE);
+			}
+
+			// 4 == 自己
+			// 2 == 对方关注我，我没关注对方
 		}
 	}
 
@@ -590,14 +606,13 @@ public class PersonalFragment extends BaseFrament {
 			openActivity(EditUserInfoAct.class);
 		} else {
 			if (uBean.getRelation().equals("0") || uBean.getRelation().equals("2")) {
-				sendConnectionPost(Constant.FOLLOW + uBean.getUser_id() + "/follow/1/", new String[] {},
-						new String[] {}, FOLLOW1, false);
-				uBean.setRelation("1");
+				sendConnectionPost(Constant.FOLLOW + uBean.getUser_id()+ "/follow/1/", new String[] {},
+						new String[] {}, FOLLOW1, true);
 				umStatistics(Constant.UM_USER_FOLLOW, uBean.getUser_id(), uBean.getNick());
-			} else {
+			}
+			if (uBean.getRelation().equals("1") || uBean.getRelation().equals("3")) {
 				sendConnectionPost(Constant.FOLLOW + uBean.getUser_id() + "/follow/0/", new String[] {},
-						new String[] {}, FOLLOW0, false);
-				uBean.setRelation("0");
+						new String[] {}, FOLLOW0, true);
 				umStatistics(Constant.UM_USER_FOLLOW_UN, uBean.getUser_id(), uBean.getNick());
 			}
 		}
@@ -799,15 +814,7 @@ public class PersonalFragment extends BaseFrament {
 		}
 
 		layout_edit.setVisibility(View.VISIBLE);
-		if (userType != 0) {
-			setConcem();
-		} else {
-			layout_edit.setBackgroundResource(R.drawable.tfz_shap);
-			psrson_tv_btn.setText("编辑个人资料");
-			psrson_tv_btn.setTextColor(getResources().getColor(R.color.like_buy_blue));
-			psrson_iv_btn.setVisibility(View.GONE);
-			uBean.setRelation("4");
-		}
+		setConcem();
 	}
 
 	/************** 阿里openIM ****************/

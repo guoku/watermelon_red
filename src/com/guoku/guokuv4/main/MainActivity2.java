@@ -4,17 +4,30 @@ import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.alibaba.fastjson.JSON;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
+import com.guoku.guokuv4.act.EntityAct;
 import com.guoku.guokuv4.act.IntroAct;
+import com.guoku.guokuv4.act.ProductInfoAct;
 import com.guoku.guokuv4.act.SettingAct;
+import com.guoku.guokuv4.act.WebShareAct;
 import com.guoku.guokuv4.base.BaseActivity.OnDoubleClickListener;
+import com.guoku.guokuv4.bean.PushBean;
+import com.guoku.guokuv4.bean.Sharebean;
 import com.guoku.guokuv4.base.NetWorkActivity;
+import com.guoku.guokuv4.base.UserBaseFrament;
 import com.guoku.guokuv4.config.Constant;
+import com.guoku.guokuv4.entity.test.PInfoBean;
+import com.guoku.guokuv4.entity.test.UserBean;
 import com.guoku.guokuv4.gragment.GuangFragment;
 import com.guoku.guokuv4.gragment.JingXuanPageFragment;
 import com.guoku.guokuv4.gragment.OrderFragment;
 import com.guoku.guokuv4.gragment.PersonalFragment;
+import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.service.DownLoadService;
 import com.guoku.guokuv4.utils.SharePrenceUtil;
 import com.guoku.guokuv4.utils.StringUtils;
@@ -25,7 +38,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -34,13 +50,17 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import cn.jpush.android.api.JPushInterface;
 
 public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListener {
+
+	private final int PROINFO = 1001;
+	private final int USERINFO = 1002;
 
 	@ViewInject(R.id.ll_destination)
 	private LinearLayout ll_destination;// 目的地
@@ -84,6 +104,8 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 		registerDoubleClickListener(main_bar_1, this);
 
 		startLaunch();
+
+		resolveJPush();
 	}
 
 	@Override
@@ -134,16 +156,7 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 			main_bar_4.setImageResource(R.drawable.tabbar_icon_me);
 		}
 	}
-
-	/**
-	 * 整个应用处于低内存状态下的回调
-	 */
-	@Override
-	public void onLowMemory() {
-		super.onLowMemory();
-		ImageLoader.getInstance().clearMemoryCache();
-	}
-
+	
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -152,6 +165,15 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 		 */
 		MobclickAgent.onPageEnd(this.getClass().getSimpleName());
 		MobclickAgent.onPause(this);
+	}
+
+	/**
+	 * 整个应用处于低内存状态下的回调
+	 */
+	@Override
+	public void onLowMemory() {
+		super.onLowMemory();
+		ImageLoader.getInstance().clearMemoryCache();
 	}
 
 	@OnClick(R.id.ll_destination)
@@ -254,13 +276,44 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 	@Override
 	protected void onSuccess(String result, int where) {
 		// TODO Auto-generated method stub
-
+		Intent intent;
+		switch (where) {
+		case PROINFO:
+			PInfoBean bean = ParseUtil.getPI(result);
+			intent = new Intent(context, ProductInfoAct.class);
+			intent.putExtra("data", JSON.toJSONString(bean));
+			startActivity(intent);
+			break;
+		case USERINFO:
+			try {
+				JSONObject root = new JSONObject(result);
+				UserBean uBean = (UserBean) JSON.parseObject(root.getString("user"), UserBean.class);
+				intent = new Intent(mContext, UserBaseFrament.class);
+				intent.putExtra("data", uBean);
+				startActivity(intent);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
 	protected void onFailure(String result, int where) {
 		// TODO Auto-generated method stub
-
+		switch (where) {
+		case PROINFO:
+			ToastUtil.show(mContext, "获取商品信息失败，请稍后再试");
+			break;
+		case USERINFO:
+			ToastUtil.show(mContext, "获取用户信息失败，请稍后再试");
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -419,6 +472,93 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 		} else {
 			finish();
 			System.exit(0);
+		}
+	}
+
+	// for receive customer msg from jpush server
+	private MessageReceiver mMessageReceiver;
+	public static final String MESSAGE_RECEIVED_ACTION = "com.guoku.guokuv4.main.MESSAGE_RECEIVED_ACTION";
+	public static final String KEY_TITLE = "title";
+	public static final String KEY_MESSAGE = "message";
+	public static final String KEY_EXTRAS = "extras";
+
+	public void registerMessageReceiver() {
+		mMessageReceiver = new MessageReceiver();
+		IntentFilter filter = new IntentFilter();
+		filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+		filter.addAction(MESSAGE_RECEIVED_ACTION);
+		registerReceiver(mMessageReceiver, filter);
+	}
+
+	public class MessageReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if (MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
+				String messge = intent.getStringExtra(KEY_MESSAGE);
+				String extras = intent.getStringExtra(KEY_EXTRAS);
+				StringBuilder showMsg = new StringBuilder();
+				showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
+				if (!StringUtils.isEmpty(extras)) {
+					showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
+				}
+				setCostomMsg(showMsg.toString());
+			}
+		}
+	}
+
+	private void setCostomMsg(String msg) {
+
+		ToastUtil.show(mContext, msg);
+	}
+
+	/**
+	 * 点击处理jpush推送消息逻辑
+	 */
+	private void resolveJPush() {
+		Bundle bundle = getIntent().getExtras();
+		if (bundle != null) {
+
+			Log.d("EXTRA_EXTRA=========", bundle.getString(JPushInterface.EXTRA_EXTRA));
+			PushBean pushBean = JSON.parseObject(bundle.getString(JPushInterface.EXTRA_EXTRA), PushBean.class);
+			if (pushBean != null) {
+				if (!StringUtils.isEmpty(pushBean.getUrl())) {
+					if (pushBean.getUrl().contains(Constant.ACTION_HTTP)) {
+						Sharebean sharebean = new Sharebean();
+						sharebean.setAricleUrl(pushBean.getUrl());
+						bundle.putSerializable(WebShareAct.class.getName(), sharebean);
+						openActivity(WebShareAct.class, bundle);
+					} else if (pushBean.getUrl().contains(Constant.ACTION_ENTITY)) {
+						String id = pushBean.getUrl().replace(Constant.ACTION_ENTITY, "");
+						sendConnection(Constant.PROINFO + id, new String[] { "entity_id" }, new String[] { id },
+								PROINFO, true);
+						umStatistics(Constant.UM_INTRO, id, pushBean.getUrl());
+					} else if (pushBean.getUrl().contains(Constant.ACTION_TAG)) {
+						if (GuokuApplication.getInstance().getBean() == null) {
+							openLogin();
+						} else {
+							String tagStr = pushBean.getUrl().replace(Constant.ACTION_TAG, "").trim().replace("#", "");
+							Intent intent = new Intent(this, EntityAct.class);
+							intent.putExtra("data", GuokuApplication.getInstance().getBean().getUser().getUser_id());
+							intent.putExtra("name", tagStr);
+							startActivity(intent);
+						}
+					} else if (pushBean.getUrl().contains(Constant.ACTION_ARTICLE)) {
+						Sharebean sharebean = new Sharebean();
+
+						String tempUrl = "http://m.guoku.com/articles/"
+								+ pushBean.getUrl().replace(Constant.ACTION_ARTICLE, "") + "/?from=app";
+						sharebean.setAricleUrl(tempUrl);
+						bundle.putSerializable(WebShareAct.class.getName(), sharebean);
+						openActivity(WebShareAct.class, bundle);
+					} else if (pushBean.getUrl().contains(Constant.ACTION_USER)) {
+						sendConnection(Constant.USERINFO + pushBean.getUrl().replace(Constant.ACTION_USER, ""),
+								new String[] { "timestamp" }, new String[] { System.currentTimeMillis() / 1000 + "" },
+								USERINFO, false);
+
+					}
+				}
+			}
 		}
 	}
 

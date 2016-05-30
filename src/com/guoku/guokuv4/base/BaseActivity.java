@@ -23,7 +23,6 @@ import com.guoku.guokuv4.config.AlibabaConfig;
 import com.guoku.guokuv4.config.Constant;
 import com.guoku.guokuv4.entity.test.PInfoBean;
 import com.guoku.guokuv4.parse.ParseUtil;
-import com.guoku.guokuv4.utils.BitmapUtil;
 import com.guoku.guokuv4.utils.MyPreferences;
 import com.guoku.guokuv4.utils.ToastUtil;
 import com.lidroid.xutils.ViewUtils;
@@ -59,6 +58,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import cn.jpush.android.api.JPushInterface;
 import android.widget.TextView;
 
 /**
@@ -149,6 +149,7 @@ public abstract class BaseActivity extends FragmentActivity {
 		AVAnalytics.onResume(this);
 
 		// jpush推送统计
+		JPushInterface.onResume(this);
 	}
 
 	@Override
@@ -156,7 +157,8 @@ public abstract class BaseActivity extends FragmentActivity {
 		super.onPause();
 		MobclickAgent.onPause(this);
 		AVAnalytics.onPause(this);
-
+		// jpush推送统计
+		JPushInterface.onPause(this);
 	}
 
 	@Override
