@@ -431,13 +431,14 @@
             android:value="developer-default" />
         <!-- Required. AppKey copied from Portal -->
         
+        <!--
             <meta-data
             android:name="JPUSH_APPKEY"
              android:value="a9b4d1fa1d30343fe7ce77fd" />
-        
-        <!-- <meta-data
+        -->
+        <meta-data
             android:name="JPUSH_APPKEY"
-            android:value="f9e153a53791659b9541eb37" /> -->
+            android:value="f9e153a53791659b9541eb37" />
     </application>
 
     <!-- 极光推送 -->

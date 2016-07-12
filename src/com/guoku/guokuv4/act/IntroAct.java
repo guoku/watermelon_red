@@ -34,7 +34,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
@@ -95,7 +94,7 @@ public class IntroAct extends NetWorkActivity {
 		File file = new File(path);
 		if (file.exists()) {
 			// simpleDraweeView.setImageURI(Uri.parse("file://" + path));
-			ViewGroup.LayoutParams params = simpleDraweeView.getLayoutParams();
+			RelativeLayout.LayoutParams params = (LayoutParams) simpleDraweeView.getLayoutParams();
 			params.width = (GuokuApplication.screenW - 36) / 4  * 3;
 			params.height = GuokuApplication.screenW - 36;
 			simpleDraweeView.setLayoutParams(params);
@@ -105,11 +104,12 @@ public class IntroAct extends NetWorkActivity {
 			
 			
 			
-			RelativeLayout.LayoutParams lp = (LayoutParams) imgClose.getLayoutParams(); 
-//			params2.width = (GuokuApplication.screenW - 36) / 4  * 3 - 30;
-//			params2.height = GuokuApplication.screenW - 36 - 30;
-			lp.setMargins(0, 0,44, 44);
-			imgClose.setLayoutParams(lp);
+//			RelativeLayout.LayoutParams lp = (LayoutParams) imgClose.getLayoutParams(); 
+//
+//			lp.width = params.width / 2;
+//			lp.height = params.width / 2;
+////			lp.setMargins(0, 0, lp.width / 2, lp.width / 2);
+//			imgClose.setLayoutParams(lp);
 			
 		}
 

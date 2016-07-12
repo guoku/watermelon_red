@@ -6,8 +6,6 @@ import com.alibaba.sdk.android.login.callback.LogoutCallback;
 import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.base.NetWorkActivity;
-import com.guoku.guokuv4.bean.CommentsBean;
-import com.guoku.guokuv4.bean.Sharebean;
 import com.guoku.guokuv4.entity.test.AccountBean;
 import com.guoku.guokuv4.main.MainActivity2;
 import com.guoku.guokuv4.my.ChangeEmailAct;
@@ -26,6 +24,7 @@ import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.controller.listener.SocializeListeners.SocializeClientListener;
 import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.UMSsoHandler;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.BitmapFactory;

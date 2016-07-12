@@ -19,7 +19,6 @@ import com.guoku.guokuv4.entity.test.EntityBean;
 import com.guoku.guokuv4.entity.test.NoteBean;
 import com.guoku.guokuv4.utils.DateUtils;
 import com.guoku.guokuv4.utils.GuokuUtil;
-import com.handmark.pulltorefresh.library.internal.Utils;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;

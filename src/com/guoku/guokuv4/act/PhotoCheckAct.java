@@ -8,6 +8,7 @@ import com.guoku.R;
 import com.guoku.app.GuokuApplication;
 import com.guoku.guokuv4.base.NetWorkActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
+
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;

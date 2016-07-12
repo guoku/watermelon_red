@@ -300,7 +300,9 @@ public class PersonalFragment extends BaseFrament {
 			articlesAuthonRefresh.onRefreshComplete();
 			if (userType == 2) {
 				ArticlesUserBean articlesUserBeanAdd = JSON.parseObject(result, ArticlesUserBean.class);
-				articlesAuthonAdapter.addListsLast(articlesUserBeanAdd.getArticles());
+				if(articlesUserBeanAdd.getArticles() != null){
+					articlesAuthonAdapter.addListsLast(articlesUserBeanAdd.getArticles());
+				}
 			}
 			break;
 		case TABNOTE:

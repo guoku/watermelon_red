@@ -19,7 +19,6 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;

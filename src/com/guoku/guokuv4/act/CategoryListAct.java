@@ -3,19 +3,18 @@
  */
 package com.guoku.guokuv4.act;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
-
 import com.guoku.R;
 import com.guoku.guokuv4.adapter.CategoryListAdapter;
 import com.guoku.guokuv4.base.BaseActivity;
 import com.guoku.guokuv4.bean.TagBean;
 import com.guoku.guokuv4.config.Constant;
 import com.lidroid.xutils.view.annotation.ViewInject;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 
 /**
  * @zhangyao

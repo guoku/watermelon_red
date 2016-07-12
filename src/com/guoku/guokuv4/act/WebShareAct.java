@@ -23,7 +23,6 @@ import com.guoku.guokuv4.eventbus.ZanEB;
 import com.guoku.guokuv4.parse.ParseUtil;
 import com.guoku.guokuv4.share.CustomShareBoard;
 import com.guoku.guokuv4.utils.StringUtils;
-import com.guoku.guokuv4.utils.ToastUtil;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.lidroid.xutils.view.annotation.event.OnClick;
 
@@ -32,7 +31,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;

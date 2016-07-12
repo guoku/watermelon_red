@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="match_parent"
+    android:gravity="center" 
+    >
 
+    <View 
+        android:id="@+id/tempview"
+        android:layout_width="match_parent"
+        android:layout_height="14dp"
+        />
+    
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/img_launch"
         android:layout_width="100dp"
@@ -12,19 +20,18 @@
         android:layout_gravity="center"
         fresco:placeholderImage="@color/gray_bg"
         fresco:retryImageScaleType="centerInside"
-        fresco:roundedCornerRadius="5dp" />
+        fresco:roundedCornerRadius="5dp" 
+        android:layout_below="@+id/tempview"
+        android:layout_centerInParent="true"
+        />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+    <ImageView
+        android:id="@+id/close_launch"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/launch_close" 
+        android:layout_toRightOf="@+id/img_launch"
+        android:layout_marginLeft="14dp"
+        />
 
-        <ImageView
-            android:id="@+id/close_launch"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/launch_close" 
-            />
-    </RelativeLayout>
-
-</FrameLayout>
+</RelativeLayout>

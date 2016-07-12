@@ -176,6 +176,7 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 		ImageLoader.getInstance().clearMemoryCache();
 	}
 
+
 	@OnClick(R.id.ll_destination)
 	public void ll_destination(View v) {
 
@@ -475,42 +476,6 @@ public class MainActivity2 extends NetWorkActivity implements OnDoubleClickListe
 		}
 	}
 
-	// for receive customer msg from jpush server
-	private MessageReceiver mMessageReceiver;
-	public static final String MESSAGE_RECEIVED_ACTION = "com.guoku.guokuv4.main.MESSAGE_RECEIVED_ACTION";
-	public static final String KEY_TITLE = "title";
-	public static final String KEY_MESSAGE = "message";
-	public static final String KEY_EXTRAS = "extras";
-
-	public void registerMessageReceiver() {
-		mMessageReceiver = new MessageReceiver();
-		IntentFilter filter = new IntentFilter();
-		filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
-		filter.addAction(MESSAGE_RECEIVED_ACTION);
-		registerReceiver(mMessageReceiver, filter);
-	}
-
-	public class MessageReceiver extends BroadcastReceiver {
-
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			if (MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
-				String messge = intent.getStringExtra(KEY_MESSAGE);
-				String extras = intent.getStringExtra(KEY_EXTRAS);
-				StringBuilder showMsg = new StringBuilder();
-				showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
-				if (!StringUtils.isEmpty(extras)) {
-					showMsg.append(KEY_EXTRAS + " : " + extras + "\n");
-				}
-				setCostomMsg(showMsg.toString());
-			}
-		}
-	}
-
-	private void setCostomMsg(String msg) {
-
-		ToastUtil.show(mContext, msg);
-	}
 
 	/**
 	 * 点击处理jpush推送消息逻辑
